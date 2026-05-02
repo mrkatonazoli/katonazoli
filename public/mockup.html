@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Katona Zoli — Hotel Tech &amp; Guest Journey Specialist</title>
+    <meta
+      name="description"
+      content="I help hotels turn technology into hospitality — designing guest journeys that feel effortless, human, and memorable from the first click to the final goodbye."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #0f0f0f;
+        --accent: #0e5c68;        /* deep teal — current pick (use the picker bottom-right to swap) */
+        --muted: #6b6b6b;
+        --line: #ececec;
+        --hero-bg: #0a0a0a;       /* matches the portrait's background */
+        --hero-fg: #faf7f2;
+        --hero-muted: rgba(250, 247, 242, 0.55);
+        --display: "Instrument Serif", Georgia, "Times New Roman", serif;
+        --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* Layout */
+      .wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      @media (min-width: 768px) {
+        .wrap { padding: 0 48px; }
+      }
+      @media (min-width: 1024px) {
+        .wrap { padding: 0 80px; }
+      }
+
+      .narrow {
+        max-width: 1024px;
+        margin: 0 auto;
+      }
+
+      section {
+        padding: 96px 0;
+      }
+      @media (min-width: 768px) {
+        section { padding: 128px 0; }
+      }
+
+      .divider {
+        border-top: 1px solid var(--line);
+      }
+
+      /* Eyebrow */
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 40px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 32px;
+        height: 1px;
+        background: var(--accent);
+      }
+
+      /* Typography */
+      .display {
+        font-family: var(--display);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      .italic-accent {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      /* Hero — full-bleed black band, mirrors the portrait background */
+      .hero {
+        background: var(--hero-bg);
+        color: var(--hero-fg);
+        padding: 96px 0;
+      }
+      @media (min-width: 768px) {
+        .hero { padding: 112px 0 128px; }
+      }
+      .hero .eyebrow { color: var(--hero-muted); }
+      .hero .lead { color: rgba(250, 247, 242, 0.82); }
+      .hero .btn {
+        background: var(--hero-fg);
+        color: var(--hero-bg);
+      }
+      .hero .btn:hover {
+        background: var(--accent);
+        color: var(--hero-fg);
+      }
+      .hero .link-muted { color: var(--hero-muted); }
+      .hero .link-muted:hover { color: var(--hero-fg); }
+
+      /* Portrait blends into the black: dark pixels disappear, edges feather out */
+      .hero .portrait-frame {
+        background: transparent;
+        border-radius: 0;
+      }
+      .hero .portrait-frame img {
+        mix-blend-mode: lighten;
+        -webkit-mask-image: radial-gradient(ellipse 80% 90% at 55% 50%, #000 55%, transparent 95%);
+        mask-image: radial-gradient(ellipse 80% 90% at 55% 50%, #000 55%, transparent 95%);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: 7fr 5fr;
+          gap: 64px;
+        }
+      }
+
+      .hero-portrait {
+        order: -1;
+      }
+      @media (min-width: 1024px) {
+        .hero-portrait { order: 1; }
+      }
+
+      .portrait-frame {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        max-width: 384px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 2px;
+        background: rgba(15, 15, 15, 0.05);
+      }
+      @media (min-width: 1024px) {
+        .portrait-frame { max-width: none; }
+      }
+
+      .portrait-frame img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h1.name {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(3.5rem, 11vw, 9rem);
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+
+      .lead {
+        margin-top: 40px;
+        max-width: 32rem;
+        font-size: 1.125rem;
+        line-height: 1.65;
+        color: rgba(15, 15, 15, 0.8);
+      }
+      @media (min-width: 768px) {
+        .lead { font-size: 1.25rem; }
+      }
+
+      .cta-row {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px 32px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: var(--fg);
+        color: var(--bg);
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background-color 200ms ease;
+      }
+      .btn:hover { background: var(--accent); }
+      .btn:disabled { opacity: 0.6; cursor: default; }
+
+      .link-muted {
+        font-size: 14px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 200ms ease;
+      }
+      .link-muted:hover {
+        color: var(--fg);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      /* Statement (mission / vision) */
+      .statement {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(1.875rem, 5vw, 3.75rem);
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+        margin: 0;
+      }
+
+      /* Two-col (about / contact) */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      @media (min-width: 768px) {
+        .two-col {
+          grid-template-columns: 4fr 8fr;
+          gap: 64px;
+        }
+      }
+      .two-col.contact-col {
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 768px) {
+        .two-col.contact-col {
+          grid-template-columns: 5fr 7fr;
+        }
+      }
+
+      .section-title {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(3rem, 6vw, 3.75rem);
+        line-height: 1;
+        letter-spacing: -0.015em;
+        margin: 24px 0 0;
+      }
+
+      .body-copy p {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        color: rgba(15, 15, 15, 0.85);
+        margin: 0 0 24px;
+      }
+      .body-copy p:last-child { margin-bottom: 0; }
+
+      .lead-contact {
+        margin-top: 24px;
+        font-size: 1.125rem;
+        line-height: 1.65;
+        color: rgba(15, 15, 15, 0.75);
+      }
+      .email-line {
+        margin-top: 32px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .email-link {
+        color: var(--fg);
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        transition: color 200ms ease;
+      }
+      .email-link:hover { color: var(--accent); }
+
+      /* Form */
+      form { display: grid; gap: 28px; }
+
+      .field { display: block; }
+      .field label {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--line);
+        padding: 12px 0;
+        font: inherit;
+        color: inherit;
+        outline: none;
+        transition: border-color 200ms ease;
+        resize: none;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        border-bottom-color: var(--accent);
+      }
+
+      .honeypot {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+
+      .submit-row {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding-top: 8px;
+      }
+
+      .form-status {
+        font-size: 14px;
+        margin: 0;
+      }
+      .form-status.success { color: var(--accent); }
+      .form-status.error { color: #b91c1c; }
+
+      /* Footer */
+      footer {
+        padding: 40px 0;
+        border-top: 1px solid var(--line);
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      @media (min-width: 768px) {
+        .footer-grid {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .footer-link {
+        text-decoration: none;
+        transition: color 200ms ease;
+      }
+      .footer-link:hover { color: var(--fg); }
+    </style>
+  </head>
+  <body>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Hotel Tech &amp; Guest Journey Specialist</div>
+            <h1 class="name">
+              Katona<br />
+              <span class="italic-accent">Zoli</span>
+            </h1>
+            <p class="lead">
+              I help hotels turn technology into hospitality — designing guest
+              journeys that feel effortless, human, and unmistakably theirs.
+            </p>
+            <div class="cta-row">
+              <a class="btn" href="#contact">Get in touch <span aria-hidden="true">→</span></a>
+              <a class="link-muted" href="#mission">Read more</a>
+            </div>
+          </div>
+          <div class="hero-portrait">
+            <div class="portrait-frame">
+              <!-- Replace the src below with portrait.jpg once your photo is in this folder -->
+              <img src="/portrait.svg" alt="Katona Zoli" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION -->
+    <section id="mission" class="divider">
+      <div class="wrap">
+        <div class="narrow">
+          <div class="eyebrow">Mission</div>
+          <p class="statement">
+            To help hotels turn technology into
+            <span class="italic-accent">hospitality</span> — designing guest
+            journeys that feel effortless, human, and memorable from the first
+            click to the final goodbye.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISION -->
+    <section id="vision" class="divider">
+      <div class="wrap">
+        <div class="narrow">
+          <div class="eyebrow">Vision</div>
+          <p class="statement">
+            A hospitality industry where technology disappears into the
+            experience — leaving only what matters:
+            <span class="italic-accent">how a guest feels.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="divider">
+      <div class="wrap">
+        <div class="narrow">
+          <div class="two-col">
+            <div>
+              <div class="eyebrow">About</div>
+              <h2 class="section-title">A few <span class="italic-accent">words.</span></h2>
+            </div>
+            <div class="body-copy">
+              <p>
+                I work at the intersection of operations, technology, and guest
+                experience — helping hotels choose the right tools, connect them
+                sensibly, and design the moments that turn a stay into a memory.
+              </p>
+              <p>
+                My focus spans property management systems, digital check-in
+                flows, mobile keys, guest messaging, and the human side of all
+                of it: the front desk teams, housekeeping flows, and operators
+                who have to make it work on a Tuesday at 6 a.m.
+              </p>
+              <p>
+                I&rsquo;m based in Hungary, work with properties across Europe,
+                and care most about the unsexy details that quietly add up to a
+                great stay.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="divider">
+      <div class="wrap">
+        <div class="narrow">
+          <div class="two-col contact-col">
+            <div>
+              <div class="eyebrow">Contact</div>
+              <h2 class="section-title">Let&rsquo;s <span class="italic-accent">talk.</span></h2>
+              <p class="lead-contact">
+                Working on a guest experience problem, evaluating hotel tech, or
+                just want to swap notes? Drop a line.
+              </p>
+              <p class="email-line">
+                Or write directly to
+                <a class="email-link" href="mailto:hello@katonazoli.hu">hello@katonazoli.hu</a>
+              </p>
+            </div>
+            <div>
+              <form id="contact-form" action="mailto:hello@katonazoli.hu" method="post" enctype="text/plain">
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input id="name" name="name" type="text" required autocomplete="name" />
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" required autocomplete="email" />
+                </div>
+                <div class="field">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                <div class="submit-row">
+                  <button class="btn" type="submit">Send message <span aria-hidden="true">→</span></button>
+                  <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>© <span id="year"></span> Katona Zoli</div>
+          <div>
+            <a class="footer-link" href="mailto:hello@katonazoli.hu">hello@katonazoli.hu</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
