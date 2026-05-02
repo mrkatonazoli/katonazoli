@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 type ContactPayload = {
   name?: string;
@@ -31,40 +32,45 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || "hello@katonazoli.hu";
-  const from =
-    process.env.RESEND_FROM_EMAIL || "Katonazoli.hu <onboarding@resend.dev>";
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  const to = process.env.CONTACT_TO_EMAIL || user;
 
-  if (!apiKey) {
-    console.log("[contact] RESEND_API_KEY not set — submission logged only:", {
-      name,
-      email,
-      message,
-    });
+  if (!user || !pass) {
+    console.log(
+      "[contact] Gmail credentials not set — submission logged only:",
+      { name, email, message },
+    );
     return NextResponse.json({ ok: true, dev: true });
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      reply_to: email,
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
+    });
+
+    await transporter.sendMail({
+      from: `"katonazoli.hu" <${user}>`,
+      to,
+      replyTo: `"${name}" <${email}>`,
       subject: `New message from ${name}`,
       text: `From: ${name} <${email}>\n\n${message}`,
-    }),
-  });
+      html: `<p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p><p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error("[contact] Resend error", res.status, text);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[contact] gmail send error", err);
     return NextResponse.json({ error: "Email send failed" }, { status: 500 });
   }
+}
 
-  return NextResponse.json({ ok: true });
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
