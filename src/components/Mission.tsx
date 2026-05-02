@@ -9,7 +9,7 @@ export function Mission() {
           <span className="text-accent">{">"}</span>
           <span>mission.txt</span>
         </div>
-        <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-[-0.025em]">
+        <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.15] tracking-[-0.02em]">
           Help hotels turn technology into{" "}
           <span className="text-accent">hospitality</span> — designing guest
           journeys that feel effortless, human, and memorable from the first
