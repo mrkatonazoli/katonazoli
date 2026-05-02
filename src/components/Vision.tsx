@@ -9,7 +9,7 @@ export function Vision() {
           <span className="text-accent">{">"}</span>
           <span>vision.txt</span>
         </div>
-        <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.15] tracking-[-0.02em]">
+        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold leading-[1.2] tracking-[-0.015em]">
           A hospitality industry where technology disappears into the
           experience — leaving only what matters:{" "}
           <span className="text-accent">how a guest feels.</span>

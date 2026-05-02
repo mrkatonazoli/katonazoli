@@ -99,7 +99,8 @@ export function Hero() {
           <p className="mt-6 max-w-2xl text-base md:text-lg text-hero-fg/70 leading-relaxed">
             I architect{" "}
             <span className="text-accent font-medium">guest journeys</span>{" "}
-            through software, integrations, and the ops behind them.
+            through digital marketing, software, integrations, and the ops
+            behind them.
           </p>
         </div>
 
