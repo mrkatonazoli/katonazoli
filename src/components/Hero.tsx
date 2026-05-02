@@ -38,9 +38,8 @@ export function Hero() {
 
         <div className="lg:col-span-5 order-1 lg:order-2">
           <div className="aspect-[4/5] w-full max-w-sm mx-auto lg:max-w-none relative overflow-hidden">
-            {/* Replace src with "/portrait.jpg" once you've dropped the photo into /public */}
             <img
-              src="/portrait.svg"
+              src="/portrait.jpg"
               alt="Katona Zoli"
               className="absolute inset-0 w-full h-full object-cover mix-blend-lighten"
               style={{
