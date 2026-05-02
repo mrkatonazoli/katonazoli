@@ -6,12 +6,12 @@ export function About() {
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-4">
-          <div className="text-xs tracking-[0.22em] uppercase text-muted flex items-center">
-            <span className="inline-block w-8 h-px bg-accent mr-3" />
-            About
+          <div className="font-mono text-xs tracking-[0.22em] uppercase text-muted flex items-center gap-3">
+            <span className="text-accent">{">"}</span>
+            <span>about.md</span>
           </div>
-          <h2 className="font-display text-5xl md:text-6xl mt-6 leading-[1] tracking-tight">
-            A few <span className="italic">words.</span>
+          <h2 className="text-5xl md:text-6xl font-semibold mt-6 leading-[1] tracking-[-0.03em]">
+            A few <span className="text-accent">words.</span>
           </h2>
         </div>
         <div className="md:col-span-8 space-y-6 text-lg leading-relaxed text-foreground/85">

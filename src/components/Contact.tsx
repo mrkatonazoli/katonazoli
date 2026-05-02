@@ -41,12 +41,12 @@ export function Contact() {
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-5">
-          <div className="text-xs tracking-[0.22em] uppercase text-muted flex items-center">
-            <span className="inline-block w-8 h-px bg-accent mr-3" />
-            Contact
+          <div className="font-mono text-xs tracking-[0.22em] uppercase text-muted flex items-center gap-3">
+            <span className="text-accent">{">"}</span>
+            <span>contact.sh</span>
           </div>
-          <h2 className="font-display text-5xl md:text-6xl mt-6 leading-[1] tracking-tight">
-            Let&apos;s <span className="italic">talk.</span>
+          <h2 className="text-5xl md:text-6xl font-semibold mt-6 leading-[1] tracking-[-0.03em]">
+            Let&apos;s <span className="text-accent">talk.</span>
           </h2>
           <p className="mt-6 text-lg text-foreground/75 leading-relaxed">
             Working on a guest experience problem, evaluating hotel tech, or
@@ -68,7 +68,7 @@ export function Contact() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-xs tracking-[0.18em] uppercase text-muted mb-2"
+                className="block font-mono text-[10px] tracking-[0.22em] uppercase text-muted mb-2"
               >
                 Your name
               </label>
@@ -83,7 +83,7 @@ export function Contact() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-xs tracking-[0.18em] uppercase text-muted mb-2"
+                className="block font-mono text-[10px] tracking-[0.22em] uppercase text-muted mb-2"
               >
                 Email
               </label>
@@ -99,7 +99,7 @@ export function Contact() {
             <div>
               <label
                 htmlFor="message"
-                className="block text-xs tracking-[0.18em] uppercase text-muted mb-2"
+                className="block font-mono text-[10px] tracking-[0.22em] uppercase text-muted mb-2"
               >
                 Message
               </label>
@@ -124,7 +124,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={status === "sending" || status === "success"}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full text-sm font-medium hover:bg-accent transition-colors disabled:opacity-60"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-foreground text-background rounded-md font-mono text-xs uppercase tracking-[0.15em] font-semibold hover:bg-accent transition-colors disabled:opacity-60"
               >
                 {status === "sending"
                   ? "Sending…"

@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Instrument_Serif({
-  variable: "--font-instrument",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
 });
 
-const sans = Inter({
-  variable: "--font-inter",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -18,11 +16,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://katonazoli.hu"),
   title: "Katona Zoli — Hotel Tech & Guest Journey Specialist",
   description:
-    "I help hotels turn technology into hospitality — designing guest journeys that feel effortless, human, and memorable from the first click to the final goodbye.",
+    "I architect guest journeys through software, integrations, and the ops behind them.",
   openGraph: {
     title: "Katona Zoli — Hotel Tech & Guest Journey Specialist",
     description:
-      "I help hotels turn technology into hospitality — designing guest journeys that feel effortless, human, and memorable.",
+      "I architect guest journeys through software, integrations, and the ops behind them.",
     url: "https://katonazoli.hu",
     siteName: "Katona Zoli",
     locale: "en_US",
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Katona Zoli — Hotel Tech & Guest Journey Specialist",
     description:
-      "I help hotels turn technology into hospitality.",
+      "I architect guest journeys through software, integrations, and the ops behind them.",
   },
 };
 
@@ -42,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>

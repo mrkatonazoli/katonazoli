@@ -5,14 +5,14 @@ export function Vision() {
       className="px-6 md:px-12 lg:px-20 py-24 md:py-32 border-t border-line"
     >
       <div className="max-w-5xl mx-auto">
-        <div className="text-xs tracking-[0.22em] uppercase text-muted mb-10 flex items-center">
-          <span className="inline-block w-8 h-px bg-accent mr-3" />
-          Vision
+        <div className="font-mono text-xs tracking-[0.22em] uppercase text-muted mb-10 flex items-center gap-3">
+          <span className="text-accent">{">"}</span>
+          <span>vision.txt</span>
         </div>
-        <p className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+        <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-[-0.025em]">
           A hospitality industry where technology disappears into the
           experience — leaving only what matters:{" "}
-          <span className="italic text-accent">how a guest feels.</span>
+          <span className="text-accent">how a guest feels.</span>
         </p>
       </div>
     </section>
