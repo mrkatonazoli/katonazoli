@@ -321,27 +321,451 @@ function SummaryTab() {
   );
 }
 
+const googleAdsCampaigns: {
+  letter: string;
+  title: string;
+  keywords: string[];
+}[] = [
+  {
+    letter: "A",
+    title: "Thaiföld befektetés",
+    keywords: [
+      "thaiföld befektetés",
+      "thaiföld ingatlan",
+      "thaiföld villa",
+      "thaiföld ingatlanvásárlás",
+      "thaiföldi ingatlanbefektetés",
+    ],
+  },
+  {
+    letter: "B",
+    title: "Külföldi ingatlanbefektetés",
+    keywords: [
+      "külföldi ingatlanbefektetés",
+      "külföldi villa befektetés",
+      "egzotikus ingatlanbefektetés",
+      "passzív jövedelem ingatlanból",
+    ],
+  },
+  {
+    letter: "C",
+    title: "Ázsiai befektetések",
+    keywords: [
+      "ázsiai ingatlanbefektetés",
+      "ázsia villa befektetés",
+      "thaiföld vagy dubai befektetés",
+      "bali vs thaiföld befektetés",
+    ],
+  },
+];
+
+const landingPages: {
+  num: string;
+  title: string;
+  goal: string;
+  details: { label: string; value: string }[];
+}[] = [
+  {
+    num: "01",
+    title: "Befektetési landing",
+    goal: "Lead capture",
+    details: [
+      { label: "Tartalom", value: "miért Koh Samui" },
+      { label: "", value: "ROI" },
+      { label: "", value: "rental management" },
+      { label: "", value: "jogi struktúra" },
+      { label: "", value: "CTA" },
+    ],
+  },
+  {
+    num: "02",
+    title: "ROI landing",
+    goal: "Komoly lead",
+    details: [{ label: "CTA", value: "„Get ROI calculation”" }],
+  },
+  {
+    num: "03",
+    title: "Guide landing",
+    goal: "Lead magnet",
+    details: [
+      { label: "Magnet", value: "„Thailand Property Investment Guide”" },
+    ],
+  },
+];
+
+const metaPillars: {
+  letter: string;
+  title: string;
+  examples: string[];
+}[] = [
+  {
+    letter: "A",
+    title: "Befektetés edukáció",
+    examples: [
+      "„Can foreigners buy property in Thailand?”",
+      "„How villa rental ROI works”",
+      "„Why Koh Samui is growing”",
+    ],
+  },
+  {
+    letter: "B",
+    title: "Lifestyle + státusz",
+    examples: ["sunset", "villa life", "work-from-paradise", "luxury but calm"],
+  },
+  {
+    letter: "C",
+    title: "Trust / legitimacy",
+    examples: ["építkezés", "fejlesztő", "management", "local expertise"],
+  },
+  {
+    letter: "D",
+    title: "Financial comparison",
+    examples: [
+      "„€300K apartment in Budapest vs Koh Samui”",
+      "„Bank interest vs villa income”",
+    ],
+  },
+];
+
+const emailStages: {
+  num: string;
+  title: string;
+  items: string[];
+}[] = [
+  {
+    num: "01",
+    title: "Edukáció",
+    items: ["hogyan működik", "jogi háttér", "ownership"],
+  },
+  {
+    num: "02",
+    title: "Bizalom",
+    items: ["projekt", "management", "kivitelezés"],
+  },
+  {
+    num: "03",
+    title: "Conversion",
+    items: ["ROI", "elérhető villák", "consultation"],
+  },
+];
+
 function InputsTab() {
   return (
     <div role="tabpanel">
+      {/* 01 — Google Ads */}
       <section className="mb-24">
         <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
             01
           </span>
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Inputok
+            Google Ads — High intent leadek
           </h2>
         </div>
 
-        <div className="rounded-xl border border-dashed border-neutral-300 bg-neutral-50 p-12 md:p-16 text-center">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-4">
-            {">"} inputs.coming_soon
+        <p className="max-w-3xl text-[15px] md:text-base leading-[1.75] text-neutral-700 mb-8">
+          Ez lesz a legerősebb{" "}
+          <strong className="text-neutral-950">
+            „bottom funnel” csatorna
+          </strong>
+          . Itt az emberek már:
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-12">
+          {["keresnek", "gondolkodnak", "összehasonlítanak", "befektetést akarnak"].map(
+            (m) => (
+              <span
+                key={m}
+                className="inline-flex items-center gap-2 rounded-full bg-neutral-950 text-white px-4 py-2 text-sm font-medium"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                {m}
+              </span>
+            ),
+          )}
+        </div>
+
+        <div className="flex items-center gap-3 mb-6">
+          <span aria-hidden className="w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(20,184,166,0.18)]" />
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-700">
+            Kampánystruktúra
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {googleAdsCampaigns.map((c) => (
+            <article
+              key={c.letter}
+              className="rounded-xl bg-neutral-950 text-white p-7 md:p-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)]"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-accent text-neutral-950 font-mono text-base font-bold">
+                  {c.letter}
+                </span>
+                <h4 className="text-lg md:text-xl font-semibold tracking-tight">
+                  {c.title}
+                </h4>
+              </div>
+
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 mb-3">
+                kulcsszavak
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {c.keywords.map((k) => (
+                  <span
+                    key={k}
+                    className="inline-flex items-center rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-[12.5px] text-white/85"
+                  >
+                    {k}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 02 — Meta */}
+      <section className="mb-24">
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            02
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Meta — Education + desire engine
+          </h2>
+        </div>
+
+        <div className="relative rounded-2xl bg-neutral-950 text-white p-8 md:p-10 overflow-hidden shadow-[0_20px_60px_-20px_rgba(0,0,0,0.3)]">
+          <div
+            aria-hidden
+            className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
+          />
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-accent mb-5">
+            {">"} positioning
           </div>
-          <p className="text-neutral-500 text-sm max-w-md mx-auto">
-            Az inputok tartalma hamarosan ide kerül — várjuk a részletes
-            anyagot.
+          <p className="text-xl md:text-2xl font-semibold tracking-tight leading-snug mb-7">
+            A Meta itt{" "}
+            <span className="text-white/40 line-through decoration-2">
+              NEM direkt sales
+            </span>{" "}
+            csatorna. Hanem:
           </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {["edukáció", "vágyépítés", "retargeting pool építés"].map(
+              (m, i) => (
+                <li
+                  key={m}
+                  className="flex items-center gap-3 rounded-lg bg-white/[0.04] border border-white/10 px-5 py-4"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+                    0{i + 1}
+                  </span>
+                  <span className="text-base font-medium text-white/95">
+                    {m}
+                  </span>
+                </li>
+              ),
+            )}
+          </ul>
+        </div>
+      </section>
+
+      {/* 03 — Landing pages */}
+      <section className="mb-24">
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            03
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Landing page típusok
+          </h2>
+        </div>
+
+        <p className="max-w-3xl text-[15px] md:text-base leading-[1.75] text-neutral-700 mb-10">
+          <strong className="text-neutral-950">Nem egy landing page kell.</strong>{" "}
+          Hanem több — minden funnel szakaszhoz külön cél és üzenet.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {landingPages.map((lp) => (
+            <article
+              key={lp.num}
+              className="rounded-xl bg-neutral-950 text-white p-7 md:p-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] flex flex-col"
+            >
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                  {lp.num}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  {lp.goal}
+                </span>
+              </div>
+
+              <h3 className="text-xl md:text-2xl font-semibold tracking-tight mb-5">
+                {lp.title}
+              </h3>
+
+              <ul className="space-y-2 text-[14px] text-white/80 mt-auto">
+                {lp.details.map((d, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span
+                      aria-hidden
+                      className="text-accent font-mono text-xs leading-[1.6] mt-0.5"
+                    >
+                      ▸
+                    </span>
+                    <span className="leading-[1.6]">
+                      {d.label && (
+                        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/50 mr-2">
+                          {d.label}:
+                        </span>
+                      )}
+                      <span>{d.value}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 04 — Meta tartalomstratégia */}
+      <section className="mb-24">
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            04
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Meta tartalomstratégia
+          </h2>
+        </div>
+
+        <div className="flex items-center gap-3 mb-8">
+          <span
+            aria-hidden
+            className="w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(20,184,166,0.18)]"
+          />
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-700">
+            Tartalom pillérek
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {metaPillars.map((p) => (
+            <article
+              key={p.letter}
+              className="rounded-xl bg-neutral-950 text-white p-7 md:p-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)]"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-accent text-neutral-950 font-mono text-base font-bold">
+                  {p.letter}
+                </span>
+                <h4 className="text-lg md:text-xl font-semibold tracking-tight">
+                  {p.title}
+                </h4>
+              </div>
+
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 mb-3">
+                példák
+              </div>
+              <ul className="space-y-2 text-[14px] text-white/85">
+                {p.examples.map((e) => (
+                  <li key={e} className="flex items-start gap-3">
+                    <span
+                      aria-hidden
+                      className="text-accent font-mono text-xs leading-[1.6] mt-0.5"
+                    >
+                      ▸
+                    </span>
+                    <span className="leading-[1.6]">{e}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 05 — Email automation */}
+      <section>
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            05
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Email automation
+          </h2>
+        </div>
+
+        {/* MailerLite recommendation strip */}
+        <div className="rounded-2xl bg-neutral-950 text-white p-7 md:p-8 mb-10 flex items-center gap-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.25)]">
+          <span
+            aria-hidden
+            className="text-2xl md:text-3xl"
+          >
+            👉
+          </span>
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-1.5">
+              recommended tool
+            </div>
+            <p className="text-lg md:text-xl font-semibold tracking-tight">
+              <span className="text-accent">MailerLite</span> teljesen jó
+              indulásnak.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 mb-8">
+          <span
+            aria-hidden
+            className="w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(20,184,166,0.18)]"
+          />
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-700">
+            Email flow logika
+          </h3>
+        </div>
+
+        {/* 3-stage email flow */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {emailStages.map((stage, i) => (
+            <div key={stage.num} className="relative">
+              <article className="rounded-xl bg-neutral-950 text-white p-7 md:p-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] h-full">
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-2">
+                  Stage {stage.num}
+                </div>
+                <h4 className="text-xl md:text-2xl font-semibold tracking-tight mb-5">
+                  {stage.title}
+                </h4>
+                <ul className="space-y-2 text-[14px] text-white/85">
+                  {stage.items.map((it) => (
+                    <li key={it} className="flex items-start gap-3">
+                      <span
+                        aria-hidden
+                        className="text-accent font-mono text-xs leading-[1.6] mt-0.5"
+                      >
+                        ▸
+                      </span>
+                      <span className="leading-[1.6]">{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+
+              {/* Arrow between stages (desktop only) */}
+              {i < emailStages.length - 1 && (
+                <div
+                  aria-hidden
+                  className="hidden md:flex absolute top-1/2 -right-3.5 -translate-y-1/2 w-7 h-7 rounded-full bg-white border border-neutral-200 items-center justify-center text-neutral-500 text-xs shadow-sm z-10"
+                >
+                  →
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
     </div>
