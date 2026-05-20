@@ -57,12 +57,13 @@ const usps: Usp[] = [
   },
 ];
 
-type TabKey = "summary" | "marketing" | "process";
+type TabKey = "summary" | "marketing" | "inputs" | "process";
 
 const tabs: { key: TabKey; num: string; label: string }[] = [
   { key: "summary", num: "01", label: "Összefoglaló" },
   { key: "marketing", num: "02", label: "Marketing" },
-  { key: "process", num: "03", label: "Folyamat" },
+  { key: "inputs", num: "03", label: "Inputok" },
+  { key: "process", num: "04", label: "Folyamat" },
 ];
 
 export default function PajaPage() {
@@ -146,6 +147,7 @@ export default function PajaPage() {
         {/* Tab content */}
         {active === "summary" && <SummaryTab />}
         {active === "marketing" && <MarketingTab />}
+        {active === "inputs" && <InputsTab />}
         {active === "process" && <ProcessTab />}
 
         {/* Footer note */}
@@ -313,6 +315,33 @@ function SummaryTab() {
               </ul>
             </article>
           ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function InputsTab() {
+  return (
+    <div role="tabpanel">
+      <section className="mb-24">
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            01
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Inputok
+          </h2>
+        </div>
+
+        <div className="rounded-xl border border-dashed border-neutral-300 bg-neutral-50 p-12 md:p-16 text-center">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-4">
+            {">"} inputs.coming_soon
+          </div>
+          <p className="text-neutral-500 text-sm max-w-md mx-auto">
+            Az inputok tartalma hamarosan ide kerül — várjuk a részletes
+            anyagot.
+          </p>
         </div>
       </section>
     </div>
