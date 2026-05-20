@@ -319,26 +319,207 @@ function SummaryTab() {
   );
 }
 
+const funnelStages: {
+  stage: string;
+  action: string;
+  width: string;
+}[] = [
+  {
+    stage: "Cold audience",
+    action: "Meta edukációs videó",
+    width: "w-full",
+  },
+  {
+    stage: "Interest",
+    action: "Landing + guide",
+    width: "w-[88%]",
+  },
+  {
+    stage: "Nurture",
+    action: "Email + remarketing",
+    width: "w-[76%]",
+  },
+  {
+    stage: "High intent",
+    action: "ROI / konzultáció",
+    width: "w-[64%]",
+  },
+  {
+    stage: "Sales",
+    action: "Call / meeting / closing",
+    width: "w-[52%]",
+  },
+];
+
+const leadSources: {
+  num: string;
+  title: string;
+  tag: string;
+}[] = [
+  {
+    num: "01",
+    title: "Google Search",
+    tag: "high intent",
+  },
+  {
+    num: "02",
+    title: "Meta edukációs videó + edukációs content + vágykeltő vizuális irány",
+    tag: "low-cost awareness",
+  },
+  {
+    num: "03",
+    title: "ROI calculator",
+    tag: "high conversion tool",
+  },
+];
+
+const buyerMotivations = [
+  "biztonságos befektetést",
+  "passzív jövedelmet",
+  "egzotikus diverzifikációt",
+  "lifestyle upgrade-et",
+];
+
 function ProcessTab() {
   return (
     <div role="tabpanel">
+      {/* Block 01 — Funnel */}
       <section className="mb-24">
         <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
             01
           </span>
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Folyamat
+            Lead funnel
           </h2>
         </div>
 
-        <div className="rounded-xl border border-dashed border-neutral-300 bg-neutral-50 p-12 md:p-16 text-center">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-4">
-            {">"} process.coming_soon
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-500 mb-10">
+          {">"} cold → sales · 5 stages
+        </p>
+
+        <div className="flex flex-col items-center">
+          {funnelStages.map((s, i) => (
+            <div key={s.stage} className={`${s.width} max-w-2xl`}>
+              <div className="rounded-xl bg-neutral-950 text-white px-6 py-5 md:px-8 md:py-6 shadow-[0_12px_30px_-15px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-1.5">
+                      stage 0{i + 1}
+                    </div>
+                    <div className="text-lg md:text-xl font-semibold tracking-tight uppercase">
+                      {s.stage}
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 mb-1.5">
+                      action
+                    </div>
+                    <div className="text-sm md:text-base text-white/90 font-medium">
+                      {s.action}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {i < funnelStages.length - 1 && (
+                <div
+                  aria-hidden
+                  className="flex flex-col items-center py-3"
+                >
+                  <div className="w-px h-5 bg-gradient-to-b from-neutral-300 to-neutral-400" />
+                  <div className="text-neutral-400 text-xs leading-none">▼</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Block 02 — Top lead sources */}
+      <section className="mb-24">
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            02
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            A három legerősebb lead source
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {leadSources.map((src) => (
+            <article
+              key={src.num}
+              className="rounded-xl bg-neutral-950 text-white p-7 md:p-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] flex flex-col"
+            >
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-4">
+                {src.num}
+              </div>
+              <h3 className="text-lg md:text-xl font-semibold tracking-tight leading-snug mb-4 flex-1">
+                {src.title}
+              </h3>
+              <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/15 bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                {src.tag}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Block 03 — Strategic reality */}
+      <section>
+        <div className="flex items-baseline gap-5 mb-10 pb-5 border-b border-neutral-200">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            03
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Stratégiai valóság
+          </h2>
+        </div>
+
+        <div className="relative rounded-2xl bg-neutral-950 text-white p-8 md:p-12 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.4)] overflow-hidden">
+          {/* Accent bar */}
+          <div
+            aria-hidden
+            className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
+          />
+
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-accent mb-6">
+            {">"} strategic_reality
           </div>
-          <p className="text-neutral-500 text-sm max-w-md mx-auto">
-            A folyamat tartalma hamarosan ide kerül — várjuk a részletes
-            leírást.
+
+          <p className="text-2xl md:text-3xl font-semibold tracking-tight leading-[1.25] mb-8">
+            Az emberek{" "}
+            <span className="text-white/40 line-through decoration-2">
+              nem villát
+            </span>{" "}
+            keresnek, hanem:
+          </p>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+            {buyerMotivations.map((m, i) => (
+              <li
+                key={m}
+                className="flex items-start gap-3 rounded-lg bg-white/[0.04] border border-white/10 px-5 py-4"
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent shrink-0 mt-0.5">
+                  0{i + 1}
+                </span>
+                <span className="text-base md:text-lg font-medium text-white/95">
+                  {m}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-base md:text-lg text-white/80 leading-relaxed border-t border-white/10 pt-6">
+            És az{" "}
+            <strong className="text-white">
+              egész marketingnek ezt kell kommunikálnia
+            </strong>
+            .
           </p>
         </div>
       </section>
