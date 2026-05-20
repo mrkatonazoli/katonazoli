@@ -326,7 +326,7 @@ const funnelStages: {
 }[] = [
   {
     stage: "Cold audience",
-    action: "Meta: edukációs videó + edukációs content + vágykeltő vizuális irány",
+    action: "Meta + Google Ads search",
     width: "w-full",
   },
   {
