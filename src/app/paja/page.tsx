@@ -106,7 +106,7 @@ export default function PajaPage() {
         <div
           role="tablist"
           aria-label="Project sections"
-          className="flex items-center gap-1 border-b border-neutral-200 mb-12 overflow-x-auto"
+          className="inline-flex items-center gap-2 p-1.5 rounded-2xl bg-neutral-100 border border-neutral-200 mb-12 max-w-full overflow-x-auto"
         >
           {tabs.map((t) => {
             const isActive = active === t.key;
@@ -117,23 +117,27 @@ export default function PajaPage() {
                 aria-selected={isActive}
                 onClick={() => setActive(t.key)}
                 className={
-                  "relative flex items-baseline gap-3 px-5 py-4 font-mono text-[11px] uppercase tracking-[0.22em] whitespace-nowrap transition-colors " +
+                  "group relative flex items-center gap-3 px-5 md:px-6 py-3.5 rounded-xl font-mono text-[11px] md:text-[12px] uppercase tracking-[0.22em] whitespace-nowrap transition-all duration-200 " +
                   (isActive
-                    ? "text-neutral-950"
-                    : "text-neutral-400 hover:text-neutral-700")
+                    ? "bg-neutral-950 text-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.45)]"
+                    : "text-neutral-500 hover:text-neutral-900 hover:bg-white")
                 }
               >
-                <span className={isActive ? "text-accent" : "text-neutral-300"}>
+                <span
+                  className={
+                    "font-semibold transition-colors " +
+                    (isActive ? "text-accent" : "text-neutral-400")
+                  }
+                >
                   {t.num}
                 </span>
-                <span>{t.label}</span>
-                <span
-                  aria-hidden
-                  className={
-                    "absolute left-0 right-0 -bottom-px h-[2px] transition-colors " +
-                    (isActive ? "bg-accent" : "bg-transparent")
-                  }
-                />
+                <span className="font-semibold">{t.label}</span>
+                {isActive && (
+                  <span
+                    aria-hidden
+                    className="ml-1 inline-block w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_0_3px_rgba(20,184,166,0.25)]"
+                  />
+                )}
               </button>
             );
           })}
