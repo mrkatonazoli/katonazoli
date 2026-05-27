@@ -18,59 +18,20 @@
     </div>
   </noscript>
 
-<style>
-  html, body {
-    margin: 0; padding: 0;
-    width: 100vw; height: 100dvh;
-    overflow: hidden;
-    background: #F2F2F7;
-  }
-
-  /* Hide all desktop chrome */
-  .solara-header,
-  .solara-notes,
-  .solara-step-nav,
-  .solara-reset,
-  .solara-summary,
-  .solara-principles { display: none !important; }
-
-  /* Strip shell padding/min-width */
-  .solara-shell {
-    min-width: unset !important;
-    padding: 0 !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-  }
-
-  .solara-main {
-    display: block !important;
-  }
-
-  /* Phone column fills the whole viewport, centers content */
-  .solara-phone-col {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-  }
-
-  /* Wrapper: React doesn't set inline styles here, so transform persists */
-  .solara-phone-wrap {
-    filter: none !important;
-    margin: 0 !important;
-    transform-origin: center center;
-  }
-</style>
 <script>
 (function () {
-  /* Actual IOSDevice dimensions used in app.jsx: width=372, height=780 */
   var W = 372, H = 780;
 
-  function scale() {
+  var CSS = [
+    'html,body{margin:0;padding:0;width:100vw;height:100dvh;overflow:hidden;background:#F2F2F7}',
+    '.solara-header,.solara-notes,.solara-step-nav,.solara-reset,.solara-summary,.solara-principles{display:none!important}',
+    '.solara-shell{min-width:unset!important;padding:0!important;max-width:100vw!important;margin:0!important}',
+    '.solara-main{display:block!important}',
+    '.solara-phone-col{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}',
+    '.solara-phone-wrap{filter:none!important;margin:0!important;transform-origin:center center}'
+  ].join('');
+
+  function applyScale() {
     var wrap = document.querySelector('.solara-phone-wrap');
     if (!wrap || !wrap.firstElementChild) return false;
     var s = Math.min(window.innerWidth / W, window.innerHeight / H);
@@ -78,15 +39,42 @@
     return true;
   }
 
-  /* Poll until React renders the wrapper */
-  var tries = 0;
-  (function poll() {
-    if (scale()) return;
-    if (++tries < 80) setTimeout(poll, 100);
-  })();
+  function applyCSS() {
+    if (document.getElementById('__m')) return;
+    var el = document.createElement('style');
+    el.id = '__m';
+    el.textContent = CSS;
+    (document.head || document.documentElement).appendChild(el);
+  }
 
-  window.addEventListener('resize', scale);
-  window.addEventListener('orientationchange', function () { setTimeout(scale, 300); });
+  /* Also fix the inner viewport meta after replacement */
+  function fixViewport() {
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) {
+      vp.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
+    } else {
+      var m = document.createElement('meta');
+      m.name = 'viewport';
+      m.content = 'width=device-width, initial-scale=1, viewport-fit=cover';
+      (document.head || document.documentElement).appendChild(m);
+    }
+  }
+
+  var done = false;
+  var t = setInterval(function () {
+    if (!document.querySelector('.solara-shell')) return;
+    if (!document.querySelector('.solara-phone-wrap')) return;
+    fixViewport();
+    applyCSS();
+    if (applyScale()) {
+      done = true;
+      clearInterval(t);
+    }
+  }, 80);
+
+  /* Keep re-applying scale on resize/orientation */
+  window.addEventListener('resize', applyScale);
+  window.addEventListener('orientationchange', function () { setTimeout(applyScale, 300); });
 })();
 </script>
 
