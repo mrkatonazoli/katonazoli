@@ -21,13 +21,12 @@
 <style>
   html, body {
     margin: 0; padding: 0;
-    width: 100%; height: 100dvh;
+    width: 100vw; height: 100dvh;
     overflow: hidden;
     background: #F2F2F7;
   }
-  #root { height: 100dvh; }
 
-  /* Hide everything except the phone */
+  /* Hide all desktop chrome */
   .solara-header,
   .solara-notes,
   .solara-step-nav,
@@ -35,19 +34,22 @@
   .solara-summary,
   .solara-principles { display: none !important; }
 
+  /* Strip shell padding/min-width */
   .solara-shell {
     min-width: unset !important;
     padding: 0 !important;
-    max-width: 100% !important;
+    max-width: 100vw !important;
     margin: 0 !important;
-    height: 100dvh !important;
   }
+
   .solara-main {
     display: block !important;
-    height: 100dvh !important;
   }
+
+  /* Phone column fills the whole viewport, centers content */
   .solara-phone-col {
-    position: static !important;
+    position: fixed !important;
+    inset: 0 !important;
     width: 100vw !important;
     height: 100dvh !important;
     display: flex !important;
@@ -55,54 +57,39 @@
     justify-content: center !important;
     padding: 0 !important;
   }
+
+  /* Wrapper: React doesn't set inline styles here, so transform persists */
   .solara-phone-wrap {
-    margin: 0 !important;
     filter: none !important;
+    margin: 0 !important;
+    transform-origin: center center;
   }
 </style>
 <script>
 (function () {
-  var ORIG_W = 402, ORIG_H = 874;
+  /* Actual IOSDevice dimensions used in app.jsx: width=372, height=780 */
+  var W = 372, H = 780;
 
-  function fillScreen() {
+  function scale() {
     var wrap = document.querySelector('.solara-phone-wrap');
-    if (!wrap) return false;
-    var phone = wrap.firstElementChild;
-    if (!phone || phone.offsetWidth < 10) return false;
-
-    var vw = window.innerWidth;
-    var vh = window.innerHeight;
-
-    /* Resize the IOSDevice div to exactly fill the viewport */
-    phone.style.width          = vw + 'px';
-    phone.style.height         = vh + 'px';
-    phone.style.borderRadius   = '0';
-    phone.style.boxShadow      = 'none';
-    phone.style.minWidth       = 'unset';
-    phone.style.minHeight      = 'unset';
-    phone.style.maxWidth       = 'unset';
-    phone.style.maxHeight      = 'unset';
-
-    wrap.style.width  = vw + 'px';
-    wrap.style.height = vh + 'px';
-
+    if (!wrap || !wrap.firstElementChild) return false;
+    var s = Math.min(window.innerWidth / W, window.innerHeight / H);
+    wrap.style.transform = 'scale(' + s + ')';
     return true;
   }
 
-  /* Poll until React has rendered the phone */
-  var attempts = 0;
-  function poll() {
-    if (fillScreen()) return;
-    if (++attempts < 60) setTimeout(poll, 100);
-  }
+  /* Poll until React renders the wrapper */
+  var tries = 0;
+  (function poll() {
+    if (scale()) return;
+    if (++tries < 80) setTimeout(poll, 100);
+  })();
 
-  document.addEventListener('DOMContentLoaded', poll);
-  window.addEventListener('resize', fillScreen);
-  window.addEventListener('orientationchange', function () {
-    setTimeout(fillScreen, 300);
-  });
+  window.addEventListener('resize', scale);
+  window.addEventListener('orientationchange', function () { setTimeout(scale, 300); });
 })();
 </script>
+
 </head>
 <body>
   <div id="__bundler_thumbnail">
