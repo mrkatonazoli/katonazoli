@@ -7,24 +7,24 @@ export default function ImmersivePage() {
   const [fullscreen, setFullscreen] = useState(false);
 
   function handleFullscreen() {
-    // iOS Safari doesn't support the Fullscreen API — open directly instead
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      window.open("/immersive-app.html", "_self");
+      // iPhone: open the mobile-optimised version directly in Safari
+      window.open("/immersive-mobile.html", "_self");
       return;
     }
 
+    // Desktop / Android: fullscreen the iframe
     const el = iframeRef.current;
     if (!el) return;
 
     if (!document.fullscreenElement) {
-      el.requestFullscreen().then(() => setFullscreen(true)).catch(() => {
-        // Fallback: open directly
-        window.open("/immersive-app.html", "_blank");
-      });
+      el.requestFullscreen()
+        .then(() => setFullscreen(true))
+        .catch(() => window.open("/immersive-mobile.html", "_blank"));
     } else {
       document.exitFullscreen().then(() => setFullscreen(false));
     }
@@ -40,7 +40,7 @@ export default function ImmersivePage() {
         allowFullScreen
       />
 
-      {/* Floating fullscreen button */}
+      {/* Floating button */}
       {!fullscreen && (
         <button
           onClick={handleFullscreen}
