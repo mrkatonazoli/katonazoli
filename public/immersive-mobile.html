@@ -19,7 +19,15 @@
   </noscript>
 
 <style>
-  /* ── Mobile override: hide desktop chrome ── */
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100dvh;
+    overflow: hidden;
+    background: #F2F2F7;
+  }
+  #root { height: 100dvh; }
+
+  /* Hide everything except the phone */
   .solara-header,
   .solara-notes,
   .solara-step-nav,
@@ -32,61 +40,68 @@
     padding: 0 !important;
     max-width: 100% !important;
     margin: 0 !important;
+    height: 100dvh !important;
   }
   .solara-main {
     display: block !important;
-    gap: 0 !important;
+    height: 100dvh !important;
   }
   .solara-phone-col {
     position: static !important;
+    width: 100vw !important;
+    height: 100dvh !important;
     display: flex !important;
-    align-items: flex-start !important;
+    align-items: center !important;
     justify-content: center !important;
     padding: 0 !important;
   }
   .solara-phone-wrap {
     margin: 0 !important;
     filter: none !important;
-    display: flex !important;
-    justify-content: center !important;
-    width: 100vw !important;
-    overflow: hidden !important;
-  }
-  html, body {
-    overflow: hidden !important;
-    height: 100dvh !important;
-    width: 100vw !important;
   }
 </style>
 <script>
-  (function() {
-    var PHONE_W = 402, PHONE_H = 874;
-    function scalePhone() {
-      var wrap = document.querySelector('.solara-phone-wrap');
-      if (!wrap) return;
-      var phone = wrap.firstElementChild;
-      if (!phone) return;
-      var vw = window.innerWidth;
-      var vh = window.innerHeight;
-      var scale = Math.min(vw / PHONE_W, vh / PHONE_H);
-      phone.style.transform = 'scale(' + scale + ')';
-      phone.style.transformOrigin = 'top center';
-      phone.style.width = PHONE_W + 'px';
-      phone.style.height = PHONE_H + 'px';
-      phone.style.borderRadius = '0';
-      phone.style.boxShadow = 'none';
-      wrap.style.height = Math.round(PHONE_H * scale) + 'px';
-    }
-    // Run once React has rendered
-    function tryScale(n) {
-      if (n <= 0) return;
-      var wrap = document.querySelector('.solara-phone-wrap');
-      if (wrap && wrap.firstElementChild) { scalePhone(); return; }
-      setTimeout(function() { tryScale(n - 1); }, 100);
-    }
-    document.addEventListener('DOMContentLoaded', function() { tryScale(30); });
-    window.addEventListener('resize', scalePhone);
-  })();
+(function () {
+  var ORIG_W = 402, ORIG_H = 874;
+
+  function fillScreen() {
+    var wrap = document.querySelector('.solara-phone-wrap');
+    if (!wrap) return false;
+    var phone = wrap.firstElementChild;
+    if (!phone || phone.offsetWidth < 10) return false;
+
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+
+    /* Resize the IOSDevice div to exactly fill the viewport */
+    phone.style.width          = vw + 'px';
+    phone.style.height         = vh + 'px';
+    phone.style.borderRadius   = '0';
+    phone.style.boxShadow      = 'none';
+    phone.style.minWidth       = 'unset';
+    phone.style.minHeight      = 'unset';
+    phone.style.maxWidth       = 'unset';
+    phone.style.maxHeight      = 'unset';
+
+    wrap.style.width  = vw + 'px';
+    wrap.style.height = vh + 'px';
+
+    return true;
+  }
+
+  /* Poll until React has rendered the phone */
+  var attempts = 0;
+  function poll() {
+    if (fillScreen()) return;
+    if (++attempts < 60) setTimeout(poll, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', poll);
+  window.addEventListener('resize', fillScreen);
+  window.addEventListener('orientationchange', function () {
+    setTimeout(fillScreen, 300);
+  });
+})();
 </script>
 </head>
 <body>
