@@ -1,25 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
+function checkProtected(
+  req: NextRequest,
+  prefix: string,
+  cookieName: string,
+  envVar: string,
+) {
   const { pathname } = req.nextUrl;
+  if (!pathname.startsWith(prefix)) return null;
 
-  if (pathname.startsWith("/paja")) {
-    const cookie = req.cookies.get("paja_auth");
-    const correct = process.env.PAJA_PASSWORD;
+  const loginPath = `${prefix}/login`;
+  if (pathname === loginPath) return NextResponse.next();
 
-    if (!correct || cookie?.value !== correct) {
-      const loginUrl = req.nextUrl.clone();
-      loginUrl.pathname = "/paja/login";
-      // Avoid redirect loop
-      if (pathname === "/paja/login") return NextResponse.next();
-      return NextResponse.redirect(loginUrl);
-    }
+  const cookie = req.cookies.get(cookieName);
+  const correct = process.env[envVar];
+
+  if (!correct || cookie?.value !== correct) {
+    const loginUrl = req.nextUrl.clone();
+    loginUrl.pathname = loginPath;
+    return NextResponse.redirect(loginUrl);
   }
+  return null;
+}
 
-  return NextResponse.next();
+export function middleware(req: NextRequest) {
+  return (
+    checkProtected(req, "/paja", "paja_auth", "PAJA_PASSWORD") ??
+    checkProtected(req, "/immersive", "immersive_auth", "IMMERSIVE_PASSWORD") ??
+    NextResponse.next()
+  );
 }
 
 export const config = {
-  matcher: ["/paja", "/paja/:path*"],
+  matcher: ["/paja", "/paja/:path*", "/immersive", "/immersive/:path*"],
 };
