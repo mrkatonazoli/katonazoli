@@ -1,0 +1,3421 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Palace Hévíz – Árbevétel Dashboard 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Fintech-inspired minimal aesthetic (Linear / Stripe / Mercury vibe)
+     Pure white surfaces · neutral grays · single blue accent · all-Inter typography */
+  :root {
+    --bg:        #fafafa;          /* page background */
+    --surface:   #ffffff;          /* card surface */
+    --surface-2: #f4f4f5;          /* secondary subtle gray */
+    --ink:       #09090b;          /* near-black */
+    --ink-soft:  #27272a;          /* dark gray */
+    --muted:     #71717a;          /* medium gray */
+    --muted-2:   #a1a1aa;          /* lighter gray (for icons, secondary lines) */
+    --line:      #e4e4e7;          /* hairline border */
+    --line-soft: #f1f1f3;          /* very light divider */
+    --accent:    #2563eb;          /* fintech blue */
+    --accent-2:  #3b82f6;          /* lighter blue */
+    --accent-soft: #eff6ff;        /* tinted blue background */
+    --good:      #16a34a;          /* clean green */
+    --good-soft: #f0fdf4;
+    --warn:      #d97706;          /* amber */
+    --warn-soft: #fffbeb;
+    --bad:       #dc2626;          /* red */
+    --bad-soft:  #fef2f2;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+    --shadow:    0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* Legacy aliases for inline styles in HTML body */
+    --navy: var(--ink);
+    --navy-light: var(--ink-soft);
+    --cream: #ffffff;
+    --gold: var(--accent);
+    --gold-light: var(--accent-2);
+    --text: var(--ink);
+    --text-muted: var(--muted);
+    --border: var(--line);
+    --card: var(--surface);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    font-feature-settings: 'cv11', 'ss01', 'tnum';
+    background: var(--bg); color: var(--ink);
+    line-height: 1.55; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-size: 14px;
+  }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum', 'ss01'; }
+
+  /* HERO */
+  .hero {
+    background: var(--surface); color: var(--ink);
+    padding: 48px 32px 40px; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::before { display: none; }
+  .hero-inner { max-width: 1280px; margin: 0 auto; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px 5px 8px; background: var(--accent-soft); color: var(--accent);
+    border: 1px solid transparent;
+    border-radius: 100px; font-size: 12px; font-weight: 500;
+    letter-spacing: 0; text-transform: none; margin-bottom: 20px;
+  }
+  .badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 40px; font-weight: 700; letter-spacing: -1.2px;
+    margin-bottom: 12px; line-height: 1.1;
+    color: var(--ink);
+  }
+  .hero h1 .accent { color: var(--accent); font-weight: 700; }
+  .hero .subtitle {
+    font-size: 16px; max-width: 720px; color: var(--muted);
+    line-height: 1.55; font-weight: 400;
+  }
+  .hero .meta {
+    margin-top: 24px; padding-top: 0;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    text-transform: none; letter-spacing: 0; font-weight: 500;
+    border-top: none;
+  }
+  .hero .meta span { display: flex; align-items: center; gap: 6px; }
+  .hero .meta .dot { width: 4px; height: 4px; background: var(--muted-2); border-radius: 50%; }
+
+  .container { max-width: 1280px; margin: 0 auto 80px; padding: 32px; position: relative; }
+
+  /* NAV — pill tabs (Linear / Stripe style) */
+  .nav-tabs {
+    display: inline-flex; gap: 2px; background: var(--surface);
+    padding: 4px; border-radius: var(--radius);
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    margin-bottom: 32px; overflow-x: auto;
+    max-width: 100%;
+  }
+  .nav-tab {
+    flex: 0 1 auto; min-width: auto; padding: 8px 14px;
+    background: transparent; border: none; border-radius: 7px;
+    cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--muted); transition: all 0.15s ease;
+    font-family: var(--sans);
+    display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap; letter-spacing: -0.1px;
+  }
+  .nav-tab.active {
+    background: var(--ink); color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-tab:hover:not(.active) { background: var(--surface-2); color: var(--ink); }
+  .nav-tab .icon { font-size: 14px; opacity: 0.85; }
+  .nav-tab.active .icon { opacity: 1; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* KPI CARDS — clean white, subtle border, big bold numbers */
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--surface); padding: 20px;
+    border-radius: var(--radius); border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm); transition: all 0.15s;
+    position: relative;
+  }
+  .kpi:hover {
+    box-shadow: var(--shadow-md); border-color: #d4d4d8;
+    transform: none;
+  }
+  .kpi.kpi-actual::before, .kpi.kpi-plan::before, .kpi.kpi-ytd::before, .kpi.kpi-delta::before { display: none; }
+  .kpi-label {
+    font-size: 12px; text-transform: none; letter-spacing: -0.1px;
+    color: var(--muted); font-weight: 500;
+    margin-bottom: 12px; padding-left: 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .kpi-label::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted-2);
+  }
+  .kpi.kpi-actual .kpi-label::before { background: var(--ink); }
+  .kpi.kpi-plan .kpi-label::before { background: var(--muted); }
+  .kpi.kpi-ytd .kpi-label::before { background: var(--accent); }
+  .kpi.kpi-delta .kpi-label::before { background: var(--bad); }
+  .kpi-value {
+    font-family: var(--sans);
+    font-size: 28px; font-weight: 600; color: var(--ink);
+    line-height: 1.15; letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'ss01';
+  }
+  .kpi-unit { font-family: var(--sans); font-size: 14px; color: var(--muted); font-weight: 500; letter-spacing: -0.2px; }
+  .kpi-sub { margin-top: 6px; font-size: 12px; color: var(--muted); line-height: 1.45; }
+  .kpi-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 500; margin-top: 10px;
+    letter-spacing: -0.1px;
+  }
+  .trend-down { color: var(--bad);  background: var(--bad-soft) !important; }
+  .trend-up   { color: var(--good); background: var(--good-soft) !important; }
+  .trend-flat { color: var(--muted); background: var(--surface-2) !important; }
+
+  /* SECTIONS */
+  .section {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow-sm);
+    margin-bottom: 16px; border: 1px solid var(--line);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line-soft);
+  }
+  .section-title {
+    font-family: var(--sans);
+    font-size: 16px; font-weight: 600; letter-spacing: -0.3px;
+    color: var(--ink);
+  }
+  .section-desc { font-size: 13px; color: var(--muted); margin-top: 4px; max-width: 720px; line-height: 1.5; font-weight: 400; }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-wrap { position: relative; height: 320px; }
+  .chart-wrap-tall { height: 380px; }
+  .chart-wrap-xtall { height: 440px; }
+
+  /* INSIGHTS */
+  .insights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  .insight {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 20px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    transition: all 0.15s;
+  }
+  .insight:hover { box-shadow: var(--shadow); }
+  .insight.warn { background: var(--surface); }
+  .insight.bad  { background: var(--surface); }
+  .insight.good { background: var(--surface); }
+  .insight-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-2); color: var(--ink);
+    margin-bottom: 14px; font-size: 16px;
+  }
+  .insight.warn .insight-icon { background: var(--warn-soft); color: var(--warn); }
+  .insight.bad  .insight-icon { background: var(--bad-soft);  color: var(--bad); }
+  .insight.good .insight-icon { background: var(--good-soft); color: var(--good); }
+  .insight h3 {
+    font-family: var(--sans);
+    font-size: 14px; font-weight: 600; letter-spacing: -0.2px;
+    margin-bottom: 8px; color: var(--ink);
+  }
+  .insight p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .insight strong { color: var(--ink); font-weight: 600; }
+
+  /* TABLES */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+  .data-table th, .data-table td {
+    padding: 12px 12px; text-align: right;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .data-table th:first-child, .data-table td:first-child {
+    text-align: left; font-weight: 500;
+  }
+  .data-table thead th {
+    background: transparent; color: var(--muted);
+    font-weight: 500; text-transform: none;
+    font-size: 12px; letter-spacing: -0.1px;
+    border-bottom: 1px solid var(--line); padding-top: 0;
+  }
+  .data-table tbody tr { transition: background 0.1s; }
+  .data-table tbody tr:hover { background: var(--surface-2); }
+  .pos { color: var(--good); font-weight: 500; }
+  .neg { color: var(--bad);  font-weight: 500; }
+
+  /* SUB-TABS — same as nav-tabs (pill) */
+  .tabs {
+    display: inline-flex; gap: 2px; background: var(--surface);
+    padding: 4px; border-radius: var(--radius);
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+  }
+  .tab {
+    flex: 0 1 auto; padding: 7px 12px; background: transparent;
+    border: none; border-radius: 7px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    transition: all 0.15s; font-family: var(--sans);
+    border-bottom: none; margin-bottom: 0; letter-spacing: -0.1px;
+    white-space: nowrap;
+  }
+  .tab.active {
+    background: var(--ink); color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .tab:hover:not(.active) { color: var(--ink); background: var(--surface-2); }
+
+  .footnote {
+    margin-top: 24px; padding: 14px 18px;
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm); font-size: 13px; color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .footnote strong { color: var(--ink); font-weight: 600; }
+
+  /* FORECAST CARDS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .scenario {
+    background: var(--surface); border-radius: var(--radius); padding: 22px;
+    box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .scenario::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .scenario.pessimistic::before { background: var(--bad); }
+  .scenario.base::before { background: var(--warn); }
+  .scenario.optimistic::before { background: var(--good); }
+  .scenario-label {
+    font-size: 11px; text-transform: uppercase; font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .scenario.pessimistic .scenario-label { color: var(--bad); }
+  .scenario.base .scenario-label { color: var(--warn); }
+  .scenario.optimistic .scenario-label { color: var(--good); }
+  .scenario-name {
+    font-family: var(--sans);
+    font-size: 15px; font-weight: 600; margin-top: 4px; margin-bottom: 16px;
+    color: var(--ink); letter-spacing: -0.2px;
+  }
+  .scenario-value {
+    font-family: var(--sans);
+    font-size: 32px; font-weight: 700; line-height: 1.1;
+    letter-spacing: -1.2px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'ss01';
+  }
+  .scenario-unit { font-family: var(--sans); font-size: 14px; color: var(--muted); font-weight: 500; }
+  .scenario-gap { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .scenario-desc {
+    margin-top: 14px; font-size: 12px; color: var(--muted);
+    padding-top: 14px; border-top: 1px solid var(--line-soft); line-height: 1.55;
+  }
+
+  /* RECO CARDS */
+  .reco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .reco {
+    background: var(--surface); border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--line);
+    transition: box-shadow 0.15s;
+  }
+  .reco:hover { box-shadow: var(--shadow); }
+  .reco-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .reco-num {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--accent-soft) !important;
+    color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--sans);
+    font-weight: 600; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .reco-title {
+    font-family: var(--sans);
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    letter-spacing: -0.2px;
+  }
+  .reco p { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+  .reco ul { list-style: none; padding-left: 0; margin-top: 8px; }
+  .reco li {
+    padding: 4px 0; font-size: 13px; color: var(--ink-soft);
+    display: flex; gap: 10px; align-items: flex-start; line-height: 1.55;
+  }
+  .reco li::before {
+    content: '→'; color: var(--accent); font-weight: 500;
+    flex-shrink: 0; opacity: 0.8;
+  }
+
+  /* DAY OF WEEK */
+  .dow-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 20px; }
+  .dow-cell {
+    background: var(--surface-2); border-radius: var(--radius-sm);
+    padding: 14px 10px; text-align: center;
+    transition: background 0.15s; border: 1px solid transparent;
+  }
+  .dow-cell:hover { background: var(--surface); border-color: var(--line); transform: none; }
+  .dow-name { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 500; letter-spacing: 0.5px; }
+  .dow-value {
+    font-family: var(--sans);
+    font-size: 18px; font-weight: 600; color: var(--ink); margin-top: 6px;
+    letter-spacing: -0.4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .dow-bar { height: 3px; border-radius: 100px; margin-top: 10px; background: var(--accent); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 64px 32px; text-align: center;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--line);
+  }
+  .empty-icon {
+    width: 56px; height: 56px; margin: 0 auto 20px;
+    background: var(--accent-soft);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--accent);
+  }
+  .empty-state h2 {
+    font-family: var(--sans);
+    font-size: 20px; font-weight: 600; color: var(--ink);
+    margin-bottom: 10px; letter-spacing: -0.4px;
+  }
+  .empty-state p { font-size: 14px; color: var(--muted); max-width: 600px; margin: 0 auto 16px; line-height: 1.55; }
+  .upload-hint {
+    background: var(--surface-2); border: 1px dashed var(--line);
+    border-radius: var(--radius); padding: 20px; max-width: 600px; margin: 20px auto 0;
+    font-size: 13px; color: var(--ink-soft); text-align: left;
+  }
+  .upload-hint strong { color: var(--ink); display: block; margin-bottom: 8px; font-family: var(--sans); font-weight: 600; font-size: 14px; }
+  .upload-hint code {
+    background: var(--surface); padding: 2px 6px; border-radius: 4px;
+    font-size: 12px; border: 1px solid var(--line); font-family: var(--mono);
+    color: var(--ink-soft);
+  }
+
+  /* DARK SECTION OVERRIDE (was navy gradient) */
+  .view .section[style*="linear-gradient"] {
+    background: var(--ink) !important;
+    color: #fff !important;
+    border: 1px solid var(--ink) !important;
+  }
+  .view .section[style*="linear-gradient"] h2 {
+    color: #fff !important;
+    font-family: var(--sans); font-weight: 600; letter-spacing: -0.4px;
+  }
+  .view .section[style*="linear-gradient"] strong {
+    color: #fff;
+  }
+  .view .section[style*="linear-gradient"] div[style*="color:var(--gold-light)"] {
+    color: var(--accent-2) !important;
+  }
+  .view .section[style*="linear-gradient"] p {
+    color: rgba(255,255,255,0.75) !important;
+  }
+
+  /* GOLD GRADIENT SECTION (recommendation hero) */
+  .view .section[style*="var(--gold) 0%"] {
+    background: var(--ink) !important;
+    color: #fff !important;
+    border: 1px solid var(--ink) !important;
+  }
+  .view .section[style*="var(--gold) 0%"] h2,
+  .view .section[style*="var(--gold) 0%"] p,
+  .view .section[style*="var(--gold) 0%"] div {
+    color: #fff !important;
+  }
+  .view .section[style*="var(--gold) 0%"] p { color: rgba(255,255,255,0.75) !important; }
+
+  @media (max-width: 1000px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .charts-grid { grid-template-columns: 1fr; }
+    .insights, .scenario-grid, .reco-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+    .dow-grid { grid-template-columns: repeat(4, 1fr); }
+    .container, .hero { padding-left: 20px; padding-right: 20px; }
+  }
+  @media (max-width: 600px) {
+    .kpi-row { grid-template-columns: 1fr; }
+    .container { padding: 20px 16px 64px; }
+    .hero { padding: 32px 16px 24px; }
+    .hero h1 { font-size: 24px; }
+    .nav-tabs { padding: 3px; }
+    .nav-tab { padding: 8px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="badge">Éves Árbevétel Kiértékelés</span>
+    <h1>Hotel <span class="accent">Palace</span> Hévíz</h1>
+    <p class="subtitle">2025 tényadatok és 2026 terv vs. tény teljesítmény elemzés – kiadott szobák, árbevétel, szobakihasználtság, vendég-szintű mutatók és piaci szegmensek alapján</p>
+    <div class="meta">
+      <span><span class="dot"></span> 136 szoba kapacitás</span>
+      <span><span class="dot"></span> Adatok: 2025 január – 2026 május</span>
+      <span><span class="dot"></span> Aktualitás: 2026.05.07</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Main Navigation -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-view="overview">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>
+      </svg>Áttekintés
+    </button>
+    <button class="nav-tab" data-view="weekly">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/>
+      </svg>Heti elemzés
+    </button>
+    <button class="nav-tab" data-view="forecast">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
+      </svg>Előrejelzés
+    </button>
+    <button class="nav-tab" data-view="segments">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M21 12a9 9 0 0 0-9-9v9z" fill="currentColor" fill-opacity="0.18" stroke="none"/>
+      </svg>Piaci szegmensek
+    </button>
+    <button class="nav-tab" data-view="nations">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/>
+      </svg>Nemzetiségek
+    </button>
+  </div>
+
+  <!-- ========== VIEW 1: OVERVIEW ========== -->
+  <div class="view active" id="view-overview">
+
+    <div class="kpi-row">
+      <div class="kpi kpi-actual">
+        <div class="kpi-label">2025 Tény Árbevétel</div>
+        <div class="kpi-value">1 366,4 <span class="kpi-unit">M Ft</span></div>
+        <div class="kpi-sub">28 364 kiadott szoba · 59% kihasználtság</div>
+      </div>
+      <div class="kpi kpi-plan">
+        <div class="kpi-label">2026 Terv Árbevétel</div>
+        <div class="kpi-value">1 415,0 <span class="kpi-unit">M Ft</span></div>
+        <div class="kpi-sub">29 185 szoba terv · 61% célzott kihasználtság</div>
+        <span class="kpi-trend trend-up">▲ +3,6% vs 2025</span>
+      </div>
+      <div class="kpi kpi-ytd">
+        <div class="kpi-label">YTD 2026 Tény (jan–ápr)</div>
+        <div class="kpi-value">315,9 <span class="kpi-unit">M Ft</span></div>
+        <div class="kpi-sub">7 123 szoba · átl. 49,7% kihasználtság</div>
+        <span class="kpi-trend trend-down">▼ −12,1% vs 2025 azonos időszak</span>
+      </div>
+      <div class="kpi kpi-delta">
+        <div class="kpi-label">Tervtől való eltérés (jan–ápr)</div>
+        <div class="kpi-value">−54,1 <span class="kpi-unit">M Ft</span></div>
+        <div class="kpi-sub">370,0 M Ft terv → 315,9 M Ft tény</div>
+        <span class="kpi-trend trend-down">▼ −14,6% terv elmaradás</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Havi árbevétel: 2025 tény vs. 2026 terv vs. 2026 tény</div>
+          <div class="section-desc">A 2026-os tény a teljesen lezárt hónapokban következetesen elmarad a tervtől és a 2025-ös bázistól is</div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>2025 Tény</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>2026 Terv</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>2026 Tény</div>
+        </div>
+      </div>
+      <div class="chart-wrap chart-wrap-tall"><canvas id="revenueChart"></canvas></div>
+    </div>
+
+    <div class="insights">
+      <div class="insight bad">
+        <div class="insight-icon">⚠</div>
+        <h3>Jelentős árbevétel-elmaradás</h3>
+        <p>A jan–ápr időszakban <strong>−54 M Ft</strong> (−14,6%) az elmaradás a tervtől, és <strong>−12,1%</strong>-kal alacsonyabb mint 2025 azonos időszaka. Az áprilisi hónap különösen gyenge: <strong>−25,5%</strong> a tervhez képest.</p>
+      </div>
+      <div class="insight warn">
+        <div class="insight-icon">◐</div>
+        <h3>Szobakihasználtság visszaesés</h3>
+        <p>A kihasználtság jan–ápr átlaga 49,7% (2025: 56,7%, 2026 terv: 59%). <strong>Január (−7pp)</strong>, <strong>február (−13pp)</strong> és <strong>április (−12pp)</strong> jelentős visszaesést mutat. Egyedül március hozott javulást.</p>
+      </div>
+      <div class="insight good">
+        <div class="insight-icon">✓</div>
+        <h3>Árszint stabil maradt</h3>
+        <p>A kiadott szobára jutó árbevétel (RevPAR) megőrizte 2025-ös szintjét: <strong>~46 000 Ft/szoba</strong> (jan–ápr átlag). A probléma elsősorban volumen-oldali, nem árazási kérdés.</p>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Szobakihasználtság (%)</div><div class="section-desc">Havi bontásban</div></div></div>
+        <div class="chart-wrap"><canvas id="occChart"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Kiadott szobára jutó árbevétel (Ft)</div><div class="section-desc">RevPAR – ár-szintet jelző mutató</div></div></div>
+        <div class="chart-wrap"><canvas id="revparChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Kiadott szobaszám (db)</div><div class="section-desc">Volumen-mutató</div></div></div>
+        <div class="chart-wrap"><canvas id="roomsChart"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Egy vendégre eső árbevétel (Ft)</div><div class="section-desc">ARPG – fogyasztási mintázat</div></div></div>
+        <div class="chart-wrap"><canvas id="guestChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Részletes havi összehasonlítás (jan–ápr 2026)</div>
+          <div class="section-desc">Lezárt hónapok – tény vs. terv és tény vs. előző év</div>
+        </div>
+        <div class="tabs">
+          <button class="tab active" data-tbl="rev">Árbevétel</button>
+          <button class="tab" data-tbl="occ">Kihasználtság</button>
+          <button class="tab" data-tbl="revpar">RevPAR</button>
+        </div>
+      </div>
+      <div id="tbl-rev">
+        <table class="data-table">
+          <thead><tr><th>Hónap</th><th>2025 Tény</th><th>2026 Terv</th><th>2026 Tény</th><th>Δ Terv</th><th>Δ YoY</th></tr></thead>
+          <tbody>
+            <tr><td>Január</td><td>75,5 M</td><td>75,0 M</td><td>63,5 M</td><td class="neg">−15,3%</td><td class="neg">−15,9%</td></tr>
+            <tr><td>Február</td><td>85,3 M</td><td>85,0 M</td><td>72,6 M</td><td class="neg">−14,6%</td><td class="neg">−15,0%</td></tr>
+            <tr><td>Március</td><td>89,8 M</td><td>95,0 M</td><td>94,1 M</td><td class="neg">−0,9%</td><td class="pos">+4,9%</td></tr>
+            <tr><td>Április</td><td>108,8 M</td><td>115,0 M</td><td>85,7 M</td><td class="neg">−25,5%</td><td class="neg">−21,3%</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Jan–Ápr</td><td>359,5 M</td><td>370,0 M</td><td>315,9 M</td><td class="neg">−14,6%</td><td class="neg">−12,1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="tbl-occ" style="display:none">
+        <table class="data-table">
+          <thead><tr><th>Hónap</th><th>2025 Tény</th><th>2026 Terv</th><th>2026 Tény</th><th>Δ vs Terv</th><th>Δ YoY</th></tr></thead>
+          <tbody>
+            <tr><td>Január</td><td>49,2%</td><td>52%</td><td>41,9%</td><td class="neg">−10,1pp</td><td class="neg">−7,3pp</td></tr>
+            <tr><td>Február</td><td>73,4%</td><td>74%</td><td>60,6%</td><td class="neg">−13,4pp</td><td class="neg">−12,8pp</td></tr>
+            <tr><td>Március</td><td>49,0%</td><td>52%</td><td>52,1%</td><td class="pos">+0,1pp</td><td class="pos">+3,2pp</td></tr>
+            <tr><td>Április</td><td>56,1%</td><td>58%</td><td>44,1%</td><td class="neg">−13,9pp</td><td class="neg">−12,0pp</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Átlag</td><td>56,7%</td><td>59%</td><td>49,7%</td><td class="neg">−9,3pp</td><td class="neg">−7,0pp</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="tbl-revpar" style="display:none">
+        <table class="data-table">
+          <thead><tr><th>Hónap</th><th>2025 Tény</th><th>2026 Terv</th><th>2026 Tény</th><th>Δ vs Terv</th><th>Δ YoY</th></tr></thead>
+          <tbody>
+            <tr><td>Január</td><td>44 190 Ft</td><td>41 783 Ft</td><td>43 656 Ft</td><td class="pos">+4,5%</td><td class="neg">−1,2%</td></tr>
+            <tr><td>Február</td><td>42 139 Ft</td><td>41 872 Ft</td><td>43 399 Ft</td><td class="pos">+3,6%</td><td class="pos">+3,0%</td></tr>
+            <tr><td>Március</td><td>43 493 Ft</td><td>43 182 Ft</td><td>42 844 Ft</td><td class="neg">−0,8%</td><td class="neg">−1,5%</td></tr>
+            <tr><td>Április</td><td>47 532 Ft</td><td>48 319 Ft</td><td>47 625 Ft</td><td class="neg">−1,4%</td><td class="pos">+0,2%</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Átlag</td><td>44 339 Ft</td><td>43 789 Ft</td><td>44 381 Ft</td><td class="pos">+1,3%</td><td class="pos">+0,1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========== VIEW 2: WEEKLY ========== -->
+  <div class="view" id="view-weekly">
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Kumulált árbevétel 2026 (heti)</div>
+          <div class="section-desc">Az olló nyitódik: a 2026 tény (sötétkék) lassan, de folyamatosan eltávolodik a tervtől és a 2025-ös bázistól</div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>2025 Bázis kumulált</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>2026 Terv kumulált</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>2026 Tény kumulált</div>
+        </div>
+      </div>
+      <div class="chart-wrap chart-wrap-xtall"><canvas id="cumChart"></canvas></div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Heti árbevétel: 2026 terv vs. tény</div><div class="section-desc">Lezárt hetek (1–17)</div></div></div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="weeklyChart"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Heti tervtől való eltérés (M Ft)</div><div class="section-desc">Pozitív = terv felett, negatív = elmaradás</div></div></div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="weeklyGapChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Hét napjai szerinti bontás (átlagos napi árbevétel)</div>
+          <div class="section-desc">2026 jan–ápr lezárt hetek (n=16) átlaga – melyik napok hozzák a forgalmat</div>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="dowChart"></canvas></div>
+      <div class="dow-grid" id="dowGrid"></div>
+    </div>
+
+  </div>
+
+  <!-- ========== VIEW 3: FORECAST ========== -->
+  <div class="view" id="view-forecast">
+
+    <div class="section" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: var(--cream);">
+      <div style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-light);font-weight:600;margin-bottom:8px;">Év végi vetítés</div>
+      <h2 style="font-size:26px;margin-bottom:8px;">Hová érkezünk 2026 végén?</h2>
+      <p style="opacity:0.85;font-size:15px;max-width:800px;">A jelenlegi (2026.05.07-i) adatok alapján három forgatókönyvet vázoltunk fel. A különbség a 2026-os terv (1 415 M Ft) és a tényleges év végi árbevétel között <strong style="color:var(--gold)">−52 és −202 M Ft</strong> között lehet, attól függően, milyen korrekciós intézkedések történnek.</p>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="scenario pessimistic">
+        <div class="scenario-label">Pesszimista</div>
+        <div class="scenario-name">Jelenlegi tempó tartós</div>
+        <div class="scenario-value">1 213 <span class="scenario-unit">M Ft</span></div>
+        <div class="scenario-gap">vs. terv: <strong style="color:var(--bad)">−202 M Ft (−14,3%)</strong></div>
+        <div class="scenario-desc">Ha a hátralévő hetek a jelenlegi 85,7%-os tervteljesítési rátán hoznak (ahogy az elmúlt 17 hét).</div>
+      </div>
+      <div class="scenario base">
+        <div class="scenario-label">Bázis</div>
+        <div class="scenario-name">2025-ös szint a hátralévőn</div>
+        <div class="scenario-value">1 330 <span class="scenario-unit">M Ft</span></div>
+        <div class="scenario-gap">vs. terv: <strong style="color:var(--warn)">−85 M Ft (−6,0%)</strong></div>
+        <div class="scenario-desc">Ha máj–dec között az előző év (2025) tényadatait hozzuk – realisztikus alappálya korrekciókkal.</div>
+      </div>
+      <div class="scenario optimistic">
+        <div class="scenario-label">Optimista</div>
+        <div class="scenario-name">Tervteljesítés mostantól</div>
+        <div class="scenario-value">1 363 <span class="scenario-unit">M Ft</span></div>
+        <div class="scenario-gap">vs. terv: <strong style="color:var(--good)">−52 M Ft (−3,7%)</strong></div>
+        <div class="scenario-desc">Ha a 18. héttől kezdve minden héten pontosan a tervet hozzuk – aktív korrekciós intézkedésekkel.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Év végi árbevétel forgatókönyvek</div>
+          <div class="section-desc">Kumulált pálya – 18. héttől három különböző feltételezés mellett</div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>Terv pálya</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>Tény (eddig)</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#c0392b"></div>Pesszimista</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#d97706"></div>Bázis</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#2e8b57"></div>Optimista</div>
+        </div>
+      </div>
+      <div class="chart-wrap chart-wrap-xtall"><canvas id="forecastChart"></canvas></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div><div class="section-title">A felzárkózáshoz szükséges teljesítmény</div><div class="section-desc">Mit kellene hoznunk hetente a hátralévő 35 hétben (18–53. hét) különböző célokhoz</div></div></div>
+      <table class="data-table">
+        <thead><tr><th>Cél</th><th>Cél árbevétel</th><th>Hátralévő szükséglet</th><th>Heti átlag (35 hét)</th><th>vs. eredeti terv</th></tr></thead>
+        <tbody>
+          <tr><td>Eredeti 2026 terv</td><td>1 415 M Ft</td><td>1 107 M Ft</td><td>31,6 M Ft/hét</td><td>—</td></tr>
+          <tr><td>2025-ös szint elérése</td><td>1 374 M Ft</td><td>1 066 M Ft</td><td>30,4 M Ft/hét</td><td class="neg">−3,7%</td></tr>
+          <tr><td>Bázis forgatókönyv</td><td>1 330 M Ft</td><td>1 022 M Ft</td><td>29,2 M Ft/hét</td><td class="neg">−7,6%</td></tr>
+          <tr><td>Pesszimista folytatódás</td><td>1 213 M Ft</td><td>905 M Ft</td><td>25,9 M Ft/hét</td><td class="neg">−18,2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ========== VIEW 4: SEGMENTS ========== -->
+  <div class="view" id="view-segments">
+
+    <!-- Year selector -->
+    <div class="tabs" style="background:var(--card);box-shadow:var(--shadow);border-radius:12px;padding:6px;margin-bottom:24px;">
+      <button class="tab year-tab active" data-year="2024">2024 (ápr–dec)</button>
+      <button class="tab year-tab" data-year="2025">2025 (teljes év)</button>
+      <button class="tab year-tab" data-year="2026">2026 (jan–ápr)</button>
+      <button class="tab year-tab" data-year="compare">3 éves összehasonlítás</button>
+    </div>
+
+    <!-- Note about revenue definitions -->
+    <div class="footnote" style="margin-top:0;margin-bottom:24px;">
+      <strong>📌 Megjegyzés:</strong> A piaci szegmens fájlokban szereplő bevétel <strong>FO bruttó forgalom</strong> (Front Office gross revenue) – ez magasabb mint az Áttekintésben látott „Árbevétel" (csak szobabevétel), mert tartalmazza az F&B-t, wellness-t és egyéb vendég-fogyasztásokat is. A két nézet konzisztens önmagán belül, csak a metrikák különböznek.
+    </div>
+
+    <!-- 2024 view -->
+    <div class="year-view" id="year-2024">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2024 (ápr–dec) Árbevétel</div>
+          <div class="kpi-value">1 221,3 <span class="kpi-unit">M Ft</span></div>
+          <div class="kpi-sub">23 747 kiadott szoba · 7 szegmens</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top szegmens</div>
+          <div class="kpi-value">BE <span class="kpi-unit">41,6%</span></div>
+          <div class="kpi-sub">Belföldi egyéni · 508,0 M Ft</div>
+        </div>
+        <div class="kpi kpi-ytd">
+          <div class="kpi-label">Belföldi vs Külföldi mix</div>
+          <div class="kpi-value">42% / 57%</div>
+          <div class="kpi-sub">Belföldi: 516 M · Külföldi: 694 M</div>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Legjobb RevPAR szegmens</div>
+          <div class="kpi-value">BC <span class="kpi-unit">58 449 Ft</span></div>
+          <div class="kpi-sub">Bár nagyon kicsi (5 szoba) – BE: 57 463 Ft</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmens-mix 2024 (árbevétel %)</div>
+              <div class="section-desc">A három fő szegmens (BE, KE, KC) adja a forgalom 98%-át</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="segDonut"></canvas></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Top szegmensek RevPAR-ja</div>
+              <div class="section-desc">Kiadott szobánkénti bevétel szegmensenként</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="segRevpar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi árbevétel-megoszlás szegmensenként (2024 ápr–dec)</div>
+            <div class="section-desc">Halmozott oszlop: jól látható, mikor melyik szegmens dominál (júliusban BE csúcs, szeptemberben KC kiugrik)</div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>BE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#2563eb"></div>KC</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>TU</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#16a34a"></div>BTV</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KTV</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="segStacked"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Szegmens teljesítmény részletes táblázat (2024 ápr–dec)</div>
+            <div class="section-desc">Mind a 7 szegmens kulcsmutatói egyben</div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Kód</th><th>Szegmens</th><th>Kiadott szoba</th><th>Árbevétel</th><th>Részesedés</th><th>RevPAR</th><th>Volumen rang</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>BE</td><td>Belföldi egyéni</td><td>8 840</td><td>508,0 M Ft</td><td><strong>41,6%</strong></td><td>57 463 Ft</td><td>🥇 1.</td></tr>
+            <tr><td>KE</td><td>Külföldi egyéni</td><td>8 630</td><td>456,7 M Ft</td><td><strong>37,4%</strong></td><td>52 925 Ft</td><td>🥈 2.</td></tr>
+            <tr><td>KC</td><td>Külföldi csoport</td><td>5 192</td><td>233,2 M Ft</td><td><strong>19,1%</strong></td><td>44 924 Ft</td><td>🥉 3.</td></tr>
+            <tr><td>TU</td><td>Tulajdonos</td><td>838</td><td>11,1 M Ft</td><td>0,9%</td><td>13 244 Ft</td><td>4.</td></tr>
+            <tr><td>BTV</td><td>Belföldi törzsvendég</td><td>167</td><td>8,2 M Ft</td><td>0,7%</td><td>49 101 Ft</td><td>5.</td></tr>
+            <tr><td>KTV</td><td>Külföldi törzsvendég</td><td>75</td><td>3,7 M Ft</td><td>0,3%</td><td>49 821 Ft</td><td>6.</td></tr>
+            <tr><td>BC</td><td>Belföldi csoport</td><td>5</td><td>0,3 M Ft</td><td>0,0%</td><td>58 449 Ft</td><td>7.</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>23 747</td><td>1 221,3 M Ft</td><td>100%</td><td>51 433 Ft</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight good">
+          <div class="insight-icon">🇭🇺</div>
+          <h3>Belföldi szegmens a vezető</h3>
+          <p>A <strong>Belföldi egyéni (BE)</strong> 41,6%-kal a legnagyobb szegmens, és magas RevPAR-ja (57 463 Ft) is van. <strong>Júliusban</strong> különösen erős: 89,4 M Ft (a hónap 51%-a). <strong>Decemberi 64%-os</strong> dominanciája is figyelemre méltó.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">✈</div>
+          <h3>Külföldi csoport (KC) szezonális</h3>
+          <p>A KC jelentős ingadozást mutat: <strong>szeptember 59,8 M Ft</strong> (38% részesedés!), de novemberre 7,8 M-re esik. Ez egy <strong>tour operator-ra épülő szegmens</strong> – egyenetlenebb cash-flow, de magas csúcsidőszaki potenciál.</p>
+        </div>
+        <div class="insight bad">
+          <div class="insight-icon">⚠</div>
+          <h3>Kis szegmensek elhanyagolhatóak</h3>
+          <p>BTV, KTV, BC, TU együtt csak <strong>1,9%</strong> a forgalomból. A „Tulajdonosi" használat 838 szobát foglal el, de csak 11 M Ft bevételt termel – RevPAR mindössze <strong>13 244 Ft</strong> (a többi szegmens negyede).</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2025 view -->
+    <div class="year-view" id="year-2025" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2025 Teljes év FO Forgalom</div>
+          <div class="kpi-value">1 490,8 <span class="kpi-unit">M Ft</span></div>
+          <div class="kpi-sub">28 373 kiadott szoba · 7 szegmens</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top szegmens</div>
+          <div class="kpi-value">BE <span class="kpi-unit">41,3%</span></div>
+          <div class="kpi-sub">Belföldi egyéni · 615,0 M Ft</div>
+        </div>
+        <div class="kpi kpi-ytd">
+          <div class="kpi-label">Belföldi vs Külföldi mix</div>
+          <div class="kpi-value">42% / 57%</div>
+          <div class="kpi-sub">Belföldi: 630 M · Külföldi: 845 M</div>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Legjobb RevPAR szegmens</div>
+          <div class="kpi-value">KTV <span class="kpi-unit">60 212 Ft</span></div>
+          <div class="kpi-sub">BE: 57 888 Ft · KE: 54 624 Ft</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmens-mix 2025 (FO bruttó forgalom %)</div>
+              <div class="section-desc">A három fő szegmens (BE, KE, KC) adja a forgalom 97,6%-át</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="seg25Donut"></canvas></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmensek RevPAR-ja 2025</div>
+              <div class="section-desc">Kiadott szobánkénti FO bruttó forgalom</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="seg25Revpar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi árbevétel-megoszlás szegmensenként (2025 jan–dec)</div>
+            <div class="section-desc">Halmozott oszlop: szeptemberben KC 45,5%-ot ér el (csúcsra jár a buszos turizmus), decemberben BE 66,4%-ra ugrik</div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>BE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#2563eb"></div>KC</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>TU</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#d4d4d8"></div>BC</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#16a34a"></div>BTV</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KTV</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="seg25Stacked"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Szegmens teljesítmény részletes táblázat (2025 teljes év)</div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Kód</th><th>Szegmens</th><th>Kiadott szoba</th><th>Forgalom</th><th>Részesedés</th><th>RevPAR</th><th>Volumen rang</th></tr></thead>
+          <tbody>
+            <tr><td>BE</td><td>Belföldi egyéni</td><td>10 624</td><td>615,0 M Ft</td><td><strong>41,3%</strong></td><td>57 888 Ft</td><td>🥇 1.</td></tr>
+            <tr><td>KE</td><td>Külföldi egyéni</td><td>10 183</td><td>556,2 M Ft</td><td><strong>37,3%</strong></td><td>54 624 Ft</td><td>🥈 2.</td></tr>
+            <tr><td>KC</td><td>Külföldi csoport</td><td>5 962</td><td>283,7 M Ft</td><td><strong>19,0%</strong></td><td>47 577 Ft</td><td>🥉 3.</td></tr>
+            <tr><td>TU</td><td>Tulajdonos</td><td>1 094</td><td>16,2 M Ft</td><td>1,1%</td><td>14 798 Ft</td><td>4.</td></tr>
+            <tr><td>BC</td><td>Belföldi csoport</td><td>375</td><td>12,1 M Ft</td><td>0,8%</td><td>32 147 Ft</td><td>5.</td></tr>
+            <tr><td>KTV</td><td>Külföldi törzsvendég</td><td>74</td><td>4,5 M Ft</td><td>0,3%</td><td>60 212 Ft</td><td>6.</td></tr>
+            <tr><td>BTV</td><td>Belföldi törzsvendég</td><td>65</td><td>3,2 M Ft</td><td>0,2%</td><td>49 445 Ft</td><td>7.</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>28 373</td><td>1 490,8 M Ft</td><td>100%</td><td>52 543 Ft</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight good">
+          <div class="insight-icon">📈</div>
+          <h3>BE megőrizte vezető pozícióját</h3>
+          <p>A <strong>Belföldi egyéni</strong> még 2025-ben is 41,3%-kal a legnagyobb szegmens, és RevPAR-ja a legmagasabb a fő szegmensek között (57 888 Ft). <strong>December 66,4%</strong> és <strong>november 58,2%</strong> különösen erős hónapjai.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🚌</div>
+          <h3>KC szezonális csúcs szeptemberben</h3>
+          <p>A Külföldi csoport <strong>szeptember 45,5%</strong>-ot ér el (65,6 M Ft) – ez az egész évben a legmagasabb. A KC összesen 19%-os mixtben van, de cash-flow-ban hatalmas a szezonális ingadozás.</p>
+        </div>
+        <div class="insight bad">
+          <div class="insight-icon">💼</div>
+          <h3>Tulajdonosi használat nő</h3>
+          <p>2025-ben <strong>1 094 szoba</strong> ment tulajdonosi használatra (vs. 2024-ben 838) – növekedés ellenére a RevPAR még mindig csak 14 798 Ft. <strong>Évente ~1 000 szoba</strong> piacra kerülhetne.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2026 view (Jan-Apr) -->
+    <div class="year-view" id="year-2026" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2026 Jan–Ápr FO Forgalom</div>
+          <div class="kpi-value">349,7 <span class="kpi-unit">M Ft</span></div>
+          <div class="kpi-sub">7 139 kiadott szoba · 7 szegmens</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top szegmens</div>
+          <div class="kpi-value">BE <span class="kpi-unit">46,5%</span></div>
+          <div class="kpi-sub">Belföldi egyéni · 162,6 M Ft</div>
+        </div>
+        <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+          <div class="kpi-label">vs 2025 azonos időszak</div>
+          <div class="kpi-value">−11,2%</div>
+          <div class="kpi-sub">2025 Jan–Ápr: 394,0 M → −44,3 M</div>
+          <span class="kpi-trend trend-down">▼ jelentős visszaesés</span>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--bad);">
+          <div class="kpi-label">Legnagyobb visszaesés</div>
+          <div class="kpi-value">KE <span class="kpi-unit">−19,7%</span></div>
+          <div class="kpi-sub">Külföldi egyéni: 154 → 124 M Ft</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmens-mix 2026 jan–ápr (%)</div>
+              <div class="section-desc">A BE súlya 46,5%-ra nőtt – a külföldi szegmensek visszaesése miatt</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="seg26Donut"></canvas></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmensek RevPAR-ja 2026 jan–ápr</div>
+              <div class="section-desc">Kiadott szobánkénti FO bruttó forgalom</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="seg26Revpar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi forgalom-megoszlás szegmensenként (2026 jan–ápr)</div>
+            <div class="section-desc">Februárban BE-csúcs (54,3%), áprilisban KE előzte be a BE-t (42,0% vs 38,4%)</div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>BE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#2563eb"></div>KC</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>TU</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#d4d4d8"></div>BC</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#16a34a"></div>BTV</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>KTV</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="seg26Stacked"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Szegmens teljesítmény (2026 jan–ápr) – terv-tény értelmezéssel</div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Kód</th><th>Szegmens</th><th>Kiadott szoba</th><th>Forgalom</th><th>Részesedés</th><th>RevPAR</th><th>2025 azonos időszak</th><th>YoY</th></tr></thead>
+          <tbody>
+            <tr><td>BE</td><td>Belföldi egyéni</td><td>2 936</td><td>162,6 M Ft</td><td><strong>46,5%</strong></td><td>55 379 Ft</td><td>184,7 M</td><td class="neg">−11,9%</td></tr>
+            <tr><td>KE</td><td>Külföldi egyéni</td><td>2 431</td><td>124,0 M Ft</td><td><strong>35,4%</strong></td><td>50 995 Ft</td><td>154,4 M</td><td class="neg">−19,7%</td></tr>
+            <tr><td>KC</td><td>Külföldi csoport</td><td>1 062</td><td>48,6 M Ft</td><td><strong>13,9%</strong></td><td>45 782 Ft</td><td>42,3 M</td><td class="pos">+14,9%</td></tr>
+            <tr><td>TU</td><td>Tulajdonos</td><td>457</td><td>7,8 M Ft</td><td>2,2%</td><td>16 999 Ft</td><td>6,0 M</td><td class="pos">+28,9%</td></tr>
+            <tr><td>BC</td><td>Belföldi csoport</td><td>238</td><td>5,9 M Ft</td><td>1,7%</td><td>24 624 Ft</td><td>5,9 M</td><td class="neg">−0,7%</td></tr>
+            <tr><td>BTV</td><td>Belföldi törzsvendég</td><td>5</td><td>0,5 M Ft</td><td>0,1%</td><td>92 731 Ft</td><td>0,6 M</td><td class="neg">−25,8%</td></tr>
+            <tr><td>KTV</td><td>Külföldi törzsvendég</td><td>11</td><td>0,5 M Ft</td><td>0,1%</td><td>41 398 Ft</td><td>0,1 M</td><td class="pos">+228,6%</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>7 139</td><td>349,7 M Ft</td><td>100%</td><td>49 029 Ft</td><td>394,0 M</td><td class="neg">−11,2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight bad">
+          <div class="insight-icon">✈</div>
+          <h3>Külföldi egyéni (KE) zuhanás</h3>
+          <p>A KE szegmens <strong>−30,4 M Ft</strong>-tal esett (−19,7%) – ez a 2026-os elmaradás <strong>69%-a</strong>! A külföldi piac (DE/AT) erősen visszafogottabb. Sürgős marketing-akció szükséges nyugat-európai irányba.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇭🇺</div>
+          <h3>BE is csökken (−11,9%)</h3>
+          <p>A vezető szegmens is veszít <strong>−22,0 M Ft</strong>-ot. A belföldi egyéni is gyengült, bár arányaiban kisebb mértékben mint a külföldi. Ár-érzékenység vagy versenytárs-aktivitás okozhatja.</p>
+        </div>
+        <div class="insight good">
+          <div class="insight-icon">🚌</div>
+          <h3>KC pozitív trend folytatódik</h3>
+          <p>A Külföldi csoport (KC) <strong>+6,3 M Ft</strong>-tal nőtt (+14,9%) – ez az egyetlen jelentős nyertes. Egybecseng a 2024 → 2025-ös +12,1%-os trenddel. <strong>A buszos-csoportos csatorna megbízható lett.</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Compare view (3 years) -->
+    <div class="year-view" id="year-compare" style="display:none;">
+
+      <div class="section" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: var(--cream);">
+        <div style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-light);font-weight:600;margin-bottom:8px;">3 éves elemzés</div>
+        <h2 style="font-size:26px;margin-bottom:8px;">2024 / 2025 / 2026 szegmens összehasonlítás</h2>
+        <p style="opacity:0.85;font-size:15px;max-width:800px;">Két fair összehasonlítás: <strong style="color:var(--gold)">április</strong> (mind a 3 évben elérhető) és <strong style="color:var(--gold)">január–április YoY</strong> (2025 vs 2026, ahol mindkét évben adatos). Plus 2024 vs 2025 ápr–dec, ami a leghosszabb átfedés.</p>
+      </div>
+
+      <!-- Sub-tabs for different period comparisons -->
+      <div class="tabs" style="margin-bottom:24px;">
+        <button class="tab cmp-tab active" data-cmp="april">Április (3 év)</button>
+        <button class="tab cmp-tab" data-cmp="janapr">Jan–Ápr (2025 vs 2026)</button>
+        <button class="tab cmp-tab" data-cmp="aprdec">Ápr–Dec (2024 vs 2025)</button>
+      </div>
+
+      <!-- April comparison: 3 years -->
+      <div class="cmp-view" id="cmp-april">
+        <div class="kpi-row">
+          <div class="kpi kpi-actual">
+            <div class="kpi-label">Április 2024</div>
+            <div class="kpi-value">84,2 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">1 861 kiadott szoba</div>
+          </div>
+          <div class="kpi kpi-plan" style="border-top-color:var(--good);">
+            <div class="kpi-label">Április 2025</div>
+            <div class="kpi-value">118,5 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">2 299 szoba</div>
+            <span class="kpi-trend trend-up">▲ +40,8% YoY</span>
+          </div>
+          <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+            <div class="kpi-label">Április 2026</div>
+            <div class="kpi-value">95,8 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">1 815 szoba</div>
+            <span class="kpi-trend trend-down">▼ −19,2% YoY</span>
+          </div>
+          <div class="kpi kpi-delta" style="border-top-color:var(--gold);">
+            <div class="kpi-label">2 év trend (24 → 26)</div>
+            <div class="kpi-value">+13,8%</div>
+            <div class="kpi-sub">CAGR ~6,7%/év</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Április szegmensenként – 3 éves összehasonlítás</div>
+              <div class="section-desc">Csoportosított oszlopok: jól látható, hogy 2025-ben minden szegmens nőtt, 2026-ban viszont visszaesés</div>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>2024</div>
+              <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>2025</div>
+              <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>2026</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="cmpAprilSeg"></canvas></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Április mix evolúció (3 év)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="cmpAprilMix"></canvas></div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Belföldi vs Külföldi mix (április, 3 év)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="cmpAprilDomFor"></canvas></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Április szegmens-teljesítmény részletesen (M Ft)</div></div></div>
+          <table class="data-table">
+            <thead><tr><th>Szegmens</th><th>2024</th><th>2025</th><th>2026</th><th>'24 → '25</th><th>'25 → '26</th><th>'24 → '26</th></tr></thead>
+            <tbody>
+              <tr><td>BE – Belföldi egyéni</td><td>33,7</td><td>45,5</td><td>36,8</td><td class="pos">+35,2%</td><td class="neg">−19,2%</td><td class="pos">+9,2%</td></tr>
+              <tr><td>KE – Külföldi egyéni</td><td>28,7</td><td>49,4</td><td>40,2</td><td class="pos">+72,2%</td><td class="neg">−18,6%</td><td class="pos">+40,1%</td></tr>
+              <tr><td>KC – Külföldi csoport</td><td>19,3</td><td>20,1</td><td>15,8</td><td class="pos">+4,3%</td><td class="neg">−21,4%</td><td class="neg">−18,0%</td></tr>
+              <tr><td>TU – Tulajdonos</td><td>0,8</td><td>1,4</td><td>2,2</td><td class="pos">+72,5%</td><td class="pos">+66,3%</td><td class="pos">+186,9%</td></tr>
+              <tr><td>BTV – Belföldi törzs</td><td>1,0</td><td>0,1</td><td>0,5</td><td class="neg">−87,0%</td><td class="pos">+248,5%</td><td class="neg">−55,5%</td></tr>
+              <tr><td>KTV – Külföldi törzs</td><td>0,7</td><td>0,1</td><td>0,2</td><td class="neg">−86,7%</td><td class="pos">+167,5%</td><td class="neg">−64,5%</td></tr>
+              <tr><td>BC – Belföldi csoport</td><td>0,0</td><td>1,9</td><td>0,0</td><td>—</td><td class="neg">−100%</td><td>—</td></tr>
+              <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Összesen</td><td>84,2</td><td>118,5</td><td>95,8</td><td class="pos">+40,8%</td><td class="neg">−19,2%</td><td class="pos">+13,8%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insights">
+          <div class="insight warn">
+            <div class="insight-icon">↻</div>
+            <h3>2025 csúcsév volt</h3>
+            <p>2024 → 2025 között <strong>+40,8%</strong>-os volt az áprilisi növekedés (BE +35%, KE +72%, KC +4%). 2025 nemcsak Hévíz, hanem az egész régió számára erős év volt – ez a magas bázis nehezíti a 2026-os összehasonlítást.</p>
+          </div>
+          <div class="insight bad">
+            <div class="insight-icon">📉</div>
+            <h3>2026 minden főszegmensben visszaesés</h3>
+            <p>BE −19,2%, KE −18,6%, KC −21,4% – mindhárom fő szegmens kétszámjegyű csökkenést mutat. Ez <strong>strukturális</strong>, nem csatorna-specifikus probléma.</p>
+          </div>
+          <div class="insight good">
+            <div class="insight-icon">📊</div>
+            <h3>2 éves trend még pozitív</h3>
+            <p>A 2024 → 2026 közötti összevetésben +13,8% (CAGR 6,7%) – tehát <strong>hosszú távon</strong> a hotel növekszik, csak az utóbbi év visszafordult. A KE +40% és BE +9% még most is messze a 2024-es szint felett van.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jan-Apr 2025 vs 2026 -->
+      <div class="cmp-view" id="cmp-janapr" style="display:none;">
+        <div class="kpi-row">
+          <div class="kpi kpi-actual">
+            <div class="kpi-label">2025 Jan–Ápr</div>
+            <div class="kpi-value">394,0 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">8 097 kiadott szoba</div>
+          </div>
+          <div class="kpi kpi-plan" style="border-top-color:var(--bad);">
+            <div class="kpi-label">2026 Jan–Ápr</div>
+            <div class="kpi-value">349,7 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">7 139 kiadott szoba</div>
+            <span class="kpi-trend trend-down">▼ −11,2% YoY</span>
+          </div>
+          <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+            <div class="kpi-label">YoY hiány</div>
+            <div class="kpi-value">−44,3 <span class="kpi-unit">M Ft</span></div>
+            <div class="kpi-sub">958 szobával kevesebb</div>
+          </div>
+          <div class="kpi kpi-delta" style="border-top-color:var(--bad);">
+            <div class="kpi-label">Legnagyobb vesztes</div>
+            <div class="kpi-value">KE <span class="kpi-unit">−30,4M</span></div>
+            <div class="kpi-sub">−19,7% – a hiány 69%-át adja</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">YoY változás szegmensenként (2025 → 2026 jan–ápr)</div>
+              <div class="section-desc">Negatív: KE, BE, BTV, BC. Pozitív: KC, TU, KTV. A piros sávok mutatják a fő veszteségeket.</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="cmpJanAprYoy"></canvas></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Mix változás 2025 → 2026 (jan–ápr)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="cmpJanAprMix"></canvas></div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Belföldi vs Külföldi (jan–ápr)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="cmpJanAprDomFor"></canvas></div>
+          </div>
+        </div>
+
+        <div class="insights">
+          <div class="insight bad">
+            <div class="insight-icon">✈</div>
+            <h3>KE a fő veszteségforrás (−30 M Ft)</h3>
+            <p>A Külföldi egyéni szegmens a 44 M Ft-os YoY hiány <strong>69%-át</strong> adja. A német-osztrák egyéni vendég-piac visszafogottabb 2026 elején – geopolitika? árfolyam? versenytárs? Sürgős vizsgálat kell.</p>
+          </div>
+          <div class="insight warn">
+            <div class="insight-icon">🇭🇺</div>
+            <h3>BE −22 M Ft</h3>
+            <p>A vezető szegmens 11,9%-kal csökkent. Mix-súlya viszont 46,9% → 46,5% maradt – tehát BE relatíve erős maradt, csak az egész piac kisebb. Belföldi marketing fókusz nem ártana.</p>
+          </div>
+          <div class="insight good">
+            <div class="insight-icon">🚌</div>
+            <h3>KC kompenzál (+6 M Ft)</h3>
+            <p>A Külföldi csoport +14,9%-kal nőtt, részesedés 10,7% → 13,9%. A buszos turizmus megbízható marad – 2024–2026 között konzisztens növekedés.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apr-Dec 2024 vs 2025 (existing content) -->
+      <div class="cmp-view" id="cmp-aprdec" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2024 (ápr–dec) Forgalom</div>
+          <div class="kpi-value">1 221,3 <span class="kpi-unit">M Ft</span></div>
+          <div class="kpi-sub">23 747 kiadott szoba</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">2025 (ápr–dec) Forgalom</div>
+          <div class="kpi-value">1 215,3 <span class="kpi-unit">M Ft</span></div>
+          <div class="kpi-sub">22 800+ kiadott szoba</div>
+        </div>
+        <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+          <div class="kpi-label">YoY változás</div>
+          <div class="kpi-value">−0,5%</div>
+          <div class="kpi-sub">−6 M Ft – gyakorlatilag stagnálás</div>
+          <span class="kpi-trend trend-down">▼ enyhe csökkenés</span>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Legnagyobb nyertes szegmens</div>
+          <div class="kpi-value">KC <span class="kpi-unit">+12,1%</span></div>
+          <div class="kpi-sub">Külföldi csoport: 233 → 261 M Ft</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Szegmens szintű YoY változás (2024 → 2025, ápr–dec)</div>
+            <div class="section-desc">Melyik szegmens növekedett, melyik csökkent – a buborék mérete a 2024-es bevételt mutatja</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="cmpYoy"></canvas></div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Szegmens-mix változás</div>
+              <div class="section-desc">Hogyan változott az arány 2024-ről 2025-re</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="cmpMix"></canvas></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Belföldi vs Külföldi mix evolúciója</div>
+              <div class="section-desc">A külföldi vendégek aránya nőtt</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="cmpDomFor"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Részletes szegmens-szintű összehasonlító táblázat (ápr–dec)</div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Szegmens</th><th>2024 Bev.</th><th>2025 Bev.</th><th>YoY %</th><th>2024 mix</th><th>2025 mix</th><th>Mix változás</th></tr></thead>
+          <tbody>
+            <tr><td>BE – Belföldi egyéni</td><td>508,0 M</td><td>475,9 M</td><td class="neg">−6,3%</td><td>41,6%</td><td>39,2%</td><td class="neg">−2,4pp</td></tr>
+            <tr><td>KE – Külföldi egyéni</td><td>456,7 M</td><td>451,2 M</td><td class="neg">−1,2%</td><td>37,4%</td><td>37,1%</td><td class="neg">−0,3pp</td></tr>
+            <tr><td>KC – Külföldi csoport</td><td>233,2 M</td><td>261,5 M</td><td class="pos">+12,1%</td><td>19,1%</td><td>21,5%</td><td class="pos">+2,4pp</td></tr>
+            <tr><td>TU – Tulajdonos</td><td>11,1 M</td><td>11,5 M</td><td class="pos">+3,7%</td><td>0,9%</td><td>0,9%</td><td>+0,0pp</td></tr>
+            <tr><td>BC – Belföldi csoport</td><td>0,3 M</td><td>8,1 M</td><td class="pos">+2 679%</td><td>0,0%</td><td>0,7%</td><td class="pos">+0,7pp</td></tr>
+            <tr><td>KTV – Külföldi törzsvendég</td><td>3,7 M</td><td>4,4 M</td><td class="pos">+17,9%</td><td>0,3%</td><td>0,4%</td><td class="pos">+0,1pp</td></tr>
+            <tr><td>BTV – Belföldi törzsvendég</td><td>8,2 M</td><td>2,7 M</td><td class="neg">−66,8%</td><td>0,7%</td><td>0,2%</td><td class="neg">−0,5pp</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Összesen</td><td>1 221,3 M</td><td>1 215,3 M</td><td class="neg">−0,5%</td><td>100%</td><td>100%</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight good">
+          <div class="insight-icon">🚌</div>
+          <h3>Külföldi csoport (KC) erős növekedés</h3>
+          <p><strong>+12,1% (+28 M Ft)</strong> a KC növekedése. Mix-részesedés 19,1% → 21,5%. Ez a tour operator-os csatorna jól teljesít, érdemes <strong>tovább erősíteni</strong> 2026-ban.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇭🇺</div>
+          <h3>Belföldi egyéni (BE) gyengült</h3>
+          <p>−6,3% (−32 M Ft) – ez a <strong>legfontosabb szegmensünk csökken</strong>. Mix-részesedés 41,6% → 39,2%. Ok lehet: belföldi árérzékenység, versenytárs-aktivitás, marketing hatékonyság-csökkenés. Vizsgálandó.</p>
+        </div>
+        <div class="insight bad">
+          <div class="insight-icon">📉</div>
+          <h3>Belföldi törzsvendég (BTV) drámai esés</h3>
+          <p>−66,8% (8,2 M → 2,7 M Ft) – kicsi szegmens, de <strong>szimbolikus jelentőségű</strong>. A „törzsvendég" érték elveszik. Loyalty/CRM program azonnal felülvizsgálandó.</p>
+        </div>
+      </div>
+
+      </div> <!-- close cmp-aprdec -->
+
+    </div> <!-- close year-compare -->
+
+  </div> <!-- close view-segments -->
+
+  <!-- ========== VIEW 4b: NATIONALITIES ========== -->
+  <div class="view" id="view-nations">
+
+    <!-- Year selector -->
+    <div class="tabs" style="background:var(--card);box-shadow:var(--shadow);border-radius:12px;padding:6px;margin-bottom:24px;">
+      <button class="tab nat-year-tab active" data-natyear="2024">2024 (ápr–dec)</button>
+      <button class="tab nat-year-tab" data-natyear="2025">2025</button>
+      <button class="tab nat-year-tab" data-natyear="2026">2026</button>
+      <button class="tab nat-year-tab" data-natyear="compare">Év/év összehasonlítás</button>
+    </div>
+
+    <div class="footnote" style="margin-top:0;margin-bottom:24px;">
+      <strong>📌 Megjegyzés:</strong> A nemzetiségi statisztika <strong>vendégéjszaka</strong> alapú (nem árbevétel). Ez a hivatalos turizmus-statisztika alapegysége, és pontosan mutatja a piaci kitettséget. Több vendégéjszaka = több piaci jelenlét egy adott országban.
+    </div>
+
+    <!-- 2024 view -->
+    <div class="nat-year-view" id="nat-year-2024">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2024 (ápr–dec) Vendégéjszaka</div>
+          <div class="kpi-value">44 884</div>
+          <div class="kpi-sub">25+ ország képviselve</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top piac</div>
+          <div class="kpi-value">🇭🇺 40,6%</div>
+          <div class="kpi-sub">Magyarország · 18 201 vendégéjszaka</div>
+        </div>
+        <div class="kpi kpi-ytd">
+          <div class="kpi-label">Belföldi vs Külföldi</div>
+          <div class="kpi-value">41% / 59%</div>
+          <div class="kpi-sub">Belföldi: 18 201 · Külföldi: 26 683</div>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Top 5 piac koncentráció</div>
+          <div class="kpi-value">86,9%</div>
+          <div class="kpi-sub">HU + DE + CZ + AT + SK</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Top piacok megoszlása 2024 (vendégéjszaka %)</div>
+              <div class="section-desc">A magyar és német piac együtt 60% – erős koncentráció</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natDonut24"></canvas></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Top országok ranglista (vendégéjszaka)</div>
+              <div class="section-desc">Vízszintes oszlop a hosszú „farok" jobb áttekintéséhez</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natTop24"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi vendégéjszaka-megoszlás országonként (2024 ápr–dec)</div>
+            <div class="section-desc">Halmozott oszlop: szeptemberben Németország meghaladja a magyart, decemberben a magyar 69%-ra ugrik</div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>🇭🇺 HU</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>🇩🇪 DE</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#2563eb"></div>🇨🇿 CZ</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#d4d4d8"></div>🇦🇹 AT</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#16a34a"></div>🇸🇰 SK</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>🇷🇺 RU</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>Egyéb</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natStacked24"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Belföldi vs Külföldi havi mix 2024</div>
+            <div class="section-desc">A külföldi vendégek aránya nyár-elején a legmagasabb (júl-szept), télen a belföldi vesz át</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natDomFor24"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2024 ápr–dec)</div></div></div>
+        <table class="data-table">
+          <thead><tr><th>Kód</th><th>Ország</th><th>Érkezések</th><th>Vendégek</th><th>Vendégéjszaka</th><th>Részesedés</th><th>Átl. tartózkodás</th></tr></thead>
+          <tbody>
+            <tr><td>🇭🇺 H</td><td>Magyarország</td><td>7 192</td><td>7 415</td><td><strong>18 201</strong></td><td><strong>40,55%</strong></td><td>2,46 éj</td></tr>
+            <tr><td>🇩🇪 D</td><td>Németország</td><td>1 107</td><td>1 323</td><td><strong>9 105</strong></td><td><strong>20,29%</strong></td><td>6,88 éj</td></tr>
+            <tr><td>🇨🇿 CS</td><td>Csehország</td><td>1 522</td><td>1 653</td><td><strong>5 475</strong></td><td><strong>12,20%</strong></td><td>3,31 éj</td></tr>
+            <tr><td>🇦🇹 A</td><td>Ausztria</td><td>1 049</td><td>1 117</td><td>3 425</td><td>7,63%</td><td>3,07 éj</td></tr>
+            <tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>1 031</td><td>1 084</td><td>2 802</td><td>6,24%</td><td>2,58 éj</td></tr>
+            <tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>93</td><td>113</td><td>773</td><td>1,72%</td><td>6,84 éj</td></tr>
+            <tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>306</td><td>330</td><td>685</td><td>1,53%</td><td>2,08 éj</td></tr>
+            <tr><td>🇨🇭 CH</td><td>Svájc</td><td>97</td><td>112</td><td>637</td><td>1,42%</td><td>5,69 éj</td></tr>
+            <tr><td>🇪🇪 EST</td><td>Észtország</td><td>75</td><td>94</td><td>571</td><td>1,27%</td><td>6,07 éj</td></tr>
+            <tr><td>🇵🇱 PL</td><td>Lengyelország</td><td>172</td><td>194</td><td>526</td><td>1,17%</td><td>2,71 éj</td></tr>
+            <tr><td>🇺🇦 UKR</td><td>Ukrajna</td><td>76</td><td>91</td><td>415</td><td>0,92%</td><td>4,56 éj</td></tr>
+            <tr><td>🇷🇴 RO</td><td>Románia</td><td>109</td><td>119</td><td>310</td><td>0,69%</td><td>2,61 éj</td></tr>
+            <tr><td>—</td><td>Egyéb (13+ ország)</td><td>~700</td><td>~750</td><td>~1 959</td><td>4,37%</td><td>2,5–3 éj</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>~13 500</td><td>~14 400</td><td>44 884</td><td>100%</td><td>3,12 éj</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight good">
+          <div class="insight-icon">🇭🇺</div>
+          <h3>Erős magyar bázis (40,6%)</h3>
+          <p>A magyar vendégek <strong>18 201 vendégéjszakát</strong> hoztak ápr–dec között – a legnagyobb stabil piac. December (69%) és november (57%) különösen magyar-erős hónapok.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇩🇪</div>
+          <h3>Németország a 2. legnagyobb piac</h3>
+          <p>9 105 vendégéjszaka (20,3%) – kétszer akkora mint a magyar átlagos tartózkodás (<strong>6,88 éj/német vendég</strong>) magasabb, így kevesebb érkezés is sok éjszakát ad. Augusztus-szeptemberben 2 000+ éj!</p>
+        </div>
+        <div class="insight bad">
+          <div class="insight-icon">🌍</div>
+          <h3>Túlzott koncentráció</h3>
+          <p>Top 5 ország adja a forgalom <strong>86,9%-át</strong> – ha bármelyikben visszaesés van (pl. német piac 2026-ban), arányosan érint. Diverzifikáció érdemes: lengyel, román, ukrán piacok 1–2%-os szinten <strong>növekedési potenciállal</strong>.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2025 nationality view -->
+    <div class="nat-year-view" id="nat-year-2025" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2025 Teljes év Vendégéjszaka</div>
+          <div class="kpi-value">53 837</div>
+          <div class="kpi-sub">25+ ország · átl. 3,06 éj/vendég</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top piac</div>
+          <div class="kpi-value">🇭🇺 42,5%</div>
+          <div class="kpi-sub">Magyarország · 22 894 vendégéjszaka</div>
+        </div>
+        <div class="kpi kpi-ytd">
+          <div class="kpi-label">Belföldi vs Külföldi</div>
+          <div class="kpi-value">42% / 58%</div>
+          <div class="kpi-sub">Belföldi: 22 894 · Külföldi: 30 943</div>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Top 5 piac koncentráció</div>
+          <div class="kpi-value">86,0%</div>
+          <div class="kpi-sub">HU + DE + CZ + AT + SK</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Top piacok megoszlása 2025 (vendégéjszaka %)</div><div class="section-desc">Hasonló kép mint 2024 – a top 5 piac stabil</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natDonut25"></canvas></div>
+        </div>
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Top országok ranglista 2025</div><div class="section-desc">Top 12 ország teljesítménye</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natTop25"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi vendégéjszaka-megoszlás országonként (2025 jan–dec)</div>
+            <div class="section-desc">Augusztus a csúcs (5 721 éj), szeptemberben Németország ismét meghaladja Magyarországot (2 101 vs 965)</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natStacked25"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Belföldi vs Külföldi havi mix 2025</div>
+            <div class="section-desc">Decemberben 71% belföldi, szeptemberben 80% külföldi – erős szezonális szegregáció</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natDomFor25"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2025 teljes év)</div></div></div>
+        <table class="data-table">
+          <thead><tr><th>Kód</th><th>Ország</th><th>Vendégéjszaka</th><th>Részesedés</th><th>Átl. tartózkodás</th></tr></thead>
+          <tbody>
+            <tr><td>🇭🇺 H</td><td>Magyarország</td><td><strong>22 894</strong></td><td><strong>42,52%</strong></td><td>2,26 éj</td></tr>
+            <tr><td>🇩🇪 D</td><td>Németország</td><td><strong>9 737</strong></td><td><strong>18,09%</strong></td><td>7,06 éj</td></tr>
+            <tr><td>🇨🇿 CS</td><td>Csehország</td><td><strong>6 004</strong></td><td><strong>11,15%</strong></td><td>3,44 éj</td></tr>
+            <tr><td>🇦🇹 A</td><td>Ausztria</td><td>4 017</td><td>7,46%</td><td>3,11 éj</td></tr>
+            <tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>3 659</td><td>6,80%</td><td>2,50 éj</td></tr>
+            <tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>1 114</td><td>2,07%</td><td>8,19 éj</td></tr>
+            <tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>1 101</td><td>2,05%</td><td>2,03 éj</td></tr>
+            <tr><td>🇨🇭 CH</td><td>Svájc</td><td>860</td><td>1,60%</td><td>4,34 éj</td></tr>
+            <tr><td>🇪🇪 EST</td><td>Észtország</td><td>635</td><td>1,18%</td><td>8,36 éj</td></tr>
+            <tr><td>🇺🇦 UKR</td><td>Ukrajna</td><td>558</td><td>1,04%</td><td>4,36 éj</td></tr>
+            <tr><td>🇭🇷 CR</td><td>Horvátország</td><td>554</td><td>1,03%</td><td>1,67 éj</td></tr>
+            <tr><td>🇵🇱 PL</td><td>Lengyelország</td><td>432</td><td>0,80%</td><td>2,94 éj</td></tr>
+            <tr><td>—</td><td>Egyéb (15+ ország)</td><td>~2 272</td><td>4,21%</td><td>2,5–10 éj</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>53 837</td><td>100%</td><td>3,06 éj</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight good">
+          <div class="insight-icon">📈</div>
+          <h3>Piaci szerkezet stabil maradt</h3>
+          <p>A 2024-eshez nagyon hasonló mix (HU 41 → 43%, DE 20 → 18%, CZ 12 → 11%). A top 5 koncentráció <strong>86,9% → 86,0%</strong> – minimális változás. A magyar piac bázis-szerepét megtartotta.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇩🇪</div>
+          <h3>Német vendég átlagos tartózkodása nőtt</h3>
+          <p>2024: 6,88 éj/vendég → 2025: <strong>7,06 éj/vendég</strong>. Hosszabb német tartózkodás = több éjszaka kevesebb érkezésből. Ez kedvező a forgalom szempontjából.</p>
+        </div>
+        <div class="insight bad">
+          <div class="insight-icon">🇵🇱</div>
+          <h3>Lengyel piac visszaesés</h3>
+          <p>A lengyel vendégéjszaka csökkent (526 → 432, <strong>−18%</strong>). Mivel ez egy „felzárkózó" piac volt, érdemes vizsgálni: árazás? marketing? versenytárs? Hasonlóan visszaesett a román piac is (−18%).</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2026 nationality view -->
+    <div class="nat-year-view" id="nat-year-2026" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2026 Jan–Ápr Vendégéjszaka</div>
+          <div class="kpi-value">13 838</div>
+          <div class="kpi-sub">~20 ország · átl. 2,6 éj/vendég</div>
+        </div>
+        <div class="kpi kpi-plan">
+          <div class="kpi-label">Top piac</div>
+          <div class="kpi-value">🇭🇺 50,2%</div>
+          <div class="kpi-sub">Magyarország · 6 944 vendégéjszaka</div>
+        </div>
+        <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+          <div class="kpi-label">vs 2025 Jan–Ápr</div>
+          <div class="kpi-value">−11,0%</div>
+          <div class="kpi-sub">2025: 15 548 → 2026: 13 838 éj</div>
+          <span class="kpi-trend trend-down">▼ 1 710 éjszakával kevesebb</span>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--bad);">
+          <div class="kpi-label">Legnagyobb visszaesés</div>
+          <div class="kpi-value">🇨🇿 −23,7%</div>
+          <div class="kpi-sub">Csehország: 1 152 → 879</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Top piacok megoszlása 2026 jan–ápr (%)</div><div class="section-desc">Magyar piac súlya 50%-ra ugrott a külföldi visszaesés miatt</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natDonut26"></canvas></div>
+        </div>
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Top országok ranglista 2026 jan–ápr</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natTop26"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Havi vendégéjszaka-megoszlás országonként (2026 jan–ápr)</div>
+            <div class="section-desc">Áprilisban a külföldi átveszi az irányítást (60%) – várva a tavaszi szezont</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natStacked26"></canvas></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2026 jan–ápr) YoY összevetéssel</div></div></div>
+        <table class="data-table">
+          <thead><tr><th>Kód</th><th>Ország</th><th>2026 Vendégéj.</th><th>Részesedés</th><th>2025 azonos időszak</th><th>YoY %</th><th>Átl. tartózkodás</th></tr></thead>
+          <tbody>
+            <tr><td>🇭🇺 H</td><td>Magyarország</td><td><strong>6 944</strong></td><td><strong>50,2%</strong></td><td>7 611</td><td class="neg">−8,8%</td><td>2,16 éj</td></tr>
+            <tr><td>🇩🇪 D</td><td>Németország</td><td><strong>1 426</strong></td><td><strong>10,3%</strong></td><td>1 761</td><td class="neg">−19,0%</td><td>5,40 éj</td></tr>
+            <tr><td>🇦🇹 A</td><td>Ausztria</td><td><strong>1 364</strong></td><td><strong>9,9%</strong></td><td>1 535</td><td class="neg">−11,1%</td><td>3,18 éj</td></tr>
+            <tr><td>🇨🇿 CS</td><td>Csehország</td><td>879</td><td>6,4%</td><td>1 152</td><td class="neg">−23,7%</td><td>3,23 éj</td></tr>
+            <tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>826</td><td>6,0%</td><td>1 034</td><td class="neg">−20,1%</td><td>2,32 éj</td></tr>
+            <tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>522</td><td>3,8%</td><td>231</td><td class="pos">+126%</td><td>1,96 éj</td></tr>
+            <tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>395</td><td>2,9%</td><td>~80</td><td class="pos">+394%</td><td>7,18 éj</td></tr>
+            <tr><td>🇭🇷 CR</td><td>Horvátország</td><td>204</td><td>1,5%</td><td>277</td><td class="neg">−26,4%</td><td>1,73 éj</td></tr>
+            <tr><td>🇪🇪 EST</td><td>Észtország</td><td>204</td><td>1,5%</td><td>~30</td><td class="pos">+580%</td><td>9,27 éj</td></tr>
+            <tr><td>🇨🇭 CH</td><td>Svájc</td><td>183</td><td>1,3%</td><td>~140</td><td class="pos">+31%</td><td>4,16 éj</td></tr>
+            <tr><td>—</td><td>Egyéb</td><td>~891</td><td>6,4%</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td colspan="2">Összesen</td><td>13 838</td><td>100%</td><td>15 548</td><td class="neg">−11,0%</td><td>2,6 éj</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight bad">
+          <div class="insight-icon">🇨🇿</div>
+          <h3>Cseh piac drámai visszaesés (−23,7%)</h3>
+          <p>Csehország a legnagyobb arányú vesztes a top 5-ben (−273 éj). Korábban (2024 Apr-Dec → 2025 Apr-Dec) csak −3,2%-kal csökkent, most viszont gyorsulás. Egyik fő okozója a 2026-os összesen visszaesésnek.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇩🇪🇸🇰</div>
+          <h3>Német és szlovák piac is gyengül</h3>
+          <p>Németország −19,0% (a tavalyihez képest gyorsult), Szlovákia −20,1% (tavaly még +7%-kal nőtt – fordulat!). Az osztrák piac stabilan visszaesik (−11,1%) – a 2025-ös tendencia folytatódik.</p>
+        </div>
+        <div class="insight good">
+          <div class="insight-icon">🇸🇮🇷🇺🇪🇪</div>
+          <h3>Új piacok feltűnnek</h3>
+          <p>Szlovénia <strong>+126%</strong> (522 éj már jan–ápr alatt!), Oroszország <strong>+394%</strong>, Észtország <strong>+580%</strong>. Bár kis bázisokról indulnak, ez egy kibontakozó <strong>kelet-európai diverzifikáció</strong> a hagyományos piacok rovására.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Compare 3 years -->
+    <div class="nat-year-view" id="nat-year-compare" style="display:none;">
+
+      <div class="section" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: var(--cream);">
+        <div style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-light);font-weight:600;margin-bottom:8px;">3 éves nemzetiségi elemzés</div>
+        <h2 style="font-size:26px;margin-bottom:8px;">2024 / 2025 / 2026 nemzetiségi összehasonlítás</h2>
+        <p style="opacity:0.85;font-size:15px;max-width:800px;">Két fair összehasonlítás: <strong style="color:var(--gold)">április</strong> (mind a 3 évben elérhető) és <strong style="color:var(--gold)">jan–április</strong> YoY (2025 vs 2026). Plus 2024 vs 2025 ápr–dec, ami a leghosszabb átfedés.</p>
+      </div>
+
+      <!-- Sub-tabs -->
+      <div class="tabs" style="margin-bottom:24px;">
+        <button class="tab natcmp-tab active" data-natcmp="april">Április (3 év)</button>
+        <button class="tab natcmp-tab" data-natcmp="janapr">Jan–Ápr (2025 vs 2026)</button>
+        <button class="tab natcmp-tab" data-natcmp="aprdec">Ápr–Dec (2024 vs 2025)</button>
+      </div>
+
+      <!-- April 3-year -->
+      <div class="natcmp-view" id="natcmp-april">
+        <div class="kpi-row">
+          <div class="kpi kpi-actual">
+            <div class="kpi-label">Április 2024</div>
+            <div class="kpi-value">3 263 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">38% bel / 62% kül</div>
+          </div>
+          <div class="kpi kpi-plan" style="border-top-color:var(--good);">
+            <div class="kpi-label">Április 2025</div>
+            <div class="kpi-value">4 298 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">37% bel / 63% kül</div>
+            <span class="kpi-trend trend-up">▲ +31,7% YoY</span>
+          </div>
+          <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+            <div class="kpi-label">Április 2026</div>
+            <div class="kpi-value">3 503 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">40% bel / 60% kül</div>
+            <span class="kpi-trend trend-down">▼ −18,5% YoY</span>
+          </div>
+          <div class="kpi kpi-delta" style="border-top-color:var(--gold);">
+            <div class="kpi-label">2 év trend (24 → 26)</div>
+            <div class="kpi-value">+7,4%</div>
+            <div class="kpi-sub">CAGR ~3,6%/év</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Április top piacok – 3 éves összehasonlítás</div>
+              <div class="section-desc">2025 csúcsév volt minden piacban, 2026-ra a többség visszacsúszott</div>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><div class="legend-swatch" style="background:#a1a1aa"></div>2024</div>
+              <div class="legend-item"><div class="legend-swatch" style="background:#71717a"></div>2025</div>
+              <div class="legend-item"><div class="legend-swatch" style="background:#09090b"></div>2026</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpAprilSeg"></canvas></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Április mix evolúció (top 4 piac)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpAprilMix"></canvas></div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Belföldi vs Külföldi (április, 3 év)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpAprilDomFor"></canvas></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Április szegmens-teljesítmény részletesen (vendégéjszaka)</div></div></div>
+          <table class="data-table">
+            <thead><tr><th>Ország</th><th>2024</th><th>2025</th><th>2026</th><th>'24→'25</th><th>'25→'26</th><th>'24→'26</th></tr></thead>
+            <tbody>
+              <tr><td>🇭🇺 Magyarország</td><td>1 255</td><td>1 600</td><td>1 399</td><td class="pos">+27,5%</td><td class="neg">−12,6%</td><td class="pos">+11,5%</td></tr>
+              <tr><td>🇩🇪 Németország</td><td>511</td><td>669</td><td>458</td><td class="pos">+30,9%</td><td class="neg">−31,5%</td><td class="neg">−10,4%</td></tr>
+              <tr><td>🇨🇿 Csehország</td><td>221</td><td>382</td><td>478</td><td class="pos">+72,9%</td><td class="pos">+25,1%</td><td class="pos">+116,3%</td></tr>
+              <tr><td>🇦🇹 Ausztria</td><td>450</td><td>421</td><td>310</td><td class="neg">−6,4%</td><td class="neg">−26,4%</td><td class="neg">−31,1%</td></tr>
+              <tr><td>🇸🇰 Szlovákia</td><td>143</td><td>378</td><td>195</td><td class="pos">+164%</td><td class="neg">−48,4%</td><td class="pos">+36,4%</td></tr>
+              <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Összesen</td><td>3 263</td><td>4 298</td><td>3 503</td><td class="pos">+31,7%</td><td class="neg">−18,5%</td><td class="pos">+7,4%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insights">
+          <div class="insight good">
+            <div class="insight-icon">🇨🇿</div>
+            <h3>Csehország konzisztens növekedés</h3>
+            <p>Áprilisban <strong>+116% 2 év alatt</strong> (221 → 478 éj). Egyetlen piac, ami 2026-ban tovább nőtt (+25%). Ez stratégiailag fontos – cseh marketing erősítése javasolt.</p>
+          </div>
+          <div class="insight bad">
+            <div class="insight-icon">🇦🇹</div>
+            <h3>Ausztria 2 éve csökken</h3>
+            <p>Április 2024 → 2026: <strong>−31%</strong> (450 → 310 éj). 2 év alatt egyharmadát elveszítette. A korábban is megfigyelt ápr–dec −15% trend gyorsult.</p>
+          </div>
+          <div class="insight warn">
+            <div class="insight-icon">🇸🇰</div>
+            <h3>Szlovák piac volatilis</h3>
+            <p>2024: 143 → 2025: 378 (+164%) → 2026: 195 (−48%). Erősen ingadozó. Lehet group booking függőség (egyetlen tour operator hatása).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jan-Apr 2025 vs 2026 -->
+      <div class="natcmp-view" id="natcmp-janapr" style="display:none;">
+        <div class="kpi-row">
+          <div class="kpi kpi-actual">
+            <div class="kpi-label">2025 Jan–Ápr</div>
+            <div class="kpi-value">15 548 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">Belföldi 49% / Külföldi 51%</div>
+          </div>
+          <div class="kpi kpi-plan" style="border-top-color:var(--bad);">
+            <div class="kpi-label">2026 Jan–Ápr</div>
+            <div class="kpi-value">13 838 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">Belföldi 50% / Külföldi 50%</div>
+            <span class="kpi-trend trend-down">▼ −11,0% YoY</span>
+          </div>
+          <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+            <div class="kpi-label">YoY hiány</div>
+            <div class="kpi-value">−1 710 <span class="kpi-unit">éj</span></div>
+            <div class="kpi-sub">11% kevesebb forgalom</div>
+          </div>
+          <div class="kpi kpi-delta" style="border-top-color:var(--bad);">
+            <div class="kpi-label">Legnagyobb vesztes</div>
+            <div class="kpi-value">🇨🇿 −23,7%</div>
+            <div class="kpi-sub">Csehország: 1 152 → 879</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <div class="section-title">YoY változás top piacok (2025 → 2026 jan–ápr)</div>
+              <div class="section-desc">Mind a top 5 piac visszaesett. Egyedül a kis kelet-európai piacok (SLO, RUS, EST) nőttek nagy %-kal kis bázisról.</div>
+            </div>
+          </div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpJanAprYoy"></canvas></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Mix változás 2025 → 2026 jan–ápr</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpJanAprMix"></canvas></div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div><div class="section-title">Belföldi vs Külföldi (jan–ápr)</div></div></div>
+            <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpJanAprDomFor"></canvas></div>
+          </div>
+        </div>
+
+        <div class="insights">
+          <div class="insight bad">
+            <div class="insight-icon">🇨🇿</div>
+            <h3>Csehország: tavaszi szezonális esés</h3>
+            <p>Jan–ápr: 1 152 → 879 (<strong>−23,7%</strong>). Áprilisban viszont +25% (382 → 478). Ez azt jelenti, hogy a tavaszelő-tél (jan–már) volt különösen gyenge cseheknél. Talán szezonálitásbeli eltolás.</p>
+          </div>
+          <div class="insight warn">
+            <div class="insight-icon">🇩🇪</div>
+            <h3>Németország: tartós gyengülés</h3>
+            <p>Jan–ápr: 1 761 → 1 426 (<strong>−19%</strong>), folyamatos lefelé tartó trend. Áprilisban −31,5% szintén. A német piacban érdemi marketing-akció kell.</p>
+          </div>
+          <div class="insight good">
+            <div class="insight-icon">🇸🇮🇷🇺🇪🇪</div>
+            <h3>Új diverzifikáció megerősödik</h3>
+            <p>Szlovénia, Oroszország, Észtország együttesen <strong>~600 plusz vendégéjszakát</strong> hoz 2026 elején vs. tavaly. Bár nem pótolja a top piacok visszaesését, irányt mutat.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apr-Dec 2024 vs 2025 (existing content) -->
+      <div class="natcmp-view" id="natcmp-aprdec" style="display:none;">
+
+      <div class="kpi-row">
+        <div class="kpi kpi-actual">
+          <div class="kpi-label">2024 (ápr–dec)</div>
+          <div class="kpi-value">44 884 <span class="kpi-unit">éj</span></div>
+          <div class="kpi-sub">Belföldi 40,6% / Külföldi 59,4%</div>
+        </div>
+        <div class="kpi kpi-plan" style="border-top-color:var(--bad);">
+          <div class="kpi-label">2025 (ápr–dec)</div>
+          <div class="kpi-value">42 587 <span class="kpi-unit">éj</span></div>
+          <div class="kpi-sub">Belföldi 39,6% / Külföldi 60,4%</div>
+          <span class="kpi-trend trend-down">▼ −5,1% YoY</span>
+        </div>
+        <div class="kpi kpi-ytd" style="border-top-color:var(--bad);">
+          <div class="kpi-label">YoY hiány</div>
+          <div class="kpi-value">−2 297 <span class="kpi-unit">éj</span></div>
+          <div class="kpi-sub">~5% kevesebb forgalom</div>
+        </div>
+        <div class="kpi kpi-delta" style="border-top-color:var(--good);">
+          <div class="kpi-label">Legnagyobb nyertes piac</div>
+          <div class="kpi-value">🇷🇺 +12,8%</div>
+          <div class="kpi-sub">Oroszország: 773 → 872</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Top piacok YoY változás (2024 → 2025 ápr–dec)</div>
+            <div class="section-desc">Negatív: HU, DE, AT, CS, PL. Pozitív: SK, RUS, SLO, CH, EST.</div>
+          </div>
+        </div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpYoy"></canvas></div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Mix változás 2024 → 2025</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpMix"></canvas></div>
+        </div>
+        <div class="section">
+          <div class="section-header"><div><div class="section-title">Belföldi vs Külföldi mix evolúciója</div></div></div>
+          <div class="chart-wrap chart-wrap-tall"><canvas id="natCmpDomFor"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><div><div class="section-title">Részletes nemzetiségi összehasonlítás (ápr–dec, vendégéjszaka)</div></div></div>
+        <table class="data-table">
+          <thead><tr><th>Ország</th><th>2024</th><th>2025</th><th>YoY %</th><th>2024 mix</th><th>2025 mix</th><th>Mix Δ</th></tr></thead>
+          <tbody>
+            <tr><td>🇭🇺 Magyarország</td><td>18 201</td><td>16 883</td><td class="neg">−7,2%</td><td>40,6%</td><td>39,6%</td><td class="neg">−1,0pp</td></tr>
+            <tr><td>🇩🇪 Németország</td><td>9 105</td><td>8 645</td><td class="neg">−5,1%</td><td>20,3%</td><td>20,3%</td><td>0,0pp</td></tr>
+            <tr><td>🇨🇿 Csehország</td><td>5 475</td><td>5 299</td><td class="neg">−3,2%</td><td>12,2%</td><td>12,4%</td><td class="pos">+0,2pp</td></tr>
+            <tr><td>🇸🇰 Szlovákia</td><td>2 802</td><td>3 003</td><td class="pos">+7,2%</td><td>6,2%</td><td>7,1%</td><td class="pos">+0,9pp</td></tr>
+            <tr><td>🇦🇹 Ausztria</td><td>3 425</td><td>2 903</td><td class="neg">−15,2%</td><td>7,6%</td><td>6,8%</td><td class="neg">−0,8pp</td></tr>
+            <tr><td>🇷🇺 Oroszország</td><td>773</td><td>872</td><td class="pos">+12,8%</td><td>1,7%</td><td>2,0%</td><td class="pos">+0,3pp</td></tr>
+            <tr><td>🇸🇮 Szlovénia</td><td>685</td><td>769</td><td class="pos">+12,3%</td><td>1,5%</td><td>1,8%</td><td class="pos">+0,3pp</td></tr>
+            <tr><td>🇨🇭 Svájc</td><td>637</td><td>656</td><td class="pos">+3,0%</td><td>1,4%</td><td>1,5%</td><td class="pos">+0,1pp</td></tr>
+            <tr><td>🇪🇪 Észtország</td><td>571</td><td>635</td><td class="pos">+11,2%</td><td>1,3%</td><td>1,5%</td><td class="pos">+0,2pp</td></tr>
+            <tr><td>🇵🇱 Lengyelország</td><td>526</td><td>397</td><td class="neg">−24,5%</td><td>1,2%</td><td>0,9%</td><td class="neg">−0,3pp</td></tr>
+            <tr style="background:rgba(201,169,110,0.08);font-weight:700"><td>Összesen</td><td>44 884</td><td>42 587</td><td class="neg">−5,1%</td><td>100%</td><td>100%</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights">
+        <div class="insight bad">
+          <div class="insight-icon">🇦🇹</div>
+          <h3>Osztrák piac jelentős visszaesés</h3>
+          <p>−15,2% (3 425 → 2 903 éj) – ez a <strong>legnagyobb arányú</strong> visszaesés a top 5 piac közül. Ausztria földrajzilag is közeli piac, ezért aggasztó. Lehetséges ok: erősödő hazai konkurencia (osztrák hévízi régiók)?</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-icon">🇭🇺</div>
+          <h3>Magyar piac is csökken (−7,2%)</h3>
+          <p>A bázispiacban −1 318 éjszaka veszteség. Még mindig vezető (39,6% mix), de a trend nem kedvező. A belföldi vendég-arány 40,6% → 39,6%-ra csökkent. Belföldi marketingre fókuszálni kell.</p>
+        </div>
+        <div class="insight good">
+          <div class="insight-icon">🇸🇰</div>
+          <h3>Szlovák piac erősödik (+7,2%)</h3>
+          <p>Egyetlen top 5 piac, ami nőtt. Plusz: 🇷🇺 Oroszország +12,8%, 🇸🇮 Szlovénia +12,3%, 🇪🇪 Észtország +11,2% – a <strong>kelet-európai diverzifikáció</strong> működik. Érdemes ezeket a piacokat tovább erősíteni.</p>
+        </div>
+      </div>
+
+      </div> <!-- close natcmp-aprdec -->
+
+    </div> <!-- close nat-year-compare -->
+
+  </div> <!-- close view-nations -->
+
+</div>
+
+<script>
+const months = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+
+// Monthly data
+const rev25 = [75520819, 85331663, 89769175, 108848008, 118761398, 127060457, 143505170, 170002847, 132415521, 119872509, 93696588, 101590079];
+const rev26t = [75000000, 85000000, 95000000, 115000000, 123000000, 132000000, 155000000, 180000000, 150000000, 125000000, 100000000, 80000000];
+const rev26 = [63519113, 72563205, 94128082, 85677584, null, null, null, null, null, null, null, null];
+
+const occ25 = [0.49, 0.73, 0.49, 0.56, 0.58, 0.70, 0.64, 0.72, 0.69, 0.59, 0.54, 0.43];
+const occ26t = [0.52, 0.74, 0.52, 0.58, 0.60, 0.72, 0.70, 0.76, 0.70, 0.59, 0.56, 0.38];
+const occ26 = [0.42, 0.61, 0.52, 0.44, null, null, null, null, null, null, null, null];
+
+const revpar25 = [44190, 42139, 43493, 47532, 48434, 45623, 53328, 55775, 47342, 48103, 42358, 56470];
+const revpar26t = [41783, 41872, 43182, 48319, 48810, 46316, 52365, 56250, 52632, 50000, 43478, 50000];
+const revpar26 = [43656, 43399, 42844, 47625, null, null, null, null, null, null, null, null];
+
+const rooms25 = [1709, 2025, 2064, 2290, 2452, 2785, 2691, 3048, 2797, 2492, 2212, 1799];
+const rooms26t = [1795, 2030, 2200, 2380, 2520, 2850, 2960, 3200, 2850, 2500, 2300, 1600];
+const rooms26 = [1455, 1672, 2197, 1799, null, null, null, null, null, null, null, null];
+
+const guest25 = [22844, 21392, 22698, 25378, 26033, 24308, 27838, 29716, 27552, 23984, 22000, 28529];
+const guest26t = [21762, 21808, 22491, 25166, 25422, 24123, 27273, 29297, 27412, 26042, 22645, 26042];
+const guest26 = [22171, 23846, 22551, 24634, null, null, null, null, null, null, null, null];
+
+// Weekly data
+const weekLabels = Array.from({length: 53}, (_, i) => 'W' + (i+1));
+const weekly25 = [17053088, 17053088, 17053088, 17053088, 17664492, 21332916, 21332916, 21332916, 21181136, 20270459, 20270459, 20270459, 20270459, 23932894, 25397869, 25397869, 25397869, 26006106, 26817090, 26817090, 26817090, 26817090, 29647440, 29647440, 29647440, 29647440, 31616692, 32404393, 32404393, 32404393, 34113921, 38387740, 38387740, 38387740, 38387740, 31967067, 30896955, 30896955, 30896955, 28708973, 27067986, 27067986, 27067986, 26324350, 21862537, 21862537, 21862537, 21862537, 22785816, 22939695, 22939695, 22939695, 13108397];
+const weekly26t = [14516129, 16935484, 16935484, 16935484, 17551843, 21250000, 21250000, 21250000, 21278802, 21451613, 21451613, 21451613, 21451613, 25295699, 26833333, 26833333, 26833333, 27236559, 27774194, 27774194, 27774194, 27774194, 30800000, 30800000, 30800000, 30800000, 33800000, 35000000, 35000000, 35000000, 36612903, 40645161, 40645161, 40645161, 40645161, 35806452, 35000000, 35000000, 35000000, 31129032, 28225806, 28225806, 28225806, 27526882, 23333333, 23333333, 23333333, 23333333, 18817204, 18064516, 18064516, 18064516, 5161290];
+const weekly26 = [18775597, 11150421, 11529372, 10824894, 11999018, 14242475, 20882644, 21668191, 16086609, 19972059, 19813625, 24331183, 23498890, 30051322, 11409359, 23028786, 19000090, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+
+const cumBase = [17053088, 34106176, 51159264, 68212353, 85876845, 107209760, 128542676, 149875592, 171056728, 191327187, 211597646, 231868105, 252138564, 276071458, 301469327, 326867195, 352265064, 378271170, 405088260, 431905350, 458722439, 485539529, 515186969, 544834409, 574481849, 604129289, 635745982, 668150375, 700554768, 732959161, 767073082, 805460822, 843848561, 882236301, 920624041, 952591108, 983488062, 1014385017, 1045281972, 1073990945, 1101058931, 1128126917, 1155194903, 1181519253, 1203381790, 1225244327, 1247106865, 1268969402, 1291755217, 1314694913, 1337634608, 1360574303, 1373682700];
+const cumPlan = [14516129, 31451613, 48387097, 65322581, 82874424, 104124424, 125374424, 146624424, 167903226, 189354839, 210806452, 232258065, 253709677, 279005376, 305838710, 332672043, 359505376, 386741935, 414516129, 442290323, 470064516, 497838710, 528638710, 559438710, 590238710, 621038710, 654838710, 689838710, 724838710, 759838710, 796451613, 837096774, 877741935, 918387097, 959032258, 994838710, 1029838710, 1064838710, 1099838710, 1130967742, 1159193548, 1187419355, 1215645161, 1243172043, 1266505376, 1289838710, 1313172043, 1336505376, 1355322581, 1373387097, 1391451613, 1409516129, 1414677419];
+const cumActual = [18775597, 29926018, 41455390, 52280284, 64279302, 78521777, 99404421, 121072612, 137159221, 157131280, 176944905, 201276088, 224774978, 254826300, 266235659, 289264445, 308264535, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+
+// Forecast data - from week 18 onwards
+const forecastIdx = 17; // week 18 = index 17
+const lastActual = 308264535;
+const ratio = 308264535 / 359505376; // 85.7% of plan achieved through week 17
+
+// Build forecast paths
+const fcPess = cumActual.slice(0, forecastIdx).concat(Array.from({length: 53-forecastIdx}, (_, i) => {
+  const incPlan = cumPlan[forecastIdx + i] - cumPlan[forecastIdx - 1];
+  return lastActual + incPlan * ratio;
+}));
+const fcBase = cumActual.slice(0, forecastIdx).concat(Array.from({length: 53-forecastIdx}, (_, i) => {
+  const incBase = cumBase[forecastIdx + i] - cumBase[forecastIdx - 1];
+  return lastActual + incBase;
+}));
+const fcOpt = cumActual.slice(0, forecastIdx).concat(Array.from({length: 53-forecastIdx}, (_, i) => {
+  const incPlan = cumPlan[forecastIdx + i] - cumPlan[forecastIdx - 1];
+  return lastActual + incPlan;
+}));
+
+// Day of week
+const dowNames = ['Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat','Vasárnap'];
+const dowAvg = [2350, 2070, 1960, 1960, 3500, 4070, 2190]; // in thousands
+
+// Fintech-minimal palette (Linear / Stripe / Mercury vibes)
+const C = {
+  navy:'#09090b',       // true ink black
+  navyLight:'#27272a',  // dark gray
+  gold:'#71717a',       // neutral gray (replaces gold)
+  goldLight:'#a1a1aa',  // lighter gray
+  gray:'#a1a1aa',       // neutral medium gray
+  grayLight:'#d4d4d8',  // light gray
+  good:'#16a34a',       // fintech green
+  warn:'#d97706',       // amber
+  bad:'#dc2626',        // red
+  accent:'#2563eb',     // fintech blue
+  accentLight:'#3b82f6' // lighter blue
+};
+
+const fmtFt = (v) => v == null ? '—' : (v/1e6).toFixed(1) + ' M';
+const fmtPct = (v) => v == null ? '—' : (v*100).toFixed(0) + '%';
+const fmtFtFull = (v) => v == null ? '—' : new Intl.NumberFormat('hu-HU').format(Math.round(v)) + ' Ft';
+
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#71717a';
+Chart.defaults.borderColor = '#e4e4e7';
+
+const baseOptions = {
+  responsive: true, maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#09090b',
+      titleColor: '#fafafa',
+      bodyColor: '#d4d4d8',
+      borderColor: '#09090b',
+      borderWidth: 0,
+      padding: 12,
+      cornerRadius: 8,
+      titleFont: { weight: 600, size: 12, family: "'Inter', sans-serif" },
+      bodyFont: { size: 13, weight: 500, family: "'Inter', sans-serif" },
+      boxPadding: 6,
+      displayColors: true
+    }
+  },
+  scales: {
+    x: {
+      grid: { display: false },
+      ticks: { font: { size: 11, family: "'Inter', sans-serif", weight: 500 }, color: '#71717a' },
+      border: { color: '#e4e4e7' }
+    },
+    y: {
+      grid: { color: '#f1f1f3', drawBorder: false },
+      ticks: { font: { size: 11, family: "'Inter', sans-serif", weight: 500 }, color: '#71717a' },
+      beginAtZero: true,
+      border: { display: false }
+    }
+  }
+};
+
+// Render charts only when their view is shown (lazy init)
+const charts = {};
+
+function initOverviewCharts() {
+  if (charts.revenue) return;
+  charts.revenue = new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: { labels: months, datasets: [
+      { label: '2025 Tény', data: rev25, backgroundColor: C.gray, borderRadius: 4 },
+      { label: '2026 Terv', data: rev26t, backgroundColor: C.gold, borderRadius: 4 },
+      { label: '2026 Tény', data: rev26, backgroundColor: C.navy, borderRadius: 4 }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFt(ctx.raw)} Ft` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6) + ' M' }}}
+    }
+  });
+
+  charts.occ = new Chart(document.getElementById('occChart'), {
+    type: 'line',
+    data: { labels: months, datasets: [
+      { label: '2025 Tény', data: occ25, borderColor: C.gray, borderWidth: 2, tension: 0.35, pointRadius: 3 },
+      { label: '2026 Terv', data: occ26t, borderColor: C.gold, borderWidth: 2, borderDash: [5,5], tension: 0.35, pointRadius: 3 },
+      { label: '2026 Tény', data: occ26, borderColor: C.navy, backgroundColor: 'rgba(14, 42, 71, 0.08)', borderWidth: 3, tension: 0.35, pointRadius: 5, pointBackgroundColor: C.navy, fill: true }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtPct(ctx.raw)}` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v*100)+'%' }, max: 0.85 }}
+    }
+  });
+
+  charts.revpar = new Chart(document.getElementById('revparChart'), {
+    type: 'line',
+    data: { labels: months, datasets: [
+      { label: '2025 Tény', data: revpar25, borderColor: C.gray, borderWidth: 2, tension: 0.35, pointRadius: 3 },
+      { label: '2026 Terv', data: revpar26t, borderColor: C.gold, borderWidth: 2, borderDash: [5,5], tension: 0.35, pointRadius: 3 },
+      { label: '2026 Tény', data: revpar26, borderColor: C.navy, backgroundColor: 'rgba(14, 42, 71, 0.08)', borderWidth: 3, tension: 0.35, pointRadius: 5, pointBackgroundColor: C.navy, fill: true }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFtFull(ctx.raw)}` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1000)+'k' }, beginAtZero: false, suggestedMin: 35000 }}
+    }
+  });
+
+  charts.rooms = new Chart(document.getElementById('roomsChart'), {
+    type: 'bar',
+    data: { labels: months, datasets: [
+      { label: '2025 Tény', data: rooms25, backgroundColor: C.gray, borderRadius: 4 },
+      { label: '2026 Terv', data: rooms26t, backgroundColor: C.gold, borderRadius: 4 },
+      { label: '2026 Tény', data: rooms26, backgroundColor: C.navy, borderRadius: 4 }
+    ]},
+    options: { ...baseOptions, plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw==null?'—':new Intl.NumberFormat('hu-HU').format(ctx.raw)} szoba` }}}}
+  });
+
+  charts.guest = new Chart(document.getElementById('guestChart'), {
+    type: 'line',
+    data: { labels: months, datasets: [
+      { label: '2025 Tény', data: guest25, borderColor: C.gray, borderWidth: 2, tension: 0.35, pointRadius: 3 },
+      { label: '2026 Terv', data: guest26t, borderColor: C.gold, borderWidth: 2, borderDash: [5,5], tension: 0.35, pointRadius: 3 },
+      { label: '2026 Tény', data: guest26, borderColor: C.navy, backgroundColor: 'rgba(14, 42, 71, 0.08)', borderWidth: 3, tension: 0.35, pointRadius: 5, pointBackgroundColor: C.navy, fill: true }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFtFull(ctx.raw)}` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1000)+'k' }, beginAtZero: false, suggestedMin: 18000 }}
+    }
+  });
+}
+
+function initWeeklyCharts() {
+  if (charts.cum) return;
+  charts.cum = new Chart(document.getElementById('cumChart'), {
+    type: 'line',
+    data: { labels: weekLabels, datasets: [
+      { label: '2025 Bázis', data: cumBase, borderColor: C.gray, borderWidth: 2, tension: 0.3, pointRadius: 0 },
+      { label: '2026 Terv', data: cumPlan, borderColor: C.gold, borderWidth: 2, borderDash: [5,5], tension: 0.3, pointRadius: 0 },
+      { label: '2026 Tény', data: cumActual, borderColor: C.navy, backgroundColor: 'rgba(14, 42, 71, 0.1)', borderWidth: 3, tension: 0.3, pointRadius: 0, fill: true }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFt(ctx.raw)} Ft` }}},
+      scales: { x: { ...baseOptions.scales.x, ticks: { ...baseOptions.scales.x.ticks, callback: function(val, idx) { return idx % 4 === 0 ? this.getLabelForValue(val) : ''; }}}, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6).toFixed(0)+' M' }}}
+    }
+  });
+
+  // Weekly closed weeks 1-17
+  const closedWeeks = weekLabels.slice(0, 17);
+  charts.weekly = new Chart(document.getElementById('weeklyChart'), {
+    type: 'bar',
+    data: { labels: closedWeeks, datasets: [
+      { label: '2026 Terv', data: weekly26t.slice(0, 17), backgroundColor: C.gold, borderRadius: 4 },
+      { label: '2026 Tény', data: weekly26.slice(0, 17), backgroundColor: C.navy, borderRadius: 4 }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFt(ctx.raw)} Ft` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6)+' M' }}}
+    }
+  });
+
+  // Gap chart
+  const gaps = weekly26.slice(0, 17).map((v, i) => v - weekly26t[i]);
+  charts.weeklyGap = new Chart(document.getElementById('weeklyGapChart'), {
+    type: 'bar',
+    data: { labels: closedWeeks, datasets: [{
+      data: gaps,
+      backgroundColor: gaps.map(v => v >= 0 ? C.good : C.bad),
+      borderRadius: 4
+    }]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false }, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `Eltérés: ${(ctx.raw/1e6).toFixed(1)} M Ft` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, beginAtZero: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6).toFixed(0)+' M' }}}
+    }
+  });
+
+  // Day of week
+  charts.dow = new Chart(document.getElementById('dowChart'), {
+    type: 'bar',
+    data: { labels: dowNames, datasets: [{
+      data: dowAvg,
+      backgroundColor: dowAvg.map(v => v > 3000 ? C.gold : v > 2200 ? '#d4d4d8' : C.gray),
+      borderRadius: 6,
+      borderWidth: 0
+    }]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false }, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${(ctx.raw/1000).toFixed(2)} M Ft napi átlag` }}},
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1000).toFixed(1)+' M' }}}
+    }
+  });
+
+  // Day of week heatmap cells
+  const dowGrid = document.getElementById('dowGrid');
+  const maxDow = Math.max(...dowAvg);
+  dowGrid.innerHTML = dowNames.map((name, i) => {
+    const v = dowAvg[i];
+    const pct = (v / maxDow * 100).toFixed(0);
+    return `<div class="dow-cell">
+      <div class="dow-name">${name}</div>
+      <div class="dow-value">${(v/1000).toFixed(2)} M</div>
+      <div class="dow-bar" style="width:${pct}%"></div>
+    </div>`;
+  }).join('');
+}
+
+// Segments data 2024 (Apr-Dec)
+const segMonths = ['Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+const segData = {
+  BE:  { name: 'Belföldi egyéni',     color: '#09090b', total: 507972500, monthly: [33662430, 38563945, 50890450, 89436030, 72895280, 36062470, 48899255, 62771010, 74791630] },
+  KE:  { name: 'Külföldi egyéni',     color: '#71717a', total: 456741620, monthly: [28704276, 49532700, 50580615, 63565740, 71641710, 59820260, 63989155, 40262635, 28644530] },
+  KC:  { name: 'Külföldi csoport',    color: '#2563eb', total: 233241225, monthly: [19295302, 24787780, 24033420, 21508195, 44190960, 59837545, 22724465, 7849160, 9014400] },
+  TU:  { name: 'Tulajdonos',          color: '#a1a1aa', total:  11096225, monthly: [   781332,   946530,   866430,   633425,  1147205,  1106960,  1972535,  1325410,  2316395] },
+  BTV: { name: 'Belföldi törzsvendég', color: '#16a34a', total:   8201418, monthly: [  1042618,  1456400,   702800,   312200,  1530400,   599400,   667900,   478600,  1411100] },
+  KTV: { name: 'Külföldi törzsvendég', color: '#71717a', total:   3735695, monthly: [   682252,        0,        0,        0,   934790,  1023350,   687825,   407478,        0] },
+  BC:  { name: 'Belföldi csoport',     color: '#d4d4d8', total:    292245, monthly: [        0,        0,        0,        0,        0,        0,        0,        0,   292245] }
+};
+
+function initSegmentCharts() {
+  if (charts.segDonut) return;
+
+  // Donut: revenue mix
+  const donutLabels = Object.keys(segData).map(c => `${c} – ${segData[c].name}`);
+  const donutValues = Object.values(segData).map(s => s.total);
+  const donutColors = Object.values(segData).map(s => s.color);
+
+  charts.segDonut = new Chart(document.getElementById('segDonut'), {
+    type: 'doughnut',
+    data: { labels: donutLabels, datasets: [{ data: donutValues, backgroundColor: donutColors, borderWidth: 2, borderColor: '#fff' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${(ctx.raw/1e6).toFixed(1)} M Ft (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  // RevPAR by segment (precomputed and sorted)
+  const revparData = [
+    { code: 'BC', name: 'Belföldi csoport', revpar: 58449, color: '#d4d4d8' },
+    { code: 'BE', name: 'Belföldi egyéni', revpar: 57463, color: '#09090b' },
+    { code: 'KE', name: 'Külföldi egyéni', revpar: 52925, color: '#71717a' },
+    { code: 'KTV', name: 'Külföldi törzsvendég', revpar: 49821, color: '#71717a' },
+    { code: 'BTV', name: 'Belföldi törzsvendég', revpar: 49101, color: '#16a34a' },
+    { code: 'KC', name: 'Külföldi csoport', revpar: 44924, color: '#2563eb' },
+    { code: 'TU', name: 'Tulajdonos', revpar: 13244, color: '#a1a1aa' }
+  ];
+
+  charts.segRevpar = new Chart(document.getElementById('segRevpar'), {
+    type: 'bar',
+    data: { labels: revparData.map(r => r.code), datasets: [{
+      data: revparData.map(r => r.revpar),
+      backgroundColor: revparData.map(r => r.color),
+      borderRadius: 6
+    }]},
+    options: {
+      ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${revparData[ctx.dataIndex].name}: ${new Intl.NumberFormat('hu-HU').format(ctx.raw)} Ft / szoba` }
+        }
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => (v/1000).toFixed(0)+'k Ft' } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  // Stacked bar: monthly revenue by segment
+  const stackedDatasets = Object.entries(segData).map(([code, s]) => ({
+    label: code,
+    data: s.monthly,
+    backgroundColor: s.color,
+    borderRadius: 2,
+    borderWidth: 0
+  }));
+
+  charts.segStacked = new Chart(document.getElementById('segStacked'), {
+    type: 'bar',
+    data: { labels: segMonths, datasets: stackedDatasets },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label} (${segData[ctx.dataset.label].name}): ${(ctx.raw/1e6).toFixed(1)} M Ft` }
+        }
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6)+' M' } }
+      }
+    }
+  });
+}
+
+const segRoomsTotals = { BE: 8840, KE: 8630, KC: 5192, TU: 838, BTV: 167, KTV: 75, BC: 5 };
+
+// 2025 segments data (full year, 12 months)
+const seg25Months = ['Jan','Feb','Már','Ápr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
+const seg25Data = {
+  BE:  { name: 'Belföldi egyéni',     color: '#09090b', total: 615000000, monthly: [40460000,49310000,49370000,45510000,42320000,41660000,56910000,65870000,31150000,58960000,60230000,73260000] },
+  KE:  { name: 'Külföldi egyéni',     color: '#71717a', total: 556230000, monthly: [32490000,40380000,32110000,49420000,57980000,53840000,59890000,74730000,44760000,56490000,32500000,21640000] },
+  KC:  { name: 'Külföldi csoport',    color: '#2563eb', total: 283650000, monthly: [3500000, 3290000,15390000,20130000,26040000,37610000,35930000,41430000,65580000,14360000, 6560000,13830000] },
+  TU:  { name: 'Tulajdonos',          color: '#a1a1aa', total:  16190000, monthly: [2240000,  950000, 1490000, 1350000, 1150000, 1770000,  780000,  760000,  360000, 1270000, 3020000, 1050000] },
+  BC:  { name: 'Belföldi csoport',    color: '#d4d4d8', total:  12060000, monthly: [4000000,       0,       0, 1900000, 1910000, 3130000,       0,       0,       0,       0, 1110000,       0] },
+  BTV: { name: 'Belföldi törzsvendég', color: '#16a34a', total:   3210000, monthly: [ 100000,  100000,  290000,  130000,  370000,  450000,  150000,  350000,  730000,       0,       0,  540000] },
+  KTV: { name: 'Külföldi törzsvendég', color: '#71717a', total:   4460000, monthly: [      0,       0,   50000,   90000,       0,       0, 1770000,  580000, 1580000,  370000,       0,       0] }
+};
+
+function initSegment2025Charts() {
+  if (charts.seg25Donut) return;
+
+  // Donut 2025
+  charts.seg25Donut = new Chart(document.getElementById('seg25Donut'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(seg25Data).map(c => `${c} – ${seg25Data[c].name}`),
+      datasets: [{ data: Object.values(seg25Data).map(s => s.total), backgroundColor: Object.values(seg25Data).map(s => s.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${(ctx.raw/1e6).toFixed(1)} M Ft (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  // RevPAR 2025
+  const revpar25Data = [
+    { code: 'KTV', name: 'Külföldi törzsvendég', revpar: 60212, color: '#71717a' },
+    { code: 'BE',  name: 'Belföldi egyéni',      revpar: 57888, color: '#09090b' },
+    { code: 'KE',  name: 'Külföldi egyéni',      revpar: 54624, color: '#71717a' },
+    { code: 'BTV', name: 'Belföldi törzsvendég', revpar: 49445, color: '#16a34a' },
+    { code: 'KC',  name: 'Külföldi csoport',     revpar: 47577, color: '#2563eb' },
+    { code: 'BC',  name: 'Belföldi csoport',     revpar: 32147, color: '#d4d4d8' },
+    { code: 'TU',  name: 'Tulajdonos',           revpar: 14798, color: '#a1a1aa' }
+  ];
+  charts.seg25Revpar = new Chart(document.getElementById('seg25Revpar'), {
+    type: 'bar',
+    data: { labels: revpar25Data.map(r => r.code), datasets: [{ data: revpar25Data.map(r => r.revpar), backgroundColor: revpar25Data.map(r => r.color), borderRadius: 6 }]},
+    options: {
+      ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${revpar25Data[ctx.dataIndex].name}: ${new Intl.NumberFormat('hu-HU').format(ctx.raw)} Ft / szoba` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => (v/1000).toFixed(0)+'k Ft' } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  // Stacked 2025
+  charts.seg25Stacked = new Chart(document.getElementById('seg25Stacked'), {
+    type: 'bar',
+    data: {
+      labels: seg25Months,
+      datasets: Object.entries(seg25Data).map(([code, s]) => ({ label: code, data: s.monthly, backgroundColor: s.color, borderRadius: 2, borderWidth: 0 }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label} (${seg25Data[ctx.dataset.label].name}): ${(ctx.raw/1e6).toFixed(1)} M Ft` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6)+' M' } }
+      }
+    }
+  });
+}
+
+// 2026 segments data (Jan-Apr)
+const seg26Months = ['Jan','Feb','Már','Ápr'];
+const seg26Data = {
+  BE:  { name: 'Belföldi egyéni',     color: '#09090b', total: 162593000, monthly: [29330000, 43660000, 52840000, 36770000] },
+  KE:  { name: 'Külföldi egyéni',     color: '#71717a', total: 123970000, monthly: [23120000, 30180000, 30460000, 40220000] },
+  KC:  { name: 'Külföldi csoport',    color: '#2563eb', total:  48620000, monthly: [ 9660000,  5450000, 17680000, 15830000] },
+  TU:  { name: 'Tulajdonos',          color: '#a1a1aa', total:   7770000, monthly: [ 2050000,   930000,  2540000,  2240000] },
+  BC:  { name: 'Belföldi csoport',    color: '#d4d4d8', total:   5860000, monthly: [ 5770000,        0,    90000,        0] },
+  KTV: { name: 'Külföldi törzsvendég', color: '#71717a', total:    460000, monthly: [       0,   170000,    40000,   240000] },
+  BTV: { name: 'Belföldi törzsvendég', color: '#16a34a', total:    460000, monthly: [       0,        0,        0,   460000] }
+};
+
+function initSegment2026Charts() {
+  if (charts.seg26Donut) return;
+
+  charts.seg26Donut = new Chart(document.getElementById('seg26Donut'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(seg26Data).map(c => `${c} – ${seg26Data[c].name}`),
+      datasets: [{ data: Object.values(seg26Data).map(s => s.total), backgroundColor: Object.values(seg26Data).map(s => s.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${(ctx.raw/1e6).toFixed(1)} M Ft (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  const revpar26Data = [
+    { code: 'BTV', name: 'Belföldi törzsvendég', revpar: 92731, color: '#16a34a' },
+    { code: 'BE',  name: 'Belföldi egyéni',      revpar: 55379, color: '#09090b' },
+    { code: 'KE',  name: 'Külföldi egyéni',      revpar: 50995, color: '#71717a' },
+    { code: 'KC',  name: 'Külföldi csoport',     revpar: 45782, color: '#2563eb' },
+    { code: 'KTV', name: 'Külföldi törzsvendég', revpar: 41398, color: '#71717a' },
+    { code: 'BC',  name: 'Belföldi csoport',     revpar: 24624, color: '#d4d4d8' },
+    { code: 'TU',  name: 'Tulajdonos',           revpar: 16999, color: '#a1a1aa' }
+  ];
+  charts.seg26Revpar = new Chart(document.getElementById('seg26Revpar'), {
+    type: 'bar',
+    data: { labels: revpar26Data.map(r => r.code), datasets: [{ data: revpar26Data.map(r => r.revpar), backgroundColor: revpar26Data.map(r => r.color), borderRadius: 6 }]},
+    options: {
+      ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${revpar26Data[ctx.dataIndex].name}: ${new Intl.NumberFormat('hu-HU').format(ctx.raw)} Ft / szoba` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => (v/1000).toFixed(0)+'k Ft' } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  charts.seg26Stacked = new Chart(document.getElementById('seg26Stacked'), {
+    type: 'bar',
+    data: {
+      labels: seg26Months,
+      datasets: Object.entries(seg26Data).map(([code, s]) => ({ label: code, data: s.monthly, backgroundColor: s.color, borderRadius: 2, borderWidth: 0 }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label} (${seg26Data[ctx.dataset.label].name}): ${(ctx.raw/1e6).toFixed(1)} M Ft` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6)+' M' } }
+      }
+    }
+  });
+}
+
+// ===== 3-year compare charts =====
+function initCompareApril() {
+  if (charts.cmpAprilSeg) return;
+
+  // April data 3 years (M Ft)
+  const aprilData = {
+    BE:  { '2024': 33.66, '2025': 45.51, '2026': 36.77 },
+    KE:  { '2024': 28.70, '2025': 49.42, '2026': 40.22 },
+    KC:  { '2024': 19.30, '2025': 20.13, '2026': 15.83 },
+    TU:  { '2024': 0.78,  '2025': 1.35,  '2026': 2.24 },
+    BTV: { '2024': 1.04,  '2025': 0.13,  '2026': 0.46 },
+    KTV: { '2024': 0.68,  '2025': 0.09,  '2026': 0.24 },
+    BC:  { '2024': 0,     '2025': 1.90,  '2026': 0 }
+  };
+  const codes = Object.keys(aprilData);
+
+  charts.cmpAprilSeg = new Chart(document.getElementById('cmpAprilSeg'), {
+    type: 'bar',
+    data: {
+      labels: codes,
+      datasets: [
+        { label: '2024', data: codes.map(c => aprilData[c]['2024']), backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2025', data: codes.map(c => aprilData[c]['2025']), backgroundColor: C.gold, borderRadius: 4 },
+        { label: '2026', data: codes.map(c => aprilData[c]['2026']), backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins,
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)} M Ft` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + ' M' } } }
+    }
+  });
+
+  // Mix evolution: line chart with mix % per segment over 3 years
+  const aprilTotals = { '2024': 84.16, '2025': 118.53, '2026': 95.76 };
+  charts.cmpAprilMix = new Chart(document.getElementById('cmpAprilMix'), {
+    type: 'line',
+    data: {
+      labels: ['2024', '2025', '2026'],
+      datasets: [
+        { label: 'BE', data: ['2024','2025','2026'].map(y => aprilData['BE'][y] / aprilTotals[y] * 100), borderColor: '#09090b', borderWidth: 3, tension: 0.2, pointRadius: 5, pointBackgroundColor: '#09090b' },
+        { label: 'KE', data: ['2024','2025','2026'].map(y => aprilData['KE'][y] / aprilTotals[y] * 100), borderColor: '#71717a', borderWidth: 3, tension: 0.2, pointRadius: 5, pointBackgroundColor: '#71717a' },
+        { label: 'KC', data: ['2024','2025','2026'].map(y => aprilData['KC'][y] / aprilTotals[y] * 100), borderColor: '#2563eb', borderWidth: 3, tension: 0.2, pointRadius: 5, pointBackgroundColor: '#2563eb' }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }, beginAtZero: false, suggestedMin: 0, suggestedMax: 50 } }
+    }
+  });
+
+  // Domestic vs Foreign April 3 years
+  const domAprilPct = ['2024','2025','2026'].map(y => (aprilData['BE'][y]+aprilData['BTV'][y]+aprilData['BC'][y]) / aprilTotals[y] * 100);
+  const forAprilPct = ['2024','2025','2026'].map(y => (aprilData['KE'][y]+aprilData['KC'][y]+aprilData['KTV'][y]) / aprilTotals[y] * 100);
+  const tuAprilPct = ['2024','2025','2026'].map(y => aprilData['TU'][y] / aprilTotals[y] * 100);
+
+  charts.cmpAprilDomFor = new Chart(document.getElementById('cmpAprilDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2024', '2025', '2026'],
+      datasets: [
+        { label: 'Belföldi (BE+BTV+BC)', data: domAprilPct, backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi (KE+KC+KTV)', data: forAprilPct, backgroundColor: '#71717a', borderRadius: 4 },
+        { label: 'Tulajdonos', data: tuAprilPct, backgroundColor: '#a1a1aa', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+function initCompareJanApr() {
+  if (charts.cmpJanAprYoy) return;
+
+  // Jan-Apr 2025 vs 2026 by segment (M Ft)
+  const data2025 = { BE: 184.65, KE: 154.40, KC: 42.31, TU: 6.03, BC: 5.90, BTV: 0.62, KTV: 0.14 };
+  const data2026 = { BE: 162.59, KE: 123.97, KC: 48.62, TU: 7.77, BC: 5.86, BTV: 0.46, KTV: 0.46 };
+  const codes = Object.keys(data2025);
+
+  // YoY delta (M Ft)
+  charts.cmpJanAprYoy = new Chart(document.getElementById('cmpJanAprYoy'), {
+    type: 'bar',
+    data: {
+      labels: codes,
+      datasets: [{
+        data: codes.map(c => data2026[c] - data2025[c]),
+        backgroundColor: codes.map(c => (data2026[c] - data2025[c]) >= 0 ? C.good : C.bad),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const c = codes[ctx.dataIndex];
+            const v25 = data2025[c]; const v26 = data2026[c];
+            const yoy = v25 ? (v26/v25 - 1) * 100 : 0;
+            return `${c}: ${(v26-v25).toFixed(1)} M Ft (${yoy >= 0 ? '+' : ''}${yoy.toFixed(1)}%) | 2025: ${v25.toFixed(1)} M → 2026: ${v26.toFixed(1)} M`;
+          }}
+        }
+      },
+      scales: {
+        x: baseOptions.scales.x,
+        y: { ...baseOptions.scales.y, beginAtZero: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v.toFixed(0) + ' M' }}
+      }
+    }
+  });
+
+  // Mix change 2025 vs 2026 (Jan-Apr)
+  const total25 = Object.values(data2025).reduce((a,b)=>a+b, 0);
+  const total26 = Object.values(data2026).reduce((a,b)=>a+b, 0);
+  const mix25 = codes.map(c => data2025[c] / total25 * 100);
+  const mix26 = codes.map(c => data2026[c] / total26 * 100);
+
+  charts.cmpJanAprMix = new Chart(document.getElementById('cmpJanAprMix'), {
+    type: 'bar',
+    data: {
+      labels: codes,
+      datasets: [
+        { label: '2025 jan–ápr', data: mix25, backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2026 jan–ápr', data: mix26, backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}}
+    }
+  });
+
+  // Domestic vs Foreign Jan-Apr
+  const dom25 = (data2025.BE + data2025.BTV + data2025.BC) / total25 * 100;
+  const for25 = (data2025.KE + data2025.KC + data2025.KTV) / total25 * 100;
+  const tu25  = data2025.TU / total25 * 100;
+  const dom26 = (data2026.BE + data2026.BTV + data2026.BC) / total26 * 100;
+  const for26 = (data2026.KE + data2026.KC + data2026.KTV) / total26 * 100;
+  const tu26  = data2026.TU / total26 * 100;
+
+  charts.cmpJanAprDomFor = new Chart(document.getElementById('cmpJanAprDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2025 jan–ápr', '2026 jan–ápr'],
+      datasets: [
+        { label: 'Belföldi (BE+BTV+BC)', data: [dom25, dom26], backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi (KE+KC+KTV)', data: [for25, for26], backgroundColor: '#71717a', borderRadius: 4 },
+        { label: 'Tulajdonos', data: [tu25, tu26], backgroundColor: '#a1a1aa', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+function initCompareCharts() {
+  if (charts.cmpYoy) return;
+
+  // YoY change bar chart
+  const yoyData = [
+    { code: 'BC',  yoy: 2679.3, label: '+2 679%', size: 0.3 },
+    { code: 'KTV', yoy: 17.9,   label: '+17,9%',  size: 3.7 },
+    { code: 'KC',  yoy: 12.1,   label: '+12,1%',  size: 233.2 },
+    { code: 'TU',  yoy: 3.7,    label: '+3,7%',   size: 11.1 },
+    { code: 'KE',  yoy: -1.2,   label: '−1,2%',   size: 456.7 },
+    { code: 'BE',  yoy: -6.3,   label: '−6,3%',   size: 508.0 },
+    { code: 'BTV', yoy: -66.8,  label: '−66,8%',  size: 8.2 }
+  ];
+  // Cap BC growth for visual clarity
+  const yoyDisplay = yoyData.map(d => ({ ...d, displayYoy: d.yoy > 100 ? 100 : d.yoy }));
+
+  charts.cmpYoy = new Chart(document.getElementById('cmpYoy'), {
+    type: 'bar',
+    data: {
+      labels: yoyDisplay.map(d => d.code),
+      datasets: [{
+        data: yoyDisplay.map(d => d.displayYoy),
+        backgroundColor: yoyDisplay.map(d => d.yoy >= 0 ? C.good : C.bad),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const d = yoyData[ctx.dataIndex];
+            return `${d.code}: ${d.label} (2024: ${d.size.toFixed(1)} M Ft → 2025: ${(d.size * (1 + d.yoy/100)).toFixed(1)} M Ft)`;
+          }}
+        }
+      },
+      scales: {
+        x: baseOptions.scales.x,
+        y: { ...baseOptions.scales.y, beginAtZero: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }, suggestedMax: 100, suggestedMin: -80 }
+      }
+    }
+  });
+
+  // Mix change (grouped bar)
+  charts.cmpMix = new Chart(document.getElementById('cmpMix'), {
+    type: 'bar',
+    data: {
+      labels: ['BE', 'KE', 'KC', 'TU', 'BC', 'BTV', 'KTV'],
+      datasets: [
+        { label: '2024', data: [41.6, 37.4, 19.1, 0.9, 0.0, 0.7, 0.3], backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2025', data: [39.2, 37.1, 21.5, 0.9, 0.7, 0.2, 0.4], backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}% részesedés` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}}
+    }
+  });
+
+  // Domestic vs Foreign mix
+  charts.cmpDomFor = new Chart(document.getElementById('cmpDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2024 (ápr–dec)', '2025 (ápr–dec)'],
+      datasets: [
+        { label: 'Belföldi (BE+BTV+BC)', data: [42.3, 40.0], backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi (KE+KC+KTV)', data: [56.8, 59.0], backgroundColor: '#71717a', borderRadius: 4 },
+        { label: 'Tulajdonos', data: [0.9, 0.9], backgroundColor: '#a1a1aa', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+// ===== Nationality 2024 data =====
+const nat24Months = ['Ápr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
+const nat24Data = {
+  'H':   { name: 'Magyarország',  flag: '🇭🇺', color: '#09090b', total: 18201, monthly: [1255, 1552, 1797, 2943, 2231, 1179, 1980, 2715, 2549] },
+  'D':   { name: 'Németország',   flag: '🇩🇪', color: '#71717a', total:  9105, monthly: [ 511, 1030, 1067, 1105, 2017, 2127,  942,  186,  120] },
+  'CS':  { name: 'Csehország',    flag: '🇨🇿', color: '#2563eb', total:  5475, monthly: [ 221,  606,  581,  993,  776,  867,  875,  410,  146] },
+  'A':   { name: 'Ausztria',      flag: '🇦🇹', color: '#d4d4d8', total:  3425, monthly: [ 450,  371,  451,  203,  145,  392,  533,  574,  306] },
+  'SK':  { name: 'Szlovákia',     flag: '🇸🇰', color: '#16a34a', total:  2802, monthly: [ 143,  243,  470,  558,  503,  278,  272,  252,   83] },
+  'RUS': { name: 'Oroszország',   flag: '🇷🇺', color: '#71717a', total:   773, monthly: [  84,   72,   90,   54,   73,   90,  140,   80,   90] },
+  'OTHER': { name: 'Egyéb',       flag: '🌐', color: '#a1a1aa', total:  5103, monthly: [ 599,  654,  631,  446,  628,  522,  671,  529,  423] }
+};
+const nat24Dom = [1255, 1552, 1797, 2943, 2231, 1179, 1980, 2715, 2549];
+const nat24For = [2008, 2976, 3290, 3359, 4142, 4276, 3433, 2031, 1168];
+
+function initNationality24Charts() {
+  if (charts.natDonut24) return;
+
+  // Donut: country mix
+  charts.natDonut24 = new Chart(document.getElementById('natDonut24'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.values(nat24Data).map(c => `${c.flag} ${c.name}`),
+      datasets: [{ data: Object.values(nat24Data).map(c => c.total), backgroundColor: Object.values(nat24Data).map(c => c.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${ctx.raw.toLocaleString('hu-HU')} éj (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  // Top countries horizontal bar (top 12)
+  const topCountries = [
+    { code: '🇭🇺 H',  name: 'Magyarország', nights: 18201 },
+    { code: '🇩🇪 D',  name: 'Németország',  nights:  9105 },
+    { code: '🇨🇿 CS', name: 'Csehország',   nights:  5475 },
+    { code: '🇦🇹 A',  name: 'Ausztria',     nights:  3425 },
+    { code: '🇸🇰 SK', name: 'Szlovákia',    nights:  2802 },
+    { code: '🇷🇺 RUS',name: 'Oroszország',  nights:   773 },
+    { code: '🇸🇮 SLO',name: 'Szlovénia',    nights:   685 },
+    { code: '🇨🇭 CH', name: 'Svájc',        nights:   637 },
+    { code: '🇪🇪 EST',name: 'Észtország',   nights:   571 },
+    { code: '🇵🇱 PL', name: 'Lengyelország',nights:   526 },
+    { code: '🇺🇦 UKR',name: 'Ukrajna',      nights:   415 },
+    { code: '🇷🇴 RO', name: 'Románia',      nights:   310 }
+  ];
+  charts.natTop24 = new Chart(document.getElementById('natTop24'), {
+    type: 'bar',
+    data: { labels: topCountries.map(c => c.code), datasets: [{ data: topCountries.map(c => c.nights), backgroundColor: topCountries.map((c, i) => i < 5 ? C.gold : C.gray), borderRadius: 4 }]},
+    options: {
+      ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${topCountries[ctx.dataIndex].name}: ${ctx.raw.toLocaleString('hu-HU')} vendégéjszaka` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => v.toLocaleString('hu-HU') } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  // Stacked monthly
+  charts.natStacked24 = new Chart(document.getElementById('natStacked24'), {
+    type: 'bar',
+    data: {
+      labels: nat24Months,
+      datasets: Object.entries(nat24Data).map(([code, c]) => ({ label: `${c.flag} ${code}`, data: c.monthly, backgroundColor: c.color, borderRadius: 2, _country: c.name }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset._country}: ${ctx.raw.toLocaleString('hu-HU')} éj` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v.toLocaleString('hu-HU') } }
+      }
+    }
+  });
+
+  // Domestic vs Foreign monthly mix
+  const domPct = nat24Dom.map((d, i) => d / (d + nat24For[i]) * 100);
+  const forPct = nat24For.map((f, i) => f / (nat24Dom[i] + f) * 100);
+  charts.natDomFor24 = new Chart(document.getElementById('natDomFor24'), {
+    type: 'bar',
+    data: {
+      labels: nat24Months,
+      datasets: [
+        { label: 'Belföldi', data: domPct, backgroundColor: '#09090b', borderRadius: 4, _raw: nat24Dom },
+        { label: 'Külföldi', data: forPct, backgroundColor: '#71717a', borderRadius: 4, _raw: nat24For }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}% (${ctx.dataset._raw[ctx.dataIndex].toLocaleString('hu-HU')} éj)` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+// ===== Nationality 2025 data =====
+const nat25Months = ['Jan','Feb','Már','Ápr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
+const nat25Data = {
+  'H':   { name: 'Magyarország',  flag: '🇭🇺', color: '#09090b', total: 22894, monthly: [1796,2176,2039,1600,1438,1714,1989,1911, 965,2233,2519,2514] },
+  'D':   { name: 'Németország',   flag: '🇩🇪', color: '#71717a', total:  9737, monthly: [ 284, 242, 566, 669, 601,1339,1259,1620,2101, 656, 227, 173] },
+  'CS':  { name: 'Csehország',    flag: '🇨🇿', color: '#2563eb', total:  6004, monthly: [ 117, 360, 293, 382, 805, 603, 780, 993, 527, 773, 372,   0] },
+  'A':   { name: 'Ausztria',      flag: '🇦🇹', color: '#d4d4d8', total:  4017, monthly: [ 310, 417, 387, 421, 297, 444, 200, 175, 380, 408, 370, 208] },
+  'SK':  { name: 'Szlovákia',     flag: '🇸🇰', color: '#16a34a', total:  3659, monthly: [ 254, 211, 191, 378, 422, 441, 423, 393, 315, 198, 288, 145] },
+  'RUS': { name: 'Oroszország',   flag: '🇷🇺', color: '#71717a', total:  1114, monthly: [   0,   0,   0,   0,  91, 113,  92, 168, 181, 174, 195, 100] },
+  'OTHER': { name: 'Egyéb',       flag: '🌐', color: '#a1a1aa', total:  6412, monthly: [ 545, 583, 479, 848, 908, 573, 412, 461, 337, 556, 288, 421] }
+};
+const nat25Dom = [1796,2176,2039,1600,1438,1714,1989,1911, 965,2233,2519,2514];
+const nat25For = [1510,1813,1916,2698,3124,3513,3166,3810,3841,2765,1740,1047];
+
+function initNationality25Charts() {
+  if (charts.natDonut25) return;
+
+  charts.natDonut25 = new Chart(document.getElementById('natDonut25'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.values(nat25Data).map(c => `${c.flag} ${c.name}`),
+      datasets: [{ data: Object.values(nat25Data).map(c => c.total), backgroundColor: Object.values(nat25Data).map(c => c.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${ctx.raw.toLocaleString('hu-HU')} éj (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  const top25 = [
+    { code:'🇭🇺 H',name:'Magyarország',n:22894 },{ code:'🇩🇪 D',name:'Németország',n:9737 },
+    { code:'🇨🇿 CS',name:'Csehország',n:6004 },{ code:'🇦🇹 A',name:'Ausztria',n:4017 },
+    { code:'🇸🇰 SK',name:'Szlovákia',n:3659 },{ code:'🇷🇺 RUS',name:'Oroszország',n:1114 },
+    { code:'🇸🇮 SLO',name:'Szlovénia',n:1101 },{ code:'🇨🇭 CH',name:'Svájc',n:860 },
+    { code:'🇪🇪 EST',name:'Észtország',n:635 },{ code:'🇺🇦 UKR',name:'Ukrajna',n:558 },
+    { code:'🇭🇷 CR',name:'Horvátország',n:554 },{ code:'🇵🇱 PL',name:'Lengyelország',n:432 }
+  ];
+  charts.natTop25 = new Chart(document.getElementById('natTop25'), {
+    type: 'bar',
+    data: { labels: top25.map(c => c.code), datasets: [{ data: top25.map(c => c.n), backgroundColor: top25.map((c, i) => i < 5 ? C.gold : C.gray), borderRadius: 4 }]},
+    options: { ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${top25[ctx.dataIndex].name}: ${ctx.raw.toLocaleString('hu-HU')} vendégéjszaka` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => v.toLocaleString('hu-HU') } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  charts.natStacked25 = new Chart(document.getElementById('natStacked25'), {
+    type: 'bar',
+    data: {
+      labels: nat25Months,
+      datasets: Object.entries(nat25Data).map(([code, c]) => ({ label: `${c.flag} ${code}`, data: c.monthly, backgroundColor: c.color, borderRadius: 2, _country: c.name }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset._country}: ${ctx.raw.toLocaleString('hu-HU')} éj` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v.toLocaleString('hu-HU') } }
+      }
+    }
+  });
+
+  const domPct = nat25Dom.map((d, i) => d / (d + nat25For[i]) * 100);
+  const forPct = nat25For.map((f, i) => f / (nat25Dom[i] + f) * 100);
+  charts.natDomFor25 = new Chart(document.getElementById('natDomFor25'), {
+    type: 'bar',
+    data: {
+      labels: nat25Months,
+      datasets: [
+        { label: 'Belföldi', data: domPct, backgroundColor: '#09090b', borderRadius: 4, _raw: nat25Dom },
+        { label: 'Külföldi', data: forPct, backgroundColor: '#71717a', borderRadius: 4, _raw: nat25For }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}% (${ctx.dataset._raw[ctx.dataIndex].toLocaleString('hu-HU')} éj)` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+// ===== Nationality 2026 data (Jan-Apr) =====
+const nat26Months = ['Jan','Feb','Már','Ápr'];
+const nat26Data = {
+  'H':   { name: 'Magyarország',  flag: '🇭🇺', color: '#09090b', total: 6944, monthly: [1516, 1744, 2285, 1399] },
+  'D':   { name: 'Németország',   flag: '🇩🇪', color: '#71717a', total: 1426, monthly: [ 333,  142,  493,  458] },
+  'A':   { name: 'Ausztria',      flag: '🇦🇹', color: '#d4d4d8', total: 1364, monthly: [ 278,  325,  451,  310] },
+  'CS':  { name: 'Csehország',    flag: '🇨🇿', color: '#2563eb', total:  879, monthly: [  52,  233,  116,  478] },
+  'SK':  { name: 'Szlovákia',     flag: '🇸🇰', color: '#16a34a', total:  826, monthly: [ 200,  254,  177,  195] },
+  'RUS': { name: 'Oroszország',   flag: '🇷🇺', color: '#71717a', total:  395, monthly: [ 100,   82,  107,  106] },
+  'OTHER': { name: 'Egyéb',       flag: '🌐', color: '#a1a1aa', total: 2004, monthly: [ 386,  516,  545,  557] }
+};
+const nat26Dom = [1516, 1744, 2285, 1399];
+const nat26For = [1349, 1552, 1889, 2104];
+
+function initNationality26Charts() {
+  if (charts.natDonut26) return;
+
+  charts.natDonut26 = new Chart(document.getElementById('natDonut26'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.values(nat26Data).map(c => `${c.flag} ${c.name}`),
+      datasets: [{ data: Object.values(nat26Data).map(c => c.total), backgroundColor: Object.values(nat26Data).map(c => c.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 }, boxWidth: 12, padding: 10 } },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const total = ctx.dataset.data.reduce((a,b) => a+b, 0);
+            return `${ctx.label}: ${ctx.raw.toLocaleString('hu-HU')} éj (${(ctx.raw/total*100).toFixed(1)}%)`;
+          }}
+        }
+      }
+    }
+  });
+
+  const top26 = [
+    { code:'🇭🇺 H',name:'Magyarország',n:6944 },{ code:'🇩🇪 D',name:'Németország',n:1426 },
+    { code:'🇦🇹 A',name:'Ausztria',n:1364 },{ code:'🇨🇿 CS',name:'Csehország',n:879 },
+    { code:'🇸🇰 SK',name:'Szlovákia',n:826 },{ code:'🇸🇮 SLO',name:'Szlovénia',n:522 },
+    { code:'🇷🇺 RUS',name:'Oroszország',n:395 },{ code:'🇭🇷 CR',name:'Horvátország',n:204 },
+    { code:'🇪🇪 EST',name:'Észtország',n:204 },{ code:'🇨🇭 CH',name:'Svájc',n:183 },
+    { code:'🇮🇹 I',name:'Olaszország',n:163 },{ code:'🇨🇳 CHN',name:'Kína',n:129 }
+  ];
+  charts.natTop26 = new Chart(document.getElementById('natTop26'), {
+    type: 'bar',
+    data: { labels: top26.map(c => c.code), datasets: [{ data: top26.map(c => c.n), backgroundColor: top26.map((c, i) => i < 5 ? C.gold : C.gray), borderRadius: 4 }]},
+    options: { ...baseOptions, indexAxis: 'y',
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${top26[ctx.dataIndex].name}: ${ctx.raw.toLocaleString('hu-HU')} vendégéjszaka` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, grid: { color: '#f1f1f3' }, ticks: { ...baseOptions.scales.x.ticks, callback: (v) => v.toLocaleString('hu-HU') } },
+        y: { ...baseOptions.scales.y, grid: { display: false } }
+      }
+    }
+  });
+
+  charts.natStacked26 = new Chart(document.getElementById('natStacked26'), {
+    type: 'bar',
+    data: {
+      labels: nat26Months,
+      datasets: Object.entries(nat26Data).map(([code, c]) => ({ label: `${c.flag} ${code}`, data: c.monthly, backgroundColor: c.color, borderRadius: 2, _country: c.name }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset._country}: ${ctx.raw.toLocaleString('hu-HU')} éj` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v.toLocaleString('hu-HU') } }
+      }
+    }
+  });
+}
+
+// ===== Nationality compare charts (3-year) =====
+function initNatCompareApril() {
+  if (charts.natCmpAprilSeg) return;
+
+  // April 3-year data for top 5 markets
+  const aprilData = [
+    { code: '🇭🇺 H',  '2024':1255, '2025':1600, '2026':1399 },
+    { code: '🇩🇪 D',  '2024': 511, '2025': 669, '2026': 458 },
+    { code: '🇨🇿 CS', '2024': 221, '2025': 382, '2026': 478 },
+    { code: '🇦🇹 A',  '2024': 450, '2025': 421, '2026': 310 },
+    { code: '🇸🇰 SK', '2024': 143, '2025': 378, '2026': 195 }
+  ];
+
+  charts.natCmpAprilSeg = new Chart(document.getElementById('natCmpAprilSeg'), {
+    type: 'bar',
+    data: {
+      labels: aprilData.map(d => d.code),
+      datasets: [
+        { label: '2024', data: aprilData.map(d => d['2024']), backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2025', data: aprilData.map(d => d['2025']), backgroundColor: C.gold, borderRadius: 4 },
+        { label: '2026', data: aprilData.map(d => d['2026']), backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins,
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString('hu-HU')} éj` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v.toLocaleString('hu-HU') }}}
+    }
+  });
+
+  // April mix evolution lines
+  const totals = { '2024':3263, '2025':4298, '2026':3503 };
+  charts.natCmpAprilMix = new Chart(document.getElementById('natCmpAprilMix'), {
+    type: 'line',
+    data: {
+      labels: ['2024', '2025', '2026'],
+      datasets: aprilData.slice(0, 4).map((d, i) => ({
+        label: d.code,
+        data: ['2024','2025','2026'].map(y => d[y] / totals[y] * 100),
+        borderColor: ['#09090b','#71717a','#2563eb','#d4d4d8'][i],
+        borderWidth: 3, tension: 0.2, pointRadius: 5
+      }))
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }, beginAtZero: false, suggestedMin: 0, suggestedMax: 50 } }
+    }
+  });
+
+  // Domestic vs foreign April 3 years
+  // 2024: 1255 dom, 2008 for. 2025: 1600 dom, 2698 for. 2026: 1399 dom, 2104 for
+  charts.natCmpAprilDomFor = new Chart(document.getElementById('natCmpAprilDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2024', '2025', '2026'],
+      datasets: [
+        { label: 'Belföldi', data: [38.5, 37.2, 39.9], backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi', data: [61.5, 62.8, 60.1], backgroundColor: '#71717a', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+function initNatCompareJanApr() {
+  if (charts.natCmpJanAprYoy) return;
+
+  // Jan-Apr 2025 vs 2026 by top markets
+  const data = [
+    { code: 'HU',  name:'Magyarország', y2025: 7611, y2026: 6944, color: '#09090b' },
+    { code: 'DE',  name:'Németország',  y2025: 1761, y2026: 1426, color: '#71717a' },
+    { code: 'AT',  name:'Ausztria',     y2025: 1535, y2026: 1364, color: '#d4d4d8' },
+    { code: 'CZ',  name:'Csehország',   y2025: 1152, y2026:  879, color: '#2563eb' },
+    { code: 'SK',  name:'Szlovákia',    y2025: 1034, y2026:  826, color: '#16a34a' },
+    { code: 'SI',  name:'Szlovénia',    y2025:  231, y2026:  522, color: '#7d8597' },
+    { code: 'RU',  name:'Oroszország',  y2025:   80, y2026:  395, color: '#71717a' },
+    { code: 'EE',  name:'Észtország',   y2025:   30, y2026:  204, color: '#a1a1aa' }
+  ].map(c => ({ ...c, yoy: ((c.y2026/c.y2025 - 1) * 100), delta: c.y2026 - c.y2025 }));
+
+  // Cap super-high % for visualization
+  const yoyDisplay = data.map(d => ({ ...d, displayYoy: d.yoy > 200 ? 200 : d.yoy }));
+
+  charts.natCmpJanAprYoy = new Chart(document.getElementById('natCmpJanAprYoy'), {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.code),
+      datasets: [{
+        data: yoyDisplay.map(d => d.displayYoy),
+        backgroundColor: yoyDisplay.map(d => d.yoy >= 0 ? C.good : C.bad),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const c = data[ctx.dataIndex];
+            return `${c.name}: ${c.yoy >= 0 ? '+' : ''}${c.yoy.toFixed(1)}% (Δ ${c.delta >= 0 ? '+' : ''}${c.delta} éj | 2025: ${c.y2025} → 2026: ${c.y2026})`;
+          }}
+        }
+      },
+      scales: {
+        x: baseOptions.scales.x,
+        y: { ...baseOptions.scales.y, beginAtZero: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }, suggestedMax: 200, suggestedMin: -50 }
+      }
+    }
+  });
+
+  // Mix change
+  const total25 = 15548;
+  const total26 = 13838;
+  const mix25 = data.map(d => d.y2025 / total25 * 100);
+  const mix26 = data.map(d => d.y2026 / total26 * 100);
+
+  charts.natCmpJanAprMix = new Chart(document.getElementById('natCmpJanAprMix'), {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.code),
+      datasets: [
+        { label: '2025 jan–ápr', data: mix25, backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2026 jan–ápr', data: mix26, backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}}
+    }
+  });
+
+  // Domestic vs Foreign
+  charts.natCmpJanAprDomFor = new Chart(document.getElementById('natCmpJanAprDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2025 jan–ápr', '2026 jan–ápr'],
+      datasets: [
+        { label: 'Belföldi', data: [49.0, 50.2], backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi', data: [51.0, 49.8], backgroundColor: '#71717a', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+function initNatCompareCharts() {
+  if (charts.natCmpYoy) return;
+
+  // YoY changes Apr-Dec
+  const compareData = [
+    { code: 'HU',  name:'Magyarország', y2024: 18201, y2025: 16883, color:'#09090b' },
+    { code: 'DE',  name:'Németország',  y2024:  9105, y2025:  8645, color:'#71717a' },
+    { code: 'CZ',  name:'Csehország',   y2024:  5475, y2025:  5299, color:'#2563eb' },
+    { code: 'SK',  name:'Szlovákia',    y2024:  2802, y2025:  3003, color:'#16a34a' },
+    { code: 'AT',  name:'Ausztria',     y2024:  3425, y2025:  2903, color:'#d4d4d8' },
+    { code: 'RU',  name:'Oroszország',  y2024:   773, y2025:   872, color:'#71717a' },
+    { code: 'SI',  name:'Szlovénia',    y2024:   685, y2025:   769, color:'#7d8597' },
+    { code: 'CH',  name:'Svájc',        y2024:   637, y2025:   656, color:'#a37e3a' },
+    { code: 'EE',  name:'Észtország',   y2024:   571, y2025:   635, color:'#a1a1aa' },
+    { code: 'PL',  name:'Lengyelország',y2024:   526, y2025:   397, color:'#bca77d' }
+  ].map(c => ({ ...c, yoy: ((c.y2025/c.y2024 - 1) * 100), delta: c.y2025 - c.y2024 }));
+
+  charts.natCmpYoy = new Chart(document.getElementById('natCmpYoy'), {
+    type: 'bar',
+    data: {
+      labels: compareData.map(c => c.code),
+      datasets: [{
+        data: compareData.map(c => c.yoy),
+        backgroundColor: compareData.map(c => c.yoy >= 0 ? C.good : C.bad),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: false },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => {
+            const c = compareData[ctx.dataIndex];
+            return `${c.name}: ${c.yoy >= 0 ? '+' : ''}${c.yoy.toFixed(1)}% (Δ ${c.delta >= 0 ? '+' : ''}${c.delta} éj)`;
+          }}
+        }
+      },
+      scales: {
+        x: baseOptions.scales.x,
+        y: { ...baseOptions.scales.y, beginAtZero: true, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+
+  // Mix change
+  const total24 = 44884;
+  const total25 = 42587;
+  const mix24 = compareData.map(c => c.y2024 / total24 * 100);
+  const mix25 = compareData.map(c => c.y2025 / total25 * 100);
+
+  charts.natCmpMix = new Chart(document.getElementById('natCmpMix'), {
+    type: 'bar',
+    data: {
+      labels: compareData.map(c => c.code),
+      datasets: [
+        { label: '2024', data: mix24, backgroundColor: C.gray, borderRadius: 4 },
+        { label: '2025', data: mix25, backgroundColor: C.navy, borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: { x: baseOptions.scales.x, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}}
+    }
+  });
+
+  // Domestic vs Foreign
+  charts.natCmpDomFor = new Chart(document.getElementById('natCmpDomFor'), {
+    type: 'bar',
+    data: {
+      labels: ['2024 (ápr–dec)', '2025 (ápr–dec)'],
+      datasets: [
+        { label: 'Belföldi', data: [40.6, 39.6], backgroundColor: '#09090b', borderRadius: 4 },
+        { label: 'Külföldi', data: [59.4, 60.4], backgroundColor: '#71717a', borderRadius: 4 }
+      ]
+    },
+    options: {
+      ...baseOptions,
+      plugins: { ...baseOptions.plugins, legend: { display: true, position: 'top' },
+        tooltip: { ...baseOptions.plugins.tooltip,
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }}
+      },
+      scales: {
+        x: { ...baseOptions.scales.x, stacked: true },
+        y: { ...baseOptions.scales.y, stacked: true, max: 100, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => v + '%' }}
+      }
+    }
+  });
+}
+
+function initForecastCharts() {
+  if (charts.forecast) return;
+  charts.forecast = new Chart(document.getElementById('forecastChart'), {
+    type: 'line',
+    data: { labels: weekLabels, datasets: [
+      { label: '2026 Terv', data: cumPlan, borderColor: C.gold, borderWidth: 2, borderDash: [5,5], tension: 0.3, pointRadius: 0 },
+      { label: 'Tény (eddig)', data: cumActual, borderColor: C.navy, borderWidth: 4, tension: 0.3, pointRadius: 0 },
+      { label: 'Pesszimista', data: fcPess, borderColor: C.bad, borderWidth: 2, borderDash: [3,3], tension: 0.3, pointRadius: 0 },
+      { label: 'Bázis', data: fcBase, borderColor: C.warn, borderWidth: 2, borderDash: [3,3], tension: 0.3, pointRadius: 0 },
+      { label: 'Optimista', data: fcOpt, borderColor: C.good, borderWidth: 2, borderDash: [3,3], tension: 0.3, pointRadius: 0 }
+    ]},
+    options: { ...baseOptions,
+      plugins: { ...baseOptions.plugins, tooltip: { ...baseOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtFt(ctx.raw)} Ft` }}},
+      scales: { x: { ...baseOptions.scales.x, ticks: { callback: function(val, idx) { return idx % 4 === 0 ? this.getLabelForValue(val) : ''; }}}, y: { ...baseOptions.scales.y, ticks: { ...baseOptions.scales.y.ticks, callback: (v) => (v/1e6).toFixed(0)+' M' }}}
+    }
+  });
+}
+
+// Navigation
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const view = btn.dataset.view;
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + view).classList.add('active');
+    if (view === 'overview') initOverviewCharts();
+    if (view === 'weekly') initWeeklyCharts();
+    if (view === 'forecast') initForecastCharts();
+    if (view === 'segments') initSegmentCharts();
+    if (view === 'nations') initNationality24Charts();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Nationality year tab switching
+document.querySelectorAll('.nat-year-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const year = btn.dataset.natyear;
+    document.querySelectorAll('.nat-year-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.nat-year-view').forEach(v => v.style.display = 'none');
+    document.getElementById('nat-year-' + year).style.display = '';
+    if (year === '2024') initNationality24Charts();
+    if (year === '2025') initNationality25Charts();
+    if (year === '2026') initNationality26Charts();
+    if (year === 'compare') initNatCompareApril();  // default sub-view
+  });
+});
+
+// Nationality compare sub-tabs
+document.querySelectorAll('.natcmp-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cmp = btn.dataset.natcmp;
+    document.querySelectorAll('.natcmp-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.natcmp-view').forEach(v => v.style.display = 'none');
+    document.getElementById('natcmp-' + cmp).style.display = '';
+    if (cmp === 'april')  initNatCompareApril();
+    if (cmp === 'janapr') initNatCompareJanApr();
+    if (cmp === 'aprdec') initNatCompareCharts();
+  });
+});
+
+// Year tab switching in segments view
+document.querySelectorAll('.year-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const year = btn.dataset.year;
+    document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.year-view').forEach(v => v.style.display = 'none');
+    document.getElementById('year-' + year).style.display = '';
+    // Lazy-init charts when needed
+    if (year === '2025') initSegment2025Charts();
+    if (year === '2026') initSegment2026Charts();
+    if (year === 'compare') {
+      initCompareApril();  // default sub-view
+    }
+  });
+});
+
+// Compare sub-tabs (April / Jan-Apr / Apr-Dec)
+document.querySelectorAll('.cmp-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cmp = btn.dataset.cmp;
+    document.querySelectorAll('.cmp-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cmp-view').forEach(v => v.style.display = 'none');
+    document.getElementById('cmp-' + cmp).style.display = '';
+    if (cmp === 'april')  initCompareApril();
+    if (cmp === 'janapr') initCompareJanApr();
+    if (cmp === 'aprdec') initCompareCharts();
+  });
+});
+
+// Sub tabs (in overview - data-tbl only)
+document.querySelectorAll('.tab[data-tbl]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab[data-tbl]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ['rev','occ','revpar'].forEach(t => {
+      document.getElementById('tbl-' + t).style.display = (t === btn.dataset.tbl) ? '' : 'none';
+    });
+  });
+});
+
+// Initial render
+initOverviewCharts();
+</script>
+
+</body>
+</html>

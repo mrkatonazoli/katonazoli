@@ -28,10 +28,11 @@ export function middleware(req: NextRequest) {
   return (
     checkProtected(req, "/paja", "paja_auth", "PAJA_PASSWORD") ??
     checkProtected(req, "/immersive", "immersive_auth", "IMMERSIVE_PASSWORD") ??
+    checkProtected(req, "/palace", "palace_auth", "PALACE_PASSWORD") ??
     NextResponse.next()
   );
 }
 
 export const config = {
-  matcher: ["/paja", "/paja/:path*", "/immersive", "/immersive/:path*"],
+  matcher: ["/paja", "/paja/:path*", "/immersive", "/immersive/:path*", "/palace", "/palace/:path*"],
 };
