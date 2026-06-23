@@ -102,12 +102,12 @@ export default function OnlyPage() {
                 Tekintsd át alaposan, használd jól.
               </p>
             </div>
-            <div className="bg-[#0a0a0b] border-y border-[#27272a]">
+            <div className="bg-[#0a0a0b] border-y border-[#27272a] flex justify-center p-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/monkey.jpg"
                 alt="A kuponod"
-                className="w-full h-auto block"
+                className="max-h-[360px] w-auto rounded-[10px] block"
               />
             </div>
             <div className="p-6 sm:p-8 text-center space-y-4">
