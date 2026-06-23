@@ -3,25 +3,17 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 
-/**
- * /only — vicces aloldal. "OnlyFans 24h kupon" igénylő, ami valójában
- * a középső-ujjas majmot adja vissza. Sima joke, semmi backend.
- */
 export default function OnlyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
   const revealRef = useRef<HTMLDivElement>(null);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function handleClaim() {
     if (loading || submitted) return;
     setLoading(true);
-    // Drámai hatáshoz pici delay — mintha tényleg dolgozna a szerver
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      // scroll a reveal-ig
       setTimeout(() => {
         revealRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 100);
@@ -65,30 +57,10 @@ export default function OnlyPage() {
 
         {/* Form vagy reveal */}
         {!submitted ? (
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-[16px] border border-[#27272a] bg-[#111114] p-6 sm:p-8 space-y-5"
-          >
-            <div>
-              <label className="block text-[12px] font-mono uppercase tracking-[0.08em] text-[#71717a] mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="te@example.com"
-                disabled={loading}
-                className="w-full h-12 px-4 rounded-[10px] bg-[#1c1c20] border border-[#27272a] text-[15px] text-[#f4f4f5] placeholder:text-[#52525b] outline-none focus:border-[#14b8a6] focus:ring-[3px] focus:ring-[#14b8a6]/20 transition disabled:opacity-50"
-              />
-              <p className="text-[11px] text-[#52525b] mt-2 font-mono">
-                Nem küldünk spamet. (Semmit se küldünk valójában.)
-              </p>
-            </div>
-
+          <div className="rounded-[16px] border border-[#27272a] bg-[#111114] p-6 sm:p-8 space-y-5">
             <button
-              type="submit"
+              type="button"
+              onClick={handleClaim}
               disabled={loading}
               className="w-full h-13 px-6 py-3.5 rounded-[10px] bg-[#14b8a6] hover:bg-[#0d9488] disabled:opacity-60 disabled:cursor-not-allowed text-[#0a0a0b] font-bold text-[15px] transition-colors inline-flex items-center justify-center gap-2"
             >
@@ -113,7 +85,7 @@ export default function OnlyPage() {
             <p className="text-[11px] text-[#52525b] text-center font-mono">
               ✓ Diszkrét számlázás · ✓ 4K minőség · ✓ Cancel anytime
             </p>
-          </form>
+          </div>
         ) : (
           <div
             ref={revealRef}
