@@ -949,60 +949,63 @@ const CH = {
     /* Máj */ {b:-25.47, r:-8.54},
     /* Jún */ {b:12.62,  r:20.03},
   ],
+  /* rd = revenue YoY delta (%) — a Channel Manager Delta oszlopából.
+     Feb RoomSome OBP: nyers +1101.32% → korrigált −14.09% (a −400M egyszeri
+     tétel utáni 2025 baseline recomputolva). */
   data: [
     /* Jan */ [
-      {name:'RoomSome OBP', b:220, r:44299055},
-      {name:'Booking.com',  b:150, r:32810892},
-      {name:'Expedia',      b:38,  r:5558576},
-      {name:'Szallas Group',b:10,  r:1399163},
-      {name:'Travelking',   b:9,   r:1356438},
-      {name:'Szállásvadász',b:3,   r:930759},
-      {name:'G2 TRAVEL',    b:1,   r:209647},
+      {name:'RoomSome OBP', b:220, r:44299055, rd:56.78},
+      {name:'Booking.com',  b:150, r:32810892, rd:-18.22},
+      {name:'Expedia',      b:38,  r:5558576,  rd:50.34},
+      {name:'Szallas Group',b:10,  r:1399163,  rd:-31.41},
+      {name:'Travelking',   b:9,   r:1356438,  rd:0},
+      {name:'Szállásvadász',b:3,   r:930759,   rd:87.27},
+      {name:'G2 TRAVEL',    b:1,   r:209647,   rd:0},
     ],
     /* Feb – RoomSome OBP korrigálva −400M egyszeri tétel */ [
-      {name:'RoomSome OBP', b:173, r:30809645},
-      {name:'Booking.com',  b:149, r:26110180},
-      {name:'Expedia',      b:23,  r:3457694},
-      {name:'G2 TRAVEL',    b:10,  r:1135516},
-      {name:'Szallas Group',b:9,   r:1268394},
-      {name:'Travelking',   b:4,   r:515433},
-      {name:'Szállásvadász',b:1,   r:368644},
+      {name:'RoomSome OBP', b:173, r:30809645, rd:-14.09},
+      {name:'Booking.com',  b:149, r:26110180, rd:-28.69},
+      {name:'Expedia',      b:23,  r:3457694,  rd:65.82},
+      {name:'G2 TRAVEL',    b:10,  r:1135516,  rd:995.49},
+      {name:'Szallas Group',b:9,   r:1268394,  rd:-71.03},
+      {name:'Travelking',   b:4,   r:515433,   rd:0},
+      {name:'Szállásvadász',b:1,   r:368644,   rd:30.81},
     ],
     /* Már */ [
-      {name:'Booking.com',  b:264, r:51646208},
-      {name:'RoomSome OBP', b:152, r:35970084},
-      {name:'Expedia',      b:27,  r:5496653},
-      {name:'G2 TRAVEL',    b:6,   r:553632},
-      {name:'Szallas Group',b:5,   r:798144},
-      {name:'Travelking',   b:3,   r:453960},
+      {name:'Booking.com',  b:264, r:51646208, rd:104.39},
+      {name:'RoomSome OBP', b:152, r:35970084, rd:-16.68},
+      {name:'Expedia',      b:27,  r:5496653,  rd:116.81},
+      {name:'G2 TRAVEL',    b:6,   r:553632,   rd:563.35},
+      {name:'Szallas Group',b:5,   r:798144,   rd:-79.57},
+      {name:'Travelking',   b:3,   r:453960,   rd:0},
     ],
     /* Ápr */ [
-      {name:'Booking.com',  b:242, r:48980749},
-      {name:'RoomSome OBP', b:166, r:34763541},
-      {name:'Expedia',      b:10,  r:3746962},
-      {name:'G2 TRAVEL',    b:9,   r:1271217},
-      {name:'Szallas Group',b:4,   r:848020},
-      {name:'Travelking',   b:3,   r:569466},
-      {name:'Szállásvadász',b:2,   r:341778},
+      {name:'Booking.com',  b:242, r:48980749, rd:62.09},
+      {name:'RoomSome OBP', b:166, r:34763541, rd:-12.68},
+      {name:'Expedia',      b:10,  r:3746962,  rd:-27.22},
+      {name:'G2 TRAVEL',    b:9,   r:1271217,  rd:14.02},
+      {name:'Szallas Group',b:4,   r:848020,   rd:-75.69},
+      {name:'Travelking',   b:3,   r:569466,   rd:0},
+      {name:'Szállásvadász',b:2,   r:341778,   rd:-10.90},
     ],
     /* Máj */ [
-      {name:'Booking.com',  b:148, r:34103377},
-      {name:'RoomSome OBP', b:107, r:26215361},
-      {name:'Travelking',   b:9,   r:1370922},
-      {name:'Szallas Group',b:5,   r:1116467},
-      {name:'G2 TRAVEL',    b:4,   r:439769},
-      {name:'Expedia',      b:4,   r:592252},
-      {name:'Szállásvadász',b:1,   r:230429},
+      {name:'Booking.com',  b:148, r:34103377, rd:6.94},
+      {name:'RoomSome OBP', b:107, r:26215361, rd:-12.93},
+      {name:'Travelking',   b:9,   r:1370922,  rd:0},
+      {name:'Szallas Group',b:5,   r:1116467,  rd:-75.50},
+      {name:'G2 TRAVEL',    b:4,   r:439769,   rd:-52.21},
+      {name:'Expedia',      b:4,   r:592252,   rd:-62.97},
+      {name:'Szállásvadász',b:1,   r:230429,   rd:-49.35},
     ],
     /* Jún */ [
-      {name:'Booking.com',  b:266, r:45955513},
-      {name:'RoomSome OBP', b:160, r:37281479},
-      {name:'Expedia',      b:17,  r:3259624},
-      {name:'G2 TRAVEL',    b:15,  r:2963646},
-      {name:'Szallas Group',b:12,  r:2128511},
-      {name:'HRS',          b:1,   r:56781},
-      {name:'Szállásvadász',b:1,   r:175476},
-      {name:'Travelking',   b:1,   r:198629},
+      {name:'Booking.com',  b:266, r:45955513, rd:112.16},
+      {name:'RoomSome OBP', b:160, r:37281479, rd:-8.13},
+      {name:'Expedia',      b:17,  r:3259624,  rd:-47.67},
+      {name:'G2 TRAVEL',    b:15,  r:2963646,  rd:0},
+      {name:'Szallas Group',b:12,  r:2128511,  rd:-72.52},
+      {name:'HRS',          b:1,   r:56781,    rd:-8.72},
+      {name:'Szállásvadász',b:1,   r:175476,   rd:-54.25},
+      {name:'Travelking',   b:1,   r:198629,   rd:0},
     ],
   ],
 };
@@ -1140,17 +1143,39 @@ function initChannels(){
 
   /* Matrix table: channels × months */
   const orderedChannels = sorted.map(([n])=>n);
+  /* Per-channel H1 YoY: compute 2025 baseline row-wise */
+  const chYoy = {};
+  orderedChannels.forEach(name => {
+    let s25=0, s26=0;
+    CH.months.forEach((_,i)=>{
+      const row = CH.data[i].find(x=>x.name===name);
+      if(!row) return;
+      s26 += row.r;
+      const base = row.r / (1 + (row.rd||0)/100);
+      if(isFinite(base)) s25 += base;
+    });
+    chYoy[name] = s25>0 ? ((s26-s25)/s25)*100 : null;
+  });
   let mBody = '';
   orderedChannels.forEach(name => {
     const cells = CH.months.map((_,i) => {
       const row = CH.data[i].find(x=>x.name===name);
-      return `<td>${row ? fmtFt(row.r) : '<span style="color:#a1a1aa">—</span>'}</td>`;
+      if(!row) return `<td><span style="color:#a1a1aa">—</span></td>`;
+      const d = row.rd;
+      const dBadge = (d===0 || d===undefined || d===null)
+        ? '<div style="font-size:11px;color:#a1a1aa;margin-top:2px">—</div>'
+        : `<div class="${cls(d)}" style="font-size:11px;margin-top:2px;font-weight:600">${arrow(d)} ${sign(d)}</div>`;
+      return `<td>${fmtFt(row.r)}${dBadge}</td>`;
     }).join('');
     const rowTotal = totalsByCh[name];
+    const chY = chYoy[name];
+    const yoyCell = chY===null
+      ? `<td><strong>${fmtFt(rowTotal)}</strong><div style="font-size:11px;color:#a1a1aa;margin-top:2px">—</div></td>`
+      : `<td><strong>${fmtFt(rowTotal)}</strong><div class="${cls(chY)}" style="font-size:11px;margin-top:2px;font-weight:700">${arrow(chY)} ${sign(chY)}</div></td>`;
     const badge = name===CH.direct
       ? '<span style="display:inline-block;padding:2px 8px;background:#eff6ff;color:#2563eb;border-radius:100px;font-size:11px;font-weight:600;margin-left:8px;">DIREKT</span>'
       : '';
-    mBody += `<tr><td><strong>${name}</strong>${badge}</td>${cells}<td><strong>${fmtFt(rowTotal)}</strong></td></tr>`;
+    mBody += `<tr><td><strong>${name}</strong>${badge}</td>${cells}${yoyCell}</tr>`;
   });
   const totalsRow = CH.months.map((_,i) => `<td><strong>${fmtFt(perMonth[i].total.r)}</strong></td>`).join('');
   mBody += `<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Havi összesen</td>${totalsRow}<td>${fmtFt(h1.r)}</td></tr>`;
