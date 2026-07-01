@@ -266,6 +266,7 @@
     display: inline-flex; gap: 2px; background: var(--surface);
     padding: 4px; border-radius: var(--radius);
     border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    max-width: 100%; overflow-x: auto;
   }
   .tab {
     flex: 0 1 auto; padding: 7px 12px; background: transparent;
@@ -449,13 +450,59 @@
     .dow-grid { grid-template-columns: repeat(4, 1fr); }
     .container, .hero { padding-left: 20px; padding-right: 20px; }
   }
+  @media (max-width: 900px) {
+    /* wide data tables: horizontal scroll wrapper */
+    .data-table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+    .data-table thead,
+    .data-table tbody { display: table; width: 100%; }
+    .data-table tr { display: table-row; }
+    .section { padding: 20px; }
+    .section-header { flex-wrap: wrap; gap: 12px; }
+    .kpi { padding: 16px; }
+    .kpi-value { font-size: 24px; letter-spacing: -0.6px; }
+    .chart-wrap { height: 280px; }
+    .chart-wrap-tall { height: 320px; }
+    .chart-wrap-xtall { height: 360px; }
+  }
   @media (max-width: 600px) {
     .kpi-row { grid-template-columns: 1fr; }
-    .container { padding: 20px 16px 64px; }
-    .hero { padding: 32px 16px 24px; }
-    .hero h1 { font-size: 24px; }
-    .nav-tabs { padding: 3px; }
+    .container { padding: 16px 12px 48px; margin-bottom: 40px; }
+    .hero { padding: 28px 16px 20px; }
+    .hero h1 { font-size: 22px; letter-spacing: -0.6px; }
+    .hero .subtitle { font-size: 14px; }
+    .hero .meta { font-size: 11px; gap: 12px; margin-top: 16px; }
+    .badge { font-size: 11px; margin-bottom: 14px; }
+    .nav-tabs { padding: 3px; margin-bottom: 20px; }
     .nav-tab { padding: 8px 12px; font-size: 12px; }
+    .section { padding: 16px; margin-bottom: 12px; }
+    .section-title { font-size: 15px; }
+    .section-desc { font-size: 12px; }
+    .kpi { padding: 14px; }
+    .kpi-value { font-size: 22px; }
+    .kpi-label { font-size: 11px; margin-bottom: 8px; }
+    .kpi-sub { font-size: 11px; }
+    .data-table th,
+    .data-table td { padding: 8px 10px; font-size: 12px; }
+    .data-table th:first-child,
+    .data-table td:first-child { padding-left: 14px; }
+    .dow-grid { grid-template-columns: repeat(4, 1fr); }
+    .chart-wrap { height: 240px; }
+    .chart-wrap-tall { height: 280px; }
+    .chart-wrap-xtall { height: 320px; }
+  }
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 20px; }
+    .kpi-row { gap: 8px; }
+    .nav-tab { padding: 7px 10px; font-size: 11px; }
+    .nav-tab .icon { display: none; }
+    .dow-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .charts-grid, .insights, .scenario-grid, .reco-grid { gap: 12px; }
   }
 </style>
 </head>
