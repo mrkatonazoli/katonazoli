@@ -6,6 +6,7 @@ function checkProtected(
   prefix: string,
   cookieName: string,
   envVar: string,
+  fallbackPassword?: string,
 ) {
   const { pathname } = req.nextUrl;
   if (!pathname.startsWith(prefix)) return null;
@@ -14,7 +15,7 @@ function checkProtected(
   if (pathname === loginPath) return NextResponse.next();
 
   const cookie = req.cookies.get(cookieName);
-  const correct = process.env[envVar];
+  const correct = process.env[envVar] || fallbackPassword;
 
   if (!correct || cookie?.value !== correct) {
     const loginUrl = req.nextUrl.clone();
@@ -29,10 +30,20 @@ export function middleware(req: NextRequest) {
     checkProtected(req, "/paja", "paja_auth", "PAJA_PASSWORD") ??
     checkProtected(req, "/immersive", "immersive_auth", "IMMERSIVE_PASSWORD") ??
     checkProtected(req, "/palace", "palace_auth", "PALACE_PASSWORD") ??
+    checkProtected(req, "/bonvital", "bonvital_auth", "BONVITAL_PASSWORD", "bnv2026") ??
     NextResponse.next()
   );
 }
 
 export const config = {
-  matcher: ["/paja", "/paja/:path*", "/immersive", "/immersive/:path*", "/palace", "/palace/:path*"],
+  matcher: [
+    "/paja",
+    "/paja/:path*",
+    "/immersive",
+    "/immersive/:path*",
+    "/palace",
+    "/palace/:path*",
+    "/bonvital",
+    "/bonvital/:path*",
+  ],
 };

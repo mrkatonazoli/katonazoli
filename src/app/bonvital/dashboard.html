@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonvital Wellness &amp; Gastro Hotel – Szegmens &amp; Nemzetiségi Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Fintech-inspired minimal aesthetic (Linear / Stripe / Mercury vibe)
+     Pure white surfaces · neutral grays · single blue accent · all-Inter typography */
+  :root {
+    --bg:        #fafafa;          /* page background */
+    --surface:   #ffffff;          /* card surface */
+    --surface-2: #f4f4f5;          /* secondary subtle gray */
+    --ink:       #09090b;          /* near-black */
+    --ink-soft:  #27272a;          /* dark gray */
+    --muted:     #71717a;          /* medium gray */
+    --muted-2:   #a1a1aa;          /* lighter gray (for icons, secondary lines) */
+    --line:      #e4e4e7;          /* hairline border */
+    --line-soft: #f1f1f3;          /* very light divider */
+    --accent:    #2563eb;          /* fintech blue */
+    --accent-2:  #3b82f6;          /* lighter blue */
+    --accent-soft: #eff6ff;        /* tinted blue background */
+    --good:      #16a34a;          /* clean green */
+    --good-soft: #f0fdf4;
+    --warn:      #d97706;          /* amber */
+    --warn-soft: #fffbeb;
+    --bad:       #dc2626;          /* red */
+    --bad-soft:  #fef2f2;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+    --shadow:    0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* Legacy aliases for inline styles in HTML body */
+    --navy: var(--ink);
+    --navy-light: var(--ink-soft);
+    --cream: #ffffff;
+    --gold: var(--accent);
+    --gold-light: var(--accent-2);
+    --text: var(--ink);
+    --text-muted: var(--muted);
+    --border: var(--line);
+    --card: var(--surface);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    font-feature-settings: 'cv11', 'ss01', 'tnum';
+    background: var(--bg); color: var(--ink);
+    line-height: 1.55; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-size: 14px;
+  }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum', 'ss01'; }
+
+  /* HERO */
+  .hero {
+    background: var(--surface); color: var(--ink);
+    padding: 48px 32px 40px; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::before { display: none; }
+  .hero-inner { max-width: 1280px; margin: 0 auto; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px 5px 8px; background: var(--accent-soft); color: var(--accent);
+    border: 1px solid transparent;
+    border-radius: 100px; font-size: 12px; font-weight: 500;
+    letter-spacing: 0; text-transform: none; margin-bottom: 20px;
+  }
+  .badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 40px; font-weight: 700; letter-spacing: -1.2px;
+    margin-bottom: 12px; line-height: 1.1;
+    color: var(--ink);
+  }
+  .hero h1 .accent { color: var(--accent); font-weight: 700; }
+  .hero .subtitle {
+    font-size: 16px; max-width: 720px; color: var(--muted);
+    line-height: 1.55; font-weight: 400;
+  }
+  .hero .meta {
+    margin-top: 24px; padding-top: 0;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    text-transform: none; letter-spacing: 0; font-weight: 500;
+    border-top: none;
+  }
+  .hero .meta span { display: flex; align-items: center; gap: 6px; }
+  .hero .meta .dot { width: 4px; height: 4px; background: var(--muted-2); border-radius: 50%; }
+
+  .container { max-width: 1280px; margin: 0 auto 80px; padding: 32px; position: relative; }
+
+  /* NAV — pill tabs (Linear / Stripe style) */
+  .nav-tabs {
+    display: inline-flex; gap: 2px; background: var(--surface);
+    padding: 4px; border-radius: var(--radius);
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    margin-bottom: 32px; overflow-x: auto;
+    max-width: 100%;
+  }
+  .nav-tab {
+    flex: 0 1 auto; min-width: auto; padding: 8px 14px;
+    background: transparent; border: none; border-radius: 7px;
+    cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--muted); transition: all 0.15s ease;
+    font-family: var(--sans);
+    display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap; letter-spacing: -0.1px;
+  }
+  .nav-tab.active {
+    background: var(--ink); color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-tab:hover:not(.active) { background: var(--surface-2); color: var(--ink); }
+  .nav-tab .icon { font-size: 14px; opacity: 0.85; }
+  .nav-tab.active .icon { opacity: 1; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* KPI CARDS — clean white, subtle border, big bold numbers */
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--surface); padding: 20px;
+    border-radius: var(--radius); border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm); transition: all 0.15s;
+    position: relative;
+  }
+  .kpi:hover {
+    box-shadow: var(--shadow-md); border-color: #d4d4d8;
+    transform: none;
+  }
+  .kpi.kpi-actual::before, .kpi.kpi-plan::before, .kpi.kpi-ytd::before, .kpi.kpi-delta::before { display: none; }
+  .kpi-label {
+    font-size: 12px; text-transform: none; letter-spacing: -0.1px;
+    color: var(--muted); font-weight: 500;
+    margin-bottom: 12px; padding-left: 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .kpi-label::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted-2);
+  }
+  .kpi.kpi-actual .kpi-label::before { background: var(--ink); }
+  .kpi.kpi-plan .kpi-label::before { background: var(--muted); }
+  .kpi.kpi-ytd .kpi-label::before { background: var(--accent); }
+  .kpi.kpi-delta .kpi-label::before { background: var(--bad); }
+  .kpi-value {
+    font-family: var(--sans);
+    font-size: 28px; font-weight: 600; color: var(--ink);
+    line-height: 1.15; letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'ss01';
+  }
+  .kpi-unit { font-family: var(--sans); font-size: 14px; color: var(--muted); font-weight: 500; letter-spacing: -0.2px; }
+  .kpi-sub { margin-top: 6px; font-size: 12px; color: var(--muted); line-height: 1.45; }
+  .kpi-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 500; margin-top: 10px;
+    letter-spacing: -0.1px;
+  }
+  .trend-down { color: var(--bad);  background: var(--bad-soft) !important; }
+  .trend-up   { color: var(--good); background: var(--good-soft) !important; }
+  .trend-flat { color: var(--muted); background: var(--surface-2) !important; }
+
+  /* SECTIONS */
+  .section {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow-sm);
+    margin-bottom: 16px; border: 1px solid var(--line);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line-soft);
+  }
+  .section-title {
+    font-family: var(--sans);
+    font-size: 16px; font-weight: 600; letter-spacing: -0.3px;
+    color: var(--ink);
+  }
+  .section-desc { font-size: 13px; color: var(--muted); margin-top: 4px; max-width: 720px; line-height: 1.5; font-weight: 400; }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-wrap { position: relative; height: 320px; }
+  .chart-wrap-tall { height: 380px; }
+  .chart-wrap-xtall { height: 440px; }
+
+  /* INSIGHTS */
+  .insights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  .insight {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 20px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    transition: all 0.15s;
+  }
+  .insight:hover { box-shadow: var(--shadow); }
+  .insight.warn { background: var(--surface); }
+  .insight.bad  { background: var(--surface); }
+  .insight.good { background: var(--surface); }
+  .insight-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-2); color: var(--ink);
+    margin-bottom: 14px; font-size: 16px;
+  }
+  .insight.warn .insight-icon { background: var(--warn-soft); color: var(--warn); }
+  .insight.bad  .insight-icon { background: var(--bad-soft);  color: var(--bad); }
+  .insight.good .insight-icon { background: var(--good-soft); color: var(--good); }
+  .insight h3 {
+    font-family: var(--sans);
+    font-size: 14px; font-weight: 600; letter-spacing: -0.2px;
+    margin-bottom: 8px; color: var(--ink);
+  }
+  .insight p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .insight strong { color: var(--ink); font-weight: 600; }
+
+  /* TABLES */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+  .data-table th, .data-table td {
+    padding: 12px 12px; text-align: right;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .data-table th:first-child, .data-table td:first-child {
+    text-align: left; font-weight: 500;
+  }
+  .data-table thead th {
+    background: transparent; color: var(--muted);
+    font-weight: 500; text-transform: none;
+    font-size: 12px; letter-spacing: -0.1px;
+    border-bottom: 1px solid var(--line); padding-top: 0;
+  }
+  .data-table tbody tr { transition: background 0.1s; }
+  .data-table tbody tr:hover { background: var(--surface-2); }
+  .pos { color: var(--good); font-weight: 500; }
+  .neg { color: var(--bad);  font-weight: 500; }
+
+  /* SUB-TABS — same as nav-tabs (pill) */
+  .tabs {
+    display: inline-flex; gap: 2px; background: var(--surface);
+    padding: 4px; border-radius: var(--radius);
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+  }
+  .tab {
+    flex: 0 1 auto; padding: 7px 12px; background: transparent;
+    border: none; border-radius: 7px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    transition: all 0.15s; font-family: var(--sans);
+    border-bottom: none; margin-bottom: 0; letter-spacing: -0.1px;
+    white-space: nowrap;
+  }
+  .tab.active {
+    background: var(--ink); color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .tab:hover:not(.active) { color: var(--ink); background: var(--surface-2); }
+
+  .footnote {
+    margin-top: 24px; padding: 14px 18px;
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm); font-size: 13px; color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .footnote strong { color: var(--ink); font-weight: 600; }
+
+  /* FORECAST CARDS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .scenario {
+    background: var(--surface); border-radius: var(--radius); padding: 22px;
+    box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .scenario::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .scenario.pessimistic::before { background: var(--bad); }
+  .scenario.base::before { background: var(--warn); }
+  .scenario.optimistic::before { background: var(--good); }
+  .scenario-label {
+    font-size: 11px; text-transform: uppercase; font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .scenario.pessimistic .scenario-label { color: var(--bad); }
+  .scenario.base .scenario-label { color: var(--warn); }
+  .scenario.optimistic .scenario-label { color: var(--good); }
+  .scenario-name {
+    font-family: var(--sans);
+    font-size: 15px; font-weight: 600; margin-top: 4px; margin-bottom: 16px;
+    color: var(--ink); letter-spacing: -0.2px;
+  }
+  .scenario-value {
+    font-family: var(--sans);
+    font-size: 32px; font-weight: 700; line-height: 1.1;
+    letter-spacing: -1.2px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'ss01';
+  }
+  .scenario-unit { font-family: var(--sans); font-size: 14px; color: var(--muted); font-weight: 500; }
+  .scenario-gap { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .scenario-desc {
+    margin-top: 14px; font-size: 12px; color: var(--muted);
+    padding-top: 14px; border-top: 1px solid var(--line-soft); line-height: 1.55;
+  }
+
+  /* RECO CARDS */
+  .reco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .reco {
+    background: var(--surface); border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--line);
+    transition: box-shadow 0.15s;
+  }
+  .reco:hover { box-shadow: var(--shadow); }
+  .reco-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .reco-num {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--accent-soft) !important;
+    color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--sans);
+    font-weight: 600; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .reco-title {
+    font-family: var(--sans);
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    letter-spacing: -0.2px;
+  }
+  .reco p { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+  .reco ul { list-style: none; padding-left: 0; margin-top: 8px; }
+  .reco li {
+    padding: 4px 0; font-size: 13px; color: var(--ink-soft);
+    display: flex; gap: 10px; align-items: flex-start; line-height: 1.55;
+  }
+  .reco li::before {
+    content: '→'; color: var(--accent); font-weight: 500;
+    flex-shrink: 0; opacity: 0.8;
+  }
+
+  /* DAY OF WEEK */
+  .dow-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 20px; }
+  .dow-cell {
+    background: var(--surface-2); border-radius: var(--radius-sm);
+    padding: 14px 10px; text-align: center;
+    transition: background 0.15s; border: 1px solid transparent;
+  }
+  .dow-cell:hover { background: var(--surface); border-color: var(--line); transform: none; }
+  .dow-name { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 500; letter-spacing: 0.5px; }
+  .dow-value {
+    font-family: var(--sans);
+    font-size: 18px; font-weight: 600; color: var(--ink); margin-top: 6px;
+    letter-spacing: -0.4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .dow-bar { height: 3px; border-radius: 100px; margin-top: 10px; background: var(--accent); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 64px 32px; text-align: center;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--line);
+  }
+  .empty-icon {
+    width: 56px; height: 56px; margin: 0 auto 20px;
+    background: var(--accent-soft);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--accent);
+  }
+  .empty-state h2 {
+    font-family: var(--sans);
+    font-size: 20px; font-weight: 600; color: var(--ink);
+    margin-bottom: 10px; letter-spacing: -0.4px;
+  }
+  .empty-state p { font-size: 14px; color: var(--muted); max-width: 600px; margin: 0 auto 16px; line-height: 1.55; }
+  .upload-hint {
+    background: var(--surface-2); border: 1px dashed var(--line);
+    border-radius: var(--radius); padding: 20px; max-width: 600px; margin: 20px auto 0;
+    font-size: 13px; color: var(--ink-soft); text-align: left;
+  }
+  .upload-hint strong { color: var(--ink); display: block; margin-bottom: 8px; font-family: var(--sans); font-weight: 600; font-size: 14px; }
+  .upload-hint code {
+    background: var(--surface); padding: 2px 6px; border-radius: 4px;
+    font-size: 12px; border: 1px solid var(--line); font-family: var(--mono);
+    color: var(--ink-soft);
+  }
+
+  /* DARK SECTION OVERRIDE (was navy gradient) */
+  .view .section[style*="linear-gradient"] {
+    background: var(--ink) !important;
+    color: #fff !important;
+    border: 1px solid var(--ink) !important;
+  }
+  .view .section[style*="linear-gradient"] h2 {
+    color: #fff !important;
+    font-family: var(--sans); font-weight: 600; letter-spacing: -0.4px;
+  }
+  .view .section[style*="linear-gradient"] strong {
+    color: #fff;
+  }
+  .view .section[style*="linear-gradient"] div[style*="color:var(--gold-light)"] {
+    color: var(--accent-2) !important;
+  }
+  .view .section[style*="linear-gradient"] p {
+    color: rgba(255,255,255,0.75) !important;
+  }
+
+  /* GOLD GRADIENT SECTION (recommendation hero) */
+  .view .section[style*="var(--gold) 0%"] {
+    background: var(--ink) !important;
+    color: #fff !important;
+    border: 1px solid var(--ink) !important;
+  }
+  .view .section[style*="var(--gold) 0%"] h2,
+  .view .section[style*="var(--gold) 0%"] p,
+  .view .section[style*="var(--gold) 0%"] div {
+    color: #fff !important;
+  }
+  .view .section[style*="var(--gold) 0%"] p { color: rgba(255,255,255,0.75) !important; }
+
+  @media (max-width: 1000px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .charts-grid { grid-template-columns: 1fr; }
+    .insights, .scenario-grid, .reco-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+    .dow-grid { grid-template-columns: repeat(4, 1fr); }
+    .container, .hero { padding-left: 20px; padding-right: 20px; }
+  }
+  @media (max-width: 600px) {
+    .kpi-row { grid-template-columns: 1fr; }
+    .container { padding: 20px 16px 64px; }
+    .hero { padding: 32px 16px 24px; }
+    .hero h1 { font-size: 24px; }
+    .nav-tabs { padding: 3px; }
+    .nav-tab { padding: 8px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="hero"><div class="hero-inner">
+  <span class="badge">Piaci szegmens &amp; Nemzetiségi elemzés</span>
+  <h1>Bonvital <span class="accent">Wellness &amp; Gastro</span> Hotel</h1>
+  <p class="subtitle">Vendégéjszaka alapú nemzetiségi statisztika és FO bruttó forgalom szerinti piaci szegmens / értékesítési csatorna elemzés – 2024–2026.</p>
+  <div class="meta">
+    <span><span class="dot"></span> Nemzetiség: 2024–2025 teljes év, 2026 jan–máj</span>
+    <span><span class="dot"></span> Szegmens: 2024 jan–nov, 2025, 2026 jan–máj</span>
+    <span><span class="dot"></span> Forrás: FRO540A &amp; FRO541c</span>
+  </div>
+</div></div>
+<div class="container">
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-view="segments">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M21 12a9 9 0 0 0-9-9v9z" fill="currentColor" fill-opacity="0.18" stroke="none"/></svg>Piaci szegmensek
+    </button>
+    <button class="nav-tab" data-view="nations">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>Nemzetiségek
+    </button>
+  </div>
+  <div class="view active" id="view-segments">
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab dim-tab active" data-dim="pmkt">Piaci szegmens (2025–2026)</button>
+      <button class="tab dim-tab" data-dim="channel">Értékesítési csatorna (2024–2025)</button>
+      <button class="tab dim-tab" data-dim="fin">Bevétel év/év</button>
+    </div>
+    <div class="footnote" style="margin-top:0;margin-bottom:24px;">
+      <strong>📌 Megjegyzés:</strong> A bevétel <strong>FO bruttó forgalom</strong> (szoba + F&amp;B + wellness). A jelentések kétféle bontást használnak: <strong>piaci szegmens</strong> (ki: belföldi/külföldi egyéni/csoport, online) a 2025 jan–máj és 2026 jan–máj időszakra, illetve <strong>értékesítési csatorna</strong> (hogyan: DIR, WEB, UGK stb.) a 2024 jan–nov és 2025 jún–dec időszakra. A két dimenzió nem feleltethető meg egymásnak, ezért külön jelenik meg. (2024 december és a 2025-ös szegmens-bontású második félév nem áll rendelkezésre.)
+    </div>
+    <div class="dim-view" id="dim-pmkt">
+      <div class="kpi-row">
+      <div class="kpi kpi-actual"><div class="kpi-label">2026 jan–máj FO bruttó forgalom</div>
+        <div class="kpi-value">382,9 <span class="kpi-unit">M Ft</span></div><div class="kpi-sub">5 306 kiadott szoba · 6 tétel</div></div>
+      <div class="kpi kpi-plan"><div class="kpi-label">Top szegmens</div>
+        <div class="kpi-value">AP <span class="kpi-unit">45,0%</span></div><div class="kpi-sub">Availpro ismeretlen · 172,1 M Ft</div></div>
+      <div class="kpi kpi-ytd"><div class="kpi-label">vs. 2025 jan–máj</div>
+        <div class="kpi-value">−14,5%</div><div class="kpi-sub">2025: 447,8 M → 2026: 382,9 M Ft</div>
+        <span class="kpi-trend trend-down">▼ −14,5% YoY</span></div>
+      <div class="kpi kpi-delta" style="border-top-color:var(--accent);"><div class="kpi-label">Besorolt belföldi/külföldi</div>
+        <div class="kpi-value">36% / 64%</div><div class="kpi-sub">Online/besorolatlan (AP+BG+egyéb): 82,4%</div></div></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Szegmens-mix 2026 jan–máj (bevétel %)</div><div class="section-desc">FO bruttó forgalom megoszlása</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="segDon26"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">2025 vs 2026 jan–máj szegmensenként</div><div class="section-desc">FO bruttó forgalom (M Ft)</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="segCompare"></canvas></div></div>
+      </div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">RevPAR szegmensenként (2026 jan–máj)</div><div class="section-desc">Kiadott szobánkénti FO bruttó forgalom</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="segRevpar26"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Havi bevétel-megoszlás szegmensenként (2026)</div><div class="section-desc">Halmozott oszlop, jan–máj</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="segStack26"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">2025 vs 2026 jan–máj összehasonlítás</div><div class="section-desc">Azonos 5 hónap, piaci szegmens bontásban</div></div></div><table class="data-table"><thead><tr><th>Piaci szegmens</th><th>2025 jan–máj</th><th>2026 jan–máj</th><th>Δ YoY</th></tr></thead><tbody><tr><td>Booking Genius</td><td>173 076 329 Ft</td><td>143 449 707 Ft</td><td class='neg'>−17,1%</td></tr><tr><td>Availpro ismeretlen</td><td>165 453 167 Ft</td><td>172 147 896 Ft</td><td class='pos'>+4,0%</td></tr><tr><td>Belföldi egyéni</td><td>64 215 408 Ft</td><td>22 743 889 Ft</td><td class='neg'>−64,6%</td></tr><tr><td>Külföldi egyéni</td><td>35 771 049 Ft</td><td>17 884 151 Ft</td><td class='neg'>−50,0%</td></tr><tr><td>Külföldi csoport</td><td>6 985 557 Ft</td><td>25 122 021 Ft</td><td class='pos'>+259,6%</td></tr><tr><td>Belföldi csoport</td><td>2 299 443 Ft</td><td>1 582 545 Ft</td><td class='neg'>−31,2%</td></tr><tr><td>Roomz-os foglalás</td><td>37 822 Ft</td><td>0 Ft</td><td class='neg'>−100,0%</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td>Összesen</td><td>447 838 775 Ft</td><td>382 930 209 Ft</td><td class='neg'>−14,5%</td></tr></tbody></table></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">2026 jan–máj részletes táblázat</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Megnevezés</th><th>Kiadott szoba</th><th>FO bruttó forgalom</th><th>Részesedés</th><th>RevPAR</th></tr></thead><tbody><tr><td>AP</td><td>Availpro ismeretlen</td><td>2 315</td><td>172 147 896 Ft</td><td><strong>45,0%</strong></td><td>74 362 Ft</td></tr><tr><td>BG</td><td>Booking Genius</td><td>1 892</td><td>143 449 707 Ft</td><td><strong>37,5%</strong></td><td>75 819 Ft</td></tr><tr><td>KC</td><td>Külföldi csoport</td><td>487</td><td>25 122 021 Ft</td><td><strong>6,6%</strong></td><td>51 585 Ft</td></tr><tr><td>BE</td><td>Belföldi egyéni</td><td>315</td><td>22 743 889 Ft</td><td><strong>5,9%</strong></td><td>72 203 Ft</td></tr><tr><td>KE</td><td>Külföldi egyéni</td><td>280</td><td>17 884 151 Ft</td><td><strong>4,7%</strong></td><td>63 872 Ft</td></tr><tr><td>BC</td><td>Belföldi csoport</td><td>17</td><td>1 582 545 Ft</td><td><strong>0,4%</strong></td><td>93 091 Ft</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>5 306</td><td>382 930 209 Ft</td><td>100%</td><td>72 169 Ft</td></tr></tbody></table></div>
+    </div>
+    <div class="dim-view" id="dim-channel" style="display:none;">
+      <div class="kpi-row">
+      <div class="kpi kpi-actual"><div class="kpi-label">2024 jan–nov FO bruttó forgalom</div>
+        <div class="kpi-value">1015,3 <span class="kpi-unit">M Ft</span></div><div class="kpi-sub">14 408 szoba · csatorna szerint</div></div>
+      <div class="kpi kpi-plan"><div class="kpi-label">2024 top csatorna</div>
+        <div class="kpi-value">02 <span class="kpi-unit">49,3%</span></div><div class="kpi-sub">DIR · 500,5 M Ft</div></div>
+      <div class="kpi kpi-ytd"><div class="kpi-label">2025 jún–dec FO bruttó forgalom</div>
+        <div class="kpi-value">803,2 <span class="kpi-unit">M Ft</span></div><div class="kpi-sub">11 191 szoba · csatorna szerint</div></div>
+      <div class="kpi kpi-delta" style="border-top-color:var(--accent);"><div class="kpi-label">2025 top csatorna</div>
+        <div class="kpi-value">03 <span class="kpi-unit">45,1%</span></div><div class="kpi-sub">WEB · 362,3 M Ft</div></div></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Csatorna-mix 2024 jan–nov (bevétel %)</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="chDon24"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Csatorna-mix 2025 jún–dec (bevétel %)</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="chDon25"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi bevétel-megoszlás csatornánként (2024 jan–nov)</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="chStack24"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi bevétel-megoszlás csatornánként (2025 jún–dec)</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="chStack25"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">2024 jan–nov részletes táblázat (csatorna)</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Megnevezés</th><th>Kiadott szoba</th><th>FO bruttó forgalom</th><th>Részesedés</th><th>RevPAR</th></tr></thead><tbody><tr><td>02</td><td>DIR</td><td>7 162</td><td>500 522 253 Ft</td><td><strong>49,3%</strong></td><td>69 886 Ft</td></tr><tr><td>03</td><td>WEB</td><td>5 465</td><td>404 468 178 Ft</td><td><strong>39,8%</strong></td><td>74 011 Ft</td></tr><tr><td>07</td><td>UGK</td><td>1 313</td><td>69 582 567 Ft</td><td><strong>6,8%</strong></td><td>52 995 Ft</td></tr><tr><td>AP</td><td>Availpro ismeretlen</td><td>179</td><td>13 117 041 Ft</td><td><strong>1,3%</strong></td><td>73 280 Ft</td></tr><tr><td>—</td><td>Érték nélküli (besorolatlan)</td><td>0</td><td>9 402 727 Ft</td><td><strong>0,9%</strong></td><td>—</td></tr><tr><td>01</td><td>Walk In</td><td>133</td><td>9 275 307 Ft</td><td><strong>0,9%</strong></td><td>69 739 Ft</td></tr><tr><td>06</td><td>UGB</td><td>74</td><td>4 172 249 Ft</td><td><strong>0,4%</strong></td><td>56 382 Ft</td></tr><tr><td>05</td><td>UEK</td><td>52</td><td>3 207 198 Ft</td><td><strong>0,3%</strong></td><td>61 677 Ft</td></tr><tr><td>04</td><td>UEB</td><td>14</td><td>949 580 Ft</td><td><strong>0,1%</strong></td><td>67 827 Ft</td></tr><tr><td>09</td><td>REC</td><td>12</td><td>493 870 Ft</td><td><strong>0,1%</strong></td><td>41 156 Ft</td></tr><tr><td>13</td><td>HOU</td><td>4</td><td>134 235 Ft</td><td><strong>0,0%</strong></td><td>33 559 Ft</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>14 408</td><td>1 015 325 205 Ft</td><td>100%</td><td>70 470 Ft</td></tr></tbody></table></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">2025 jún–dec részletes táblázat (csatorna)</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Megnevezés</th><th>Kiadott szoba</th><th>FO bruttó forgalom</th><th>Részesedés</th><th>RevPAR</th></tr></thead><tbody><tr><td>03</td><td>WEB</td><td>5 119</td><td>362 282 520 Ft</td><td><strong>45,1%</strong></td><td>70 772 Ft</td></tr><tr><td>AP</td><td>Availpro ismeretlen</td><td>4 614</td><td>334 040 072 Ft</td><td><strong>41,6%</strong></td><td>72 397 Ft</td></tr><tr><td>07</td><td>UGK</td><td>501</td><td>26 317 448 Ft</td><td><strong>3,3%</strong></td><td>52 530 Ft</td></tr><tr><td>02</td><td>DIR</td><td>375</td><td>25 450 843 Ft</td><td><strong>3,2%</strong></td><td>67 869 Ft</td></tr><tr><td>05</td><td>UEK</td><td>266</td><td>21 937 431 Ft</td><td><strong>2,7%</strong></td><td>82 472 Ft</td></tr><tr><td>11</td><td>RCS</td><td>200</td><td>15 954 523 Ft</td><td><strong>2,0%</strong></td><td>79 773 Ft</td></tr><tr><td>—</td><td>Érték nélküli (besorolatlan)</td><td>0</td><td>9 660 659 Ft</td><td><strong>1,2%</strong></td><td>—</td></tr><tr><td>09</td><td>REC</td><td>44</td><td>3 386 882 Ft</td><td><strong>0,4%</strong></td><td>76 975 Ft</td></tr><tr><td>01</td><td>Walk In</td><td>43</td><td>2 845 370 Ft</td><td><strong>0,3%</strong></td><td>66 171 Ft</td></tr><tr><td>04</td><td>UEB</td><td>14</td><td>911 302 Ft</td><td><strong>0,1%</strong></td><td>65 093 Ft</td></tr><tr><td>12</td><td>COM</td><td>13</td><td>307 850 Ft</td><td><strong>0,0%</strong></td><td>23 681 Ft</td></tr><tr><td>13</td><td>HOU</td><td>2</td><td>128 310 Ft</td><td><strong>0,0%</strong></td><td>64 155 Ft</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>11 191</td><td>803 223 210 Ft</td><td>100%</td><td>71 774 Ft</td></tr></tbody></table></div>
+    </div>
+
+    <div class="dim-view" id="dim-fin" style="display:none;">
+      <div class="section" style="margin-bottom:16px;">
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+          <div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px;">Bázis év (A)</div>
+            <div class="tabs"><button class="tab fina-btn" data-y="2024">2024</button><button class="tab fina-btn" data-y="2025">2025</button><button class="tab fina-btn active" data-y="2026">2026</button></div></div>
+          <div style="font-size:18px;color:var(--muted-2);font-weight:600;align-self:flex-end;padding-bottom:8px;">vs</div>
+          <div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px;">Összevetett év (B)</div>
+            <div class="tabs"><button class="tab finb-btn" data-y="2024">2024</button><button class="tab finb-btn active" data-y="2025">2025</button><button class="tab finb-btn" data-y="2026">2026</button></div></div>
+          <div id="finNote" style="margin-left:auto;font-size:13px;color:var(--accent);font-weight:600;align-self:flex-end;padding-bottom:8px;"></div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--muted);">A teljes FO bruttó forgalom dimenziófüggetlen, ezért bármelyik év bármelyikkel összevethető. 2026 esetén automatikusan a közös jan–máj időszak, 2024-nél a december hiányzik (a közös időszak ezt kezeli).</div>
+      </div>
+      <div class="kpi-row" id="finKpi"></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Havi FO bruttó forgalom – <span class="finLabelA"></span> vs <span class="finLabelB"></span></div><div class="section-desc">Közös hónapok, M Ft</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="finMonthly"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Kumulált bevétel – <span class="finLabelA"></span> vs <span class="finLabelB"></span></div><div class="section-desc">Az olló: hol nyílik az elmaradás/előny</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="finCum"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi bevétel-eltérés táblázat</div><div class="section-desc">Δ = A − B (pozitív = előny, negatív = elmaradás)</div></div></div><div id="finTable"></div></div>
+    </div>
+  </div>
+  <div class="view" id="view-nations">
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab nat-year-tab active" data-natyear="2024">2024 (teljes év)</button>
+      <button class="tab nat-year-tab" data-natyear="2025">2025 (teljes év)</button>
+      <button class="tab nat-year-tab" data-natyear="2026">2026 (jan–máj)</button>
+      <button class="tab nat-year-tab" data-natyear="compare">Összehasonlítás</button>
+    </div>
+    <div class="footnote" style="margin-top:0;margin-bottom:24px;">
+      <strong>📌 Megjegyzés:</strong> A nemzetiségi statisztika <strong>vendégéjszaka</strong> alapú – a hivatalos turizmus-statisztika alapegysége, ami a piaci kitettséget mutatja. (Forrás: FRO540A.)
+    </div>
+    
+    <div class="nat-year-view" id="nat-year-2024" style="">
+      <div class="kpi-row">
+      <div class="kpi kpi-actual"><div class="kpi-label">2024 (teljes év) Vendégéjszaka</div>
+        <div class="kpi-value">29 609</div><div class="kpi-sub">55 ország · átl. 2,4 éj/vendég</div></div>
+      <div class="kpi kpi-plan"><div class="kpi-label">Top piac</div>
+        <div class="kpi-value">🇭🇺 44,5%</div><div class="kpi-sub">Magyarország · 13 186 vendégéjszaka</div></div>
+      <div class="kpi kpi-ytd"><div class="kpi-label">Belföldi vs Külföldi</div>
+        <div class="kpi-value">45% / 55%</div><div class="kpi-sub">Belföldi: 13 186 · Külföldi: 16 423</div></div>
+      <div class="kpi kpi-delta" style="border-top-color:var(--good);"><div class="kpi-label">Top 5 piac koncentráció</div>
+        <div class="kpi-value">74,5%</div><div class="kpi-sub">H + D + A + CS + SK</div></div></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Top piacok megoszlása 2024 (vendégéjszaka %)</div><div class="section-desc">A legnagyobb piacok részesedése</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDon2024"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Top országok ranglista 2024</div><div class="section-desc">Vendégéjszaka szerint, top 12</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natRank2024"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi vendégéjszaka-megoszlás országonként (2024)</div><div class="section-desc">Halmozott oszlop – top 6 piac + egyéb</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natStack2024"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Belföldi vs Külföldi havi mix 2024</div><div class="section-desc">100%-ra normált havi bontás</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDom2024"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2024)</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Ország</th><th>Érkezések</th><th>Vendégek</th><th>Vendégéjszaka</th><th>Részesedés</th><th>Átl. tartózkodás</th></tr></thead><tbody><tr><td>🇭🇺 H</td><td>Magyarország</td><td>5 469</td><td>5 726</td><td><strong>13 186</strong></td><td><strong>44,5%</strong></td><td>2,3 éj</td></tr><tr><td>🇩🇪 D</td><td>Németország</td><td>559</td><td>647</td><td><strong>2 921</strong></td><td><strong>9,9%</strong></td><td>4,5 éj</td></tr><tr><td>🇦🇹 A</td><td>Ausztria</td><td>894</td><td>948</td><td><strong>2 482</strong></td><td><strong>8,4%</strong></td><td>2,6 éj</td></tr><tr><td>🇨🇿 CS</td><td>Csehország</td><td>532</td><td>570</td><td><strong>1 747</strong></td><td><strong>5,9%</strong></td><td>3,1 éj</td></tr><tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>658</td><td>708</td><td><strong>1 729</strong></td><td><strong>5,8%</strong></td><td>2,4 éj</td></tr><tr><td>🇨🇳 CHN</td><td>Kína</td><td>1 652</td><td>1 650</td><td><strong>1 656</strong></td><td><strong>5,6%</strong></td><td>1,0 éj</td></tr><tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>145</td><td>166</td><td><strong>665</strong></td><td><strong>2,2%</strong></td><td>4,0 éj</td></tr><tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>277</td><td>293</td><td><strong>597</strong></td><td><strong>2,0%</strong></td><td>2,0 éj</td></tr><tr><td>🇺🇦 UKR</td><td>Ukrajna</td><td>168</td><td>180</td><td><strong>568</strong></td><td><strong>1,9%</strong></td><td>3,2 éj</td></tr><tr><td>🇮🇱 IL</td><td>Izrael</td><td>121</td><td>130</td><td><strong>530</strong></td><td><strong>1,8%</strong></td><td>4,1 éj</td></tr><tr><td>🇺🇸 USA</td><td>Egyesült Államok</td><td>145</td><td>156</td><td><strong>393</strong></td><td><strong>1,3%</strong></td><td>2,5 éj</td></tr><tr><td>🇷🇴 RO</td><td>Románia</td><td>94</td><td>103</td><td><strong>391</strong></td><td><strong>1,3%</strong></td><td>3,8 éj</td></tr><tr><td>🇭🇷 CR</td><td>Horvátország</td><td>163</td><td>163</td><td><strong>283</strong></td><td><strong>1,0%</strong></td><td>1,7 éj</td></tr><tr><td>🇨🇭 CH</td><td>Svájc</td><td>79</td><td>86</td><td><strong>279</strong></td><td><strong>0,9%</strong></td><td>3,2 éj</td></tr><tr><td>🇮🇹 I</td><td>Olaszország</td><td>124</td><td>128</td><td><strong>252</strong></td><td><strong>0,8%</strong></td><td>2,0 éj</td></tr><tr><td>—</td><td>Egyéb (40 ország)</td><td>593</td><td>654</td><td>1 930</td><td>6,5%</td><td>—</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>11 673</td><td>12 308</td><td>29 609</td><td>100%</td><td>2,4 éj</td></tr></tbody></table></div>
+      <div class="insights">
+      <div class="insight good"><div class="insight-icon">🇭🇺</div><h3>Erős magyar bázis (44,5%)</h3>
+        <p>A magyar vendégek <strong>13 186 vendégéjszakát</strong> hoztak (teljes év) – a legnagyobb stabil piac, átlagosan 2,3 éj/vendég tartózkodással.</p></div>
+      <div class="insight warn"><div class="insight-icon">🇩🇪</div><h3>Németország a 2. legnagyobb piac</h3>
+        <p>2 921 vendégéjszaka (9,9%), átlagos tartózkodás <strong>4,5 éj</strong>. A 3. 🇦🇹 Ausztria (8,4%).</p></div>
+      <div class="insight bad"><div class="insight-icon">🌍</div><h3>Top 5 koncentráció 74,5%</h3>
+        <p>Az öt legnagyobb piac adja a forgalom <strong>74,5%-át</strong>. Diverzifikációs potenciál a kisebb, 1–2%-os piacokon (lengyel, román, szlovén stb.).</p></div></div>
+    </div>
+    
+    <div class="nat-year-view" id="nat-year-2025" style="display:none;">
+      <div class="kpi-row">
+      <div class="kpi kpi-actual"><div class="kpi-label">2025 (teljes év) Vendégéjszaka</div>
+        <div class="kpi-value">33 415</div><div class="kpi-sub">56 ország · átl. 2,5 éj/vendég</div></div>
+      <div class="kpi kpi-plan"><div class="kpi-label">Top piac</div>
+        <div class="kpi-value">🇭🇺 45,4%</div><div class="kpi-sub">Magyarország · 15 162 vendégéjszaka</div></div>
+      <div class="kpi kpi-ytd"><div class="kpi-label">Belföldi vs Külföldi</div>
+        <div class="kpi-value">45% / 55%</div><div class="kpi-sub">Belföldi: 15 162 · Külföldi: 18 253</div></div>
+      <div class="kpi kpi-delta" style="border-top-color:var(--good);"><div class="kpi-label">Top 5 piac koncentráció</div>
+        <div class="kpi-value">78,0%</div><div class="kpi-sub">H + D + A + SK + CS</div></div></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Top piacok megoszlása 2025 (vendégéjszaka %)</div><div class="section-desc">A legnagyobb piacok részesedése</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDon2025"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Top országok ranglista 2025</div><div class="section-desc">Vendégéjszaka szerint, top 12</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natRank2025"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi vendégéjszaka-megoszlás országonként (2025)</div><div class="section-desc">Halmozott oszlop – top 6 piac + egyéb</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natStack2025"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Belföldi vs Külföldi havi mix 2025</div><div class="section-desc">100%-ra normált havi bontás</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDom2025"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2025)</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Ország</th><th>Érkezések</th><th>Vendégek</th><th>Vendégéjszaka</th><th>Részesedés</th><th>Átl. tartózkodás</th></tr></thead><tbody><tr><td>🇭🇺 H</td><td>Magyarország</td><td>6 373</td><td>6 790</td><td><strong>15 162</strong></td><td><strong>45,4%</strong></td><td>2,2 éj</td></tr><tr><td>🇩🇪 D</td><td>Németország</td><td>709</td><td>844</td><td><strong>4 139</strong></td><td><strong>12,4%</strong></td><td>4,9 éj</td></tr><tr><td>🇦🇹 A</td><td>Ausztria</td><td>939</td><td>993</td><td><strong>2 674</strong></td><td><strong>8,0%</strong></td><td>2,7 éj</td></tr><tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>806</td><td>866</td><td><strong>2 110</strong></td><td><strong>6,3%</strong></td><td>2,4 éj</td></tr><tr><td>🇨🇿 CS</td><td>Csehország</td><td>611</td><td>641</td><td><strong>1 972</strong></td><td><strong>5,9%</strong></td><td>3,1 éj</td></tr><tr><td>🇨🇳 CHN</td><td>Kína</td><td>984</td><td>984</td><td><strong>988</strong></td><td><strong>3,0%</strong></td><td>1,0 éj</td></tr><tr><td>🇺🇦 UKR</td><td>Ukrajna</td><td>182</td><td>195</td><td><strong>781</strong></td><td><strong>2,3%</strong></td><td>4,0 éj</td></tr><tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>113</td><td>138</td><td><strong>725</strong></td><td><strong>2,2%</strong></td><td>5,2 éj</td></tr><tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>346</td><td>368</td><td><strong>712</strong></td><td><strong>2,1%</strong></td><td>1,9 éj</td></tr><tr><td>🇮🇱 IL</td><td>Izrael</td><td>107</td><td>136</td><td><strong>653</strong></td><td><strong>1,9%</strong></td><td>4,8 éj</td></tr><tr><td>🇷🇴 RO</td><td>Románia</td><td>143</td><td>151</td><td><strong>457</strong></td><td><strong>1,4%</strong></td><td>3,0 éj</td></tr><tr><td>🇭🇷 CR</td><td>Horvátország</td><td>163</td><td>166</td><td><strong>342</strong></td><td><strong>1,0%</strong></td><td>2,1 éj</td></tr><tr><td>🇵🇱 PL</td><td>Lengyelország</td><td>125</td><td>135</td><td><strong>322</strong></td><td><strong>1,0%</strong></td><td>2,4 éj</td></tr><tr><td>🇺🇸 USA</td><td>Egyesült Államok</td><td>106</td><td>115</td><td><strong>306</strong></td><td><strong>0,9%</strong></td><td>2,7 éj</td></tr><tr><td>🇮🇹 I</td><td>Olaszország</td><td>123</td><td>136</td><td><strong>287</strong></td><td><strong>0,9%</strong></td><td>2,1 éj</td></tr><tr><td>—</td><td>Egyéb (41 ország)</td><td>674</td><td>714</td><td>1 785</td><td>5,3%</td><td>—</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>12 504</td><td>13 372</td><td>33 415</td><td>100%</td><td>2,5 éj</td></tr></tbody></table></div>
+      <div class="insights">
+      <div class="insight good"><div class="insight-icon">🇭🇺</div><h3>Erős magyar bázis (45,4%)</h3>
+        <p>A magyar vendégek <strong>15 162 vendégéjszakát</strong> hoztak (teljes év) – a legnagyobb stabil piac, átlagosan 2,2 éj/vendég tartózkodással.</p></div>
+      <div class="insight warn"><div class="insight-icon">🇩🇪</div><h3>Németország a 2. legnagyobb piac</h3>
+        <p>4 139 vendégéjszaka (12,4%), átlagos tartózkodás <strong>4,9 éj</strong>. A 3. 🇦🇹 Ausztria (8,0%).</p></div>
+      <div class="insight bad"><div class="insight-icon">🌍</div><h3>Top 5 koncentráció 78,0%</h3>
+        <p>Az öt legnagyobb piac adja a forgalom <strong>78,0%-át</strong>. Diverzifikációs potenciál a kisebb, 1–2%-os piacokon (lengyel, román, szlovén stb.).</p></div></div>
+    </div>
+    
+    <div class="nat-year-view" id="nat-year-2026" style="display:none;">
+      <div class="kpi-row">
+      <div class="kpi kpi-actual"><div class="kpi-label">2026 (jan–máj) Vendégéjszaka</div>
+        <div class="kpi-value">10 058</div><div class="kpi-sub">50 ország · átl. 2,2 éj/vendég</div></div>
+      <div class="kpi kpi-plan"><div class="kpi-label">Top piac</div>
+        <div class="kpi-value">🇭🇺 43,0%</div><div class="kpi-sub">Magyarország · 4 325 vendégéjszaka</div></div>
+      <div class="kpi kpi-ytd"><div class="kpi-label">Belföldi vs Külföldi</div>
+        <div class="kpi-value">43% / 57%</div><div class="kpi-sub">Belföldi: 4 325 · Külföldi: 5 733</div></div>
+      <div class="kpi kpi-delta" style="border-top-color:var(--good);"><div class="kpi-label">Top 5 piac koncentráció</div>
+        <div class="kpi-value">75,3%</div><div class="kpi-sub">H + A + D + SK + CS</div></div></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Top piacok megoszlása 2026 (vendégéjszaka %)</div><div class="section-desc">A legnagyobb piacok részesedése</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDon2026"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Top országok ranglista 2026</div><div class="section-desc">Vendégéjszaka szerint, top 12</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natRank2026"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Havi vendégéjszaka-megoszlás országonként (2026)</div><div class="section-desc">Halmozott oszlop – top 6 piac + egyéb</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natStack2026"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Belföldi vs Külföldi havi mix 2026</div><div class="section-desc">100%-ra normált havi bontás</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="natDom2026"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Részletes nemzetiségi táblázat (2026)</div></div></div><table class="data-table"><thead><tr><th>Kód</th><th>Ország</th><th>Érkezések</th><th>Vendégek</th><th>Vendégéjszaka</th><th>Részesedés</th><th>Átl. tartózkodás</th></tr></thead><tbody><tr><td>🇭🇺 H</td><td>Magyarország</td><td>1 996</td><td>2 107</td><td><strong>4 325</strong></td><td><strong>43,0%</strong></td><td>2,0 éj</td></tr><tr><td>🇦🇹 A</td><td>Ausztria</td><td>443</td><td>482</td><td><strong>1 138</strong></td><td><strong>11,3%</strong></td><td>2,4 éj</td></tr><tr><td>🇩🇪 D</td><td>Németország</td><td>197</td><td>230</td><td><strong>1 019</strong></td><td><strong>10,1%</strong></td><td>4,4 éj</td></tr><tr><td>🇸🇰 SK</td><td>Szlovákia</td><td>261</td><td>275</td><td><strong>671</strong></td><td><strong>6,7%</strong></td><td>2,4 éj</td></tr><tr><td>🇨🇿 CS</td><td>Csehország</td><td>155</td><td>166</td><td><strong>420</strong></td><td><strong>4,2%</strong></td><td>2,5 éj</td></tr><tr><td>🇸🇮 SLO</td><td>Szlovénia</td><td>170</td><td>178</td><td><strong>339</strong></td><td><strong>3,4%</strong></td><td>1,9 éj</td></tr><tr><td>🏳️ TAI</td><td>Taivan</td><td>298</td><td>298</td><td><strong>315</strong></td><td><strong>3,1%</strong></td><td>1,1 éj</td></tr><tr><td>🇨🇳 CHN</td><td>Kína</td><td>224</td><td>224</td><td><strong>226</strong></td><td><strong>2,2%</strong></td><td>1,0 éj</td></tr><tr><td>🇺🇦 UKR</td><td>Ukrajna</td><td>48</td><td>53</td><td><strong>204</strong></td><td><strong>2,0%</strong></td><td>3,9 éj</td></tr><tr><td>🇷🇺 RUS</td><td>Oroszország</td><td>34</td><td>39</td><td><strong>185</strong></td><td><strong>1,8%</strong></td><td>4,7 éj</td></tr><tr><td>🇭🇷 CR</td><td>Horvátország</td><td>88</td><td>89</td><td><strong>162</strong></td><td><strong>1,6%</strong></td><td>1,8 éj</td></tr><tr><td>🇨🇭 CH</td><td>Svájc</td><td>31</td><td>35</td><td><strong>133</strong></td><td><strong>1,3%</strong></td><td>3,8 éj</td></tr><tr><td>🇷🇸 SRB</td><td>Szerbia</td><td>34</td><td>34</td><td><strong>93</strong></td><td><strong>0,9%</strong></td><td>2,7 éj</td></tr><tr><td>🇳🇴 N</td><td>Norvégia</td><td>13</td><td>25</td><td><strong>85</strong></td><td><strong>0,8%</strong></td><td>3,4 éj</td></tr><tr><td>🇵🇱 PL</td><td>Lengyelország</td><td>35</td><td>37</td><td><strong>80</strong></td><td><strong>0,8%</strong></td><td>2,2 éj</td></tr><tr><td>—</td><td>Egyéb (35 ország)</td><td>268</td><td>280</td><td>663</td><td>6,6%</td><td>—</td></tr><tr style='background:rgba(37,99,235,0.06);font-weight:700'><td colspan='2'>Összesen</td><td>4 295</td><td>4 552</td><td>10 058</td><td>100%</td><td>2,2 éj</td></tr></tbody></table></div>
+      <div class="insights">
+      <div class="insight good"><div class="insight-icon">🇭🇺</div><h3>Erős magyar bázis (43,0%)</h3>
+        <p>A magyar vendégek <strong>4 325 vendégéjszakát</strong> hoztak (jan–máj) – a legnagyobb stabil piac, átlagosan 2,0 éj/vendég tartózkodással.</p></div>
+      <div class="insight warn"><div class="insight-icon">🇦🇹</div><h3>Ausztria a 2. legnagyobb piac</h3>
+        <p>1 138 vendégéjszaka (11,3%), átlagos tartózkodás <strong>2,4 éj</strong>. A 3. 🇩🇪 Németország (10,1%).</p></div>
+      <div class="insight bad"><div class="insight-icon">🌍</div><h3>Top 5 koncentráció 75,3%</h3>
+        <p>Az öt legnagyobb piac adja a forgalom <strong>75,3%-át</strong>. Diverzifikációs potenciál a kisebb, 1–2%-os piacokon (lengyel, román, szlovén stb.).</p></div></div>
+    </div>
+
+    <div class="nat-year-view" id="nat-year-compare" style="display:none;">
+      <div class="section" style="margin-bottom:16px;">
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+          <div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px;">Bázis év (A)</div>
+            <div class="tabs"><button class="tab cmpa-btn" data-y="2024">2024</button><button class="tab cmpa-btn" data-y="2025">2025</button><button class="tab cmpa-btn active" data-y="2026">2026</button></div></div>
+          <div style="font-size:18px;color:var(--muted-2);font-weight:600;align-self:flex-end;padding-bottom:8px;">vs</div>
+          <div><div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px;">Összevetett év (B)</div>
+            <div class="tabs"><button class="tab cmpb-btn" data-y="2024">2024</button><button class="tab cmpb-btn active" data-y="2025">2025</button><button class="tab cmpb-btn" data-y="2026">2026</button></div></div>
+          <div id="cmpNote" style="margin-left:auto;font-size:13px;color:var(--accent);font-weight:600;align-self:flex-end;padding-bottom:8px;"></div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--muted);">Ha 2026 szerepel az összevetésben, automatikusan csak a közös jan–máj időszakot mutatja mindkét évnél (azonos alapú összehasonlítás).</div>
+      </div>
+      <div class="kpi-row" id="cmpKpi"></div>
+      <div class="charts-grid">
+        <div class="section"><div class="section-header"><div><div class="section-title">Top országok – <span class="cmpLabelA"></span> vs <span class="cmpLabelB"></span></div><div class="section-desc">Vendégéjszaka a közös időszakban, top 10</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="cmpCountries"></canvas></div></div>
+        <div class="section"><div class="section-header"><div><div class="section-title">Havi vendégéjszaka alakulás</div><div class="section-desc">Közös hónapok havi összvolumene</div></div></div><div class="chart-wrap chart-wrap-tall"><canvas id="cmpMonthly"></canvas></div></div>
+      </div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Belföldi vs Külföldi – <span class="cmpLabelA"></span> vs <span class="cmpLabelB"></span></div><div class="section-desc">Vendégéjszaka a közös időszakban</div></div></div><div class="chart-wrap"><canvas id="cmpDomFor"></canvas></div></div>
+      <div class="section"><div class="section-header"><div><div class="section-title">Részletes összehasonlító táblázat</div><div class="section-desc">Országonkénti vendégéjszaka és eltérés (Δ = A vs B)</div></div></div><div id="cmpTable"></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const DATA = {"NAT": {"2024": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "don_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇨🇿 Csehország", "🇸🇰 Szlovákia", "🇨🇳 Kína", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "Egyéb"], "don_data": [13186, 2921, 2482, 1747, 1729, 1656, 665, 597, 4626], "rank_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇨🇿 Csehország", "🇸🇰 Szlovákia", "🇨🇳 Kína", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "🇺🇦 Ukrajna", "🇮🇱 Izrael", "🇺🇸 Egyesült Államok", "🇷🇴 Románia"], "rank_data": [13186, 2921, 2482, 1747, 1729, 1656, 665, 597, 568, 530, 393, 391], "stacked": [{"label": "🇭🇺 Magyarország", "data": [503, 946, 1032, 989, 838, 807, 1557, 1854, 983, 1157, 1300, 1220], "color": "#09090b"}, {"label": "🇩🇪 Németország", "data": [26, 26, 93, 201, 306, 390, 214, 515, 539, 377, 155, 79], "color": "#2563eb"}, {"label": "🇦🇹 Ausztria", "data": [139, 177, 272, 220, 255, 203, 144, 163, 154, 174, 269, 312], "color": "#71717a"}, {"label": "🇨🇿 Csehország", "data": [31, 40, 108, 124, 177, 160, 238, 147, 238, 335, 61, 88], "color": "#16a34a"}, {"label": "🇸🇰 Szlovákia", "data": [23, 53, 160, 103, 102, 55, 260, 483, 238, 116, 102, 34], "color": "#d97706"}, {"label": "🇨🇳 Kína", "data": [0, 20, 0, 120, 305, 262, 95, 22, 312, 341, 177, 2], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [129, 167, 325, 489, 609, 751, 554, 820, 865, 458, 376, 345], "color": "#d4d4d8"}], "dom": [503, 946, 1032, 989, 838, 807, 1557, 1854, 983, 1157, 1300, 1220], "for": [348, 483, 958, 1257, 1754, 1821, 1505, 2150, 2346, 1801, 1140, 860]}, "2025": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "don_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "Egyéb"], "don_data": [15162, 4139, 2674, 2110, 1972, 988, 781, 725, 4864], "rank_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "🇮🇱 Izrael", "🇷🇴 Románia", "🇭🇷 Horvátország"], "rank_data": [15162, 4139, 2674, 2110, 1972, 988, 781, 725, 712, 653, 457, 342], "stacked": [{"label": "🇭🇺 Magyarország", "data": [1100, 1275, 1212, 979, 1027, 906, 1964, 1887, 801, 1669, 1291, 1051], "color": "#09090b"}, {"label": "🇩🇪 Németország", "data": [104, 65, 197, 346, 382, 597, 423, 729, 653, 408, 141, 94], "color": "#2563eb"}, {"label": "🇦🇹 Ausztria", "data": [292, 237, 165, 143, 283, 179, 111, 169, 263, 282, 242, 308], "color": "#71717a"}, {"label": "🇸🇰 Szlovákia", "data": [66, 117, 142, 220, 268, 145, 309, 380, 191, 99, 108, 65], "color": "#16a34a"}, {"label": "🇨🇿 Csehország", "data": [65, 86, 95, 228, 280, 180, 143, 195, 247, 236, 121, 96], "color": "#d97706"}, {"label": "🇨🇳 Kína", "data": [4, 6, 1, 24, 93, 110, 110, 40, 177, 142, 232, 49], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [428, 365, 308, 524, 877, 737, 565, 684, 824, 485, 301, 272], "color": "#d4d4d8"}], "dom": [1100, 1275, 1212, 979, 1027, 906, 1964, 1887, 801, 1669, 1291, 1051], "for": [959, 876, 908, 1485, 2183, 1948, 1661, 2197, 2355, 1652, 1145, 884]}, "2026": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj"], "don_labels": ["🇭🇺 Magyarország", "🇦🇹 Ausztria", "🇩🇪 Németország", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇸🇮 Szlovénia", "🏳️ Taivan", "🇨🇳 Kína", "Egyéb"], "don_data": [4325, 1138, 1019, 671, 420, 339, 315, 226, 1605], "rank_labels": ["🇭🇺 Magyarország", "🇦🇹 Ausztria", "🇩🇪 Németország", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇸🇮 Szlovénia", "🏳️ Taivan", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "🇭🇷 Horvátország", "🇨🇭 Svájc"], "rank_data": [4325, 1138, 1019, 671, 420, 339, 315, 226, 204, 185, 162, 133], "stacked": [{"label": "🇭🇺 Magyarország", "data": [841, 983, 781, 969, 751], "color": "#09090b"}, {"label": "🇦🇹 Ausztria", "data": [183, 221, 257, 232, 245], "color": "#2563eb"}, {"label": "🇩🇪 Németország", "data": [75, 102, 183, 253, 406], "color": "#71717a"}, {"label": "🇸🇰 Szlovákia", "data": [46, 77, 68, 317, 163], "color": "#16a34a"}, {"label": "🇨🇿 Csehország", "data": [26, 60, 82, 156, 96], "color": "#d97706"}, {"label": "🇸🇮 Szlovénia", "data": [39, 73, 32, 100, 95], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [316, 208, 372, 472, 778], "color": "#d4d4d8"}], "dom": [841, 983, 781, 969, 751], "for": [685, 741, 994, 1530, 1783]}}, "SEG": {"don2026": {"labels": ["AP Availpro ismeretlen", "BG Booking Genius", "KC Külföldi csoport", "BE Belföldi egyéni", "KE Külföldi egyéni", "BC Belföldi csoport"], "data": [172147896, 143449707, 25122021, 22743889, 17884151, 1582545]}, "revpar2026": {"labels": ["BC Belföldi csoport", "BG Booking Genius", "AP Availpro ismeretlen", "BE Belföldi egyéni", "KE Külföldi egyéni", "KC Külföldi csoport"], "data": [93091, 75819, 74362, 72203, 63872, 51585]}, "stack2026": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj"], "series": [{"label": "Availpro ismeretlen", "data": [31671886, 34171903, 32486363, 41874377, 31943367], "color": "#09090b"}, {"label": "Booking Genius", "data": [19390264, 22325895, 20216214, 38124553, 43392781], "color": "#2563eb"}, {"label": "Külföldi csoport", "data": [1460593, 1446196, 5555007, 5862645, 10797580], "color": "#71717a"}, {"label": "Belföldi egyéni", "data": [4407101, 4949703, 4649567, 4214892, 4522626], "color": "#16a34a"}, {"label": "Külföldi egyéni", "data": [3244834, 3495892, 3513702, 3012740, 4616983], "color": "#d97706"}, {"label": "Belföldi csoport", "data": [438785, 0, 0, 0, 1143760], "color": "#a1a1aa"}]}, "compare": {"labels": ["Booking Genius", "Availpro ismeretlen", "Belföldi egyéni", "Külföldi egyéni", "Külföldi csoport", "Belföldi csoport", "Roomz-os foglalás"], "rev25": [173076329, 165453167, 64215408, 35771049, 6985557, 2299443, 37822], "rev26": [143449707, 172147896, 22743889, 17884151, 25122021, 1582545, 0]}, "don2024": {"labels": ["02 DIR", "03 WEB", "07 UGK", "AP Availpro ismeretlen", "— Érték nélküli (besorolatlan)", "01 Walk In", "06 UGB", "05 UEK", "Egyéb"], "data": [500522253, 404468178, 69582567, 13117041, 9402727, 9275307, 4172249, 3207198, 1577685]}, "stack2024": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov"], "series": [{"label": "DIR", "data": [18197445, 34169840, 47138344, 38565978, 44777643, 41022725, 59937299, 81335376, 50590298, 47648492, 37138813], "color": "#09090b"}, {"label": "WEB", "data": [13874377, 12950451, 25872728, 28548138, 38130134, 41027435, 47215161, 65664067, 53399787, 49345900, 28440000], "color": "#2563eb"}, {"label": "UGK", "data": [0, 556006, 2626924, 7449374, 11442934, 12148031, 4385414, 4058409, 12258109, 9763006, 4894360], "color": "#71717a"}, {"label": "Availpro ismeretlen", "data": [0, 0, 0, 70010, -729, 0, 201000, 0, 0, 0, 12846760], "color": "#16a34a"}, {"label": "Érték nélküli (besorolatlan)", "data": [-100867, 765423, 1407956, 878574, 1241258, 1211202, 309215, 566114, 1066915, 1492462, 564475], "color": "#d97706"}, {"label": "Walk In", "data": [147212, 324564, 732808, 643023, 553419, 204266, 1840699, 745971, 1514619, 846010, 1722716], "color": "#a1a1aa"}, {"label": "UGB", "data": [984064, 1290033, 0, 0, 874341, 0, 0, 0, 1023811, 0, 0], "color": "#dc2626"}, {"label": "UEK", "data": [0, 0, 0, 0, 0, 855816, 0, 0, 1396980, 765464, 188938], "color": "#3b82f6"}, {"label": "UEB", "data": [0, 0, 0, 0, 949580, 0, 0, 0, 0, 0, 0], "color": "#d4d4d8"}, {"label": "REC", "data": [0, 0, 0, 0, 0, 0, 0, 493870, 0, 0, 0], "color": "#0ea5e9"}, {"label": "HOU", "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 58940, 75295], "color": "#7c3aed"}]}, "don2025ch": {"labels": ["03 WEB", "AP Availpro ismeretlen", "07 UGK", "02 DIR", "05 UEK", "11 RCS", "— Érték nélküli (besorolatlan)", "09 REC", "Egyéb"], "data": [362282520, 334040072, 26317448, 25450843, 21937431, 15954523, 9660659, 3386882, 4192832]}, "stack2025ch": {"labels": ["Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "series": [{"label": "WEB", "data": [49174518, 60133737, 78578182, 57027429, 51646190, 30701047, 35021417], "color": "#09090b"}, {"label": "Availpro ismeretlen", "data": [37269687, 57697664, 63351236, 39692766, 51969165, 35369450, 48690104], "color": "#2563eb"}, {"label": "UGK", "data": [3826273, 2469928, 756423, 5306133, 5363816, 6629311, 1965564], "color": "#71717a"}, {"label": "DIR", "data": [6436755, 2176045, 4227712, 2536640, 3280936, 5535496, 1257259], "color": "#16a34a"}, {"label": "UEK", "data": [6235336, 2272920, 2664523, 5111291, 3990292, 294093, 1368976], "color": "#d97706"}, {"label": "RCS", "data": [0, 884898, 3078062, 4492998, 2057446, 2147032, 3294087], "color": "#a1a1aa"}, {"label": "Érték nélküli (besorolatlan)", "data": [1743074, 1601116, 1782046, 1803714, 1080983, 817523, 832203], "color": "#dc2626"}, {"label": "REC", "data": [0, 358810, 98920, 0, 0, 2880565, 48587], "color": "#3b82f6"}, {"label": "Walk In", "data": [957818, 1562321, 240911, 84320, 0, 0, 0], "color": "#d4d4d8"}, {"label": "UEB", "data": [911302, 0, 0, 0, 0, 0, 0], "color": "#0ea5e9"}, {"label": "COM", "data": [283550, 0, 17140, 4380, 2780, 0, 0], "color": "#7c3aed"}, {"label": "HOU", "data": [66430, 58010, 0, 3870, 0, 0, 0], "color": "#059669"}]}}};
+const NATMONTH = {"2024":{"avail":[1,2,3,4,5,6,7,8,9,10,11,12],"countries":{"A":{"flag":"🇦🇹","name":"Ausztria","n":{"1":139,"2":177,"3":272,"4":220,"5":255,"6":203,"7":144,"8":163,"9":154,"10":174,"11":269,"12":312},"a":{"1":56,"2":72,"3":94,"4":80,"5":90,"6":57,"7":47,"8":54,"9":52,"10":72,"11":103,"12":117},"g":{"1":58,"2":74,"3":100,"4":81,"5":97,"6":72,"7":49,"8":58,"9":53,"10":78,"11":111,"12":117}},"BOS":{"flag":"🇧🇦","name":"Bosznia-Hercegovina","n":{"1":2,"3":4,"4":1,"5":7,"6":1,"7":1,"9":4,"10":4,"11":1,"12":10},"a":{"1":1,"3":1,"4":1,"5":5,"6":1,"7":1,"9":4,"10":4,"11":1,"12":6},"g":{"1":1,"3":1,"4":1,"5":5,"6":1,"7":1,"9":4,"10":4,"11":1,"12":6}},"CS":{"flag":"🇨🇿","name":"Csehország","n":{"1":31,"2":40,"3":108,"4":124,"5":177,"6":160,"7":238,"8":147,"9":238,"10":335,"11":61,"12":88},"a":{"1":10,"2":17,"3":35,"4":41,"5":49,"6":50,"7":74,"8":43,"9":67,"10":102,"11":21,"12":23},"g":{"1":14,"2":17,"3":36,"4":41,"5":49,"6":62,"7":76,"8":49,"9":69,"10":113,"11":21,"12":23}},"CR":{"flag":"🇭🇷","name":"Horvátország","n":{"1":24,"2":39,"3":16,"4":52,"5":15,"6":14,"7":18,"8":16,"9":28,"10":6,"11":41,"12":14},"a":{"1":12,"2":24,"3":7,"4":29,"5":10,"6":9,"7":10,"8":8,"9":17,"10":6,"11":23,"12":8},"g":{"1":12,"2":24,"3":7,"4":29,"5":10,"6":9,"7":10,"8":8,"9":17,"10":6,"11":23,"12":8}},"IL":{"flag":"🇮🇱","name":"Izrael","n":{"1":4,"2":21,"3":14,"4":17,"5":28,"6":237,"7":21,"8":33,"9":116,"10":14,"11":9,"12":16},"a":{"1":2,"2":7,"3":6,"4":2,"5":8,"6":36,"7":7,"8":13,"9":18,"10":10,"11":6,"12":6},"g":{"1":2,"2":7,"3":7,"4":2,"5":8,"6":38,"7":7,"8":13,"9":24,"10":10,"11":6,"12":6}},"PL":{"flag":"🇵🇱","name":"Lengyelország","n":{"1":9,"3":7,"4":4,"5":9,"6":18,"7":60,"8":51,"9":22,"10":1,"11":4},"a":{"1":3,"3":5,"4":3,"5":5,"6":6,"7":22,"8":14,"9":8,"10":1,"11":2},"g":{"1":3,"3":5,"4":3,"5":5,"6":6,"7":22,"8":15,"9":8,"10":1,"11":2}},"LT":{"flag":"🇱🇹","name":"Litvánia","n":{"1":4,"4":8,"5":16,"6":7,"7":6,"8":4,"10":3,"12":16},"a":{"1":0,"4":3,"5":1,"6":4,"7":2,"8":2,"10":1,"12":4},"g":{"1":4,"4":3,"5":3,"6":3,"7":2,"8":2,"10":1,"12":4}},"H":{"flag":"🇭🇺","name":"Magyarország","n":{"1":503,"2":946,"3":1032,"4":989,"5":838,"6":807,"7":1557,"8":1854,"9":983,"10":1157,"11":1300,"12":1220},"a":{"1":204,"2":442,"3":459,"4":464,"5":355,"6":347,"7":552,"8":676,"9":401,"10":487,"11":602,"12":480},"g":{"1":265,"2":446,"3":479,"4":479,"5":364,"6":374,"7":574,"8":711,"9":413,"10":501,"11":623,"12":497}},"GB":{"flag":"🇬🇧","name":"Nagybritannia","n":{"1":10,"4":4,"5":6,"6":14,"7":5,"8":15,"9":21,"10":37,"11":2,"12":11},"a":{"1":2,"4":4,"5":4,"6":7,"7":4,"8":5,"9":5,"10":13,"11":1,"12":4},"g":{"1":2,"4":4,"5":4,"6":8,"7":4,"8":7,"9":5,"10":14,"11":1,"12":4}},"D":{"flag":"🇩🇪","name":"Németország","n":{"1":26,"2":26,"3":93,"4":201,"5":306,"6":390,"7":214,"8":515,"9":539,"10":377,"11":155,"12":79},"a":{"1":8,"2":10,"3":22,"4":43,"5":57,"6":51,"7":44,"8":90,"9":104,"10":72,"11":34,"12":24},"g":{"1":8,"2":10,"3":24,"4":49,"5":70,"6":66,"7":49,"8":102,"9":116,"10":84,"11":43,"12":26}},"I":{"flag":"🇮🇹","name":"Olaszország","n":{"1":12,"2":18,"4":4,"5":19,"6":4,"7":11,"8":78,"9":68,"10":14,"11":21,"12":3},"a":{"1":4,"2":7,"4":3,"5":7,"6":2,"7":6,"8":29,"9":52,"10":4,"11":7,"12":3},"g":{"1":4,"2":7,"4":3,"5":7,"6":3,"7":6,"8":29,"9":55,"10":4,"11":7,"12":3}},"RO":{"flag":"🇷🇴","name":"Románia","n":{"1":15,"2":13,"3":7,"4":2,"5":29,"6":12,"7":51,"8":122,"9":73,"10":47,"11":17,"12":3},"a":{"1":3,"2":6,"3":4,"4":2,"5":9,"6":4,"7":15,"8":24,"9":18,"10":5,"11":3,"12":1},"g":{"1":3,"2":8,"3":5,"4":2,"5":9,"6":4,"7":15,"8":27,"9":19,"10":7,"11":3,"12":1}},"SM":{"flag":"🏳️","name":"San Marino","n":{"1":1},"a":{"1":1},"g":{"1":1}},"SK":{"flag":"🇸🇰","name":"Szlovákia","n":{"1":23,"2":53,"3":160,"4":103,"5":102,"6":55,"7":260,"8":483,"9":238,"10":116,"11":102,"12":34},"a":{"1":7,"2":29,"3":63,"4":48,"5":44,"6":21,"7":101,"8":154,"9":86,"10":47,"11":44,"12":14},"g":{"1":9,"2":29,"3":66,"4":55,"5":44,"6":29,"7":104,"8":171,"9":89,"10":47,"11":48,"12":17}},"SLO":{"flag":"🇸🇮","name":"Szlovénia","n":{"1":38,"2":32,"3":45,"4":52,"5":24,"6":40,"7":52,"8":43,"9":51,"10":44,"11":74,"12":102},"a":{"1":12,"2":12,"3":23,"4":32,"5":12,"6":21,"7":23,"8":19,"9":25,"10":26,"11":28,"12":44},"g":{"1":16,"2":12,"3":23,"4":32,"5":16,"6":21,"7":23,"8":19,"9":25,"10":26,"11":36,"12":44}},"UKR":{"flag":"🇺🇦","name":"Ukrajna","n":{"1":10,"2":8,"3":38,"4":10,"5":57,"6":23,"7":88,"8":105,"9":100,"10":65,"11":37,"12":27},"a":{"1":2,"2":4,"3":7,"4":4,"5":8,"6":6,"7":61,"8":19,"9":27,"10":11,"11":7,"12":12},"g":{"1":2,"2":4,"3":7,"4":6,"5":8,"6":6,"7":61,"8":19,"9":29,"10":16,"11":9,"12":13}},"USA":{"flag":"🇺🇸","name":"Egyesült Államok","n":{"2":2,"3":5,"4":23,"5":64,"6":88,"7":27,"8":66,"9":75,"10":20,"11":11,"12":12},"a":{"2":1,"3":4,"4":7,"5":16,"6":22,"7":9,"8":12,"9":53,"10":10,"11":9,"12":2},"g":{"2":1,"3":5,"4":7,"5":18,"6":24,"7":11,"8":13,"9":56,"10":10,"11":9,"12":2}},"F":{"flag":"🇫🇷","name":"Franciaország","n":{"2":2,"4":13,"5":19,"6":20,"7":10,"8":25,"9":35},"a":{"2":2,"4":11,"5":7,"6":4,"7":6,"8":7,"9":10},"g":{"2":2,"4":11,"5":7,"6":6,"7":6,"8":8,"9":10}},"CHN":{"flag":"🇨🇳","name":"Kína","n":{"2":20,"4":120,"5":305,"6":262,"7":95,"8":22,"9":312,"10":341,"11":177,"12":2},"a":{"2":20,"4":120,"5":308,"6":262,"7":90,"8":20,"9":312,"10":341,"11":177,"12":2},"g":{"2":20,"4":120,"5":305,"6":262,"7":91,"8":20,"9":312,"10":341,"11":177,"12":2}},"N":{"flag":"🇳🇴","name":"Norvégia","n":{"2":2,"3":95,"4":102,"5":2,"7":2,"9":6,"12":3},"a":{"2":2,"3":19,"4":0,"5":1,"7":2,"9":5,"12":1},"g":{"2":2,"3":21,"4":17,"5":1,"7":2,"9":5,"12":1}},"RUS":{"flag":"🇷🇺","name":"Oroszország","n":{"2":15,"3":35,"4":96,"5":93,"6":50,"7":27,"8":84,"9":77,"10":54,"11":82,"12":52},"a":{"2":11,"3":6,"4":14,"5":14,"6":13,"7":15,"8":29,"9":14,"10":11,"11":11,"12":7},"g":{"2":11,"3":10,"4":14,"5":16,"6":19,"7":15,"8":30,"9":16,"10":11,"11":16,"12":8}},"P":{"flag":"🏳️","name":"Portugália","n":{"2":14,"3":3,"7":10,"10":1},"a":{"2":1,"3":1,"7":1,"10":1},"g":{"2":1,"3":1,"7":1,"10":1}},"TR":{"flag":"🇹🇷","name":"Törökország","n":{"2":1,"6":4,"9":3,"10":13},"a":{"2":1,"6":4,"9":3,"10":1},"g":{"2":1,"6":4,"9":3,"10":1}},"AZA":{"flag":"🏳️","name":"Azerbajdzsán","n":{"3":3,"9":3},"a":{"3":1,"9":3},"g":{"3":1,"9":3}},"ZAF":{"flag":"🏳️","name":"Dél-afrikai Közt.","n":{"3":2},"a":{"3":1},"g":{"3":1}},"NL":{"flag":"🇳🇱","name":"Hollandia","n":{"3":5,"4":1,"5":21,"7":13,"8":23,"9":4,"10":7,"11":2,"12":3},"a":{"3":2,"4":1,"5":5,"7":6,"8":9,"9":0,"10":3,"11":1,"12":1},"g":{"3":2,"4":1,"5":5,"7":6,"8":9,"9":2,"10":3,"11":1,"12":1}},"CND":{"flag":"🇨🇦","name":"Kanada","n":{"3":6,"4":5,"5":2,"7":3,"8":34,"9":7,"10":3,"11":2},"a":{"3":1,"4":5,"5":2,"7":2,"8":2,"9":2,"10":1,"11":2},"g":{"3":1,"4":5,"5":2,"7":2,"8":3,"9":2,"10":1,"11":2}},"LV":{"flag":"🇱🇻","name":"Lettország","n":{"3":8,"4":8,"5":15,"6":34,"8":6,"9":34},"a":{"3":2,"4":1,"5":3,"6":2,"8":2,"9":6},"g":{"3":2,"4":3,"5":3,"6":4,"8":2,"9":6}},"MOL":{"flag":"🇲🇩","name":"Moldovai Köztársaság","n":{"3":4,"4":2,"7":44,"8":4,"9":34,"10":21,"11":21},"a":{"3":2,"4":1,"7":6,"8":2,"9":6,"10":1,"11":5},"g":{"3":2,"4":1,"7":6,"8":2,"9":6,"10":5,"11":5}},"CH":{"flag":"🇨🇭","name":"Svájc","n":{"3":12,"4":14,"5":37,"6":12,"7":38,"8":10,"9":70,"10":13,"11":27,"12":46},"a":{"3":5,"4":6,"5":13,"6":6,"7":10,"8":4,"9":18,"10":7,"11":3,"12":7},"g":{"3":5,"4":6,"5":13,"6":6,"7":12,"8":6,"9":19,"10":7,"11":3,"12":9}},"SRB":{"flag":"🇷🇸","name":"Szerbia","n":{"3":12,"4":3,"5":8,"6":68,"7":1,"8":6,"9":4,"10":3,"11":2,"12":4},"a":{"3":4,"4":3,"5":2,"6":26,"7":1,"8":1,"9":1,"10":2,"11":0,"12":2},"g":{"3":4,"4":3,"5":4,"6":26,"7":1,"8":1,"9":1,"10":2,"11":1,"12":2}},"TN":{"flag":"🏳️","name":"Tunézia","n":{"3":4},"a":{"3":2},"g":{"3":2}},"AUS":{"flag":"🇦🇺","name":"Ausztrália","n":{"4":4,"5":4,"6":10,"7":1,"11":6},"a":{"4":2,"5":4,"6":6,"7":1,"11":2},"g":{"4":2,"5":4,"6":6,"7":1,"11":2}},"KR":{"flag":"🇰🇷","name":"Dél-koreai köztársas","n":{"4":26,"5":1,"6":1,"7":3,"8":1,"11":2},"a":{"4":26,"5":1,"6":1,"7":3,"8":1,"11":2},"g":{"4":26,"5":1,"6":1,"7":3,"8":1,"11":2}},"EST":{"flag":"🇪🇪","name":"Észtország","n":{"4":6,"5":2,"6":42,"7":4,"8":20,"9":2,"10":15},"a":{"4":4,"5":0,"6":3,"7":4,"8":2,"9":1,"10":1},"g":{"4":4,"5":2,"6":3,"7":4,"8":2,"9":1,"10":2}},"FEH":{"flag":"🇧🇾","name":"Fehéroroszország","n":{"4":28,"5":17,"10":51,"11":3},"a":{"4":8,"5":1,"10":7,"11":0},"g":{"4":8,"5":5,"10":9,"11":3}},"PHL":{"flag":"🇵🇭","name":"Fülöp Szigetek","n":{"4":4,"6":6},"a":{"4":4,"6":3},"g":{"4":4,"6":3}},"AL":{"flag":"🏳️","name":"Albánia","n":{"5":3,"6":2},"a":{"5":1,"6":2},"g":{"5":1,"6":2}},"DZ":{"flag":"🏳️","name":"Algéria","n":{"5":2,"8":5,"9":1},"a":{"5":1,"8":1,"9":1},"g":{"5":1,"8":1,"9":1}},"B":{"flag":"🏳️","name":"Belgium","n":{"5":51,"6":2,"7":9,"8":9,"10":9},"a":{"5":9,"6":1,"7":7,"8":2,"10":3},"g":{"5":9,"6":1,"7":7,"8":3,"10":3}},"DK":{"flag":"🇩🇰","name":"Dánia","n":{"5":10,"8":5,"9":2},"a":{"5":1,"8":3,"9":1},"g":{"5":1,"8":3,"9":1}},"SF":{"flag":"🏳️","name":"Finnország","n":{"5":6,"7":10,"8":2,"12":14},"a":{"5":2,"7":2,"8":2,"12":2},"g":{"5":2,"7":2,"8":2,"12":2}},"GR":{"flag":"🇬🇷","name":"Görögország","n":{"5":4,"7":5,"12":3},"a":{"5":2,"7":3,"12":2},"g":{"5":2,"7":3,"12":2}},"IRL":{"flag":"🏳️","name":"Írország","n":{"5":2,"7":3,"9":8,"10":2},"a":{"5":1,"7":1,"9":2,"10":2},"g":{"5":1,"7":1,"9":2,"10":2}},"J":{"flag":"🏳️","name":"Japán","n":{"5":8,"9":4},"a":{"5":8,"9":1},"g":{"5":8,"9":1}},"KAZ":{"flag":"🏳️","name":"Kazahstan","n":{"5":24,"6":2,"8":21,"9":10,"10":8},"a":{"5":2,"6":1,"8":3,"9":2,"10":1},"g":{"5":2,"6":1,"8":3,"9":2,"10":3}},"E":{"flag":"🏳️","name":"Spanyolország","n":{"5":2,"6":5,"7":6,"8":2,"11":2,"12":2},"a":{"5":1,"6":4,"7":4,"8":2,"11":1,"12":2},"g":{"5":1,"6":4,"7":4,"8":2,"11":1,"12":2}},"S":{"flag":"🏳️","name":"Svédország","n":{"5":2,"6":25,"7":25,"8":5,"9":2,"10":3},"a":{"5":1,"6":9,"7":7,"8":3,"9":1,"10":1},"g":{"5":1,"6":9,"7":7,"8":3,"9":1,"10":1}},"BRA":{"flag":"🏳️","name":"Brazília","n":{"6":1,"12":4},"a":{"6":1,"12":2},"g":{"6":1,"12":2}},"CY":{"flag":"🏳️","name":"Ciprus","n":{"6":9,"8":20},"a":{"6":1,"8":2},"g":{"6":1,"8":2}},"BG":{"flag":"🇧🇬","name":"Bulgária","n":{"8":3,"9":1},"a":{"8":1,"9":1},"g":{"8":1,"9":1}},"IZL":{"flag":"🏳️","name":"Izland","n":{"8":2},"a":{"8":2},"g":{"8":2}},"LY":{"flag":"🏳️","name":"Líbia","n":{"11":4},"a":{"11":1},"g":{"11":1}},"MK":{"flag":"🇲🇰","name":"Macedónia","n":{"11":1},"a":{"11":1},"g":{"11":1}},"MA":{"flag":"🏳️","name":"Marokkó","n":{"11":5},"a":{"11":2},"g":{"11":2}}},"domfor":{"1":[503,348],"2":[946,483],"3":[1032,958],"4":[989,1257],"5":[838,1754],"6":[807,1821],"7":[1557,1505],"8":[1854,2150],"9":[983,2346],"10":[1157,1801],"11":[1300,1140],"12":[1220,860]}},"2025":{"avail":[1,2,3,4,5,6,7,8,9,10,11,12],"countries":{"A":{"flag":"🇦🇹","name":"Ausztria","n":{"1":292,"2":237,"3":165,"4":143,"5":283,"6":179,"7":111,"8":169,"9":263,"10":282,"11":242,"12":308},"a":{"1":109,"2":96,"3":61,"4":65,"5":80,"6":67,"7":33,"8":61,"9":58,"10":100,"11":101,"12":108},"g":{"1":121,"2":102,"3":63,"4":66,"5":86,"6":68,"7":39,"8":63,"9":64,"10":103,"11":106,"12":112}},"BOS":{"flag":"🇧🇦","name":"Bosznia-Hercegovina","n":{"1":4,"2":2,"5":7,"6":2,"9":1,"11":6,"12":4},"a":{"1":1,"2":2,"5":4,"6":2,"9":1,"11":4,"12":2},"g":{"1":1,"2":2,"5":4,"6":2,"9":1,"11":4,"12":2}},"BG":{"flag":"🇧🇬","name":"Bulgária","n":{"1":6,"2":8,"3":1,"4":6,"7":4,"9":1,"12":6},"a":{"1":1,"2":3,"3":1,"4":2,"7":2,"9":1,"12":2},"g":{"1":1,"2":3,"3":1,"4":2,"7":2,"9":1,"12":2}},"CS":{"flag":"🇨🇿","name":"Csehország","n":{"1":65,"2":86,"3":95,"4":228,"5":280,"6":180,"7":143,"8":195,"9":247,"10":236,"11":121,"12":96},"a":{"1":23,"2":28,"3":25,"4":73,"5":81,"6":52,"7":54,"8":56,"9":68,"10":77,"11":46,"12":28},"g":{"1":25,"2":28,"3":28,"4":73,"5":83,"6":57,"7":58,"8":62,"9":69,"10":79,"11":49,"12":30}},"USA":{"flag":"🇺🇸","name":"Egyesült Államok","n":{"1":4,"2":5,"3":25,"4":9,"5":108,"6":39,"7":22,"8":16,"9":60,"10":15,"11":2,"12":1},"a":{"1":2,"2":2,"3":12,"4":5,"5":18,"6":19,"7":6,"8":12,"9":21,"10":6,"11":2,"12":1},"g":{"1":2,"2":2,"3":12,"4":5,"5":18,"6":24,"7":7,"8":12,"9":24,"10":6,"11":2,"12":1}},"FEH":{"flag":"🇧🇾","name":"Fehéroroszország","n":{"1":9,"3":22,"4":2,"5":3,"7":14,"9":5,"10":4,"12":16},"a":{"1":3,"3":5,"4":2,"5":2,"7":2,"9":5,"10":0,"12":2},"g":{"1":3,"3":5,"4":2,"5":2,"7":2,"9":5,"10":2,"12":2}},"F":{"flag":"🇫🇷","name":"Franciaország","n":{"1":3,"2":2,"3":9,"4":2,"5":19,"6":16,"7":75,"8":27,"9":1,"10":2,"11":4,"12":4},"a":{"1":3,"2":1,"3":3,"4":1,"5":4,"6":2,"7":10,"8":13,"9":1,"10":1,"11":4,"12":3},"g":{"1":3,"2":1,"3":3,"4":1,"5":4,"6":4,"7":12,"8":15,"9":1,"10":1,"11":4,"12":3}},"GR":{"flag":"🇬🇷","name":"Görögország","n":{"1":4,"2":4,"3":2,"6":1,"11":2},"a":{"1":2,"2":1,"3":2,"6":1,"11":1},"g":{"1":2,"2":2,"3":2,"6":1,"11":1}},"NL":{"flag":"🇳🇱","name":"Hollandia","n":{"1":5,"2":1,"4":7,"5":16,"6":8,"7":8,"8":15,"10":3,"11":4,"12":4},"a":{"1":2,"2":1,"4":2,"5":2,"6":3,"7":4,"8":10,"10":1,"11":2,"12":1},"g":{"1":3,"2":1,"4":2,"5":2,"6":3,"7":4,"8":10,"10":1,"11":2,"12":1}},"CR":{"flag":"🇭🇷","name":"Horvátország","n":{"1":110,"2":38,"3":35,"4":10,"5":25,"6":19,"7":6,"8":27,"9":13,"10":28,"11":25,"12":6},"a":{"1":48,"2":20,"3":16,"4":6,"5":12,"6":13,"7":2,"8":11,"9":9,"10":9,"11":13,"12":4},"g":{"1":48,"2":20,"3":16,"4":6,"5":13,"6":13,"7":4,"8":11,"9":9,"10":9,"11":13,"12":4}},"IL":{"flag":"🇮🇱","name":"Izrael","n":{"1":44,"2":3,"3":3,"4":16,"5":51,"6":164,"7":100,"8":70,"9":142,"10":41,"11":14,"12":5},"a":{"1":9,"2":1,"3":1,"4":6,"5":9,"6":19,"7":12,"8":19,"9":20,"10":4,"11":4,"12":3},"g":{"1":9,"2":1,"3":1,"4":6,"5":11,"6":23,"7":12,"8":25,"9":30,"10":9,"11":6,"12":3}},"CHN":{"flag":"🇨🇳","name":"Kína","n":{"1":4,"2":6,"3":1,"4":24,"5":93,"6":110,"7":110,"8":40,"9":177,"10":142,"11":232,"12":49},"a":{"1":4,"2":6,"3":1,"4":24,"5":93,"6":110,"7":108,"8":40,"9":177,"10":140,"11":232,"12":49},"g":{"1":4,"2":6,"3":1,"4":24,"5":93,"6":110,"7":108,"8":40,"9":177,"10":140,"11":232,"12":49}},"PL":{"flag":"🇵🇱","name":"Lengyelország","n":{"1":5,"2":12,"3":8,"4":42,"5":60,"6":54,"7":11,"8":58,"9":30,"10":4,"11":30,"12":8},"a":{"1":3,"2":5,"3":5,"4":22,"5":11,"6":22,"7":7,"8":19,"9":7,"10":4,"11":17,"12":3},"g":{"1":3,"2":5,"3":5,"4":22,"5":17,"6":22,"7":8,"8":22,"9":7,"10":4,"11":17,"12":3}},"LT":{"flag":"🇱🇹","name":"Litvánia","n":{"1":6,"2":21,"3":8,"5":3,"6":8,"9":10,"12":8},"a":{"1":0,"2":3,"3":6,"5":1,"6":1,"9":2,"12":4},"g":{"1":4,"2":3,"3":6,"5":1,"6":1,"9":2,"12":4}},"H":{"flag":"🇭🇺","name":"Magyarország","n":{"1":1100,"2":1275,"3":1212,"4":979,"5":1027,"6":906,"7":1964,"8":1887,"9":801,"10":1669,"11":1291,"12":1051},"a":{"1":478,"2":633,"3":551,"4":407,"5":446,"6":407,"7":667,"8":694,"9":342,"10":696,"11":603,"12":449},"g":{"1":559,"2":682,"3":629,"4":427,"5":462,"6":417,"7":689,"8":731,"9":353,"10":719,"11":659,"12":463}},"MOL":{"flag":"🇲🇩","name":"Moldovai Köztársaság","n":{"1":11,"2":10,"3":16,"6":30,"8":20,"9":36,"10":6,"12":20},"a":{"1":2,"2":4,"3":2,"6":4,"8":4,"9":5,"10":0,"12":4},"g":{"1":2,"2":4,"3":2,"6":4,"8":4,"9":5,"10":3,"12":4}},"GB":{"flag":"🇬🇧","name":"Nagybritannia","n":{"1":2,"2":3,"3":8,"4":9,"5":18,"6":14,"7":34,"8":11,"9":47,"10":19,"11":4,"12":8},"a":{"1":1,"2":2,"3":8,"4":6,"5":4,"6":10,"7":10,"8":9,"9":34,"10":3,"11":2,"12":4},"g":{"1":2,"2":2,"3":7,"4":7,"5":5,"6":12,"7":10,"8":7,"9":36,"10":3,"11":2,"12":4}},"D":{"flag":"🇩🇪","name":"Németország","n":{"1":104,"2":65,"3":197,"4":346,"5":382,"6":597,"7":423,"8":729,"9":653,"10":408,"11":141,"12":94},"a":{"1":20,"2":23,"3":41,"4":67,"5":65,"6":93,"7":75,"8":120,"9":98,"10":58,"11":24,"12":25},"g":{"1":29,"2":23,"3":44,"4":76,"5":77,"6":103,"7":86,"8":145,"9":126,"10":81,"11":29,"12":25}},"I":{"flag":"🇮🇹","name":"Olaszország","n":{"1":21,"2":14,"3":7,"4":40,"5":38,"6":30,"7":24,"8":54,"9":11,"10":17,"11":7,"12":24},"a":{"1":7,"2":5,"3":5,"4":20,"5":21,"6":13,"7":8,"8":27,"9":3,"10":6,"11":1,"12":7},"g":{"1":7,"2":5,"3":5,"4":20,"5":23,"6":15,"7":11,"8":27,"9":5,"10":8,"11":3,"12":7}},"RUS":{"flag":"🇷🇺","name":"Oroszország","n":{"1":10,"2":4,"3":38,"4":121,"5":131,"6":68,"7":56,"8":30,"9":72,"10":132,"11":51,"12":12},"a":{"1":3,"2":4,"3":8,"4":13,"5":23,"6":9,"7":8,"8":6,"9":13,"10":14,"11":8,"12":4},"g":{"1":5,"2":4,"3":12,"4":17,"5":26,"6":12,"7":9,"8":7,"9":16,"10":16,"11":10,"12":4}},"P":{"flag":"🏳️","name":"Portugália","n":{"1":4,"3":14,"4":3,"6":1,"8":14,"9":14,"10":7,"11":16},"a":{"1":1,"3":1,"4":1,"6":1,"8":4,"9":3,"10":2,"11":0},"g":{"1":1,"3":1,"4":1,"6":1,"8":4,"9":4,"10":2,"11":1}},"RO":{"flag":"🇷🇴","name":"Románia","n":{"1":18,"2":6,"3":8,"4":48,"5":20,"6":87,"7":83,"8":102,"9":55,"10":18,"11":8,"12":4},"a":{"1":8,"2":4,"3":4,"4":13,"5":5,"6":17,"7":34,"8":35,"9":12,"10":4,"11":3,"12":4},"g":{"1":8,"2":4,"3":4,"4":15,"5":7,"6":20,"7":34,"8":35,"9":12,"10":5,"11":3,"12":4}},"CH":{"flag":"🇨🇭","name":"Svájc","n":{"1":3,"2":23,"3":5,"4":28,"6":22,"7":4,"8":7,"9":2,"10":7,"11":13,"12":3},"a":{"1":1,"2":10,"3":3,"4":10,"6":6,"7":3,"8":4,"9":2,"10":5,"11":3,"12":1},"g":{"1":2,"2":10,"3":3,"4":10,"6":6,"7":3,"8":4,"9":2,"10":5,"11":3,"12":1}},"S":{"flag":"🏳️","name":"Svédország","n":{"1":2,"4":12,"6":2,"7":1},"a":{"1":1,"4":4,"6":2,"7":1},"g":{"1":1,"4":4,"6":2,"7":1}},"SRB":{"flag":"🇷🇸","name":"Szerbia","n":{"1":5,"2":13,"3":12,"4":8,"5":11,"6":2,"7":15,"8":14,"9":1,"10":4,"11":6},"a":{"1":2,"2":6,"3":7,"4":2,"5":7,"6":2,"7":7,"8":5,"9":1,"10":2,"11":2},"g":{"1":3,"2":6,"3":7,"4":2,"5":7,"6":2,"7":7,"8":5,"9":1,"10":2,"11":2}},"SK":{"flag":"🇸🇰","name":"Szlovákia","n":{"1":66,"2":117,"3":142,"4":220,"5":268,"6":145,"7":309,"8":380,"9":191,"10":99,"11":108,"12":65},"a":{"1":28,"2":60,"3":61,"4":85,"5":88,"6":55,"7":103,"8":130,"9":81,"10":47,"11":49,"12":19},"g":{"1":33,"2":64,"3":80,"4":85,"5":89,"6":57,"7":107,"8":142,"9":81,"10":47,"11":60,"12":21}},"SLO":{"flag":"🇸🇮","name":"Szlovénia","n":{"1":93,"2":86,"3":34,"4":91,"5":70,"6":41,"7":20,"8":33,"9":34,"10":72,"11":66,"12":72},"a":{"1":43,"2":37,"3":12,"4":39,"5":36,"6":31,"7":11,"8":20,"9":15,"10":42,"11":24,"12":36},"g":{"1":43,"2":39,"3":18,"4":41,"5":41,"6":31,"7":11,"8":21,"9":15,"10":42,"11":30,"12":36}},"TR":{"flag":"🇹🇷","name":"Törökország","n":{"1":4,"2":2,"3":6,"4":3,"7":7},"a":{"1":2,"2":1,"3":6,"4":2,"7":7},"g":{"1":2,"2":1,"3":6,"4":2,"7":7}},"UKR":{"flag":"🇺🇦","name":"Ukrajna","n":{"1":55,"2":77,"3":23,"4":12,"5":155,"6":79,"7":31,"8":86,"9":163,"10":67,"11":6,"12":27},"a":{"1":13,"2":14,"3":13,"4":7,"5":30,"6":15,"7":12,"8":32,"9":22,"10":14,"11":2,"12":8},"g":{"1":13,"2":14,"3":13,"4":7,"5":32,"6":18,"7":12,"8":33,"9":24,"10":17,"11":4,"12":8}},"EST":{"flag":"🇪🇪","name":"Észtország","n":{"2":6,"5":2,"6":6,"8":36,"10":2,"11":2},"a":{"2":2,"5":1,"6":2,"8":3,"10":1,"11":2},"g":{"2":2,"5":1,"6":2,"8":3,"10":1,"11":2}},"LV":{"flag":"🇱🇻","name":"Lettország","n":{"2":17,"6":3,"7":8,"8":22,"9":27,"10":7},"a":{"2":3,"6":3,"7":0,"8":4,"9":8,"10":1},"g":{"2":3,"6":3,"7":2,"8":4,"9":9,"10":1}},"TH":{"flag":"🏳️","name":"Thaiföld","n":{"2":8,"4":6,"5":2,"6":1,"9":2,"11":6},"a":{"2":2,"4":6,"5":1,"6":1,"9":1,"11":6},"g":{"2":2,"4":6,"5":1,"6":1,"9":1,"11":6}},"IRL":{"flag":"🏳️","name":"Írország","n":{"3":2,"6":1,"9":1,"10":2},"a":{"3":2,"6":1,"9":1,"10":1},"g":{"3":2,"6":1,"9":1,"10":1}},"CND":{"flag":"🇨🇦","name":"Kanada","n":{"3":20,"4":23,"5":36,"6":14,"7":1,"8":4,"9":15},"a":{"3":2,"4":3,"5":6,"6":4,"7":1,"8":2,"9":11},"g":{"3":2,"4":3,"5":6,"6":6,"7":1,"8":2,"9":11}},"KAZ":{"flag":"🏳️","name":"Kazahstan","n":{"3":2,"4":2,"5":5,"6":1,"9":43,"12":10},"a":{"3":2,"4":1,"5":2,"6":1,"9":5,"12":4},"g":{"3":2,"4":1,"5":2,"6":1,"9":5,"12":4}},"DZ":{"flag":"🏳️","name":"Algéria","n":{"4":3,"9":2},"a":{"4":1,"9":1},"g":{"4":1,"9":1}},"AUS":{"flag":"🇦🇺","name":"Ausztrália","n":{"4":3,"6":10,"8":11,"9":5,"10":12},"a":{"4":3,"6":8,"8":7,"9":3,"10":3},"g":{"4":3,"6":8,"8":7,"9":3,"10":7}},"B":{"flag":"🏳️","name":"Belgium","n":{"4":8,"5":18,"6":4,"7":10,"8":10,"9":12,"11":2},"a":{"4":2,"5":2,"6":2,"7":6,"8":2,"9":0,"11":1},"g":{"4":2,"5":2,"6":2,"7":6,"8":4,"9":2,"11":1}},"KR":{"flag":"🇰🇷","name":"Dél-koreai köztársas","n":{"4":4,"5":72,"6":1},"a":{"4":4,"5":72,"6":1},"g":{"4":4,"5":72,"6":1}},"SF":{"flag":"🏳️","name":"Finnország","n":{"4":2,"7":4,"9":5,"11":1},"a":{"4":1,"7":2,"9":1,"11":1},"g":{"4":1,"7":2,"9":1,"11":1}},"J":{"flag":"🏳️","name":"Japán","n":{"4":1,"6":1,"7":2,"8":2,"11":2},"a":{"4":1,"6":1,"7":2,"8":1,"11":2},"g":{"4":1,"6":1,"7":2,"8":1,"11":2}},"E":{"flag":"🏳️","name":"Spanyolország","n":{"4":2,"5":2,"8":4,"10":2,"11":2,"12":1},"a":{"4":2,"5":1,"8":4,"10":1,"11":1,"12":1},"g":{"4":2,"5":1,"8":4,"10":1,"11":1,"12":1}},"UUG":{"flag":"🏳️","name":"Uruguay","n":{"4":1,"6":2,"9":1},"a":{"4":1,"6":2,"9":1},"g":{"4":1,"6":2,"9":1}},"AL":{"flag":"🏳️","name":"Albánia","n":{"5":3},"a":{"5":1},"g":{"5":1}},"M":{"flag":"🏳️","name":"Málta","n":{"5":2},"a":{"5":1},"g":{"5":1}},"CY":{"flag":"🏳️","name":"Ciprus","n":{"6":5,"9":7,"12":2},"a":{"6":1,"9":1,"12":1},"g":{"6":1,"9":1,"12":1}},"ZAF":{"flag":"🏳️","name":"Dél-afrikai Közt.","n":{"6":1},"a":{"6":1},"g":{"6":1}},"AZA":{"flag":"🏳️","name":"Azerbajdzsán","n":{"7":16},"a":{"7":4},"g":{"7":4}},"IZL":{"flag":"🏳️","name":"Izland","n":{"7":2,"11":2},"a":{"7":2,"11":1},"g":{"7":2,"11":1}},"L":{"flag":"🏳️","name":"Luxemburg","n":{"7":2,"12":3},"a":{"7":2,"12":1},"g":{"7":2,"12":1}},"MA":{"flag":"🏳️","name":"Marokkó","n":{"7":2,"8":1,"9":5,"12":1},"a":{"7":1,"8":0,"9":1,"12":1},"g":{"7":1,"8":1,"9":1,"12":1}},"N":{"flag":"🇳🇴","name":"Norvégia","n":{"7":3,"8":2,"11":20,"12":18},"a":{"7":1,"8":0,"11":3,"12":4},"g":{"7":1,"8":1,"11":5,"12":4}},"DK":{"flag":"🇩🇰","name":"Dánia","n":{"8":8,"10":14},"a":{"8":8,"10":1},"g":{"8":6,"10":1}},"MK":{"flag":"🇲🇰","name":"Macedónia","n":{"9":1},"a":{"9":1},"g":{"9":1}},"AR":{"flag":"🏳️","name":"Argentína","n":{"12":3},"a":{"12":1},"g":{"12":1}},"PHL":{"flag":"🇵🇭","name":"Fülöp Szigetek","n":{"12":2},"a":{"12":1},"g":{"12":1}}},"domfor":{"1":[1100,959],"2":[1275,876],"3":[1212,908],"4":[979,1485],"5":[1027,2183],"6":[906,1948],"7":[1964,1661],"8":[1887,2197],"9":[801,2355],"10":[1669,1652],"11":[1291,1145],"12":[1051,884]}},"2026":{"avail":[1,2,3,4,5],"countries":{"A":{"flag":"🇦🇹","name":"Ausztria","n":{"1":183,"2":221,"3":257,"4":232,"5":245},"a":{"1":61,"2":93,"3":98,"4":84,"5":107},"g":{"1":84,"2":95,"3":100,"4":96,"5":107}},"BOS":{"flag":"🇧🇦","name":"Bosznia-Hercegovina","n":{"1":2,"3":1,"5":2},"a":{"1":2,"3":1,"5":1},"g":{"1":2,"3":1,"5":1}},"BG":{"flag":"🇧🇬","name":"Bulgária","n":{"1":2,"4":5,"5":1},"a":{"1":1,"4":1,"5":0},"g":{"1":1,"4":1,"5":1}},"CS":{"flag":"🇨🇿","name":"Csehország","n":{"1":26,"2":60,"3":82,"4":156,"5":96},"a":{"1":8,"2":26,"3":31,"4":53,"5":37},"g":{"1":10,"2":26,"3":33,"4":57,"5":40}},"NL":{"flag":"🇳🇱","name":"Hollandia","n":{"1":1,"3":5,"4":22},"a":{"1":0,"3":1,"4":5},"g":{"1":1,"3":1,"4":5}},"CR":{"flag":"🇭🇷","name":"Horvátország","n":{"1":32,"2":33,"3":54,"4":33,"5":10},"a":{"1":17,"2":28,"3":24,"4":12,"5":7},"g":{"1":17,"2":28,"3":24,"4":13,"5":7}},"IL":{"flag":"🇮🇱","name":"Izrael","n":{"1":8,"2":10,"4":20,"5":28},"a":{"1":2,"2":4,"4":7,"5":8},"g":{"1":2,"2":4,"4":7,"5":8}},"CND":{"flag":"🇨🇦","name":"Kanada","n":{"1":18,"3":2},"a":{"1":2,"3":1},"g":{"1":2,"3":1}},"CHN":{"flag":"🇨🇳","name":"Kína","n":{"1":25,"3":47,"4":17,"5":137},"a":{"1":24,"3":47,"4":17,"5":136},"g":{"1":24,"3":47,"4":17,"5":136}},"PL":{"flag":"🇵🇱","name":"Lengyelország","n":{"1":8,"2":1,"3":18,"4":6,"5":47},"a":{"1":4,"2":1,"3":8,"4":3,"5":19},"g":{"1":5,"2":1,"3":8,"4":3,"5":20}},"LT":{"flag":"🇱🇹","name":"Litvánia","n":{"1":3,"4":8,"5":43},"a":{"1":1,"4":4,"5":8},"g":{"1":1,"4":4,"5":8}},"L":{"flag":"🏳️","name":"Luxemburg","n":{"1":12},"a":{"1":2},"g":{"1":2}},"H":{"flag":"🇭🇺","name":"Magyarország","n":{"1":841,"2":983,"3":781,"4":969,"5":751},"a":{"1":365,"2":478,"3":374,"4":431,"5":348},"g":{"1":414,"2":490,"3":390,"4":443,"5":370}},"M":{"flag":"🏳️","name":"Málta","n":{"1":3},"a":{"1":1},"g":{"1":1}},"GB":{"flag":"🇬🇧","name":"Nagybritannia","n":{"1":2,"2":2,"3":1,"4":6,"5":11},"a":{"1":1,"2":2,"3":1,"4":1,"5":5},"g":{"1":1,"2":2,"3":1,"4":1,"5":5}},"D":{"flag":"🇩🇪","name":"Németország","n":{"1":75,"2":102,"3":183,"4":253,"5":406},"a":{"1":11,"2":21,"3":43,"4":47,"5":75},"g":{"1":22,"2":21,"3":45,"4":53,"5":89}},"I":{"flag":"🇮🇹","name":"Olaszország","n":{"1":13,"2":5,"3":4,"5":33},"a":{"1":3,"2":4,"3":3,"5":25},"g":{"1":5,"2":4,"3":3,"5":26}},"RUS":{"flag":"🇷🇺","name":"Oroszország","n":{"1":72,"2":2,"3":46,"4":18,"5":47},"a":{"1":9,"2":1,"3":7,"4":5,"5":12},"g":{"1":13,"2":1,"3":7,"4":5,"5":13}},"RO":{"flag":"🇷🇴","name":"Románia","n":{"1":9,"2":18,"3":6,"4":14,"5":4},"a":{"1":3,"2":8,"3":5,"4":6,"5":4},"g":{"1":3,"2":8,"3":5,"4":6,"5":4}},"SRB":{"flag":"🇷🇸","name":"Szerbia","n":{"1":31,"2":8,"4":54},"a":{"1":10,"2":4,"4":20},"g":{"1":10,"2":4,"4":20}},"SK":{"flag":"🇸🇰","name":"Szlovákia","n":{"1":46,"2":77,"3":68,"4":317,"5":163},"a":{"1":24,"2":32,"3":29,"4":118,"5":58},"g":{"1":24,"2":32,"3":31,"4":120,"5":68}},"SLO":{"flag":"🇸🇮","name":"Szlovénia","n":{"1":39,"2":73,"3":32,"4":100,"5":95},"a":{"1":20,"2":35,"3":14,"4":54,"5":47},"g":{"1":22,"2":35,"3":14,"4":56,"5":51}},"TAI":{"flag":"🏳️","name":"Taivan","n":{"1":31,"2":24,"3":104,"4":35,"5":121},"a":{"1":31,"2":24,"3":104,"4":18,"5":121},"g":{"1":31,"2":24,"3":104,"4":18,"5":121}},"TR":{"flag":"🇹🇷","name":"Törökország","n":{"1":6,"2":5,"4":1},"a":{"1":6,"2":3,"4":1},"g":{"1":6,"2":3,"4":1}},"UKR":{"flag":"🇺🇦","name":"Ukrajna","n":{"1":38,"2":23,"3":19,"4":11,"5":113},"a":{"1":6,"2":5,"3":6,"4":6,"5":25},"g":{"1":8,"2":5,"3":7,"4":7,"5":26}},"BRA":{"flag":"🏳️","name":"Brazília","n":{"2":2,"3":3,"4":3},"a":{"2":1,"3":1,"4":1},"g":{"2":1,"3":1,"4":1}},"USA":{"flag":"🇺🇸","name":"Egyesült Államok","n":{"2":2,"3":5,"4":23,"5":24},"a":{"2":1,"3":4,"4":7,"5":11},"g":{"2":1,"3":4,"4":7,"5":13}},"FEH":{"flag":"🇧🇾","name":"Fehéroroszország","n":{"2":21,"4":28},"a":{"2":5,"4":4},"g":{"2":5,"4":4}},"SF":{"flag":"🏳️","name":"Finnország","n":{"2":1,"3":4,"4":4},"a":{"2":1,"3":2,"4":3},"g":{"2":1,"3":2,"4":3}},"GR":{"flag":"🇬🇷","name":"Görögország","n":{"2":3},"a":{"2":1},"g":{"2":1}},"MOL":{"flag":"🇲🇩","name":"Moldovai Köztársaság","n":{"2":14,"5":2},"a":{"2":2,"5":1},"g":{"2":2,"5":1}},"N":{"flag":"🇳🇴","name":"Norvégia","n":{"2":8,"4":33,"5":44},"a":{"2":2,"4":11,"5":0},"g":{"2":2,"4":12,"5":11}},"CH":{"flag":"🇨🇭","name":"Svájc","n":{"2":26,"3":22,"4":74,"5":11},"a":{"2":9,"3":5,"4":13,"5":4},"g":{"2":9,"3":6,"4":15,"5":5}},"AUS":{"flag":"🇦🇺","name":"Ausztrália","n":{"3":2},"a":{"3":2},"g":{"3":2}},"EST":{"flag":"🇪🇪","name":"Észtország","n":{"3":2,"4":2,"5":2},"a":{"3":2,"4":2,"5":1},"g":{"3":2,"4":2,"5":1}},"KAM":{"flag":"🏳️","name":"Kamerun","n":{"3":18},"a":{"3":18},"g":{"3":18}},"MK":{"flag":"🇲🇰","name":"Macedónia","n":{"3":5,"4":2},"a":{"3":1,"4":1},"g":{"3":1,"4":1}},"S":{"flag":"🏳️","name":"Svédország","n":{"3":4,"4":3,"5":2},"a":{"3":2,"4":2,"5":2},"g":{"3":2,"4":2,"5":2}},"F":{"flag":"🇫🇷","name":"Franciaország","n":{"4":6,"5":66},"a":{"4":6,"5":29},"g":{"4":6,"5":31}},"KAZ":{"flag":"🏳️","name":"Kazahstan","n":{"4":26},"a":{"4":4},"g":{"4":4}},"LV":{"flag":"🇱🇻","name":"Lettország","n":{"4":2},"a":{"4":2},"g":{"4":2}},"P":{"flag":"🏳️","name":"Portugália","n":{"4":11,"5":3},"a":{"4":1,"5":0},"g":{"4":1,"5":1}},"SM":{"flag":"🏳️","name":"San Marino","n":{"4":1},"a":{"4":1},"g":{"4":1}},"E":{"flag":"🏳️","name":"Spanyolország","n":{"4":4,"5":3},"a":{"4":3,"5":0},"g":{"4":3,"5":1}},"DZ":{"flag":"🏳️","name":"Algéria","n":{"5":5},"a":{"5":1},"g":{"5":2}},"DK":{"flag":"🇩🇰","name":"Dánia","n":{"5":2},"a":{"5":1},"g":{"5":1}},"ZAF":{"flag":"🏳️","name":"Dél-afrikai Közt.","n":{"5":8},"a":{"5":2},"g":{"5":2}},"IRL":{"flag":"🏳️","name":"Írország","n":{"5":5},"a":{"5":3},"g":{"5":3}},"J":{"flag":"🏳️","name":"Japán","n":{"5":2},"a":{"5":2},"g":{"5":2}},"TH":{"flag":"🏳️","name":"Thaiföld","n":{"5":2},"a":{"5":2},"g":{"5":2}}},"domfor":{"1":[841,685],"2":[983,741],"3":[781,994],"4":[969,1530],"5":[751,1783]}}};
+const SEGMONTH = {"2024":{"avail":[1,2,3,4,5,6,7,8,9,10,11],"rev":{"1":33102231,"2":50056317,"3":77778760,"4":76155097,"5":97968580,"6":96469475,"7":113888788,"8":152863807,"9":121250519,"10":109920274,"11":85871357},"rooms":{"1":432,"2":734,"3":1055,"4":1190,"5":1384,"6":1425,"7":1577,"8":2066,"9":1737,"10":1550,"11":1258}},"2025":{"avail":[1,2,3,4,5,6,7,8,9,10,11,12],"rev":{"1":79826240,"2":76739342,"3":76145851,"4":95390970,"5":119736372,"6":106904743,"7":129215449,"8":154795155,"9":116063541,"10":119391608,"11":84374517,"12":92478197},"rooms":{"1":1059,"2":1105,"3":1098,"4":1270,"5":1675,"6":1520,"7":1901,"8":2097,"9":1676,"10":1714,"11":1275,"12":1008}},"2026":{"avail":[1,2,3,4,5],"rev":{"1":60613463,"2":66389589,"3":66420853,"4":93089207,"5":96417097},"rooms":{"1":782,"2":904,"3":950,"4":1327,"5":1343}}};
+const PAL=['#09090b','#2563eb','#71717a','#16a34a','#d97706','#a1a1aa','#dc2626','#3b82f6','#d4d4d8','#0ea5e9','#7c3aed','#059669'];
+Chart.defaults.font.family="'Inter',-apple-system,sans-serif";
+Chart.defaults.font.size=11; Chart.defaults.color='#71717a'; Chart.defaults.borderColor='#e4e4e7';
+const fmM=v=>v==null?'—':new Intl.NumberFormat('hu-HU').format(Math.round(v/1e6*10)/10)+' M Ft';
+const fmI=v=>v==null?'—':new Intl.NumberFormat('hu-HU').format(Math.round(v));
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#09090b',titleColor:'#fafafa',bodyColor:'#d4d4d8',borderWidth:0,padding:12,cornerRadius:8,titleFont:{weight:600,size:12},bodyFont:{size:13,weight:500},boxPadding:6}},
+  scales:{x:{grid:{display:false},ticks:{font:{size:11,weight:500},color:'#71717a'},border:{color:'#e4e4e7'}},y:{grid:{color:'#f1f1f3'},ticks:{font:{size:11,weight:500},color:'#71717a'},beginAtZero:true,border:{display:false}}}};
+const charts={};
+function donut(id,labels,data,fmt){ if(charts[id])return; charts[id]=new Chart(document.getElementById(id),{type:'doughnut',
+  data:{labels:labels,datasets:[{data:data,backgroundColor:labels.map((_,i)=>labels[i]==='Egyéb'?'#d4d4d8':PAL[i%PAL.length]),borderColor:'#fff',borderWidth:2}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:8,usePointStyle:true,pointStyle:'circle'}},
+    tooltip:{backgroundColor:'#09090b',padding:12,cornerRadius:8,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return ' '+c.label+': '+(fmt?fmt(c.raw):fmI(c.raw))+' ('+(100*c.raw/t).toFixed(1)+'%)';}}}}}});}
+function hbar(id,labels,data){ if(charts[id])return; charts[id]=new Chart(document.getElementById(id),{type:'bar',
+  data:{labels:labels,datasets:[{data:data,backgroundColor:'#2563eb',borderRadius:4}]},
+  options:{...base,indexAxis:'y',plugins:{...base.plugins,tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+fmI(c.raw)+' éj'}}},
+    scales:{x:{...base.scales.x,grid:{color:'#f1f1f3'},ticks:{...base.scales.x.ticks,callback:v=>fmI(v)}},y:base.scales.y}}});}
+function revparBar(id,labels,data){ if(charts[id])return; charts[id]=new Chart(document.getElementById(id),{type:'bar',
+  data:{labels:labels,datasets:[{data:data,backgroundColor:'#09090b',borderRadius:4}]},
+  options:{...base,indexAxis:'y',plugins:{...base.plugins,tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+fmI(c.raw)+' Ft'}}},
+    scales:{x:{...base.scales.x,grid:{color:'#f1f1f3'},ticks:{...base.scales.x.ticks,callback:v=>(v/1000)+'k'}},y:base.scales.y}}});}
+function stacked(id,labels,series,money){ if(charts[id])return; charts[id]=new Chart(document.getElementById(id),{type:'bar',
+  data:{labels:labels,datasets:series.map((s,i)=>({label:s.label,data:s.data,backgroundColor:s.color||PAL[i%PAL.length],borderRadius:3,stack:'s'}))},
+  options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:10},padding:8,usePointStyle:true,pointStyle:'circle'}},
+    tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+(money?fmM(c.raw):fmI(c.raw)+' éj')}}},
+    scales:{x:{...base.scales.x,stacked:true},y:{...base.scales.y,stacked:true,ticks:{...base.scales.y.ticks,callback:v=>money?(v/1e6)+'M':fmI(v)}}}}});}
+function domfor(id,labels,dom,forn){ if(charts[id])return;
+  const tot=labels.map((_,i)=>dom[i]+forn[i]);
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',
+  data:{labels:labels,datasets:[
+    {label:'Belföldi',data:dom.map((v,i)=>tot[i]?100*v/tot[i]:0),backgroundColor:'#09090b',borderRadius:3,stack:'s'},
+    {label:'Külföldi',data:forn.map((v,i)=>tot[i]?100*v/tot[i]:0),backgroundColor:'#2563eb',borderRadius:3,stack:'s'}]},
+  options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+    tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}}},
+    scales:{x:{...base.scales.x,stacked:true},y:{...base.scales.y,stacked:true,max:100,ticks:{...base.scales.y.ticks,callback:v=>v+'%'}}}}});}
+function groupBar(id,labels,a,b,la,lb){ if(charts[id])return; charts[id]=new Chart(document.getElementById(id),{type:'bar',
+  data:{labels:labels,datasets:[{label:la,data:a,backgroundColor:'#a1a1aa',borderRadius:4},{label:lb,data:b,backgroundColor:'#09090b',borderRadius:4}]},
+  options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+    tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+fmM(c.raw)}}},
+    scales:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>(v/1e6)+'M'}}}}});}
+function initNat(y){const d=DATA.NAT[y];
+  donut('natDon'+y,d.don_labels,d.don_data);
+  hbar('natRank'+y,d.rank_labels,d.rank_data);
+  stacked('natStack'+y,d.labels,d.stacked,false);
+  domfor('natDom'+y,d.labels,d.dom,d['for']);}
+function initSegPmkt(){const S=DATA.SEG;
+  donut('segDon26',S.don2026.labels,S.don2026.data,fmM);
+  groupBar('segCompare',S.compare.labels,S.compare.rev25,S.compare.rev26,'2025 jan–máj','2026 jan–máj');
+  revparBar('segRevpar26',S.revpar2026.labels,S.revpar2026.data);
+  stacked('segStack26',S.stack2026.labels,S.stack2026.series,true);}
+function initSegChannel(){const S=DATA.SEG;
+  donut('chDon24',S.don2024.labels,S.don2024.data,fmM);
+  donut('chDon25',S.don2025ch.labels,S.don2025ch.data,fmM);
+  stacked('chStack24',S.stack2024.labels,S.stack2024.series,true);
+  stacked('chStack25',S.stack2025ch.labels,S.stack2025ch.series,true);}
+
+const MNH=['Jan','Feb','Már','Ápr','Máj','Jún','Júl','Aug','Sze','Okt','Nov','Dec'];
+let cmpA='2026', cmpB='2025';
+function destroyC(id){ if(charts[id]){charts[id].destroy(); delete charts[id];} }
+function aggY(y,months){ const Y=NATMONTH[y]; const o={total:0,dom:0,for:0,countries:{}};
+  for(const code in Y.countries){ const c=Y.countries[code]; let s=0; months.forEach(m=>s+=(c.n[m]||0)); if(s>0)o.countries[code]={flag:c.flag,name:c.name,nights:s}; o.total+=s; }
+  months.forEach(m=>{ const d=Y.domfor[m]||[0,0]; o.dom+=d[0]; o.for+=d[1]; }); return o; }
+function gbarN(id,labels,dA,dB,la,lb,horiz){ destroyC(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',
+   data:{labels:labels,datasets:[{label:la,data:dA,backgroundColor:'#09090b',borderRadius:4},{label:lb,data:dB,backgroundColor:'#a1a1aa',borderRadius:4}]},
+   options:{...base,indexAxis:horiz?'y':'x',plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+     tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+fmI(c.raw)+' éj'}}},
+     scales:horiz?{x:{...base.scales.x,grid:{color:'#f1f1f3'},ticks:{...base.scales.x.ticks,callback:v=>fmI(v)}},y:base.scales.y}:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>fmI(v)}}}}});}
+function lcmp(id,labels,dA,dB,la,lb){ destroyC(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+   data:{labels:labels,datasets:[{label:la,data:dA,borderColor:'#09090b',backgroundColor:'rgba(9,9,11,0.06)',borderWidth:3,tension:0.35,pointRadius:4,fill:true},{label:lb,data:dB,borderColor:'#a1a1aa',borderWidth:2,borderDash:[5,5],tension:0.35,pointRadius:3}]},
+   options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+     tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+fmI(c.raw)+' éj'}}},
+     scales:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>fmI(v)}}}}});}
+function renderCompare(){
+  const common=NATMONTH[cmpA].avail.filter(m=>NATMONTH[cmpB].avail.includes(m)).sort((a,b)=>a-b);
+  const A=aggY(cmpA,common),B=aggY(cmpB,common);
+  const pl=common.map(m=>MNH[m-1]); const per=pl.length?(pl[0]+'–'+pl[pl.length-1]):'—';
+  document.getElementById('cmpNote').textContent='Közös időszak: '+per+' ('+common.length+' hónap)';
+  document.querySelectorAll('.cmpLabelA').forEach(e=>e.textContent=cmpA);
+  document.querySelectorAll('.cmpLabelB').forEach(e=>e.textContent=cmpB);
+  const dt=B.total?((A.total-B.total)/B.total*100):0;
+  const fpc=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(1).replace('.',',')+'%';
+  const tA=Object.values(A.countries).sort((a,b)=>b.nights-a.nights)[0]||{flag:'',name:'–'};
+  const tB=Object.values(B.countries).sort((a,b)=>b.nights-a.nights)[0]||{flag:'',name:'–'};
+  document.getElementById('cmpKpi').innerHTML=
+   '<div class="kpi kpi-actual"><div class="kpi-label">'+cmpA+' ('+per+') vendégéjszaka</div><div class="kpi-value">'+fmI(A.total)+'</div><div class="kpi-sub">Belföldi '+fmI(A.dom)+' · Külföldi '+fmI(A.for)+'</div></div>'+
+   '<div class="kpi kpi-plan"><div class="kpi-label">'+cmpB+' ('+per+') vendégéjszaka</div><div class="kpi-value">'+fmI(B.total)+'</div><div class="kpi-sub">Belföldi '+fmI(B.dom)+' · Külföldi '+fmI(B.for)+'</div></div>'+
+   '<div class="kpi kpi-ytd"><div class="kpi-label">Eltérés '+cmpA+' vs '+cmpB+'</div><div class="kpi-value">'+fpc(dt)+'</div><div class="kpi-sub">'+fmI(A.total-B.total)+' éj különbség</div><span class="kpi-trend '+(dt>=0?'trend-up':'trend-down')+'">'+(dt>=0?'▲':'▼')+' '+fpc(dt)+'</span></div>'+
+   '<div class="kpi kpi-delta" style="border-top-color:var(--accent);"><div class="kpi-label">Top piac (A / B)</div><div class="kpi-value">'+tA.flag+' / '+tB.flag+'</div><div class="kpi-sub">'+cmpA+': '+tA.name+' · '+cmpB+': '+tB.name+'</div></div>';
+  const uni={}; Object.entries(A.countries).forEach(([c,v])=>uni[c]=(uni[c]||0)+v.nights); Object.entries(B.countries).forEach(([c,v])=>uni[c]=(uni[c]||0)+v.nights);
+  const meta=c=>A.countries[c]||B.countries[c]||{flag:'',name:c};
+  const codes=Object.keys(uni).sort((a,b)=>uni[b]-uni[a]).slice(0,10);
+  gbarN('cmpCountries',codes.map(c=>meta(c).flag+' '+meta(c).name),codes.map(c=>(A.countries[c]||{}).nights||0),codes.map(c=>(B.countries[c]||{}).nights||0),cmpA,cmpB,true);
+  const monA=common.map(m=>{const d=NATMONTH[cmpA].domfor[m]||[0,0];return d[0]+d[1];});
+  const monB=common.map(m=>{const d=NATMONTH[cmpB].domfor[m]||[0,0];return d[0]+d[1];});
+  lcmp('cmpMonthly',pl,monA,monB,cmpA,cmpB);
+  gbarN('cmpDomFor',['Belföldi','Külföldi'],[A.dom,A.for],[B.dom,B.for],cmpA,cmpB,false);
+  const allc=Object.keys(uni).sort((a,b)=>((B.countries[b]||{}).nights||0)-((B.countries[a]||{}).nights||0)||((A.countries[b]||{}).nights||0)-((A.countries[a]||{}).nights||0));
+  let body='';
+  allc.forEach(c=>{ const an=(A.countries[c]||{}).nights||0,bn=(B.countries[c]||{}).nights||0; if(!an&&!bn)return;
+    const ash=A.total?100*an/A.total:0,bsh=B.total?100*bn/B.total:0; const d=bn?((an-bn)/bn*100):null;
+    body+='<tr><td>'+meta(c).flag+' '+meta(c).name+'</td><td>'+fmI(an)+'</td><td>'+ash.toFixed(1).replace('.',',')+'%</td><td>'+fmI(bn)+'</td><td>'+bsh.toFixed(1).replace('.',',')+'%</td><td class="'+(an>=bn?'pos':'neg')+'">'+(d===null?'—':fpc(d))+'</td></tr>'; });
+  body+='<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Összesen</td><td>'+fmI(A.total)+'</td><td>100%</td><td>'+fmI(B.total)+'</td><td>100%</td><td class="'+(dt>=0?'pos':'neg')+'">'+fpc(dt)+'</td></tr>';
+  document.getElementById('cmpTable').innerHTML='<table class="data-table"><thead><tr><th>Ország</th><th>'+cmpA+' éj</th><th>'+cmpA+' %</th><th>'+cmpB+' éj</th><th>'+cmpB+' %</th><th>Δ</th></tr></thead><tbody>'+body+'</tbody></table>';
+}
+document.querySelectorAll('.cmpa-btn').forEach(b=>b.addEventListener('click',()=>{cmpA=b.dataset.y;document.querySelectorAll('.cmpa-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCompare();}));
+document.querySelectorAll('.cmpb-btn').forEach(b=>b.addEventListener('click',()=>{cmpB=b.dataset.y;document.querySelectorAll('.cmpb-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCompare();}));
+
+
+let finA='2026', finB='2025';
+function aggFin(y,months){ const Y=SEGMONTH[y]; let rev=0,rooms=0; months.forEach(m=>{rev+=(Y.rev[m]||0);rooms+=(Y.rooms[m]||0);}); return {rev,rooms,revpar:rooms?rev/rooms:0}; }
+function gbarM(id,labels,dA,dB,la,lb){ destroyC(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',
+   data:{labels:labels,datasets:[{label:la,data:dA,backgroundColor:'#09090b',borderRadius:4},{label:lb,data:dB,backgroundColor:'#a1a1aa',borderRadius:4}]},
+   options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+     tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+fmM(c.raw)}}},
+     scales:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>(v/1e6)+'M'}}}}});}
+function lineM(id,labels,dA,dB,la,lb){ destroyC(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+   data:{labels:labels,datasets:[{label:la,data:dA,borderColor:'#09090b',backgroundColor:'rgba(9,9,11,0.08)',borderWidth:3,tension:0.3,pointRadius:3,fill:true},{label:lb,data:dB,borderColor:'#a1a1aa',borderWidth:2,borderDash:[5,5],tension:0.3,pointRadius:3}]},
+   options:{...base,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:11},padding:10,usePointStyle:true,pointStyle:'circle'}},
+     tooltip:{...base.plugins.tooltip,callbacks:{label:c=>' '+c.dataset.label+': '+fmM(c.raw)}}},
+     scales:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>(v/1e6)+'M'}}}}});}
+function renderFin(){
+  const common=SEGMONTH[finA].avail.filter(m=>SEGMONTH[finB].avail.includes(m)).sort((a,b)=>a-b);
+  const A=aggFin(finA,common),B=aggFin(finB,common);
+  const pl=common.map(m=>MNH[m-1]); const per=pl.length?pl[0]+'–'+pl[pl.length-1]:'—';
+  document.getElementById('finNote').textContent='Közös időszak: '+per+' ('+common.length+' hónap)';
+  document.querySelectorAll('.finLabelA').forEach(e=>e.textContent=finA);
+  document.querySelectorAll('.finLabelB').forEach(e=>e.textContent=finB);
+  const dRev=A.rev-B.rev, dt=B.rev?100*dRev/B.rev:0;
+  const dtr=B.rooms?100*(A.rooms-B.rooms)/B.rooms:0, dtp=B.revpar?100*(A.revpar-B.revpar)/B.revpar:0;
+  const fpc=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(1).replace('.',',')+'%';
+  const trend=dt>=0?'trend-up':'trend-down';
+  document.getElementById('finKpi').innerHTML=
+   '<div class="kpi kpi-actual"><div class="kpi-label">'+finA+' ('+per+') FO bruttó forgalom</div><div class="kpi-value">'+fmM(A.rev)+'</div><div class="kpi-sub">'+fmI(A.rooms)+' kiadott szoba · RevPAR '+fmI(A.revpar)+' Ft</div></div>'+
+   '<div class="kpi kpi-plan"><div class="kpi-label">'+finB+' ('+per+') FO bruttó forgalom</div><div class="kpi-value">'+fmM(B.rev)+'</div><div class="kpi-sub">'+fmI(B.rooms)+' kiadott szoba · RevPAR '+fmI(B.revpar)+' Ft</div></div>'+
+   '<div class="kpi kpi-ytd"><div class="kpi-label">Bevétel '+(dRev>=0?'előny':'elmaradás')+' '+finA+' vs '+finB+'</div><div class="kpi-value">'+(dRev>=0?'+':'−')+fmM(Math.abs(dRev))+'</div><div class="kpi-sub">a közös időszakban</div><span class="kpi-trend '+trend+'">'+(dt>=0?'▲':'▼')+' '+fpc(dt)+'</span></div>'+
+   '<div class="kpi kpi-delta" style="border-top-color:var(--accent);"><div class="kpi-label">Volumen & ár (A vs B)</div><div class="kpi-value">'+fpc(dtr)+'</div><div class="kpi-sub">Kiadott szoba '+fpc(dtr)+' · RevPAR '+fpc(dtp)+'</div></div>';
+  const mA=common.map(m=>SEGMONTH[finA].rev[m]||0), mB=common.map(m=>SEGMONTH[finB].rev[m]||0);
+  gbarM('finMonthly',pl,mA,mB,finA,finB);
+  let ca=0,cb=0; const cumA=mA.map(v=>ca+=v), cumB=mB.map(v=>cb+=v);
+  lineM('finCum',pl,cumA,cumB,finA,finB);
+  let body='';
+  common.forEach((m,i)=>{ const a=mA[i],b=mB[i],d=a-b,dp=b?100*d/b:null;
+    body+='<tr><td>'+MNH[m-1]+'</td><td>'+fmI(a)+' Ft</td><td>'+fmI(b)+' Ft</td><td class="'+(d>=0?'pos':'neg')+'">'+(d>=0?'+':'−')+fmI(Math.abs(d))+' Ft</td><td class="'+(d>=0?'pos':'neg')+'">'+(dp===null?'—':fpc(dp))+'</td></tr>'; });
+  body+='<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Összesen</td><td>'+fmI(A.rev)+' Ft</td><td>'+fmI(B.rev)+' Ft</td><td class="'+(dRev>=0?'pos':'neg')+'">'+(dRev>=0?'+':'−')+fmI(Math.abs(dRev))+' Ft</td><td class="'+(dt>=0?'pos':'neg')+'">'+fpc(dt)+'</td></tr>';
+  document.getElementById('finTable').innerHTML='<table class="data-table"><thead><tr><th>Hónap</th><th>'+finA+'</th><th>'+finB+'</th><th>Δ Ft</th><th>Δ %</th></tr></thead><tbody>'+body+'</tbody></table>';
+}
+document.querySelectorAll('.fina-btn').forEach(b=>b.addEventListener('click',()=>{finA=b.dataset.y;document.querySelectorAll('.fina-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderFin();}));
+document.querySelectorAll('.finb-btn').forEach(b=>b.addEventListener('click',()=>{finB=b.dataset.y;document.querySelectorAll('.finb-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderFin();}));
+
+document.querySelectorAll('.nav-tab').forEach(btn=>btn.addEventListener('click',()=>{
+  const v=btn.dataset.view;
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById('view-'+v).classList.add('active');
+  if(v==='segments') initSegPmkt();
+  if(v==='nations') initNat('2024');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+document.querySelectorAll('.dim-tab').forEach(btn=>btn.addEventListener('click',()=>{
+  const d=btn.dataset.dim;
+  document.querySelectorAll('.dim-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dim-view').forEach(x=>x.style.display='none');
+  document.getElementById('dim-'+d).style.display='';
+  if(d==='pmkt') initSegPmkt(); if(d==='channel') initSegChannel(); if(d==='fin') renderFin();
+}));
+document.querySelectorAll('.nat-year-tab').forEach(btn=>btn.addEventListener('click',()=>{
+  const y=btn.dataset.natyear;
+  document.querySelectorAll('.nat-year-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.nat-year-view').forEach(x=>x.style.display='none');
+  document.getElementById('nat-year-'+y).style.display='';
+  if(y==='compare'){renderCompare();}else{initNat(y);}
+}));
+initSegPmkt();
+</script>
+</body></html>
