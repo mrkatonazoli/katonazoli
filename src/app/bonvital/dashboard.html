@@ -525,6 +525,9 @@
     <button class="nav-tab" data-view="nations">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>Nemzetiségek
     </button>
+    <button class="nav-tab" data-view="channels">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>Csatornák (2026 H1)
+    </button>
   </div>
   <div class="view active" id="view-segments">
     <div class="tabs" style="margin-bottom:20px;">
@@ -707,6 +710,65 @@
       <div class="section"><div class="section-header"><div><div class="section-title">Részletes összehasonlító táblázat</div><div class="section-desc">Országonkénti vendégéjszaka és eltérés (Δ = A vs B)</div></div></div><div id="cmpTable"></div></div>
     </div>
   </div>
+
+  <div class="view" id="view-channels">
+    <div class="footnote" style="margin-bottom:24px">
+      <strong>📊 Channel Manager – 2026 H1:</strong> A hoteltől független csatorna-manager rendszer havi bejövő forgalma (bookings + FO bruttó forgalom) 2026 január – június. <strong>Direkt = RoomSome OBP</strong> (a hotel saját booking engine-e). Minden más OTA vagy tour operator csatorna. <em>Megjegyzés: a februári RoomSome OBP-ből 400 M Ft egyszeri, kiugró tétel korrigálva lett.</em>
+    </div>
+
+    <div class="kpi-row" id="chKpi"></div>
+
+    <div class="charts-grid">
+      <div class="section">
+        <div class="section-header"><div>
+          <div class="section-title">Havi bevétel — Direkt vs OTA</div>
+          <div class="section-desc">2026 H1, halmozott oszlop</div>
+        </div></div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="chMonthlyStack"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div>
+          <div class="section-title">Csatorna-mix (H1 összesen)</div>
+          <div class="section-desc">FO bruttó forgalom megoszlása</div>
+        </div></div>
+        <div class="chart-wrap chart-wrap-tall"><canvas id="chDonut"></canvas></div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="section">
+        <div class="section-header"><div>
+          <div class="section-title">Foglalások száma — Direkt vs OTA (havi)</div>
+        </div></div>
+        <div class="chart-wrap"><canvas id="chBookingStack"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div>
+          <div class="section-title">Direkt (RoomSome OBP) havi trend</div>
+          <div class="section-desc">Bookings vs FO bruttó forgalom</div>
+        </div></div>
+        <div class="chart-wrap"><canvas id="chDirectTrend"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div>
+        <div class="section-title">H1 összesített csatorna-táblázat</div>
+        <div class="section-desc">Bookings, FO bruttó forgalom, átlagos foglalás érték, részesedés</div>
+      </div></div>
+      <div id="chSummaryTable"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div>
+        <div class="section-title">Havi bontás csatornánként</div>
+        <div class="section-desc">FO bruttó forgalom (Ft) hónap szerint</div>
+      </div></div>
+      <div id="chMatrixTable"></div>
+    </div>
+
+    <div class="insights" id="chInsights"></div>
+  </div>
 </div>
 <script>
 const DATA = {"NAT": {"2024": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "don_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇨🇿 Csehország", "🇸🇰 Szlovákia", "🇨🇳 Kína", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "Egyéb"], "don_data": [13186, 2921, 2482, 1747, 1729, 1656, 665, 597, 4626], "rank_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇨🇿 Csehország", "🇸🇰 Szlovákia", "🇨🇳 Kína", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "🇺🇦 Ukrajna", "🇮🇱 Izrael", "🇺🇸 Egyesült Államok", "🇷🇴 Románia"], "rank_data": [13186, 2921, 2482, 1747, 1729, 1656, 665, 597, 568, 530, 393, 391], "stacked": [{"label": "🇭🇺 Magyarország", "data": [503, 946, 1032, 989, 838, 807, 1557, 1854, 983, 1157, 1300, 1220], "color": "#09090b"}, {"label": "🇩🇪 Németország", "data": [26, 26, 93, 201, 306, 390, 214, 515, 539, 377, 155, 79], "color": "#2563eb"}, {"label": "🇦🇹 Ausztria", "data": [139, 177, 272, 220, 255, 203, 144, 163, 154, 174, 269, 312], "color": "#71717a"}, {"label": "🇨🇿 Csehország", "data": [31, 40, 108, 124, 177, 160, 238, 147, 238, 335, 61, 88], "color": "#16a34a"}, {"label": "🇸🇰 Szlovákia", "data": [23, 53, 160, 103, 102, 55, 260, 483, 238, 116, 102, 34], "color": "#d97706"}, {"label": "🇨🇳 Kína", "data": [0, 20, 0, 120, 305, 262, 95, 22, 312, 341, 177, 2], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [129, 167, 325, 489, 609, 751, 554, 820, 865, 458, 376, 345], "color": "#d4d4d8"}], "dom": [503, 946, 1032, 989, 838, 807, 1557, 1854, 983, 1157, 1300, 1220], "for": [348, 483, 958, 1257, 1754, 1821, 1505, 2150, 2346, 1801, 1140, 860]}, "2025": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "don_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "Egyéb"], "don_data": [15162, 4139, 2674, 2110, 1972, 988, 781, 725, 4864], "rank_labels": ["🇭🇺 Magyarország", "🇩🇪 Németország", "🇦🇹 Ausztria", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "🇸🇮 Szlovénia", "🇮🇱 Izrael", "🇷🇴 Románia", "🇭🇷 Horvátország"], "rank_data": [15162, 4139, 2674, 2110, 1972, 988, 781, 725, 712, 653, 457, 342], "stacked": [{"label": "🇭🇺 Magyarország", "data": [1100, 1275, 1212, 979, 1027, 906, 1964, 1887, 801, 1669, 1291, 1051], "color": "#09090b"}, {"label": "🇩🇪 Németország", "data": [104, 65, 197, 346, 382, 597, 423, 729, 653, 408, 141, 94], "color": "#2563eb"}, {"label": "🇦🇹 Ausztria", "data": [292, 237, 165, 143, 283, 179, 111, 169, 263, 282, 242, 308], "color": "#71717a"}, {"label": "🇸🇰 Szlovákia", "data": [66, 117, 142, 220, 268, 145, 309, 380, 191, 99, 108, 65], "color": "#16a34a"}, {"label": "🇨🇿 Csehország", "data": [65, 86, 95, 228, 280, 180, 143, 195, 247, 236, 121, 96], "color": "#d97706"}, {"label": "🇨🇳 Kína", "data": [4, 6, 1, 24, 93, 110, 110, 40, 177, 142, 232, 49], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [428, 365, 308, 524, 877, 737, 565, 684, 824, 485, 301, 272], "color": "#d4d4d8"}], "dom": [1100, 1275, 1212, 979, 1027, 906, 1964, 1887, 801, 1669, 1291, 1051], "for": [959, 876, 908, 1485, 2183, 1948, 1661, 2197, 2355, 1652, 1145, 884]}, "2026": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj"], "don_labels": ["🇭🇺 Magyarország", "🇦🇹 Ausztria", "🇩🇪 Németország", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇸🇮 Szlovénia", "🏳️ Taivan", "🇨🇳 Kína", "Egyéb"], "don_data": [4325, 1138, 1019, 671, 420, 339, 315, 226, 1605], "rank_labels": ["🇭🇺 Magyarország", "🇦🇹 Ausztria", "🇩🇪 Németország", "🇸🇰 Szlovákia", "🇨🇿 Csehország", "🇸🇮 Szlovénia", "🏳️ Taivan", "🇨🇳 Kína", "🇺🇦 Ukrajna", "🇷🇺 Oroszország", "🇭🇷 Horvátország", "🇨🇭 Svájc"], "rank_data": [4325, 1138, 1019, 671, 420, 339, 315, 226, 204, 185, 162, 133], "stacked": [{"label": "🇭🇺 Magyarország", "data": [841, 983, 781, 969, 751], "color": "#09090b"}, {"label": "🇦🇹 Ausztria", "data": [183, 221, 257, 232, 245], "color": "#2563eb"}, {"label": "🇩🇪 Németország", "data": [75, 102, 183, 253, 406], "color": "#71717a"}, {"label": "🇸🇰 Szlovákia", "data": [46, 77, 68, 317, 163], "color": "#16a34a"}, {"label": "🇨🇿 Csehország", "data": [26, 60, 82, 156, 96], "color": "#d97706"}, {"label": "🇸🇮 Szlovénia", "data": [39, 73, 32, 100, 95], "color": "#a1a1aa"}, {"label": "Egyéb", "data": [316, 208, 372, 472, 778], "color": "#d4d4d8"}], "dom": [841, 983, 781, 969, 751], "for": [685, 741, 994, 1530, 1783]}}, "SEG": {"don2026": {"labels": ["AP Availpro ismeretlen", "BG Booking Genius", "KC Külföldi csoport", "BE Belföldi egyéni", "KE Külföldi egyéni", "BC Belföldi csoport"], "data": [172147896, 143449707, 25122021, 22743889, 17884151, 1582545]}, "revpar2026": {"labels": ["BC Belföldi csoport", "BG Booking Genius", "AP Availpro ismeretlen", "BE Belföldi egyéni", "KE Külföldi egyéni", "KC Külföldi csoport"], "data": [93091, 75819, 74362, 72203, 63872, 51585]}, "stack2026": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj"], "series": [{"label": "Availpro ismeretlen", "data": [31671886, 34171903, 32486363, 41874377, 31943367], "color": "#09090b"}, {"label": "Booking Genius", "data": [19390264, 22325895, 20216214, 38124553, 43392781], "color": "#2563eb"}, {"label": "Külföldi csoport", "data": [1460593, 1446196, 5555007, 5862645, 10797580], "color": "#71717a"}, {"label": "Belföldi egyéni", "data": [4407101, 4949703, 4649567, 4214892, 4522626], "color": "#16a34a"}, {"label": "Külföldi egyéni", "data": [3244834, 3495892, 3513702, 3012740, 4616983], "color": "#d97706"}, {"label": "Belföldi csoport", "data": [438785, 0, 0, 0, 1143760], "color": "#a1a1aa"}]}, "compare": {"labels": ["Booking Genius", "Availpro ismeretlen", "Belföldi egyéni", "Külföldi egyéni", "Külföldi csoport", "Belföldi csoport", "Roomz-os foglalás"], "rev25": [173076329, 165453167, 64215408, 35771049, 6985557, 2299443, 37822], "rev26": [143449707, 172147896, 22743889, 17884151, 25122021, 1582545, 0]}, "don2024": {"labels": ["02 DIR", "03 WEB", "07 UGK", "AP Availpro ismeretlen", "— Érték nélküli (besorolatlan)", "01 Walk In", "06 UGB", "05 UEK", "Egyéb"], "data": [500522253, 404468178, 69582567, 13117041, 9402727, 9275307, 4172249, 3207198, 1577685]}, "stack2024": {"labels": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov"], "series": [{"label": "DIR", "data": [18197445, 34169840, 47138344, 38565978, 44777643, 41022725, 59937299, 81335376, 50590298, 47648492, 37138813], "color": "#09090b"}, {"label": "WEB", "data": [13874377, 12950451, 25872728, 28548138, 38130134, 41027435, 47215161, 65664067, 53399787, 49345900, 28440000], "color": "#2563eb"}, {"label": "UGK", "data": [0, 556006, 2626924, 7449374, 11442934, 12148031, 4385414, 4058409, 12258109, 9763006, 4894360], "color": "#71717a"}, {"label": "Availpro ismeretlen", "data": [0, 0, 0, 70010, -729, 0, 201000, 0, 0, 0, 12846760], "color": "#16a34a"}, {"label": "Érték nélküli (besorolatlan)", "data": [-100867, 765423, 1407956, 878574, 1241258, 1211202, 309215, 566114, 1066915, 1492462, 564475], "color": "#d97706"}, {"label": "Walk In", "data": [147212, 324564, 732808, 643023, 553419, 204266, 1840699, 745971, 1514619, 846010, 1722716], "color": "#a1a1aa"}, {"label": "UGB", "data": [984064, 1290033, 0, 0, 874341, 0, 0, 0, 1023811, 0, 0], "color": "#dc2626"}, {"label": "UEK", "data": [0, 0, 0, 0, 0, 855816, 0, 0, 1396980, 765464, 188938], "color": "#3b82f6"}, {"label": "UEB", "data": [0, 0, 0, 0, 949580, 0, 0, 0, 0, 0, 0], "color": "#d4d4d8"}, {"label": "REC", "data": [0, 0, 0, 0, 0, 0, 0, 493870, 0, 0, 0], "color": "#0ea5e9"}, {"label": "HOU", "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 58940, 75295], "color": "#7c3aed"}]}, "don2025ch": {"labels": ["03 WEB", "AP Availpro ismeretlen", "07 UGK", "02 DIR", "05 UEK", "11 RCS", "— Érték nélküli (besorolatlan)", "09 REC", "Egyéb"], "data": [362282520, 334040072, 26317448, 25450843, 21937431, 15954523, 9660659, 3386882, 4192832]}, "stack2025ch": {"labels": ["Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"], "series": [{"label": "WEB", "data": [49174518, 60133737, 78578182, 57027429, 51646190, 30701047, 35021417], "color": "#09090b"}, {"label": "Availpro ismeretlen", "data": [37269687, 57697664, 63351236, 39692766, 51969165, 35369450, 48690104], "color": "#2563eb"}, {"label": "UGK", "data": [3826273, 2469928, 756423, 5306133, 5363816, 6629311, 1965564], "color": "#71717a"}, {"label": "DIR", "data": [6436755, 2176045, 4227712, 2536640, 3280936, 5535496, 1257259], "color": "#16a34a"}, {"label": "UEK", "data": [6235336, 2272920, 2664523, 5111291, 3990292, 294093, 1368976], "color": "#d97706"}, {"label": "RCS", "data": [0, 884898, 3078062, 4492998, 2057446, 2147032, 3294087], "color": "#a1a1aa"}, {"label": "Érték nélküli (besorolatlan)", "data": [1743074, 1601116, 1782046, 1803714, 1080983, 817523, 832203], "color": "#dc2626"}, {"label": "REC", "data": [0, 358810, 98920, 0, 0, 2880565, 48587], "color": "#3b82f6"}, {"label": "Walk In", "data": [957818, 1562321, 240911, 84320, 0, 0, 0], "color": "#d4d4d8"}, {"label": "UEB", "data": [911302, 0, 0, 0, 0, 0, 0], "color": "#0ea5e9"}, {"label": "COM", "data": [283550, 0, 17140, 4380, 2780, 0, 0], "color": "#7c3aed"}, {"label": "HOU", "data": [66430, 58010, 0, 3870, 0, 0, 0], "color": "#059669"}]}}};
@@ -864,6 +926,216 @@ function renderFin(){
 document.querySelectorAll('.fina-btn').forEach(b=>b.addEventListener('click',()=>{finA=b.dataset.y;document.querySelectorAll('.fina-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderFin();}));
 document.querySelectorAll('.finb-btn').forEach(b=>b.addEventListener('click',()=>{finB=b.dataset.y;document.querySelectorAll('.finb-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderFin();}));
 
+/* ---------- CHANNEL MANAGER (2026 H1) ---------- */
+const CH = {
+  months: ['Január','Február','Március','Április','Május','Június'],
+  direct: 'RoomSome OBP',
+  data: [
+    /* Jan */ [
+      {name:'RoomSome OBP', b:220, r:44299055},
+      {name:'Booking.com',  b:150, r:32810892},
+      {name:'Expedia',      b:38,  r:5558576},
+      {name:'Szallas Group',b:10,  r:1399163},
+      {name:'Travelking',   b:9,   r:1356438},
+      {name:'Szállásvadász',b:3,   r:930759},
+      {name:'G2 TRAVEL',    b:1,   r:209647},
+    ],
+    /* Feb – RoomSome OBP korrigálva −400M egyszeri tétel */ [
+      {name:'RoomSome OBP', b:173, r:30809645},
+      {name:'Booking.com',  b:149, r:26110180},
+      {name:'Expedia',      b:23,  r:3457694},
+      {name:'G2 TRAVEL',    b:10,  r:1135516},
+      {name:'Szallas Group',b:9,   r:1268394},
+      {name:'Travelking',   b:4,   r:515433},
+      {name:'Szállásvadász',b:1,   r:368644},
+    ],
+    /* Már */ [
+      {name:'Booking.com',  b:264, r:51646208},
+      {name:'RoomSome OBP', b:152, r:35970084},
+      {name:'Expedia',      b:27,  r:5496653},
+      {name:'G2 TRAVEL',    b:6,   r:553632},
+      {name:'Szallas Group',b:5,   r:798144},
+      {name:'Travelking',   b:3,   r:453960},
+    ],
+    /* Ápr */ [
+      {name:'Booking.com',  b:242, r:48980749},
+      {name:'RoomSome OBP', b:166, r:34763541},
+      {name:'Expedia',      b:10,  r:3746962},
+      {name:'G2 TRAVEL',    b:9,   r:1271217},
+      {name:'Szallas Group',b:4,   r:848020},
+      {name:'Travelking',   b:3,   r:569466},
+      {name:'Szállásvadász',b:2,   r:341778},
+    ],
+    /* Máj */ [
+      {name:'Booking.com',  b:148, r:34103377},
+      {name:'RoomSome OBP', b:107, r:26215361},
+      {name:'Travelking',   b:9,   r:1370922},
+      {name:'Szallas Group',b:5,   r:1116467},
+      {name:'G2 TRAVEL',    b:4,   r:439769},
+      {name:'Expedia',      b:4,   r:592252},
+      {name:'Szállásvadász',b:1,   r:230429},
+    ],
+    /* Jún */ [
+      {name:'Booking.com',  b:266, r:45955513},
+      {name:'RoomSome OBP', b:160, r:37281479},
+      {name:'Expedia',      b:17,  r:3259624},
+      {name:'G2 TRAVEL',    b:15,  r:2963646},
+      {name:'Szallas Group',b:12,  r:2128511},
+      {name:'HRS',          b:1,   r:56781},
+      {name:'Szállásvadász',b:1,   r:175476},
+      {name:'Travelking',   b:1,   r:198629},
+    ],
+  ],
+};
+let chReady = false;
+function initChannels(){
+  if(chReady) return;
+  chReady = true;
+
+  const fmt = n => n.toLocaleString('hu-HU').replace(/,/g,' ');
+  const fmtFt = n => fmt(Math.round(n)) + ' Ft';
+  const fmtM  = n => (n/1000000).toFixed(1) + ' M Ft';
+  const pct   = n => (n*100).toFixed(1) + '%';
+
+  /* Aggregate */
+  const perMonth = CH.data.map(rows => {
+    const t = rows.reduce((a,c)=>({b:a.b+c.b, r:a.r+c.r}), {b:0,r:0});
+    const direct = rows.find(x=>x.name===CH.direct) || {b:0,r:0};
+    return {total:t, direct, ota:{b:t.b-direct.b, r:t.r-direct.r}};
+  });
+  const h1 = perMonth.reduce((a,m)=>({b:a.b+m.total.b, r:a.r+m.total.r}), {b:0,r:0});
+  const h1Direct = perMonth.reduce((a,m)=>({b:a.b+m.direct.b, r:a.r+m.direct.r}), {b:0,r:0});
+
+  /* KPI cards */
+  const bestMonthIdx = perMonth.reduce((bi,m,i,arr)=> m.total.r>arr[bi].total.r ? i : bi, 0);
+  document.getElementById('chKpi').innerHTML = [
+    {c:'kpi-actual', l:'H1 FO bruttó forgalom', v:(h1.r/1000000).toFixed(1), u:'M Ft', s:'6 hónap, minden csatorna'},
+    {c:'kpi-plan',   l:'H1 foglalások',         v:h1.b.toLocaleString('hu-HU'), u:'db', s:'Átl. '+fmtFt(h1.r/h1.b)+' / booking'},
+    {c:'kpi-ytd',    l:'Direkt részesedés',     v:pct(h1Direct.r/h1.r), u:'',   s:fmtM(h1Direct.r)+' RoomSome OBP-n'},
+    {c:'kpi-delta',  l:'Legerősebb hónap',      v:CH.months[bestMonthIdx], u:'', s:fmtM(perMonth[bestMonthIdx].total.r)},
+  ].map(k=>`<div class="kpi ${k.c}"><div class="kpi-label">${k.l}</div><div class="kpi-value">${k.v}<span class="kpi-unit"> ${k.u}</span></div><div class="kpi-sub">${k.s}</div></div>`).join('');
+
+  const chartFont = {family:"'Inter',system-ui,sans-serif", size:11};
+
+  /* Chart 1 — Monthly revenue Direct vs OTA (stacked) */
+  new Chart(document.getElementById('chMonthlyStack'), {
+    type:'bar',
+    data:{
+      labels: CH.months,
+      datasets:[
+        {label:'Direkt (RoomSome OBP)', data:perMonth.map(m=>m.direct.r), backgroundColor:'#2563eb', borderRadius:4, stack:'s'},
+        {label:'OTA + partnerek',       data:perMonth.map(m=>m.ota.r),    backgroundColor:'#a1a1aa', borderRadius:4, stack:'s'},
+      ],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom', labels:{font:chartFont, boxWidth:10, padding:14}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.parsed.y)}}},
+      scales:{
+        x:{stacked:true, ticks:{font:chartFont}, grid:{display:false}},
+        y:{stacked:true, ticks:{font:chartFont, callback:v=>(v/1000000)+'M'}, grid:{color:'#f1f1f3'}},
+      },
+    },
+  });
+
+  /* Chart 2 — Donut H1 mix */
+  const totalsByCh = {};
+  CH.data.forEach(month => month.forEach(r => { totalsByCh[r.name] = (totalsByCh[r.name]||0) + r.r; }));
+  const sorted = Object.entries(totalsByCh).sort((a,b)=>b[1]-a[1]);
+  const donutColors = ['#2563eb','#09090b','#71717a','#16a34a','#d97706','#a1a1aa','#3b82f6','#7c3aed','#dc2626'];
+  new Chart(document.getElementById('chDonut'), {
+    type:'doughnut',
+    data:{
+      labels: sorted.map(([n])=>n===CH.direct ? n+' (Direkt)' : n),
+      datasets:[{data: sorted.map(([,v])=>v), backgroundColor: donutColors.slice(0,sorted.length), borderColor:'#fff', borderWidth:2}],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{legend:{position:'right', labels:{font:chartFont, boxWidth:10, padding:8}}, tooltip:{callbacks:{label:c=>c.label+': '+fmtM(c.parsed)+' ('+pct(c.parsed/h1.r)+')'}}},
+    },
+  });
+
+  /* Chart 3 — Bookings Direct vs OTA (stacked) */
+  new Chart(document.getElementById('chBookingStack'), {
+    type:'bar',
+    data:{
+      labels: CH.months,
+      datasets:[
+        {label:'Direkt',      data:perMonth.map(m=>m.direct.b), backgroundColor:'#2563eb', borderRadius:4, stack:'s'},
+        {label:'OTA + partnerek', data:perMonth.map(m=>m.ota.b), backgroundColor:'#a1a1aa', borderRadius:4, stack:'s'},
+      ],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom', labels:{font:chartFont, boxWidth:10, padding:14}}},
+      scales:{x:{stacked:true, ticks:{font:chartFont}, grid:{display:false}}, y:{stacked:true, ticks:{font:chartFont}, grid:{color:'#f1f1f3'}}},
+    },
+  });
+
+  /* Chart 4 — Direct trend dual axis */
+  new Chart(document.getElementById('chDirectTrend'), {
+    type:'bar',
+    data:{
+      labels: CH.months,
+      datasets:[
+        {type:'bar',  label:'FO bruttó forgalom', data:perMonth.map(m=>m.direct.r), backgroundColor:'#2563eb', borderRadius:4, yAxisID:'y'},
+        {type:'line', label:'Bookings',           data:perMonth.map(m=>m.direct.b), borderColor:'#09090b', backgroundColor:'#09090b', tension:0.3, pointRadius:4, yAxisID:'y1'},
+      ],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom', labels:{font:chartFont, boxWidth:10, padding:14}}},
+      scales:{
+        x:{ticks:{font:chartFont}, grid:{display:false}},
+        y:{position:'left', ticks:{font:chartFont, callback:v=>(v/1000000)+'M'}, grid:{color:'#f1f1f3'}, title:{display:true, text:'Ft', font:chartFont}},
+        y1:{position:'right', ticks:{font:chartFont}, grid:{display:false}, title:{display:true, text:'db', font:chartFont}},
+      },
+    },
+  });
+
+  /* Summary table */
+  let sumBody = '';
+  sorted.forEach(([name, rev]) => {
+    const bookings = CH.data.reduce((s,m)=>s + (m.find(x=>x.name===name)?.b||0), 0);
+    const avg = bookings ? rev/bookings : 0;
+    const share = rev/h1.r;
+    const badge = name===CH.direct
+      ? '<span style="display:inline-block;padding:2px 8px;background:#eff6ff;color:#2563eb;border-radius:100px;font-size:11px;font-weight:600;margin-left:8px;">DIREKT</span>'
+      : '';
+    sumBody += `<tr><td><strong>${name}</strong>${badge}</td><td>${bookings.toLocaleString('hu-HU')}</td><td>${fmtFt(rev)}</td><td>${fmtFt(avg)}</td><td><strong>${pct(share)}</strong></td></tr>`;
+  });
+  sumBody += `<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Összesen</td><td>${h1.b.toLocaleString('hu-HU')}</td><td>${fmtFt(h1.r)}</td><td>${fmtFt(h1.r/h1.b)}</td><td>100%</td></tr>`;
+  document.getElementById('chSummaryTable').innerHTML = `<table class="data-table"><thead><tr><th>Csatorna</th><th>Bookings</th><th>FO bruttó forgalom</th><th>Átl. érték / booking</th><th>Részesedés</th></tr></thead><tbody>${sumBody}</tbody></table>`;
+
+  /* Matrix table: channels × months */
+  const orderedChannels = sorted.map(([n])=>n);
+  let mBody = '';
+  orderedChannels.forEach(name => {
+    const cells = CH.months.map((_,i) => {
+      const row = CH.data[i].find(x=>x.name===name);
+      return `<td>${row ? fmtFt(row.r) : '<span style="color:#a1a1aa">—</span>'}</td>`;
+    }).join('');
+    const rowTotal = totalsByCh[name];
+    const badge = name===CH.direct
+      ? '<span style="display:inline-block;padding:2px 8px;background:#eff6ff;color:#2563eb;border-radius:100px;font-size:11px;font-weight:600;margin-left:8px;">DIREKT</span>'
+      : '';
+    mBody += `<tr><td><strong>${name}</strong>${badge}</td>${cells}<td><strong>${fmtFt(rowTotal)}</strong></td></tr>`;
+  });
+  const totalsRow = CH.months.map((_,i) => `<td><strong>${fmtFt(perMonth[i].total.r)}</strong></td>`).join('');
+  mBody += `<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Havi összesen</td>${totalsRow}<td>${fmtFt(h1.r)}</td></tr>`;
+  const monthHeaders = CH.months.map(m=>`<th>${m}</th>`).join('');
+  document.getElementById('chMatrixTable').innerHTML = `<table class="data-table"><thead><tr><th>Csatorna</th>${monthHeaders}<th>H1 összesen</th></tr></thead><tbody>${mBody}</tbody></table>`;
+
+  /* Insights */
+  const directShare = h1Direct.r/h1.r;
+  const bookingShare = totalsByCh['Booking.com']/h1.r;
+  const otaCount = h1.b - h1Direct.b;
+  document.getElementById('chInsights').innerHTML = [
+    {t:'Direkt vs OTA arány', d:`A <strong>RoomSome OBP</strong> (direkt csatorna) 2026 H1-ben <strong>${pct(directShare)}</strong>-át hozta a bejövő forgalomnak (${fmtM(h1Direct.r)} / ${fmtM(h1.r)}). Az OTA-k együtt ${pct(1-directShare)} részesedést tettek ki.`},
+    {t:'Booking.com dominancia', d:`A <strong>Booking.com</strong> az egyetlen OTA amely önmagában <strong>${pct(bookingShare)}</strong>-át hozta a forgalomnak (${fmtM(totalsByCh['Booking.com'])}). Márciustól folyamatosan a legerősebb csatorna.`},
+    {t:'Legerősebb hónap', d:`A legmagasabb havi forgalom <strong>${CH.months[bestMonthIdx]}</strong>-ban volt (${fmtM(perMonth[bestMonthIdx].total.r)}, ${perMonth[bestMonthIdx].total.b} booking). Az OTA-kon keresztül összesen <strong>${otaCount}</strong> foglalás jött 6 hónap alatt.`},
+  ].map(i=>`<div class="section" style="margin-bottom:0"><div class="section-title">${i.t}</div><p style="margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.6">${i.d}</p></div>`).join('');
+}
+
 document.querySelectorAll('.nav-tab').forEach(btn=>btn.addEventListener('click',()=>{
   const v=btn.dataset.view;
   document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
@@ -871,6 +1143,7 @@ document.querySelectorAll('.nav-tab').forEach(btn=>btn.addEventListener('click',
   btn.classList.add('active'); document.getElementById('view-'+v).classList.add('active');
   if(v==='segments') initSegPmkt();
   if(v==='nations') initNat('2024');
+  if(v==='channels') initChannels();
   window.scrollTo({top:0,behavior:'smooth'});
 }));
 document.querySelectorAll('.dim-tab').forEach(btn=>btn.addEventListener('click',()=>{
