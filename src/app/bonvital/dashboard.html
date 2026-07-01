@@ -753,6 +753,14 @@
 
     <div class="section">
       <div class="section-header"><div>
+        <div class="section-title">Havi YoY változás (revenue %)</div>
+        <div class="section-desc">2026 vs 2025 összes csatorna forgalom · zöld = növekedés, piros = csökkenés</div>
+      </div></div>
+      <div class="chart-wrap"><canvas id="chYoy"></canvas></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div>
         <div class="section-title">H1 összesített csatorna-táblázat</div>
         <div class="section-desc">Bookings, FO bruttó forgalom, átlagos foglalás érték, részesedés</div>
       </div></div>
@@ -930,6 +938,17 @@ document.querySelectorAll('.finb-btn').forEach(b=>b.addEventListener('click',()=
 const CH = {
   months: ['Január','Február','Március','Április','Május','Június'],
   direct: 'RoomSome OBP',
+  /* Havi YoY delta a Channel Manager Delta oszlopaiból (%).
+     Feb: revenue delta a −400 M Ft egyszeri tétel utáni korrigált értékkel
+     újraszámolva (nyers 483,68% → korrigált −19,86%). */
+  monthlyDelta: [
+    /* Jan */ {b:-1.15,  r:16.02},
+    /* Feb */ {b:-10.44, r:-19.86},
+    /* Már */ {b:21.87,  r:25.64},
+    /* Ápr */ {b:8.19,   r:12.74},
+    /* Máj */ {b:-25.47, r:-8.54},
+    /* Jún */ {b:12.62,  r:20.03},
+  ],
   data: [
     /* Jan */ [
       {name:'RoomSome OBP', b:220, r:44299055},
@@ -1006,13 +1025,26 @@ function initChannels(){
   const h1 = perMonth.reduce((a,m)=>({b:a.b+m.total.b, r:a.r+m.total.r}), {b:0,r:0});
   const h1Direct = perMonth.reduce((a,m)=>({b:a.b+m.direct.b, r:a.r+m.direct.r}), {b:0,r:0});
 
+  /* YoY: 2025 baseline hónapról hónapra a monthlyDelta alapján */
+  const monthly2025 = CH.monthlyDelta.map((d,i) => ({
+    b: perMonth[i].total.b / (1 + d.b/100),
+    r: perMonth[i].total.r / (1 + d.r/100),
+  }));
+  const h1_2025 = monthly2025.reduce((a,m)=>({b:a.b+m.b, r:a.r+m.r}), {b:0,r:0});
+  const yoyB = (h1.b - h1_2025.b) / h1_2025.b;
+  const yoyR = (h1.r - h1_2025.r) / h1_2025.r;
+  const arrow = v => v>=0 ? '▲' : '▼';
+  const cls   = v => v>=0 ? 'pos' : 'neg';
+  const sign  = v => (v>=0?'+':'')+v.toFixed(1)+'%';
+  const yoyBadge = v => `<span class="${cls(v)}" style="font-weight:600;">${arrow(v)} ${sign(v)}</span>`;
+
   /* KPI cards */
   const bestMonthIdx = perMonth.reduce((bi,m,i,arr)=> m.total.r>arr[bi].total.r ? i : bi, 0);
   document.getElementById('chKpi').innerHTML = [
-    {c:'kpi-actual', l:'H1 FO bruttó forgalom', v:(h1.r/1000000).toFixed(1), u:'M Ft', s:'6 hónap, minden csatorna'},
-    {c:'kpi-plan',   l:'H1 foglalások',         v:h1.b.toLocaleString('hu-HU'), u:'db', s:'Átl. '+fmtFt(h1.r/h1.b)+' / booking'},
+    {c:'kpi-actual', l:'H1 FO bruttó forgalom', v:(h1.r/1000000).toFixed(1), u:'M Ft', s:`YoY ${yoyBadge(yoyR*100)} · 2025 H1: ${fmtM(h1_2025.r)}`},
+    {c:'kpi-plan',   l:'H1 foglalások',         v:h1.b.toLocaleString('hu-HU'), u:'db', s:`YoY ${yoyBadge(yoyB*100)} · Átl. ${fmtFt(h1.r/h1.b)} / booking`},
     {c:'kpi-ytd',    l:'Direkt részesedés',     v:pct(h1Direct.r/h1.r), u:'',   s:fmtM(h1Direct.r)+' RoomSome OBP-n'},
-    {c:'kpi-delta',  l:'Legerősebb hónap',      v:CH.months[bestMonthIdx], u:'', s:fmtM(perMonth[bestMonthIdx].total.r)},
+    {c:'kpi-delta',  l:'Legerősebb hónap',      v:CH.months[bestMonthIdx], u:'', s:`${fmtM(perMonth[bestMonthIdx].total.r)} · YoY ${yoyBadge(CH.monthlyDelta[bestMonthIdx].r)}`},
   ].map(k=>`<div class="kpi ${k.c}"><div class="kpi-label">${k.l}</div><div class="kpi-value">${k.v}<span class="kpi-unit"> ${k.u}</span></div><div class="kpi-sub">${k.s}</div></div>`).join('');
 
   const chartFont = {family:"'Inter',system-ui,sans-serif", size:11};
@@ -1122,17 +1154,49 @@ function initChannels(){
   });
   const totalsRow = CH.months.map((_,i) => `<td><strong>${fmtFt(perMonth[i].total.r)}</strong></td>`).join('');
   mBody += `<tr style="background:rgba(37,99,235,0.06);font-weight:700"><td>Havi összesen</td>${totalsRow}<td>${fmtFt(h1.r)}</td></tr>`;
+  const yoyRow = CH.monthlyDelta.map(d=>`<td class="${cls(d.r)}" style="font-weight:600">${arrow(d.r)} ${sign(d.r)}</td>`).join('');
+  mBody += `<tr style="background:rgba(37,99,235,0.03);"><td style="color:var(--muted);font-weight:600">YoY (revenue)</td>${yoyRow}<td class="${cls(yoyR*100)}" style="font-weight:700">${arrow(yoyR*100)} ${sign(yoyR*100)}</td></tr>`;
   const monthHeaders = CH.months.map(m=>`<th>${m}</th>`).join('');
   document.getElementById('chMatrixTable').innerHTML = `<table class="data-table"><thead><tr><th>Csatorna</th>${monthHeaders}<th>H1 összesen</th></tr></thead><tbody>${mBody}</tbody></table>`;
+
+  /* YoY delta chart */
+  const yoyCanvas = document.getElementById('chYoy');
+  if(yoyCanvas){
+    new Chart(yoyCanvas, {
+      type:'bar',
+      data:{
+        labels: CH.months,
+        datasets:[{
+          label:'Revenue YoY (%)',
+          data: CH.monthlyDelta.map(d=>d.r),
+          backgroundColor: CH.monthlyDelta.map(d=> d.r>=0 ? '#16a34a' : '#dc2626'),
+          borderRadius:4,
+        }],
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:c=>'Revenue YoY: '+(c.parsed.y>=0?'+':'')+c.parsed.y.toFixed(1)+'%'}},
+        },
+        scales:{
+          x:{ticks:{font:chartFont}, grid:{display:false}},
+          y:{ticks:{font:chartFont, callback:v=>v+'%'}, grid:{color:'#f1f1f3'}},
+        },
+      },
+    });
+  }
 
   /* Insights */
   const directShare = h1Direct.r/h1.r;
   const bookingShare = totalsByCh['Booking.com']/h1.r;
   const otaCount = h1.b - h1Direct.b;
+  const bestYoyIdx = CH.monthlyDelta.reduce((bi,d,i,arr)=> d.r>arr[bi].r?i:bi, 0);
+  const worstYoyIdx = CH.monthlyDelta.reduce((wi,d,i,arr)=> d.r<arr[wi].r?i:wi, 0);
   document.getElementById('chInsights').innerHTML = [
+    {t:'H1 YoY összesítés', d:`2026 H1 forgalom <strong>${fmtM(h1.r)}</strong> vs 2025 H1 <strong>${fmtM(h1_2025.r)}</strong> → <span class="${cls(yoyR*100)}">${sign(yoyR*100)}</span>. Foglalások: ${h1.b} vs ${Math.round(h1_2025.b)} → <span class="${cls(yoyB*100)}">${sign(yoyB*100)}</span>. Legerősebb hónap YoY: <strong>${CH.months[bestYoyIdx]}</strong> (${sign(CH.monthlyDelta[bestYoyIdx].r)}), leggyengébb: <strong>${CH.months[worstYoyIdx]}</strong> (${sign(CH.monthlyDelta[worstYoyIdx].r)}).`},
     {t:'Direkt vs OTA arány', d:`A <strong>RoomSome OBP</strong> (direkt csatorna) 2026 H1-ben <strong>${pct(directShare)}</strong>-át hozta a bejövő forgalomnak (${fmtM(h1Direct.r)} / ${fmtM(h1.r)}). Az OTA-k együtt ${pct(1-directShare)} részesedést tettek ki.`},
-    {t:'Booking.com dominancia', d:`A <strong>Booking.com</strong> az egyetlen OTA amely önmagában <strong>${pct(bookingShare)}</strong>-át hozta a forgalomnak (${fmtM(totalsByCh['Booking.com'])}). Márciustól folyamatosan a legerősebb csatorna.`},
-    {t:'Legerősebb hónap', d:`A legmagasabb havi forgalom <strong>${CH.months[bestMonthIdx]}</strong>-ban volt (${fmtM(perMonth[bestMonthIdx].total.r)}, ${perMonth[bestMonthIdx].total.b} booking). Az OTA-kon keresztül összesen <strong>${otaCount}</strong> foglalás jött 6 hónap alatt.`},
+    {t:'Booking.com dominancia', d:`A <strong>Booking.com</strong> az egyetlen OTA amely önmagában <strong>${pct(bookingShare)}</strong>-át hozta a forgalomnak (${fmtM(totalsByCh['Booking.com'])}). Márciustól folyamatosan a legerősebb csatorna, és a YoY növekedés jelentős része is innen jön.`},
   ].map(i=>`<div class="section" style="margin-bottom:0"><div class="section-title">${i.t}</div><p style="margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.6">${i.d}</p></div>`).join('');
 }
 
