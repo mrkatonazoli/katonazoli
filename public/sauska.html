@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sauska × Maverix — Marketing riport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MAVERIX DESIGN FRAMEWORK  v1.0
+   Ügyfél: Sauska (shop.sauska.hu)
+   ------------------------------------------------------------
+   1. Design tokenek (szín, tipográfia, spacing)
+   2. Slide-keretrendszer (navigáció, layout)
+   3. Komponensek (KPI kártya, chart, táblázat, badge…)
+   ============================================================ */
+
+:root{
+  /* ---- Színek — Maverix ---- */
+  --mx-ink:        #141414;   /* Maverix fekete (wordmark) */
+  --mx-terracotta: #C24B2C;   /* Maverix pötty */
+  --mx-terracotta-soft: #E8CFC5;
+  --mx-terracotta-dark: #9A3A21;
+
+  /* ---- Színek — Sauska ---- */
+  --sk-wine:  #6E1E2B;        /* borvörös — másodlagos akcentus */
+  --sk-gold:  #B08D57;        /* aszú-arany — kiemelésekhez */
+
+  /* ---- Semlegesek ---- */
+  --paper:     #F7F4EF;       /* törtfehér alap */
+  --paper-2:   #EFEAE2;       /* kártyaháttér */
+  --line:      #DDD5C9;       /* vonalak, keretek */
+  --gray:      #6F6A62;       /* másodlagos szöveg */
+
+  /* ---- Tipográfia ---- */
+  --font-sans:  'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+
+  --fs-hero:   clamp(2.6rem, 7vw, 5.4rem);
+  --fs-h1:     clamp(2rem, 4.5vw, 3.4rem);
+  --fs-h2:     clamp(1.3rem, 2.4vw, 1.9rem);
+  --fs-body:   clamp(.95rem, 1.3vw, 1.08rem);
+  --fs-small:  .82rem;
+  --fs-kpi:    clamp(2.2rem, 4.6vw, 3.6rem);
+
+  /* ---- Spacing / rács ---- */
+  --sp-1:.5rem; --sp-2:1rem; --sp-3:1.75rem; --sp-4:2.75rem; --sp-5:4rem;
+  --slide-pad: clamp(1.5rem, 5vw, 5rem);
+  --radius: 14px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--font-sans);
+  font-size:var(--fs-body);
+  color:var(--mx-ink);
+  background:var(--paper);
+  overflow:hidden;
+}
+
+/* ============ 2. SLIDE-KERETRENDSZER ============ */
+.deck{height:100vh;height:100dvh;position:relative}
+.slide{
+  position:absolute;inset:0;
+  padding:var(--slide-pad);
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity .5s ease, transform .5s ease, visibility .5s;
+  overflow:hidden;
+}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide.dark{background:var(--mx-ink);color:var(--paper)}
+.slide.dark .eyebrow{color:var(--mx-terracotta)}
+.slide.wine{background:var(--sk-wine);color:var(--paper)}
+
+/* fejléc minden dián */
+.slide-head{
+  position:absolute;top:var(--sp-3);left:var(--slide-pad);right:var(--slide-pad);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:var(--fs-small);letter-spacing:.14em;text-transform:uppercase;color:var(--gray);
+}
+.slide.dark .slide-head,.slide.wine .slide-head{color:rgba(247,244,239,.55)}
+
+/* Maverix wordmark (logó újrarajzolva) */
+.mx-logo{display:inline-flex;align-items:center;gap:.42em;font-weight:900;letter-spacing:.16em;font-size:1em;color:inherit;text-decoration:none}
+.mx-logo .dot{width:.62em;height:.62em;border-radius:50%;background:var(--mx-terracotta);flex:none}
+
+/* navigáció */
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--mx-terracotta);width:0;transition:width .4s ease;z-index:10}
+.nav{
+  position:fixed;bottom:var(--sp-3);right:var(--slide-pad);z-index:10;
+  display:flex;align-items:center;gap:var(--sp-2);
+}
+.nav button{
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+  background:var(--paper);color:var(--mx-ink);font-size:1.1rem;cursor:pointer;
+  transition:all .2s;
+}
+.nav button:hover{background:var(--mx-terracotta);border-color:var(--mx-terracotta);color:#fff}
+.counter{font-size:var(--fs-small);letter-spacing:.12em;color:var(--gray);min-width:3.5em;text-align:center}
+
+/* ============ TIPOGRÁFIAI ELEMEK ============ */
+.eyebrow{
+  font-size:var(--fs-small);font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mx-terracotta);margin-bottom:var(--sp-2);
+  display:flex;align-items:center;gap:.7em;
+}
+.eyebrow::before{content:'';width:2em;height:2px;background:currentColor}
+h1{font-size:var(--fs-h1);font-weight:800;line-height:1.05;letter-spacing:-.01em;margin-bottom:var(--sp-3)}
+.hero-title{font-size:var(--fs-hero);font-weight:900;line-height:.98;letter-spacing:-.02em;text-transform:uppercase}
+h2{font-size:var(--fs-h2);font-weight:700;margin-bottom:var(--sp-2)}
+.serif{font-family:var(--font-serif);font-weight:300;font-style:italic;letter-spacing:0;text-transform:none}
+.lead{font-size:calc(var(--fs-body)*1.15);color:var(--gray);max-width:34em;line-height:1.6}
+.slide.dark .lead,.slide.wine .lead{color:rgba(247,244,239,.75)}
+
+/* ============ 3. KOMPONENSEK ============ */
+.grid{display:grid;gap:var(--sp-2)}
+.grid.c2{grid-template-columns:repeat(2,1fr)}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+.grid.c4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:820px){.grid.c3,.grid.c4{grid-template-columns:repeat(2,1fr)}.grid.c2{grid-template-columns:1fr}}
+
+.card{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:var(--sp-3);
+}
+.slide.dark .card{background:rgba(247,244,239,.06);border-color:rgba(247,244,239,.14)}
+
+/* KPI kártya */
+.kpi .label{font-size:var(--fs-small);letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:.6em}
+.slide.dark .kpi .label{color:rgba(247,244,239,.6)}
+.kpi .value{font-size:var(--fs-kpi);font-weight:900;line-height:1;letter-spacing:-.02em}
+.kpi .delta{display:inline-flex;align-items:center;gap:.35em;margin-top:.7em;font-size:var(--fs-small);font-weight:700;padding:.3em .8em;border-radius:100px}
+.delta.up{background:rgba(46,125,50,.12);color:#2E7D32}
+.delta.down{background:rgba(194,75,44,.14);color:var(--mx-terracotta-dark)}
+.slide.dark .delta.up{background:rgba(129,199,132,.15);color:#81C784}
+
+/* badge / címke */
+.badge{display:inline-block;font-size:var(--fs-small);font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:100px;border:1px solid var(--line);color:var(--gray)}
+.badge.accent{background:var(--mx-terracotta);border-color:var(--mx-terracotta);color:#fff}
+.badge.wine{background:var(--sk-wine);border-color:var(--sk-wine);color:#fff}
+.badge.gold{background:var(--sk-gold);border-color:var(--sk-gold);color:#fff}
+
+/* vízszintes bar chart */
+.bars{display:flex;flex-direction:column;gap:var(--sp-2)}
+.bar-row{display:grid;grid-template-columns:9em 1fr 4.5em;align-items:center;gap:var(--sp-2);font-size:var(--fs-small)}
+.bar-row .name{font-weight:600;letter-spacing:.04em}
+.bar-track{height:14px;background:var(--paper-2);border-radius:100px;overflow:hidden}
+.slide.dark .bar-track{background:rgba(247,244,239,.1)}
+.bar-fill{height:100%;border-radius:100px;background:var(--mx-terracotta)}
+.bar-fill.wine{background:var(--sk-wine)}
+.bar-fill.gold{background:var(--sk-gold)}
+.bar-fill.ink{background:var(--mx-ink)}
+.slide.dark .bar-fill.ink{background:var(--paper)}
+.bar-row .num{font-weight:800;text-align:right}
+
+/* táblázat */
+table{width:100%;border-collapse:collapse;font-size:var(--fs-small)}
+th{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);font-weight:700;text-align:left;padding:.8em .9em;border-bottom:2px solid var(--mx-ink)}
+td{padding:.85em .9em;border-bottom:1px solid var(--line);font-weight:500}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(194,75,44,.05)}
+
+/* idézet */
+.quote{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.35;max-width:26em}
+.quote::before{content:'„'}.quote::after{content:'”'}
+
+/* lista számozott */
+.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:var(--sp-2)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:3em 1fr;gap:var(--sp-2);align-items:baseline}
+.steps li::before{
+  content:counter(s,decimal-leading-zero);
+  font-weight:900;font-size:1.4rem;color:var(--mx-terracotta);
+}
+.steps b{display:block;margin-bottom:.2em}
+.steps span{color:var(--gray);font-size:var(--fs-small);line-height:1.55}
+.slide.dark .steps span{color:rgba(247,244,239,.65)}
+
+/* swatch (style guide) */
+.swatch{border-radius:var(--radius);padding:var(--sp-2);height:110px;display:flex;flex-direction:column;justify-content:flex-end;font-size:var(--fs-small);font-weight:700;border:1px solid var(--line)}
+.swatch small{font-weight:500;opacity:.75}
+
+footer.slide-foot{
+  position:absolute;bottom:var(--sp-3);left:var(--slide-pad);
+  font-size:var(--fs-small);letter-spacing:.1em;color:var(--gray);
+}
+.slide.dark footer.slide-foot,.slide.wine footer.slide-foot{color:rgba(247,244,239,.45)}
+
+svg.chart{width:100%;height:auto;display:block}
+.legend{display:flex;gap:var(--sp-3);font-size:var(--fs-small);margin-top:var(--sp-2);color:var(--gray)}
+.legend i{display:inline-block;width:.85em;height:.85em;border-radius:3px;margin-right:.45em;vertical-align:-.08em}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ========== 1 / CÍMLAP ========== -->
+  <section class="slide dark active">
+    <div class="slide-head">
+      <span class="mx-logo"><span class="dot"></span>MAVERIX</span>
+      <span>Bizalmas · Ügyféli riport</span>
+    </div>
+    <p class="eyebrow">Marketing riport · 2026. június</p>
+    <div class="hero-title">Sauska<br><span class="serif" style="color:var(--mx-terracotta)">shop.sauska.hu</span><br>teljesítmény</div>
+    <p class="lead" style="margin-top:var(--sp-3)">Egy család, két borvidék, három univerzum — és egy webshop, amelynek növekedését ez a riport mutatja be.</p>
+    <footer class="slide-foot">Készítette: Maverix · hello@katonazoli.hu</footer>
+  </section>
+
+  <!-- ========== 3 / KPI ÖSSZEFOGLALÓ ========== -->
+  <section class="slide">
+    <div class="slide-head"><span class="mx-logo"><span class="dot"></span>MAVERIX</span><span>01 · Vezetői összefoglaló</span></div>
+    <p class="eyebrow">Webshop-forgalom · 2026. június</p>
+    <h1>Shop forgalom — év/év</h1>
+    <div class="grid c3" style="margin-bottom:var(--sp-3)">
+      <div class="card kpi"><div class="label">Rendelések értéke</div><div class="value">3 628 896 Ft</div><span class="delta up">▲ 15,3% vs 2025</span></div>
+      <div class="card kpi"><div class="label">Rendelések száma</div><div class="value">72 db</div><span class="delta" style="background:var(--paper);color:var(--gray);border:1px solid var(--line)">— 0% vs 2025</span></div>
+      <div class="card kpi"><div class="label">Átl. rendelésérték</div><div class="value">50 401 Ft</div><span class="delta up">▲ 15,3% vs 2025</span></div>
+    </div>
+    <div class="grid c2" style="align-items:start">
+      <div class="card">
+        <div class="bars">
+          <div class="bar-row" style="grid-template-columns:6.5em 1fr 7.5em">
+            <span class="name">2026. jún.</span>
+            <div class="bar-track" style="height:20px"><div class="bar-fill" style="width:100%"></div></div>
+            <span class="num">3 628 896 Ft</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:6.5em 1fr 7.5em">
+            <span class="name">2025. jún.</span>
+            <div class="bar-track" style="height:20px"><div class="bar-fill ink" style="width:86.7%"></div></div>
+            <span class="num">3 147 429 Ft</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>Ugyanannyi rendelés, több bevétel</h2>
+        <p class="lead">A rendelésszám változatlan (72 db), a bevétel mégis 481 467 Ft-tal nőtt — a vásárlók átlagosan 6 687 Ft-tal többet költöttek rendelésenként, mint egy évvel korábban.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3b / RENDELT TERMÉKEK 2026 (interaktív) ========== -->
+  <section class="slide">
+    <div class="slide-head"><span class="mx-logo"><span class="dot"></span>MAVERIX</span><span>01 · Rendelt termékek · 2026</span></div>
+    <p class="eyebrow">Webshop · 2026. június</p>
+    <h1 style="margin-bottom:var(--sp-2)">Rendelt termékek — 2026</h1>
+    <div class="grid" style="grid-template-columns:minmax(240px,1fr) 2fr;align-items:start;gap:var(--sp-3)">
+      <div>
+        <div id="pCats26" class="bars" style="gap:.7rem"></div>
+        <p id="pSummary26" style="margin-top:var(--sp-2);font-size:var(--fs-small);color:var(--gray)"></p>
+      </div>
+      <div class="card" style="padding:var(--sp-2)">
+        <input id="pSearch26" type="search" placeholder="Keresés a termékek között…" style="width:100%;padding:.7em 1em;border:1px solid var(--line);border-radius:100px;background:var(--paper);font-family:var(--font-sans);font-size:var(--fs-small);margin-bottom:var(--sp-1);outline:none">
+        <div style="max-height:46vh;overflow-y:auto">
+          <table id="pTable26">
+            <thead><tr>
+              <th data-k="name" style="cursor:pointer">Termék</th>
+              <th data-k="qty" class="num" style="cursor:pointer">Db ↕</th>
+              <th data-k="ft" class="num" style="cursor:pointer">Összeg ↓</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="slide-foot">A terméklista összege 3 598 296 Ft — a 3 628 896 Ft-os rendelésérték a szállítási díjakat is tartalmazza.</footer>
+  </section>
+
+  <!-- ========== 3c / RENDELT TERMÉKEK 2025 (interaktív) ========== -->
+  <section class="slide">
+    <div class="slide-head"><span class="mx-logo"><span class="dot"></span>MAVERIX</span><span>01 · Rendelt termékek · 2025</span></div>
+    <p class="eyebrow">Webshop · 2025. június (bázis)</p>
+    <h1 style="margin-bottom:var(--sp-2)">Rendelt termékek — 2025</h1>
+    <div class="grid" style="grid-template-columns:minmax(240px,1fr) 2fr;align-items:start;gap:var(--sp-3)">
+      <div>
+        <div id="pCats25" class="bars" style="gap:.7rem"></div>
+        <p id="pSummary25" style="margin-top:var(--sp-2);font-size:var(--fs-small);color:var(--gray)"></p>
+      </div>
+      <div class="card" style="padding:var(--sp-2)">
+        <input id="pSearch25" type="search" placeholder="Keresés a termékek között…" style="width:100%;padding:.7em 1em;border:1px solid var(--line);border-radius:100px;background:var(--paper);font-family:var(--font-sans);font-size:var(--fs-small);margin-bottom:var(--sp-1);outline:none">
+        <div style="max-height:46vh;overflow-y:auto">
+          <table id="pTable25">
+            <thead><tr>
+              <th data-k="name" style="cursor:pointer">Termék</th>
+              <th data-k="qty" class="num" style="cursor:pointer">Db ↕</th>
+              <th data-k="ft" class="num" style="cursor:pointer">Összeg ↓</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="slide-foot">A terméklista összege 3 108 879 Ft — a 3 147 429 Ft-os rendelésérték a szállítási díjakat is tartalmazza.</footer>
+  </section>
+
+  <!-- ========== 3d / KATEGÓRIA-ÖSSZEHASONLÍTÁS ========== -->
+  <section class="slide">
+    <div class="slide-head"><span class="mx-logo"><span class="dot"></span>MAVERIX</span><span>01 · Összehasonlítás</span></div>
+    <p class="eyebrow">Termékmix · év/év</p>
+    <h1 style="margin-bottom:var(--sp-2)">Mi változott egy év alatt?</h1>
+    <div class="grid" style="grid-template-columns:3fr 2fr;align-items:start;gap:var(--sp-3)">
+      <div class="card" id="cmpChart" style="padding:var(--sp-3)">
+        <div class="legend" style="margin:0 0 var(--sp-2)">
+          <span><i style="background:var(--mx-terracotta)"></i>2026. jún.</span>
+          <span><i style="background:var(--mx-ink)"></i>2025. jún.</span>
+        </div>
+      </div>
+      <div>
+        <h2>Kiemelt tanulságok</h2>
+        <ol class="steps">
+          <li><div><b>A pezsgő húzta a növekedést</b><span>554 → 1 020 ezer Ft (+84%) — a Brut Nature és a Blanc de Noirs önmagában 515 ezer Ft-ot hozott.</span></div></li>
+          <li><div><b>Csomagajánlat nélkül is nőtt a forgalom</b><span>2025-ben a bevétel 25%-a (773 ezer Ft) akciós csomagokból jött; 2026-ban ezt teljes áras termékek pótolták.</span></div></li>
+          <li><div><b>A rosé berobbant</b><span>41 → 132 ezer Ft (+220%), a Rosé 2025 a hónap legnagyobb darabszámú terméke (52 db).</span></div></li>
+        </ol>
+      </div>
+    </div>
+    <footer class="slide-foot">Terméklista-szintű összevetés, szállítási díjak nélkül · 2026: 3 598 296 Ft · 2025: 3 108 879 Ft · +15,7%</footer>
+  </section>
+
+  <!-- ========== 9 / ZÁRÓ ========== -->
+  <section class="slide dark">
+    <div class="slide-head"><span class="mx-logo"><span class="dot"></span>MAVERIX</span><span>Köszönjük</span></div>
+    <div class="hero-title">Köszönjük<span style="color:var(--mx-terracotta)">.</span></div>
+    <p class="lead" style="margin-top:var(--sp-3)">Kérdés esetén keressen minket bizalommal.<br>Maverix · hello@katonazoli.hu</p>
+    <footer class="slide-foot">© 2026 Maverix · Készült a Sauska részére</footer>
+  </section>
+
+
+</div>
+
+<div class="nav">
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="prev" aria-label="Előző dia">←</button>
+  <button id="next" aria-label="Következő dia">→</button>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const counter=document.getElementById('counter'), progress=document.getElementById('progress');
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    counter.textContent=(i+1)+' / '+slides.length;
+    progress.style.width=((i+1)/slides.length*100)+'%';
+    location.hash='#'+(i+1);
+  }
+  document.getElementById('next').onclick=()=>go(i+1);
+  document.getElementById('prev').onclick=()=>go(i-1);
+  addEventListener('keydown',e=>{
+    if(e.target.matches('input,textarea'))return;
+    if(['ArrowRight','PageDown',' '].includes(e.key))go(i+1);
+    if(['ArrowLeft','PageUp'].includes(e.key))go(i-1);
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+  });
+  let x0=null;
+  addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>60)go(i+(dx<0?1:-1));
+    x0=null;
+  },{passive:true});
+  const h=parseInt(location.hash.slice(1)); if(h)go(h-1); else go(0);
+})();
+
+/* ===== Rendelt termékek — interaktív dia ===== */
+(function(){
+  const DATA26=[
+    ["SAUSKA VILLÁNY UTALVÁNY 1","Élmény & utalvány",8,400000],
+    ["SAUSKA TOKAJ UTALVÁNY 1","Élmény & utalvány",6,300000],
+    ["Sauska Brut Nature NV","Pezsgő",31,261250],
+    ["Blanc de Noirs NV","Pezsgő",20,253630],
+    ["SAUSKA VILLÁNY UTALVÁNY 2","Élmény & utalvány",2,200000],
+    ["SAUSKA TOKAJ UTALVÁNY 2","Élmény & utalvány",2,200000],
+    ["SAUSKA BUDAPEST PINCETÚRA 2026.07.04.","Élmény & utalvány",15,157500],
+    ["Sauska Sauvignon Blanc 2025","Fehérbor",24,144750],
+    ["Sauska Extra Dry NV","Pezsgő",33,142348],
+    ["Sauska Rosé 2025","Rozé",52,130131],
+    ["Sauska Rosé Extra Brut","Pezsgő",20,117480],
+    ["Sauska Pinot Noir 2024","Vörösbor",13,84675],
+    ["Sauska Chardonnay 2025","Fehérbor",19,74690],
+    ["SAUSKA BUDAPEST PEZSGŐPINCE SÉTA","Élmény & utalvány",7,73500],
+    ["Sauska Late Harvest Cuvée 2023 Tokaj","Fehérbor",13,71650],
+    ["Sauska Rosé Brut Magnum","Pezsgő",5,68400],
+    ["Sauska Rosé Extra Brut 2017","Pezsgő",6,68250],
+    ["Sauska Cuvée 11 2021 Villány","Vörösbor",11,64790],
+    ["Sauska Furmint 2025 Tokaj","Fehérbor",21,64675],
+    ["SAUSKA BUDAPEST PINCETÚRA 2026.06.06.","Élmény & utalvány",6,63000],
+    ["Sauska Sárgamuskotály 2025 Tokaj","Fehérbor",19,62445],
+    ["Sauska Rosé Brut","Pezsgő",10,58460],
+    ["Sauska Cuvée 5 2012 Villány","Vörösbor",1,50000],
+    ["Sauska Cabernet Sauvignon 2021 Villány","Vörösbor",10,44253],
+    ["Sauska Brut","Pezsgő",7,38885],
+    ["Sauska Pinot Noir Padi 2023","Vörösbor",3,34375],
+    ["Sauska Cuvée 7 Villány 2021","Vörösbor",3,32700],
+    ["SAUSKA BUDAPEST PINCETÚRA 2026.06.12.","Élmény & utalvány",3,31500],
+    ["Sauska Furmint Medve Tokaj 2023","Fehérbor",3,28500],
+    ["Sauska Kadarka Villány 2024","Vörösbor",5,24750],
+    ["Sauska Cuvée 7 Villány 2018 Magnum","Vörösbor",1,23000],
+    ["SAUSKA SPARKLING WINE CELLAR TOUR 2026.06.13. 14:30","Élmény & utalvány",2,21000],
+    ["SAUSKA BUDAPEST PINCETÚRA 2026.08.01.","Élmény & utalvány",2,21000],
+    ["Sauska Cuvée 113 2025","Fehérbor",6,20148],
+    ["SAUSKA BLANC DE BLANCS NŐI PÓLÓ / FEHÉR / L/XL","Merch",2,19000],
+    ["SAUSKA BLANC DE NOIRS NŐI PÓLÓ / FEKETE / S/M","Merch",2,19000],
+    ["SAUSKA BLANC DE BLANCS NŐI PÓLÓ / FEHÉR / S/M","Merch",2,19000],
+    ["Sauska Cabernet Sauvignon Ördögárok 2019 Villány","Vörösbor",1,18000],
+    ["Sauska Sauvignon Blanc 2024","Fehérbor",3,17750],
+    ["Sauska Chardonnay Birs 2024","Fehérbor",2,15800],
+    ["Sauska Chardonnay 2024","Fehérbor",3,12573],
+    ["Sauska Brut Magnum","Pezsgő",1,11700],
+    ["SAUSKA BLANC DE NOIRS NŐI PÓLÓ / FEKETE / L/XL","Merch",1,9500],
+    ["Sauska Pinot Noir Birs 2023","Vörösbor",1,9375],
+    ["Sauska Kékfrankos 2023 Villány","Vörösbor",2,9108],
+    ["Sauska Cuvée 13 2022 Villány","Vörösbor",1,3690],
+    ["Sauska Siller 2025 Villány","Rozé",1,2065]
+  ].map(r=>({name:r[0],cat:r[1],qty:r[2],ft:r[3]}));
+
+  const DATA25=[
+    ["SAUSKA TOKAJ AJÁNDÉKUTALVÁNY 1","Élmény & utalvány",8,400000],
+    ["SAUSKA VILLÁNY AJÁNDÉKUTALVÁNY 1","Élmény & utalvány",7,350000],
+    ["5=6 Sárgamuskotály 2024","Csomagajánlat",17,293250],
+    ["5=6 Cuvée 13 2021","Csomagajánlat",8,147600],
+    ["Sauska Rosé Brut Demi","Pezsgő",58,137701],
+    ["Sauska Brut Demi","Pezsgő",41,114550],
+    ["Sauska Brut","Pezsgő",25,113250],
+    ["2x3 JÚNIUS","Csomagajánlat",5,109950],
+    ["JÚNIUSI VÁLOGATÁS","Csomagajánlat",4,95960],
+    ["SAUSKA BUDAPEST PINCETÚRA 2025.06.20.","Élmény & utalvány",9,85500],
+    ["Sauska Furmint Birsalmás Tokaj 2021","Fehérbor",10,77000],
+    ["SAUSKA BUDAPEST PINCETÚRA 2025.07.05.","Élmény & utalvány",8,76000],
+    ["Sauska Late Harvest Cuvée 2023 Tokaj","Fehérbor",13,71500],
+    ["Sauska Cuvée 11 2020 Villány","Vörösbor",12,69480],
+    ["Sauska Rosé Brut","Pezsgő",10,64780],
+    ["Sauska Furmint 2024 Tokaj","Fehérbor",23,63750],
+    ["Sauska Sauvignon Blanc 2024","Fehérbor",14,63125],
+    ["SAUSKA BUDAPEST PINCETÚRA 2025.06.14.","Élmény & utalvány",6,57000],
+    ["Sauska Cuvée 5 2012 Villány","Vörösbor",1,50000],
+    ["Sauska Cuvée 7 Siklós 2017","Vörösbor",5,49000],
+    ["Sauska Cuvée 113 2024","Fehérbor",18,47610],
+    ["5=6 Chardonnay Birs 2023","Csomagajánlat",1,47400],
+    ["Blanc de Noirs NV","Pezsgő",4,41720],
+    ["1 x SAUSKA VILLÁNY CUVÉE 5 2018","Csomagajánlat",1,41000],
+    ["Sauska Extra Dry NV","Pezsgő",13,40828],
+    ["SAUSKA BUDAPEST PINCETÚRA 2025.08.15.","Élmény & utalvány",4,38000],
+    ["3x2 JÚNIUS","Csomagajánlat",2,37980],
+    ["Sauska Merlot Csukma 2019 Villány","Vörösbor",2,33120],
+    ["Sauska Cuvée 7 Villány 2020","Vörösbor",6,32700],
+    ["Sauska Cuvée 7 Villány 2019","Vörösbor",6,32700],
+    ["Sauska Rosé 2024","Rozé",10,29500],
+    ["Cabernet Franc Siklós 2020 Villány","Vörösbor",4,29200],
+    ["Sauska Sárgamuskotály 2024 Tokaj","Fehérbor",6,19113],
+    ["Sauska Chardonnay 2024","Fehérbor",4,19008],
+    ["SAUSKA BUDAPEST PEZSGŐPINCE SÉTA","Élmény & utalvány",2,19000],
+    ["SAUSKA BUDAPEST PINCETÚRA 2025.08.02.","Élmény & utalvány",2,19000],
+    ["Sauska Cabernet Sauvignon Ördögárok 2019 Villány","Vörösbor",1,18000],
+    ["Sauska Furmint Brut Tokaj 2018","Pezsgő",1,17500],
+    ["Sauska Extra Brut 2017","Pezsgő",1,15000],
+    ["Sauska Siller 2024 Villány","Rozé",4,11800],
+    ["Sauska Cuvée 7 Siklós 2020","Vörösbor",1,10900],
+    ["Sauska Rosé Extra Brut","Pezsgő",1,8900],
+    ["Sauska Kadarka 2022 Villány","Vörösbor",1,4950],
+    ["Sauska Cabernet Sauvignon 2020 Villány","Vörösbor",1,4554]
+  ].map(r=>({name:r[0],cat:r[1],qty:r[2],ft:r[3]}));
+
+  const COLORS={"Élmény & utalvány":"var(--sk-gold)","Pezsgő":"var(--mx-terracotta)","Fehérbor":"#D9B23C","Vörösbor":"var(--sk-wine)","Rozé":"#D98A8A","Merch":"var(--mx-ink)","Csomagajánlat":"#7A8B6F"};
+  const fmt=n=>n.toLocaleString('hu-HU');
+  const agg=data=>{const a={};data.forEach(d=>{(a[d.cat]=a[d.cat]||{qty:0,ft:0}),a[d.cat].qty+=d.qty,a[d.cat].ft+=d.ft;});return a;};
+
+  function initProducts(sfx,data){
+    const catsEl=document.getElementById('pCats'+sfx), tbody=document.querySelector('#pTable'+sfx+' tbody'),
+          summary=document.getElementById('pSummary'+sfx), search=document.getElementById('pSearch'+sfx),
+          ths=document.querySelectorAll('#pTable'+sfx+' th');
+    if(!catsEl) return;
+    let cat=null, q='', sortK='ft', sortDir=-1;
+    const cats=Object.entries(agg(data)).sort((a,b)=>b[1].ft-a[1].ft);
+    const maxFt=cats[0][1].ft;
+
+    function renderCats(){
+      catsEl.innerHTML=cats.map(([c,v])=>`
+        <div class="bar-row" data-cat="${c}" style="grid-template-columns:8.5em 1fr 6em;cursor:pointer;opacity:${cat&&cat!==c?.4:1}">
+          <span class="name" style="font-weight:${cat===c?800:600}">${c}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${(v.ft/maxFt*100).toFixed(1)}%;background:${COLORS[c]}"></div></div>
+          <span class="num">${fmt(v.ft)} Ft</span>
+        </div>`).join('');
+      catsEl.querySelectorAll('[data-cat]').forEach(el=>el.onclick=()=>{cat=(cat===el.dataset.cat)?null:el.dataset.cat;render();});
+    }
+
+    function render(){
+      renderCats();
+      let rows=data.filter(d=>(!cat||d.cat===cat)&&(!q||d.name.toLowerCase().includes(q)));
+      rows.sort((a,b)=>sortK==='name'?sortDir*a.name.localeCompare(b.name,'hu'):sortDir*(a[sortK]-b[sortK]));
+      tbody.innerHTML=rows.map(d=>`<tr>
+        <td><span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:${COLORS[d.cat]};margin-right:.6em"></span>${d.name}</td>
+        <td class="num">${d.qty}</td><td class="num"><b>${fmt(d.ft)} Ft</b></td></tr>`).join('')
+        ||'<tr><td colspan="3" style="color:var(--gray)">Nincs találat.</td></tr>';
+      const tq=rows.reduce((s,d)=>s+d.qty,0), tf=rows.reduce((s,d)=>s+d.ft,0);
+      summary.innerHTML=`<b>${rows.length}</b> tétel · <b>${fmt(tq)}</b> db · <b>${fmt(tf)} Ft</b>`+(cat?` · <u style="cursor:pointer" data-reset>szűrő törlése</u>`:'');
+      const r=summary.querySelector('[data-reset]'); if(r)r.onclick=()=>{cat=null;render();};
+      ths.forEach(th=>{
+        const k=th.dataset.k, base=th.textContent.replace(/[↕↑↓]\s*$/,'').trim();
+        th.textContent=base+(k===sortK?(sortDir<0?' ↓':' ↑'):' ↕');
+      });
+    }
+
+    search.addEventListener('input',()=>{q=search.value.trim().toLowerCase();render();});
+    ths.forEach(th=>th.onclick=()=>{
+      const k=th.dataset.k;
+      if(k===sortK)sortDir*=-1; else{sortK=k;sortDir=k==='name'?1:-1;}
+      render();
+    });
+    render();
+  }
+  initProducts('26',DATA26);
+  initProducts('25',DATA25);
+
+  /* --- kategória-összehasonlítás (év/év) --- */
+  (function(){
+    const el=document.getElementById('cmpChart'); if(!el)return;
+    const a26=agg(DATA26), a25=agg(DATA25);
+    const cats=[...new Set([...Object.keys(a26),...Object.keys(a25)])];
+    const rows=cats.map(c=>({c,f26:(a26[c]||{ft:0}).ft,f25:(a25[c]||{ft:0}).ft}))
+                   .sort((x,y)=>(y.f26-x.f26)||(y.f25-x.f25));
+    const max=Math.max(...rows.map(r=>Math.max(r.f26,r.f25)));
+    el.insertAdjacentHTML('beforeend',rows.map(r=>{
+      const d=r.f25?Math.round((r.f26-r.f25)/r.f25*100):null;
+      const badge=r.f25===0?'<span class="badge accent">új</span>'
+        :r.f26===0?'<span class="badge">nem volt</span>'
+        :`<span class="delta ${d>=0?'up':'down'}" style="margin:0">${d>=0?'▲':'▼'} ${Math.abs(d)}%</span>`;
+      return `<div style="display:grid;grid-template-columns:9.5em 1fr 6.5em;gap:1rem;align-items:center;margin-bottom:.9rem;font-size:var(--fs-small)">
+        <span style="font-weight:600">${r.c}</span>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div class="bar-track" style="height:11px"><div class="bar-fill" style="width:${(r.f26/max*100).toFixed(1)}%"></div></div>
+          <div class="bar-track" style="height:11px"><div class="bar-fill ink" style="width:${(r.f25/max*100).toFixed(1)}%"></div></div>
+        </div>
+        <div style="text-align:right">${badge}</div>
+      </div>`;
+    }).join(''));
+  })();
+})();
+</script>
+</body>
+</html>
