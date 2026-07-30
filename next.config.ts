@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { source: "/rsnew", destination: "/rsnew.html" },
       { source: "/sauska", destination: "/sauska.html" },
       { source: "/starthu", destination: "/starthu.html" },
+      { source: "/startro", destination: "/startro.html" },
     ];
   },
 };
