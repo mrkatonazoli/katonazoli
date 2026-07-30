@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/rsnew", destination: "/rsnew.html" },
       { source: "/sauska", destination: "/sauska.html" },
+      { source: "/starthu", destination: "/starthu.html" },
     ];
   },
 };
