@@ -12,9 +12,9 @@
   --gray:#3C3C3B; --ink:#041C19; --teal:#0C4A42;
   --keppel:#14AF9F; --seagreen:#50B16B; --kelly:#6CB42E;
   --grad:linear-gradient(135deg,#14AF9F,#50B16B,#6CB42E);
-  --paper:#f4f6f5; --card:#ffffff;
-  --line:#e2e9e6; --line2:#d3dedb;
-  --txt:#3C3C3B; --dim:#6f817d; --faint:#93a5a1;
+  --paper:#eef2f1; --card:#ffffff;
+  --line:#ccd8d4; --line2:#bccbc6;
+  --txt:#2b2b2a; --dim:#485955; --faint:#5c6e6a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -22,12 +22,8 @@ body{
   background:var(--paper); color:var(--txt);
   -webkit-font-smoothing:antialiased;
   padding:44px 28px 56px;
-  background-image:
-    radial-gradient(900px 520px at 10% -10%, rgba(20,175,159,.10), transparent 62%),
-    radial-gradient(760px 460px at 94% 2%, rgba(108,180,46,.09), transparent 62%);
-  background-attachment:fixed;
 }
-.wrap{max-width:1280px;margin:0 auto}
+.wrap{max-width:1280px;margin:0 auto;background:var(--paper);color:var(--txt)}
 h1,h2,h3,.eyebrow{font-family:'Space Grotesk',system-ui,sans-serif}
 
 /* ---------- header ---------- */
@@ -39,22 +35,22 @@ header{margin-bottom:30px}
 }
 h1{font-size:clamp(26px,4vw,42px);font-weight:700;line-height:1.12;letter-spacing:-.5px;color:var(--gray)}
 h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--dim);font-weight:300;font-size:15px;margin-top:12px;max-width:760px;line-height:1.6}
+.sub{color:var(--dim);font-weight:400;font-size:15px;margin-top:12px;max-width:760px;line-height:1.6}
 
 /* ---------- journey ribbon ---------- */
 .journey{
   margin:30px 0 26px;border:1px solid var(--line);border-radius:16px;
   background:var(--card);padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.03);
 }
-.journey .lbl{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:12px;font-family:'Space Grotesk',sans-serif}
+.journey .lbl{font-size:10.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--dim);font-weight:600;margin-bottom:12px;font-family:'Space Grotesk',sans-serif}
 .steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .step{
   font-size:12.5px;font-weight:500;padding:7px 14px;border-radius:999px;
-  background:rgba(20,175,159,.09);border:1px solid rgba(20,175,159,.32);color:#0d7a6f;white-space:nowrap;
+  background:rgba(20,175,159,.11);border:1px solid rgba(20,175,159,.42);color:#08635a;white-space:nowrap;
 }
-.arrow{color:var(--faint);font-size:14px;flex:0 0 auto}
+.arrow{color:#7b8d89;font-size:14px;flex:0 0 auto}
 .loop{
-  margin-left:auto;font-size:11.5px;color:#3f8f22;font-weight:500;
+  margin-left:auto;font-size:12px;color:#2c7a16;font-weight:600;
   border:1px dashed rgba(108,180,46,.55);background:rgba(108,180,46,.07);
   padding:6px 13px;border-radius:999px;white-space:nowrap;
 }
@@ -67,24 +63,24 @@ h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 }
 .layer .name{
   font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.9px;text-transform:uppercase;
-  font-weight:700;color:var(--faint);display:flex;align-items:center;line-height:1.45;
+  font-weight:700;color:var(--dim);display:flex;align-items:center;line-height:1.45;
 }
 .layer.core{
   border-color:rgba(20,175,159,.45);
   background:linear-gradient(90deg,rgba(20,175,159,.10),rgba(108,180,46,.05));
 }
-.layer.core .name{color:#0d7a6f}
+.layer.core .name{color:#08635a}
 .cards{display:flex;flex-wrap:wrap;gap:10px}
 
 .card{
   flex:1 1 190px;min-width:180px;border:1px solid var(--line2);border-radius:13px;
-  background:#fbfdfc;padding:12px 14px;position:relative;
+  background:#fff;padding:12px 14px;position:relative;
 }
 .card.wide{flex:1 1 100%}
 .card .t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;letter-spacing:-.1px;display:flex;align-items:center;gap:8px;color:var(--gray)}
-.card .d{font-size:11.6px;color:var(--dim);font-weight:300;line-height:1.5;margin-top:6px}
-.card.mag{border-color:rgba(20,175,159,.5);background:rgba(20,175,159,.07)}
-.card.mag .t{color:#0d7a6f}
+.card .d{font-size:12.4px;color:var(--dim);font-weight:400;line-height:1.55;margin-top:6px}
+.card.mag{border-color:rgba(20,175,159,.6);background:rgba(20,175,159,.09)}
+.card.mag .t{color:#08635a}
 
 .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;display:inline-block}
 .d-live{background:var(--kelly);box-shadow:0 0 0 3px rgba(108,180,46,.18)}
@@ -98,9 +94,9 @@ h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;
   padding:13px 18px;border-radius:18px;border:1px dashed var(--line2);
   background:rgba(255,255,255,.6);align-items:center;
 }
-.rail .name{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.9px;text-transform:uppercase;font-weight:700;color:var(--faint)}
+.rail .name{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.9px;text-transform:uppercase;font-weight:700;color:var(--dim)}
 .chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{font-size:11.5px;font-weight:400;color:var(--dim);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;background:#fff}
+.chip{font-size:12px;font-weight:400;color:var(--dim);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;background:#fff}
 
 /* ---------- service band ---------- */
 .service{margin-top:16px;border-radius:20px;padding:2px;background:var(--grad)}
@@ -117,33 +113,33 @@ h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 .diagram{margin-top:44px}
 .diagram > .lbl{
   font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2.2px;
-  text-transform:uppercase;color:#0d7a6f;font-weight:700;margin-bottom:8px;
+  text-transform:uppercase;color:#08635a;font-weight:700;margin-bottom:8px;
 }
 .diagram h2{font-size:clamp(20px,2.6vw,28px);font-weight:700;letter-spacing:-.3px;color:var(--gray)}
-.diagram .cap{color:var(--dim);font-size:13px;font-weight:300;margin-top:9px;max-width:840px;line-height:1.6}
+.diagram .cap{color:var(--dim);font-size:13.5px;font-weight:400;margin-top:9px;max-width:840px;line-height:1.6}
 .canvas{
   margin-top:20px;border:1px solid var(--line);border-radius:18px;
   background:var(--card);padding:18px 14px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03);
 }
 .canvas svg{width:100%;height:auto;display:block}
 svg text{font-family:'Poppins',sans-serif}
-.nt{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;fill:#3C3C3B}
-.nt.hub{font-size:16px;fill:#0d7a6f}
-.ns{font-size:10.5px;font-weight:300;fill:#7d8f8b}
-.el{font-size:10.5px;font-weight:400;fill:#8a9a96}
-.el.hi{fill:#3f8f22;font-weight:500}
-.node{fill:#ffffff;stroke:#d3dedb;stroke-width:1.2}
-.node.hub{fill:rgba(20,175,159,.10);stroke:#14AF9F;stroke-width:1.8}
-.node.ext{fill:#f7faf9;stroke:#c9d6d2;stroke-dasharray:5 4}
-.edge{stroke:#a9bab6;stroke-width:1.4;fill:none}
+.nt{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;fill:#242423}
+.nt.hub{font-size:16.5px;fill:#0a6b61}
+.ns{font-size:11.2px;font-weight:400;fill:#4f625e}
+.el{font-size:11.2px;font-weight:400;fill:#556865}
+.el.hi{fill:#2c7a16;font-weight:600}
+.node{fill:#ffffff;stroke:#b3c3bf;stroke-width:1.3}
+.node.hub{fill:rgba(20,175,159,.12);stroke:#0f9c8e;stroke-width:2}
+.node.ext{fill:#f4f8f7;stroke:#aebeba;stroke-dasharray:5 4}
+.edge{stroke:#879995;stroke-width:1.5;fill:none}
 .edge.dash{stroke-dasharray:6 5;stroke:rgba(20,175,159,.7)}
 .edge.loop{stroke:#6CB42E;stroke-width:1.8;fill:none}
 .edge.data{stroke:rgba(20,175,159,.65);stroke-width:1.3;stroke-dasharray:5 5;fill:none}
 
 /* ---------- legend + footer ---------- */
 .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
-.legend div{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--dim);font-weight:300}
-.foot{margin-top:22px;font-size:11px;color:var(--faint);font-weight:300;line-height:1.7}
+.legend div{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--dim);font-weight:400}
+.foot{margin-top:22px;font-size:11.5px;color:var(--dim);font-weight:400;line-height:1.7}
 
 @media (max-width:820px){
   .layer,.rail{grid-template-columns:1fr;gap:11px}
@@ -347,10 +343,10 @@ svg text{font-family:'Poppins',sans-serif}
   <svg viewBox="0 0 1200 800" role="img" aria-label="A RoomSome modulok kapcsolati térképe">
     <defs>
       <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="#a9bab6"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"/>
       </marker>
       <marker id="as" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto">
-        <path d="M9,0 L0,4.5 L9,9 z" fill="#a9bab6"/>
+        <path d="M9,0 L0,4.5 L9,9 z" fill="#879995"/>
       </marker>
       <marker id="at" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
         <path d="M0,0 L9,4.5 L0,9 z" fill="rgba(20,175,159,.9)"/>
@@ -450,7 +446,7 @@ svg text{font-family:'Poppins',sans-serif}
   <svg viewBox="0 0 1200 490" role="img" aria-label="A RoomSome értékteremtő hurok">
     <defs>
       <marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="#a9bab6"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"/>
       </marker>
       <marker id="bl" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
         <path d="M0,0 L10,5 L0,10 z" fill="#6CB42E"/>
@@ -510,7 +506,7 @@ svg text{font-family:'Poppins',sans-serif}
 
     <rect x="32" y="382" width="1136" height="66" rx="14" fill="#0C4A42" stroke="#0C4A42" stroke-width="1.5"/>
     <text class="nt" x="600" y="410" text-anchor="middle" style="fill:#DBF183">Service réteg — Morgens</text>
-    <text class="ns" x="600" y="430" text-anchor="middle" style="fill:#bfe6d8">revenue management · digital marketing · adtech · sales · BI</text>
+    <text class="ns" x="600" y="430" text-anchor="middle" style="fill:#cdeade">revenue management · digital marketing · adtech · sales · BI</text>
 
     <path class="edge loop" d="M32,415 L20,415 Q8,415 8,403 L8,110 Q8,98 20,98 L28,98" marker-end="url(#bl)"/>
     <text class="el hi" x="600" y="472" text-anchor="middle">a service réteg dönti el, hol és mennyiért hirdetünk, és milyen áron adjuk a szobát</text>
