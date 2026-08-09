@@ -31,6 +31,7 @@ export function middleware(req: NextRequest) {
     checkProtected(req, "/immersive", "immersive_auth", "IMMERSIVE_PASSWORD") ??
     checkProtected(req, "/palace", "palace_auth", "PALACE_PASSWORD") ??
     checkProtected(req, "/bonvital", "bonvital_auth", "BONVITAL_PASSWORD", "bnv2026") ??
+    checkProtected(req, "/2027bp", "bp2027_auth", "BP2027_PASSWORD", "FutureGoGo") ??
     NextResponse.next()
   );
 }
@@ -45,5 +46,7 @@ export const config = {
     "/palace/:path*",
     "/bonvital",
     "/bonvital/:path*",
+    "/2027bp",
+    "/2027bp/:path*",
   ],
 };
