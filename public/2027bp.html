@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morgens üzleti terv 2023–2031</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gray:#3C3C3B; --teal:#0C4A42;
+  --keppel:#14AF9F; --seagreen:#50B16B; --kelly:#6CB42E;
+  --grad:linear-gradient(135deg,#14AF9F,#50B16B,#6CB42E);
+  --paper:#eef2f1; --card:#ffffff;
+  --line:#ccd8d4; --line2:#bccbc6;
+  --txt:#2b2b2a; --dim:#485955; --faint:#5c6e6a;
+  --s1:#0F9C8E;   /* HU — validált */
+  --s2:#D98324;   /* RO — validált */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',system-ui,'Segoe UI',sans-serif;background:var(--paper);color:var(--txt);
+     -webkit-font-smoothing:antialiased;padding:44px 28px 60px;}
+.wrap{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--txt)}
+h1,h2,h3,.eyebrow,.nt{font-family:'Space Grotesk',system-ui,sans-serif}
+
+header{margin-bottom:30px}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-weight:600;
+  color:#fff;background:var(--grad);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+h1{font-size:clamp(27px,4.4vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.6px}
+h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--dim);font-weight:400;font-size:15px;margin-top:12px;max-width:800px;line-height:1.6}
+
+section{margin-top:40px}
+.lbl{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;
+  color:#08635a;font-weight:700;margin-bottom:8px}
+h2{font-size:clamp(20px,2.7vw,29px);font-weight:700;letter-spacing:-.3px}
+h3{font-size:16px;font-weight:600;margin-top:22px;color:var(--txt)}
+p{color:var(--dim);font-size:14.5px;line-height:1.65;margin-top:12px}
+p strong,li strong{color:var(--txt);font-weight:600}
+ul,ol{margin:12px 0 0 20px;color:var(--dim);font-size:14.5px;line-height:1.7}
+li{margin-bottom:8px}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:26px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.tile .k{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--faint);font-weight:600;
+  font-family:'Space Grotesk',sans-serif}
+.tile .v{font-family:'Space Grotesk',sans-serif;font-size:31px;font-weight:700;letter-spacing:-1px;margin-top:8px;color:#08635a}
+.tile .d{font-size:12px;color:var(--dim);margin-top:5px;line-height:1.45}
+
+/* tables */
+.tblwrap{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #e6ecea}
+thead th{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--faint);font-weight:700;background:#f7faf9;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{background:#f2f8f6;font-weight:600;color:var(--txt)}
+
+/* figures */
+figure{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 12px}
+figcaption{font-size:12.5px;color:var(--dim);margin-top:10px;line-height:1.5}
+.figtitle{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:var(--txt)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;margin-bottom:6px}
+.legend span{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dim)}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+.chart{width:100%;position:relative}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#0C4A42;color:#eaf5f1;font-size:12px;
+  padding:8px 11px;border-radius:9px;line-height:1.45;opacity:0;transition:opacity .12s;white-space:nowrap;z-index:5;
+  box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tip b{color:#DBF183;font-weight:600}
+.grid line{stroke:#e4ebe9;stroke-width:1}
+.axis text{font-family:'Poppins',sans-serif;font-size:11px;fill:#5c6e6a}
+.vlabel{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;fill:#2b2b2a}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+
+.note{margin-top:18px;border-left:3px solid var(--kelly);background:rgba(108,180,46,.07);
+  padding:14px 16px;border-radius:0 12px 12px 0}
+.note p{margin-top:0;color:var(--txt);font-size:14px}
+.warn{border-left-color:#D98324;background:rgba(217,131,36,.08)}
+
+.band{margin-top:26px;border-radius:20px;padding:2px;background:var(--grad)}
+.band-in{border-radius:18px;background:var(--teal);padding:22px 24px;color:#eaf5f1}
+.band-in h3{color:#fff;margin-top:0;font-size:19px}
+.band-in p{color:#bfe6d8;font-size:13.5px}
+.band-in .row{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.band-in .row span{font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:999px;
+  background:rgba(219,241,131,.16);border:1px solid rgba(219,241,131,.42);color:#eaf7c9}
+
+.foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Morgens · üzleti terv</span>
+  <h1>2023–2031<br><span class="gr">növekedési pálya.</span></h1>
+  <p class="sub">A „Morgens terv 2023–2031" modell teljes áttekintése: piac, termékportfólió, bevétel, költségszerkezet, eredményesség, a román piacra lépés finanszírozása és a tranzakciós struktúra. Minden összeg millió forintban, ha másképp nincs jelölve.</p>
+</header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">Bevétel 2031</div><div class="v">3 566</div><div class="d">M Ft — a 2023-as 393 M Ft ~9-szerese</div></div>
+  <div class="tile"><div class="k">Éves átlagos növekedés</div><div class="v">~32%</div><div class="d">2023–2031 CAGR</div></div>
+  <div class="tile"><div class="k">EBITDA-marzs 2031</div><div class="v">49,5%</div><div class="d">a 2023-as 15%-os szintről</div></div>
+  <div class="tile"><div class="k">Kumulált cash EBITDA</div><div class="v">~5,8</div><div class="d">Mrd Ft a kilenc év alatt</div></div>
+</div>
+
+<!-- 1 -->
+<section>
+  <div class="lbl">01</div>
+  <h2>Vezetői összefoglaló</h2>
+  <p>A terv 2023 és 2031 között <strong>~9-szeres bevételnövekedést</strong> vázol: 393 M Ft-ról 3 566 M Ft-ra, ami ~32%-os éves átlagos növekedésnek felel meg. A növekedésnek három motorja van:</p>
+  <ol>
+    <li>a magyar ügyfélbázis bővítése <strong>111-ről 455 szálláshelyre</strong>;</li>
+    <li>a termékportfólió szélesítése <strong>2-ről 8 termékre</strong>, ami az egy hotelre jutó bevételt ~285 ezer Ft/hó-ról ~450 ezer Ft/hó-ra emeli;</li>
+    <li>a <strong>román piacra lépés 2027-től</strong>, amely 2031-re 931 M Ft bevételt ad.</li>
+  </ol>
+  <p>Az EBITDA-marzs a 2023–2025 közötti <strong>15–19%-os szintről</strong> 2031-re <strong>49,5%-ra</strong> nő; a kumulált cash EBITDA a kilenc év alatt ~5,8 Mrd Ft.</p>
+  <p>A tervhez <strong>kétlépcsős tulajdonszerzési tranzakció</strong> kapcsolódik: 27% secondary kivásárlás 70% diszkonttal, plusz ~70 M Ft primary tőkeemelés a román terjeszkedésre. A javított képletekkel a két új tulajdonos fejenként ~117,4 M Ft tőkével száll be, ~12,9%-os végső részesedésért.</p>
+</section>
+
+<!-- 2 -->
+<section>
+  <div class="lbl">02</div>
+  <h2>A modell felépítése</h2>
+  <p>A munkafüzet négy fülből áll, tiszta hierarchiával:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Fül</th><th>Szerep</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Personal reszletezo</strong></td><td>HR input: divíziónként (Product / Advisory) és országonként FTE × havi átlagbér → éves közvetlen HR-költség. Innen képlettel folyik be a HU és RO fülek 57. és 62. sorába.</td></tr>
+      <tr><td><strong>HU</strong></td><td>A magyar működés teljes modellje: piac, ügyfélszám, termékpenetráció, árak, bevétel, költségek, cash EBITDA.</td></tr>
+      <tr><td><strong>RO</strong></td><td>A román terjeszkedés ugyanezen szerkezetben, 2027-es indulással. A felfutási logika cellakommentekben dokumentált.</td></tr>
+      <tr><td><strong>Összegítő</strong></td><td>HU+RO soronkénti összegzés, plusz alul a cégértékelés, a tranzakciós struktúra és a cap table.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><p>Az ellenőrzések alapján a képletlánc konzisztens: a bevétel mindenhol ügyfélszám × ár, a HR-adatok hivatkozással (nem kézzel) kerülnek át, az Összegítő tisztán aggregál.</p></div>
+</section>
+
+<!-- 3 -->
+<section>
+  <div class="lbl">03</div>
+  <h2>Piaci és ügyfélszám-feltételezések</h2>
+
+  <h3>Magyarország</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th></th><th class="num">2023</th><th class="num">2025</th><th class="num">2026</th><th class="num">2027</th><th class="num">2029</th><th class="num">2031</th></tr></thead>
+    <tbody>
+      <tr><td>Célpiac (szálláshely)</td><td class="num">600</td><td class="num">600</td><td class="num">600</td><td class="num">1 000</td><td class="num">1 000</td><td class="num">1 000</td></tr>
+      <tr><td>Aktív, bevételt termelő ügyfél</td><td class="num">111</td><td class="num">233</td><td class="num">273</td><td class="num">335</td><td class="num">395</td><td class="num">455</td></tr>
+      <tr><td>Penetráció</td><td class="num">18%</td><td class="num">39%</td><td class="num">46%</td><td class="num">34%</td><td class="num">40%</td><td class="num">46%</td></tr>
+      <tr><td>Új akvirálás (db/év)</td><td class="num">46</td><td class="num">76</td><td class="num">35</td><td class="num">60</td><td class="num">40</td><td class="num">40</td></tr>
+      <tr><td>Churn (db/év)</td><td class="num">0</td><td class="num">0</td><td class="num">−5</td><td class="num">−10</td><td class="num">−10</td><td class="num">−10</td></tr>
+    </tbody>
+  </table></div>
+
+  <figure>
+    <div class="figtitle">Aktív, bevételt termelő magyar ügyfelek</div>
+    <div class="chart" id="c-cust"></div>
+    <figcaption>Csak a modellben szereplő évek. A churn éves szinten a bázis ~2–3%-a.</figcaption>
+  </figure>
+
+  <div class="note warn"><p><strong>Fontos:</strong> 2027-ben a célpiac definíciója 600-ról 1 000-re bővül, ezért a penetráció látszólagos visszaesése (46% → 34%) <strong>nem ügyfélvesztés, hanem nevezőváltás</strong>. Prezentációban ezt érdemes lábjegyzetelni.</p></div>
+
+  <h3>Románia</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th></th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th><th class="num">2030</th><th class="num">2031</th></tr></thead>
+    <tbody>
+      <tr><td>Célpiac</td><td class="num">600</td><td class="num">700</td><td class="num">800</td><td class="num">900</td><td class="num">1 000</td></tr>
+      <tr><td>Aktív ügyfél</td><td class="num">0</td><td class="num">56</td><td class="num">98</td><td class="num">147</td><td class="num">205</td></tr>
+      <tr><td>Penetráció</td><td class="num">0%</td><td class="num">8%</td><td class="num">12%</td><td class="num">16%</td><td class="num">20%</td></tr>
+    </tbody>
+  </table></div>
+  <p>A RO fül kommentjei szerint 2027 a befektetési és felépítési év (van költség, nincs bevétel), a bevételi pálya pedig úgy skálázódik, hogy <strong>2027 a HU 2023-as szintjének, 2031 a HU 2028-as szintjének felel meg</strong>, lineáris interpolációval. Konzervatív és jól védhető megközelítés: a román felfutás a már bizonyított magyar pályát ismétli.</p>
+</section>
+
+<!-- 4 -->
+<section>
+  <div class="lbl">04</div>
+  <h2>Termékportfólió és árazás</h2>
+  <p>A modell 8 bevételi lábbal számol. Magyar havi árak szálláshelyenként (Ft/hó):</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Termék</th><th>Indulás</th><th class="num">Ár induláskor</th><th class="num">Ár 2031</th><th class="num">Penetráció 2031</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Booking engine + Voucher</strong></td><td>fut (2023)</td><td class="num">116 096</td><td class="num">71 000</td><td class="num">94%</td></tr>
+      <tr><td><strong>Advisory</strong></td><td>fut (2023)</td><td class="num">423 561</td><td class="num">600 000</td><td class="num">35%</td></tr>
+      <tr><td><strong>RoomSome Loyalty</strong></td><td>fut (2023)</td><td class="num">184 189</td><td class="num">49 000</td><td class="num">59%</td></tr>
+      <tr><td><strong>RoomSome CBX</strong></td><td>2026</td><td class="num">13 000</td><td class="num">25 000</td><td class="num">58%</td></tr>
+      <tr><td><strong>RoomSome GuestApp</strong></td><td>2026</td><td class="num">60 000</td><td class="num">52 000</td><td class="num">43%</td></tr>
+      <tr><td><strong>RoomSome Inbox</strong></td><td>2026</td><td class="num">75 000</td><td class="num">75 000</td><td class="num">36%</td></tr>
+      <tr><td><strong>CM engine</strong></td><td>2027</td><td class="num">70 000</td><td class="num">70 000</td><td class="num">64%</td></tr>
+      <tr><td><strong>RoomSome CRM</strong></td><td>2027</td><td class="num">75 000</td><td class="num">75 000</td><td class="num">30%</td></tr>
+    </tbody>
+  </table></div>
+  <p>Két beépített, őszinte feltételezés:</p>
+  <ol>
+    <li><strong>Árerózió a mag termékeknél</strong> — a booking engine átlagára 116 → 71 ezer Ft/hó-ra csökken (verseny és kisebb ügyfelek belépése miatt), a Loyalty még erősebben esik.</li>
+    <li>A bevételnövekedés fő hajtóereje ezért nem az ár, hanem a <strong>cross-sell</strong>: az egy hotelre jutó összbevétel így is nő, mert az ügyfelek átlagosan egyre több modult használnak.</li>
+  </ol>
+  <p>Romániában minden modul ára lineárisan fut fel a magyar szintre.</p>
+</section>
+
+<!-- 5 -->
+<section>
+  <div class="lbl">05</div>
+  <h2>Bevételi pálya</h2>
+
+  <figure>
+    <div class="figtitle">Éves bevétel országonként (M Ft)</div>
+    <div class="legend">
+      <span><i class="sw" style="background:#0F9C8E"></i>Magyarország</span>
+      <span><i class="sw" style="background:#D98324"></i>Románia</span>
+    </div>
+    <div class="chart" id="c-rev"></div>
+    <figcaption>A számok az oszlopok fölött az adott év teljes bevételét mutatják. A pontos értékek a lenti táblázatban.</figcaption>
+  </figure>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>M Ft</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th><th class="num">2030</th><th class="num">2031</th></tr></thead>
+    <tbody>
+      <tr><td>HU bevétel</td><td class="num">393</td><td class="num">538</td><td class="num">796</td><td class="num">1 002</td><td class="num">1 432</td><td class="num">1 727</td><td class="num">1 966</td><td class="num">2 267</td><td class="num">2 635</td></tr>
+      <tr><td>RO bevétel</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">151</td><td class="num">326</td><td class="num">600</td><td class="num">931</td></tr>
+      <tr class="total"><td>Összesen</td><td class="num">393</td><td class="num">538</td><td class="num">796</td><td class="num">1 002</td><td class="num">1 432</td><td class="num">1 878</td><td class="num">2 292</td><td class="num">2 867</td><td class="num">3 566</td></tr>
+      <tr><td>Növekedés</td><td class="num">—</td><td class="num">37%</td><td class="num">48%</td><td class="num">26%</td><td class="num">43%</td><td class="num">31%</td><td class="num">22%</td><td class="num">25%</td><td class="num">24%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><p><strong>Bevételi mix eltolódása:</strong> 2025-ben a bevétel 59%-a Advisory és 32%-a booking engine; 2031-re az Advisory 47%-ra, a booking engine 15%-ra csökken, miközben az új modulok (CM, CRM, Inbox, GuestApp, CBX, Loyalty) együtt a bevétel ~38%-át adják. A cég tehát <strong>egytermékes rendszer + tanácsadás felől egy többtermékes ökoszisztéma irányába mozog</strong> — de az Advisory végig a legnagyobb egyedi bevételi láb marad.</p></div>
+</section>
+
+<!-- 6 -->
+<section>
+  <div class="lbl">06</div>
+  <h2>Költségszerkezet és HR</h2>
+
+  <figure>
+    <div class="figtitle">Költségszerkezet 2031 (M Ft) — összesen 1 802</div>
+    <div class="chart" id="c-cost"></div>
+    <figcaption>A közvetlen és menedzsment HR együtt a teljes költség ~60–65%-a; R&amp;D-vel együtt ~80%.</figcaption>
+  </figure>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>M Ft (Összegítő)</th><th class="num">2025</th><th class="num">2031</th></tr></thead>
+    <tbody>
+      <tr><td>Advisory közvetlen HR</td><td class="num">235</td><td class="num">698</td></tr>
+      <tr><td>Product közvetlen HR</td><td class="num">132</td><td class="num">281</td></tr>
+      <tr><td>R&amp;D</td><td class="num">121</td><td class="num">338</td></tr>
+      <tr><td>Management / Operáció HR</td><td class="num">48</td><td class="num">159</td></tr>
+      <tr><td>Advisory egyéb közvetlen</td><td class="num">48</td><td class="num">159</td></tr>
+      <tr><td>Egyéb</td><td class="num">32</td><td class="num">89</td></tr>
+      <tr><td>Rezsi</td><td class="num">9</td><td class="num">25</td></tr>
+      <tr><td>Product egyéb közvetlen</td><td class="num">7</td><td class="num">20</td></tr>
+      <tr><td>Szoftver</td><td class="num">6</td><td class="num">17</td></tr>
+      <tr><td>Sales</td><td class="num">5</td><td class="num">14</td></tr>
+      <tr><td>Marketing</td><td class="num">1</td><td class="num">3</td></tr>
+      <tr class="total"><td>Total Cost</td><td class="num">644</td><td class="num">1 802</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><strong>Létszámterv:</strong> HU Product 10 → 13 FTE, HU Advisory 17 → 25 FTE (2025 → 2031); Románia 2027-től indul, 2031-re Product 4 + Advisory 13 FTE. A havi átlagbérek évi ~50 ezer Ft-tal emelkednek (Product HU: 1,1 → 1,4 M Ft/hó; Advisory HU: 1,15 → 1,6 M Ft/hó). A román FTE-k a HU 2026-os FTE/bevétel arány alapján skálázódnak — a kommentekben dokumentált, következetes módszertan.</p>
+  <p>A működési arányok stabilak: Operáció/bevétel ~4,5%, Rezsi ~0,7%, R&amp;D+szoftver 16%-ról 10%-ra csökken.</p>
+</section>
+
+<!-- 7 -->
+<section>
+  <div class="lbl">07</div>
+  <h2>Eredményesség</h2>
+
+  <div class="two">
+    <figure>
+      <div class="figtitle">Cash EBITDA (M Ft)</div>
+      <div class="chart" id="c-ebitda"></div>
+      <figcaption>Akvizíció nélkül.</figcaption>
+    </figure>
+    <figure>
+      <div class="figtitle">EBITDA-marzs (%)</div>
+      <div class="chart" id="c-margin"></div>
+      <figcaption>2023–2025 között 15–19% körül, 2026-tól folyamatos javulás.</figcaption>
+    </figure>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>M Ft</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th><th class="num">2030</th><th class="num">2031</th></tr></thead>
+    <tbody>
+      <tr><td>Cash EBITDA</td><td class="num">59</td><td class="num">87</td><td class="num">152</td><td class="num">233</td><td class="num">495</td><td class="num">772</td><td class="num">973</td><td class="num">1 306</td><td class="num">1 764</td></tr>
+      <tr><td>EBITDA-marzs</td><td class="num">15%</td><td class="num">16%</td><td class="num">19%</td><td class="num">23%</td><td class="num">35%</td><td class="num">41%</td><td class="num">43%</td><td class="num">46%</td><td class="num">49%</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>A 2023–2025 közötti alacsony (15–19%-os) marzs oka az Advisory-csapat előrehozott felskálázása (HR 120 → 164 M Ft) és az R&amp;D felfutása a bevétel előtt. <strong>2027-től a modell erős operatív tőkeáttételt mutat:</strong> a bevétel nő, miközben a költségarányok stabilak, így a marzs évről évre javul. A 2031-es ~50%-os marzs ambiciózus, de a HR-dominált, alacsony változó költségű modellben nem irreális — feltéve, hogy a bérinfláció tényleg megáll az évi ~3–4%-nál.</p>
+</section>
+
+<!-- 8 -->
+<section>
+  <div class="lbl">08</div>
+  <h2>A román terjeszkedés és finanszírozása</h2>
+  <p>A RO-modell legerősebb tulajdonsága, hogy a tőkeigénye pontosan levezetett:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Év</th><th class="num">Cash EBITDA (M Ft)</th><th>Mi történik</th></tr></thead>
+    <tbody>
+      <tr><td><strong>2027</strong></td><td class="num">−69,6</td><td>7 fő HR, nulla bevétel — építési év</td></tr>
+      <tr><td><strong>2028</strong></td><td class="num">−0,4</td><td>a bevétel már majdnem fedezi a költségeket</td></tr>
+      <tr><td><strong>2029</strong></td><td class="num">+21</td><td>fordulópont</td></tr>
+      <tr><td><strong>2030</strong></td><td class="num">+151</td><td></td></tr>
+      <tr><td><strong>2031</strong></td><td class="num">+349</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="band">
+    <div class="band-in">
+      <h3>A friss tőke célzottan a román piacra lépést fedezi</h3>
+      <p>A primary tőkeemelés összege (<strong style="color:#DBF183">~70,05 M Ft</strong>) képlettel egyenlő a 2027–28-as kumulált hiánnyal — se többet, se kevesebbet. Befektetői szemmel ez erős, mert a pénz felhasználása közvetlenül a modellből vezethető le.</p>
+      <div class="row"><span>2027: építési év</span><span>2028: nullszaldó közelében</span><span>2029-től pozitív</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section>
+  <div class="lbl">09</div>
+  <h2>Cégértékelés és tranzakciós struktúra</h2>
+
+  <h3>Értékelés</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Módszer</th><th class="num">Alap (2025)</th><th class="num">Szorzó</th><th class="num">Cégérték</th></tr></thead>
+    <tbody>
+      <tr><td>Árbevétel-alapú</td><td class="num">796 M Ft</td><td class="num">3,0×</td><td class="num"><strong>2 388 M Ft</strong></td></tr>
+      <tr><td>EBITDA-alapú (kontroll)</td><td class="num">152 M Ft</td><td class="num">4,5×</td><td class="num">686 M Ft</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Secondary — 27% kivásárlása (70% diszkonttal)</h3>
+  <ul>
+    <li>Diszkontált cégérték: 2 388 × 0,30 = <strong>716,4 M Ft</strong>; a 27%-os csomag ára <strong>193,4 M Ft</strong></li>
+    <li>Eladók: Tulaj1–4, fejenként 6,75% → fejenként <strong>~48,4 M Ft</strong> bevétel</li>
+    <li>Katona Zoltán: +4% → <strong>~28,7 M Ft</strong></li>
+    <li>Új Tulajdonos 1 és 2: 11,5–11,5% → fejenként <strong>~82,4 M Ft</strong></li>
+  </ul>
+
+  <h3>Primary — tőkeemelés</h3>
+  <ul>
+    <li>Pre-money (25% primary diszkonttal): 1 791 M Ft · investment: 70,05 M Ft · post-money: 1 861 M Ft</li>
+    <li>Új részvények: ~3,76%, a két új tulajdonos fele-fele arányban jegyzi (35,0 M Ft/fő)</li>
+    <li><strong>Új tulajdonosok teljes tőkeigénye fejenként: 82,4 + 35,0 = ~117,4 M Ft</strong></li>
+  </ul>
+
+  <h3>Cap table</h3>
+  <figure>
+    <div class="figtitle">Végső tulajdonosi szerkezet (primary után)</div>
+    <div class="chart" id="c-cap"></div>
+    <figcaption>A Tulaj1–4 csoport négy, egyenként 11,8%-os tulajdonost jelöl.</figcaption>
+  </figure>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Tulajdonos</th><th class="num">Eredeti</th><th class="num">Secondary után</th><th class="num">Primary után (végső)</th></tr></thead>
+    <tbody>
+      <tr><td>Katona Zoltán</td><td class="num">19,0%</td><td class="num">23,0%</td><td class="num"><strong>22,1%</strong></td></tr>
+      <tr><td>Morgens COO</td><td class="num">5,0%</td><td class="num">5,0%</td><td class="num">4,8%</td></tr>
+      <tr><td>Tulaj1</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
+      <tr><td>Tulaj2</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
+      <tr><td>Tulaj3</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
+      <tr><td>Tulaj4</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
+      <tr><td>Új Tulaj 1</td><td class="num">—</td><td class="num">11,5%</td><td class="num"><strong>12,9%</strong></td></tr>
+      <tr><td>Új Tulaj 2</td><td class="num">—</td><td class="num">11,5%</td><td class="num"><strong>12,9%</strong></td></tr>
+      <tr class="total"><td>Összesen</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><p>A secondary implikált ára <strong>7,16 M Ft/százalékpont</strong>, a primary <strong>~18,6 M Ft/százalékpont</strong> — a ~2,6-szeres különbség logikusan tükrözi, hogy a kiszálló tulajdonosok diszkontot adnak, míg a friss növekedési tőke a teljes(ebb) értéken száll be.</p></div>
+</section>
+
+<!-- 10 -->
+<section>
+  <div class="lbl">10</div>
+  <h2>Észrevételek, kockázatok, nyitott kérdések</h2>
+
+  <div class="note warn"><p><strong>1. Marketing- és sales-költség irreálisan alacsony a növekedési tervhez képest.</strong> A marketing 1–3 M Ft/év (a bevétel ~0,1%-a), a sales 5–14 M Ft/év, miközben a terv évi 40–100 új szálláshely akvirálását és egy teljes új országos piacra lépést tartalmaz. Vagy a HR-sorok fedik az értékesítést — akkor ezt érdemes explicitté tenni —, vagy alulméretezett a growth-motor. <strong>Befektetői due diligence-ben ez lesz az első kérdés.</strong></p></div>
+
+  <div class="note warn"><p><strong>2. Az Advisory-súly és a 3× árbevétel-szorzó feszültsége.</strong> Az Advisory a bevétel 47–59%-a a teljes időszakban. Egy tanácsadási üzletágra a piac jellemzően 0,5–1,5× árbevétel-szorzót ad, nem 3×-ot; a SaaS-lábra viszont a 3× védhető. Egy befektető várhatóan súlyozott szorzót fog javasolni — érdemes előre felkészülni az érveléssel (az Advisory magas visszatérő aránya, a szoftverhez kötöttsége).</p></div>
+
+  <ol start="3">
+    <li><strong>Apró képlethiba a Total Cost sorban:</strong> a <code>=SUM(B57:B78)</code> az „Increase" százaléksorokat is összeadja (2025-ben ~2,85 Ft többlet). Forintban elhanyagolható, de a SUM-tartományt érdemes a tényleges költségsorokra szűkíteni, mert audit során rossz benyomást kelt.</li>
+    <li><strong>Penetráció-törés 2027-ben:</strong> a HU célpiac 600-ról 1 000-re bővül, így a penetrációs idősor nem folytonos. Prezentációban lábjegyzetelni kell, hogy a 46% → 34% esés definícióváltás.</li>
+    <li><strong>Árerózió-feltételezés:</strong> a booking engine ára 9 év alatt −39%, a Loyalty −73%. Ez konzervatív (jó), de a terv így teljes egészében a cross-sell sikerén múlik — az új modulok (CM, CRM, Inbox) 2031-es 30–64%-os penetrációja a kritikus feltételezés-csomag.</li>
+    <li><strong>Bérinfláció:</strong> az évi ~3–4%-os béremelés a magyar piacon historikusan alacsony; ha a tényleges bérnövekedés magasabb, a 2031-es ~50%-os EBITDA-marzs arányosan sérül.</li>
+  </ol>
+
+  <div class="note"><p><strong>Ami kifejezetten jól megoldott:</strong> a RO-felfutás kommentekkel dokumentált, HU-bázisú módszertana; a primary investment és a RO tőkeigény képletszintű összekötése; a javított secondary-árazás; és a cap table mindhárom oszlopban 100%-ra záró ellenőrzőösszege.</p></div>
+</section>
+
+<p class="foot">
+  Forrás: „Morgens terv 2023–2031" xlsx (javított verzió). Minden összeg millió forintban, ha másképp nincs jelölve.<br>
+  A grafikonok színpalettája színlátászavarra validálva (teal #0F9C8E · borostyán #D98324).
+</p>
+
+</div>
+
+<script>
+const YEARS = [2023,2024,2025,2026,2027,2028,2029,2030,2031];
+const S1 = '#0F9C8E', S2 = '#D98324';
+const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+function tipFor(host){
+  const t = document.createElement('div'); t.className='tip'; host.appendChild(t);
+  return {
+    show(html, x, y){ t.innerHTML = html; t.style.opacity = 1;
+      const w = t.offsetWidth, hh = t.offsetHeight;
+      t.style.left = Math.max(4, Math.min(host.clientWidth - w - 4, x - w/2)) + 'px';
+      t.style.top  = Math.max(0, y - hh - 12) + 'px'; },
+    hide(){ t.style.opacity = 0; }
+  };
+}
+const SVGNS='http://www.w3.org/2000/svg';
+const el=(n,a={})=>{const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+/* ---------- stacked / simple vertical bars ---------- */
+function barChart(id, opts){
+  const host = document.getElementById(id); if(!host) return;
+  const W=opts.w||1000, H=opts.h||300, m={t:26,r:12,b:34,l:opts.l||46};
+  const svg = el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
+  const iw = W-m.l-m.r, ih = H-m.t-m.b;
+  const labels = opts.labels || YEARS;
+  const totals = labels.map((_,i)=> opts.series.reduce((s,se)=>s+se.values[i],0));
+  const max = opts.max || Math.max(...totals)*1.14;
+  const nt  = opts.ticks || 4;
+  const y = v => m.t + ih - (v/max)*ih;
+  const bw = Math.min(52, iw/labels.length*0.62);
+  const cx = i => m.l + (iw/labels.length)*(i+0.5);
+
+  const g = el('g',{class:'grid'});
+  for(let k=0;k<=nt;k++){ const yy=m.t+ih-(ih/nt)*k;
+    g.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy}));
+    const tx=el('text',{x:m.l-8,y:yy+4,'text-anchor':'end'}); tx.setAttribute('class','axis');
+    tx.textContent = fmt(max/nt*k); g.appendChild(tx); }
+  svg.appendChild(g);
+
+  const tip = tipFor(host);
+  labels.forEach((lab,i)=>{
+    let acc=0;
+    opts.series.forEach(se=>{
+      const v=se.values[i]; if(v<=0) return;
+      const yTop=y(acc+v), yBot=y(acc);
+      const h=Math.max(2,yBot-yTop-(acc>0?2:0));
+      svg.appendChild(el('rect',{x:cx(i)-bw/2,y:yTop,width:bw,height:h,rx:4,fill:se.color}));
+      acc+=v;
+    });
+    if(opts.showTotal!==false){
+      const t=el('text',{x:cx(i),y:y(totals[i])-9,'text-anchor':'middle'});
+      t.setAttribute('class','vlabel'); t.textContent=fmt(totals[i]); svg.appendChild(t);
+    }
+    const ax=el('text',{x:cx(i),y:H-12,'text-anchor':'middle'}); ax.setAttribute('class','axis');
+    ax.textContent=lab; svg.appendChild(ax);
+
+    const hit=el('rect',{x:cx(i)-(iw/labels.length)/2,y:m.t,width:iw/labels.length,height:ih,fill:'transparent'});
+    hit.addEventListener('mousemove',e=>{
+      const r=host.getBoundingClientRect();
+      const rows=opts.series.filter(se=>se.values[i]>0)
+        .map(se=>`${se.name}: <b>${fmt(se.values[i])}</b>${opts.unit||''}`).join('<br>');
+      const tot=opts.series.length>1?`<br>Összesen: <b>${fmt(totals[i])}</b>${opts.unit||''}`:'';
+      tip.show(`<b>${lab}</b><br>${rows}${tot}`, e.clientX-r.left, e.clientY-r.top);
+    });
+    hit.addEventListener('mouseleave',()=>tip.hide());
+    svg.appendChild(hit);
+  });
+  host.appendChild(svg);
+}
+
+/* ---------- line ---------- */
+function lineChart(id, opts){
+  const host=document.getElementById(id); if(!host) return;
+  const W=opts.w||1000,H=opts.h||300,m={t:26,r:16,b:34,l:44};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
+  const iw=W-m.l-m.r, ih=H-m.t-m.b, vals=opts.values;
+  const max=opts.max||Math.max(...vals)*1.2, nt=opts.ticks||4;
+  const x=i=>m.l+(iw/(vals.length-1))*i, y=v=>m.t+ih-(v/max)*ih;
+
+  const g=el('g',{class:'grid'});
+  for(let k=0;k<=nt;k++){const yy=m.t+ih-(ih/nt)*k;
+    g.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy}));
+    const tx=el('text',{x:m.l-8,y:yy+4,'text-anchor':'end'});tx.setAttribute('class','axis');
+    tx.textContent=Math.round(max/nt*k)+(opts.unit||''); g.appendChild(tx);}
+  svg.appendChild(g);
+
+  svg.appendChild(el('path',{d:vals.map((v,i)=>(i?'L':'M')+x(i)+','+y(v)).join(' '),
+    fill:'none',stroke:opts.color||S1,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+
+  const tip=tipFor(host);
+  vals.forEach((v,i)=>{
+    svg.appendChild(el('circle',{cx:x(i),cy:y(v),r:4.5,fill:opts.color||S1,stroke:'#fff','stroke-width':2}));
+    if(i===0||i===vals.length-1||opts.labelAll){
+      const t=el('text',{x:i===0?x(i)+8:x(i),y:y(v)-12,'text-anchor':i===0?'start':'middle'});
+      t.setAttribute('class','vlabel');
+      t.textContent=v+(opts.unit||'');svg.appendChild(t);}
+    const ax=el('text',{x:x(i),y:H-12,'text-anchor':'middle'});ax.setAttribute('class','axis');
+    ax.textContent=YEARS[i];svg.appendChild(ax);
+    const hit=el('rect',{x:x(i)-iw/(vals.length-1)/2,y:m.t,width:iw/(vals.length-1),height:ih,fill:'transparent'});
+    hit.addEventListener('mousemove',e=>{const r=host.getBoundingClientRect();
+      tip.show(`<b>${YEARS[i]}</b><br>${opts.name}: <b>${v}${opts.unit||''}</b>`,e.clientX-r.left,e.clientY-r.top);});
+    hit.addEventListener('mouseleave',()=>tip.hide());
+    svg.appendChild(hit);
+  });
+  host.appendChild(svg);
+}
+
+/* ---------- horizontal ranked bars ---------- */
+function hBar(id, rows, unit){
+  const host=document.getElementById(id); if(!host) return;
+  const W=1000, rowH=28, m={t:8,r:88,b:8,l:250}, H=m.t+rows.length*rowH+m.b;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
+  const iw=W-m.l-m.r, max=Math.max(...rows.map(r=>r.v));
+  const tip=tipFor(host);
+  rows.forEach((r,i)=>{
+    const yy=m.t+i*rowH+5, h=rowH-13;
+    const lab=el('text',{x:m.l-12,y:yy+h/2+4,'text-anchor':'end'});lab.setAttribute('class','axis');
+    lab.textContent=r.k;svg.appendChild(lab);
+    svg.appendChild(el('rect',{x:m.l,y:yy,width:Math.max(3,(r.v/max)*iw),height:h,rx:4,fill:S1,opacity:r.o||1}));
+    const val=el('text',{x:m.l+(r.v/max)*iw+9,y:yy+h/2+4});val.setAttribute('class','vlabel');
+    val.textContent=fmt(r.v)+(unit||'');svg.appendChild(val);
+    const hit=el('rect',{x:m.l,y:yy-4,width:iw,height:rowH,fill:'transparent'});
+    hit.addEventListener('mousemove',e=>{const rc=host.getBoundingClientRect();
+      tip.show(`${r.k}: <b>${fmt(r.v)}${unit||''}</b>`,e.clientX-rc.left,e.clientY-rc.top);});
+    hit.addEventListener('mouseleave',()=>tip.hide());
+    svg.appendChild(hit);
+  });
+  host.appendChild(svg);
+}
+
+/* ---------- single stacked bar (cap table) ---------- */
+function stackBar(id, parts){
+  const host=document.getElementById(id); if(!host) return;
+  const W=1000,H=120,m={l:8,r:8,t:14};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
+  const iw=W-m.l-m.r, tot=parts.reduce((s,p)=>s+p.v,0);
+  let x=m.l; const tip=tipFor(host);
+  parts.forEach((p,i)=>{
+    const w=(p.v/tot)*iw-(i<parts.length-1?2:0);
+    svg.appendChild(el('rect',{x,y:m.t,width:w,height:38,rx:4,fill:p.c}));
+    const last=i===parts.length-1, anch=last?'end':'middle', lx=last?W-m.r:x+w/2;
+    const t=el('text',{x:lx,y:m.t+64,'text-anchor':anch});t.setAttribute('class','vlabel');
+    t.textContent=p.v.toString().replace('.',',')+'%';svg.appendChild(t);
+    const l=el('text',{x:lx,y:m.t+84,'text-anchor':anch});l.setAttribute('class','axis');
+    l.textContent=p.k;svg.appendChild(l);
+    const hit=el('rect',{x,y:m.t,width:w,height:38,fill:'transparent'});
+    const px=x+w/2;
+    hit.addEventListener('mousemove',e=>{const r=host.getBoundingClientRect();
+      tip.show(`${p.k}: <b>${p.v}%</b>`,e.clientX-r.left,e.clientY-r.top);});
+    hit.addEventListener('mouseleave',()=>tip.hide());
+    svg.appendChild(hit); x+=w+2;
+  });
+  host.appendChild(svg);
+}
+
+/* ---------- render ---------- */
+barChart('c-rev',{ max:4000, ticks:4, series:[
+  {name:'Magyarország',color:S1,values:[393,538,796,1002,1432,1727,1966,2267,2635]},
+  {name:'Románia',    color:S2,values:[0,0,0,0,0,151,326,600,931]}], unit:' M Ft', h:320 });
+
+barChart('c-cust',{ labels:[2023,2025,2026,2027,2029,2031], showTotal:true, unit:' hotel',
+  h:250, max:500, ticks:5,
+  series:[{name:'Aktív magyar ügyfél',color:S1,values:[111,233,273,335,395,455]}] });
+
+barChart('c-ebitda',{ w:560, max:2000, ticks:4, series:[{name:'Cash EBITDA',color:S1,
+  values:[59,87,152,233,495,772,973,1306,1764]}], unit:' M Ft', h:300, l:52 });
+
+lineChart('c-margin',{ w:560, max:50, ticks:5, values:[15,16,19,23,35,41,43,46,49],
+  name:'EBITDA-marzs', unit:'%', color:S1, h:300, labelAll:false });
+
+hBar('c-cost',[
+  {k:'Advisory közvetlen HR',v:698},{k:'R&D',v:338},{k:'Product közvetlen HR',v:281},
+  {k:'Management / Operáció',v:159},{k:'Advisory egyéb',v:159},
+  {k:'Egyéb',v:89},{k:'Rezsi',v:25},{k:'Product egyéb',v:20},
+  {k:'Szoftver',v:17},{k:'Sales',v:14},{k:'Marketing',v:3}],' M Ft');
+
+stackBar('c-cap',[
+  {k:'Tulaj1–4',v:47.2,c:'#0a5f57'},
+  {k:'Katona Zoltán',v:22.1,c:'#0F9C8E'},
+  {k:'Új tulajdonosok',v:25.8,c:'#D98324'},
+  {k:'Morgens COO',v:4.8,c:'#7fc9c0'}]);
+</script>
+</body>
+</html>
