@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       { source: "/2027", destination: "/2027.html" },
       { source: "/2027bp", destination: "/2027bp.html" },
       { source: "/roomlytics", destination: "/roomlytics.html" },
+      { source: "/roomlytics-plan", destination: "/roomlytics-plan.html" },
       { source: "/v2", destination: "/v2.html" },
     ];
   },
