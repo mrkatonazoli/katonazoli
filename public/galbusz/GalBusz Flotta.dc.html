@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Flottánk – saját Setra túrabuszok | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #E3E9F2;box-shadow:0 2px 8px rgba(13,21,38,.04)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="#" style="font-size:16px;font-weight:600;color:#0A6D9F;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9">Flotta</a>
+      <a href="GalBusz Rolunk.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Rólunk</a>
+      <a href="GalBusz GYIK.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Gyakori kérdések</a>
+      <a href="GalBusz Kapcsolat.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<!-- F1 Hero -->
+<section data-screen-label="F1 Hero" style="position:relative;background:#0B2B40">
+  <div style="position:absolute;inset:0"><image-slot id="flotta-hero" shape="rect" src="https://www.galbusz.hu/upload/flotta/4/setra-001_uwgo_8w61.jpg" placeholder="Setra buszok fotó úton (16:9)"></image-slot></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,43,64,.78) 0%,rgba(11,43,64,.5) 55%,rgba(11,43,64,.82) 100%);pointer-events:none"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto;padding:96px 40px;box-sizing:border-box">
+    <div style="color:#FFD24D;font-size:16px;font-weight:600;letter-spacing:.05em;margin-bottom:16px">Flottánk</div>
+    <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:48px;line-height:1.1;letter-spacing:-0.02em;color:#fff;margin:0 0 18px;max-width:600px">Saját buszok, saját sofőrök</h1>
+    <p style="font-size:18px;line-height:1.65;color:#E3F2FA;margin:0;max-width:52ch">Két Setra túrabusszal járjuk Európát. Nem bérelünk, nem szervezünk ki — a buszt, amivel utazik, mi tartjuk karban, és a sofőrt is név szerint ismeri majd.</p>
+  </div>
+</section>
+
+<!-- F2 Buszkártyák -->
+<section data-screen-label="F2 Buszok" style="background:#fff;padding:88px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:48px">
+
+    <article style="display:grid;grid-template-columns:7fr 5fr;border:1px solid #E3E9F2;border-radius:28px;overflow:hidden">
+      <div style="position:relative;min-height:420px">
+        <image-slot id="busz-hd-fo" shape="rect" src="https://www.galbusz.hu/upload/flotta/4/setra-001_uwgo_8w61.jpg" placeholder="Setra S 415 HD fotó"></image-slot>
+        <span style="position:absolute;left:16px;top:16px;background:#E7F7EF;color:#076B42;font-size:13px;font-weight:600;border-radius:6px;padding:5px 11px;pointer-events:none">Nagy körutazásokra</span>
+      </div>
+      <div style="padding:36px 40px;display:flex;flex-direction:column">
+        <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 4px">Setra S 415 HD</h2>
+        <div style="font-size:16px;color:#5C6B82;margin-bottom:22px">46 + 2 férőhely · többnapos körutazások, hosszú távok</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px 20px;margin-bottom:24px">
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Légkondicionálás és fűtés</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>WC a fedélzeten</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Kávéfőző, italhűtő</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Állítható ülés lábtartóval</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Hővédő üvegezés</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>DVD és rádió</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto">
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-hd-1" shape="rect" src="https://www.galbusz.hu/cache/setra-013_gqsm_qi2a-bdc6-1395742874.jpg" placeholder="Belső tér"></image-slot></div>
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-hd-2" shape="rect" src="https://www.galbusz.hu/cache/setra-012_ixfa_ylk3-a4e7-1395742874.jpg" placeholder="Ülések"></image-slot></div>
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-hd-3" shape="rect" src="https://www.galbusz.hu/cache/setra-011_rbxc_5_eg-c4f3-1395742874.jpg" placeholder="Kávéfőző"></image-slot></div>
+        </div>
+      </div>
+    </article>
+
+    <article style="display:grid;grid-template-columns:5fr 7fr;border:1px solid #E3E9F2;border-radius:28px;overflow:hidden">
+      <div style="padding:36px 40px;display:flex;flex-direction:column;order:1">
+        <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 4px">Setra S 415 GT-HD</h2>
+        <div style="font-size:16px;color:#5C6B82;margin-bottom:22px">47 + 2 férőhely · egynapos utak, adventi és színházi járatok</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px 20px;margin-bottom:24px">
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Légkondicionálás és fűtés</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>WC a fedélzeten</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Kávéfőző, italhűtő</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Extra lábtér</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Utánfutó nagyobb csomaghoz</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:15px;color:#2B3648"><span style="width:6px;height:6px;border-radius:99px;background:#F5A524;flex:none"></span>Mikrofonos idegenvezetés</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto">
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-gt-1" shape="rect" placeholder="Belső tér"></image-slot></div>
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-gt-2" shape="rect" placeholder="Ülések"></image-slot></div>
+          <div style="height:84px;border-radius:12px;overflow:hidden"><image-slot id="busz-gt-3" shape="rect" placeholder="Csomagtér"></image-slot></div>
+        </div>
+      </div>
+      <div style="position:relative;min-height:420px;order:2">
+        <image-slot id="busz-gt-fo" shape="rect" placeholder="Setra S 415 GT-HD fotó"></image-slot>
+        <span style="position:absolute;left:16px;top:16px;background:#EAF6FC;color:#086A9E;font-size:13px;font-weight:600;border-radius:6px;padding:5px 11px;pointer-events:none">Egynapos utakra</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- F3 Biztonság -->
+<section data-screen-label="F3 Biztonság" style="background:#F8FAFC;padding:80px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="color:#7A4806;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Biztonság</div>
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 36px">Amit a buszainkról tudni érdemes</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:28px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin-bottom:8px">Két sofőr a hosszú utakon</div>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">A 600 km felett mindig két sofőr váltja egymást, a kötelező pihenőidőket digitális tachográf rögzíti.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:28px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin-bottom:8px">Rendszeres szerviz</div>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">Buszainkat márkaszervizben, előírt ciklus szerint tartjuk karban, minden indulás előtt átvizsgáljuk.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:28px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin-bottom:8px">Pihenő 2,5–3 óránként</div>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">Hosszú úton rendszeres megállókat tartunk — mosdó, kávé, mozgás. 8 óra út is kibírható, ha jól van beosztva.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- F4 Bérlés CTA -->
+<section data-screen-label="F4 Bérlés CTA" style="background:#fff;padding:80px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="background:#EAF6FC;border-radius:28px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="color:#086A9E;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Buszbérlés</div>
+        <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 6px">Buszt bérelne osztálynak, cégnek, csoportnak?</h2>
+        <p style="font-size:16px;color:#5C6B82;margin:0">Sofőrrel együtt béreljük — kérjen ajánlatot, egy munkanapon belül válaszolunk.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex:none">
+        <a href="GalBusz Kapcsolat.dc.html" style="display:inline-flex;align-items:center;border:1px solid #A5D5EE;background:#fff;color:#0D1526;height:50px;padding:0 24px;border-radius:14px;font-size:16px;font-weight:600;text-decoration:none;transition:all 120ms ease-out" style-hover="border-color:#0A6D9F;color:#0A6D9F;text-decoration:none">Ajánlatot kérek</a>
+        <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:4px solid #F5A524">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#A5B3C7">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+</body>
+</html>

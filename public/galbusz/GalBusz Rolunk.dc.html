@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Rólunk – családi utazási iroda Kapuváron 1998 óta | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #E3E9F2;box-shadow:0 2px 8px rgba(13,21,38,.04)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="GalBusz Fooldal v2.dc.html#flotta" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Flotta</a>
+      <a href="#" style="font-size:16px;font-weight:600;color:#0A6D9F;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9">Rólunk</a>
+      <a href="GalBusz GYIK.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Gyakori kérdések</a>
+      <a href="#kapcsolat" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<!-- R1 Hero -->
+<section data-screen-label="R1 Hero" style="background:#0B2B40;position:relative;overflow:hidden">
+  <div style="max-width:1200px;margin:0 auto;padding:88px 40px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,600px) 420px;gap:64px;justify-content:space-between;align-items:center;position:relative">
+    <div>
+      <div style="color:#FFD24D;font-size:16px;font-weight:600;letter-spacing:.05em;margin-bottom:16px">Rólunk</div>
+      <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:48px;line-height:1.1;letter-spacing:-0.02em;color:#fff;margin:0 0 20px">Egy család, két busz, huszonnyolc év úton.</h1>
+      <p style="font-size:18px;line-height:1.65;color:#A5D5EE;margin:0;max-width:52ch">A Gál-Busz nem egy nagy utazási vállalat. Egy kapuvári családi iroda vagyunk, ahol a telefont az veszi fel, aki az útját is szervezi — és ahol az idegenvezető a második útján már névről köszön.</p>
+    </div>
+    <div style="position:relative">
+      <div style="border-radius:24px;overflow:hidden;height:340px;box-shadow:0 20px 48px rgba(0,0,0,.35)">
+        <image-slot id="rolunk-hero" shape="rect" src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" placeholder="Családi / csapat fotó a busz előtt (4:3)" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+      </div>
+      <div style="position:absolute;left:-24px;bottom:-20px;background:#fff;border-radius:16px;padding:14px 20px;box-shadow:0 12px 32px rgba(13,21,38,.25)">
+        <span style="display:block;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:26px;color:#0D1526;font-variant-numeric:tabular-nums">1998</span>
+        <span style="display:block;font-size:13px;color:#5C6B82">óta családi kézben</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- R2 Számok -->
+<section data-screen-label="R2 Számok" style="background:#fff;border-bottom:1px solid #E3E9F2">
+  <div style="max-width:1200px;margin:0 auto;padding:48px 40px;box-sizing:border-box;display:grid;grid-template-columns:repeat(4,1fr);gap:32px">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:40px;letter-spacing:-0.02em;color:#0A6D9F;font-variant-numeric:tabular-nums">{{ s.v }}</div>
+        <div style="font-size:16px;color:#5C6B82;margin-top:4px">{{ s.l }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- R3 Történet -->
+<section data-screen-label="R3 Történetünk" style="background:#fff;padding:96px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,560px) 440px;gap:72px;justify-content:space-between">
+    <div>
+      <div style="color:#7A4806;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Történetünk</div>
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 24px">Egy busszal indult, a Piac térről</h2>
+      <div style="font-size:17px;line-height:1.75;color:#2B3648;display:flex;flex-direction:column;gap:16px;max-width:62ch">
+        <p style="margin:0">1998-ban egyetlen busszal és egy kapuvári irodával kezdtük. Az első utak a környék falvaiból indultak — színházba Pestre, kirándulni az Őrségbe, adventkor Bécsbe. Az utasok visszajöttek, és hozták a szomszédokat is.</p>
+        <p style="margin:0">Ma két saját Setra túrabusszal és négy állandó idegenvezetővel járjuk Európát az egynapos kirándulásoktól a nyolcnapos körutazásokig. Az iroda ma is ott van a Piac téren, és ma is családtag veszi fel a telefont.</p>
+        <p style="margin:0">Nem akarunk a legnagyobbak lenni. Azt szeretnénk, hogy aki egyszer velünk utazott, a következő útját is nálunk foglalja — az utasaink többsége visszatérő vendég.</p>
+      </div>
+    </div>
+    <div aria-label="Mérföldkövek">
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ miles }}" as="m" hint-placeholder-count="5">
+          <div style="position:relative;padding:0 0 28px 32px;border-left:2px solid {{ m.line }};margin-left:7px">
+            <span style="position:absolute;left:-8px;top:2px;width:14px;height:14px;border-radius:99px;background:{{ m.dot }};border:3px solid #fff;box-shadow:0 0 0 1px #CBE7F6;display:block" aria-hidden="true"></span>
+            <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:17px;color:#0A6D9F;font-variant-numeric:tabular-nums">{{ m.y }}</div>
+            <div style="font-size:16px;color:#2B3648;margin-top:2px;line-height:1.5">{{ m.t }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- R4 Értékek -->
+<section data-screen-label="R4 Értékeink" style="background:#F8FAFC;padding:96px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="color:#7A4806;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Amiben hiszünk</div>
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 40px">Három dolog, amiből nem engedünk</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:32px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:40px;color:#CBE7F6;line-height:1">01</div>
+        <h3 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin:14px 0 10px">Nincs apró betű</h3>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">A belépőket előre, tételesen kiírjuk. Az ár, amit lát, az az ár, amit fizet — a meglepetés maradjon az útra.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:32px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:40px;color:#CBE7F6;line-height:1">02</div>
+        <h3 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin:14px 0 10px">Ismerős arcok</h3>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">Saját buszok, saját sofőrök, négy állandó idegenvezető. Nem alvállalkozót kap, hanem azt a csapatot, amelyik tavaly is vitte.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:32px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:40px;color:#CBE7F6;line-height:1">03</div>
+        <h3 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin:14px 0 10px">Nyugodt tempó</h3>
+        <p style="font-size:16px;line-height:1.6;color:#5C6B82;margin:0">Az útjainkat úgy tervezzük, hogy élmény legyen, ne teljesítménytúra. Van idő kávéra, fotóra, sétára — ezért térnek vissza az utasaink.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- R5 Csapat -->
+<section data-screen-label="R5 Csapat" style="background:#fff;padding:96px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="color:#7A4806;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Csapatunk</div>
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 12px">Akikkel találkozni fog</h2>
+    <p style="font-size:17px;color:#5C6B82;margin:0 0 40px;max-width:56ch">Az irodában a tulajdonosok fogadják, az úton a négy állandó idegenvezetőnk kíséri.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px">
+      <div style="display:flex;gap:24px;align-items:center;background:#F8FAFC;border-radius:24px;padding:28px">
+        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-1" shape="circle" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&h=400&q=80" placeholder="Tulajdonos 1 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Tulajdonos 1</div>
+          <div style="font-size:14px;font-weight:600;color:#0A6D9F;margin-top:2px">alapító-tulajdonos</div>
+          <p style="font-size:15px;line-height:1.55;color:#5C6B82;margin:10px 0 0">1998 óta vezeti az irodát. Ha a Piac téren jár, jó eséllyel ő köszönti a pult mögül.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:center;background:#F8FAFC;border-radius:24px;padding:28px">
+        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-2" shape="circle" src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&h=400&q=80" placeholder="Tulajdonos 2 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Tulajdonos 2</div>
+          <div style="font-size:14px;font-weight:600;color:#0A6D9F;margin-top:2px">ügyvezető, második generáció</div>
+          <p style="font-size:15px;line-height:1.55;color:#5C6B82;margin:10px 0 0">A foglalások, az online jelenlét és az új úti célok felelőse. Az anyja mellett nőtt bele az irodába.</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <sc-for list="{{ guides }}" as="g" hint-placeholder-count="4">
+        <div>
+          <div style="position:relative;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:#EAF6FC">
+            <image-slot id="{{ g.slot }}" shape="rect" src="{{ g.img }}" placeholder="{{ g.ph }}" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+          </div>
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:17px;color:#0D1526;margin-top:12px">{{ g.n }}</div>
+          <div style="font-size:14px;font-weight:600;color:#0A6D9F;margin-top:1px">idegenvezető</div>
+          <div style="font-size:14px;line-height:1.5;color:#5C6B82;margin-top:4px">{{ g.s }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- R6 Garanciák -->
+<section data-screen-label="R6 Garanciák" style="background:#0C3A54;padding:80px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:center">
+    <div>
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#fff;margin:0 0 14px">Biztonságban utazik</h2>
+      <p style="font-size:16px;line-height:1.65;color:#A5D5EE;margin:0">Kis iroda vagyunk, de ugyanazokkal a garanciákkal dolgozunk, mint a legnagyobbak.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <sc-for list="{{ trust }}" as="t" hint-placeholder-count="4">
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:20px 22px">
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:17px;color:#fff">{{ t.t }}</div>
+          <div style="font-size:14px;line-height:1.55;color:#A5D5EE;margin-top:6px">{{ t.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- R7 Irodák / kapcsolat -->
+<section id="kapcsolat" data-screen-label="R7 Irodáink" style="background:#fff;padding:96px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="color:#7A4806;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Irodáink</div>
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:36px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 40px">Jöjjön be, beszéljük meg személyesen</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div style="border:1px solid #E3E9F2;border-radius:24px;overflow:hidden">
+        <div style="height:200px"><image-slot id="iroda-kapuvar" shape="rect" placeholder="Kapuvári iroda fotó (Piac tér 1.)"></image-slot></div>
+        <div style="padding:24px 28px">
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Kapuvár — központi iroda</div>
+          <div style="font-size:16px;color:#2B3648;margin-top:8px;line-height:1.7">Piac tér 1.<br>H–P 8:00–16:30<br><a href="tel:+3696595080" style="font-weight:600">+36 96 595 080</a> · <a href="tel:+36307540211" style="font-weight:600">+36 30 754 0211</a></div>
+        </div>
+      </div>
+      <div style="border:1px solid #E3E9F2;border-radius:24px;overflow:hidden">
+        <div style="height:200px"><image-slot id="iroda-gyor" shape="rect" placeholder="Győri iroda fotó (Aradi vértanúk útja 2.)"></image-slot></div>
+        <div style="padding:24px 28px">
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Győr — városi iroda</div>
+          <div style="font-size:16px;color:#2B3648;margin-top:8px;line-height:1.7">Aradi vértanúk útja 2.<br>H–P 9:00–17:00<br><a href="tel:+36209528310" style="font-weight:600">+36 20 952 8310</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#EAF6FC;border-radius:20px;padding:22px 28px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <span style="font-size:16px;color:#0D1526"><strong>Út közben, munkaidőn kívül?</strong> 0–24 ügyeleti vonalunk utazás alatt mindig elérhető.</span>
+      <a href="tel:+36307540260" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#0C3A54;white-space:nowrap;font-variant-numeric:tabular-nums">+36 30 754 0260</a>
+    </div>
+  </div>
+</section>
+
+<!-- R8 CTA -->
+<section data-screen-label="R8 CTA" style="background:#F8FAFC;border-top:1px solid #E3E9F2;padding:72px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;text-align:center">
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 12px">Utazzon velünk legközelebb</h2>
+    <p style="font-size:17px;color:#5C6B82;margin:0 0 28px">Nézze meg a közelgő indulásainkat — a legtöbb útra Kapuvárról, Győrből és Sopronból is felszállhat.</p>
+    <a href="GalBusz Listaoldal.dc.html" style="display:inline-flex;align-items:center;justify-content:center;background:#0A6D9F;color:#fff;height:54px;padding:0 32px;border-radius:14px;font-size:16px;font-weight:700;text-decoration:none;transition:background 120ms ease-out" style-hover="background:#086A9E;color:#fff;text-decoration:none">Utazások böngészése →</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:4px solid #F5A524">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#A5B3C7">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals(){
+    return {
+      stats:[
+        {v:'28 év', l:'folyamatos működés 1998 óta'},
+        {v:'2', l:'saját Setra túrabusz'},
+        {v:'4', l:'állandó idegenvezető'},
+        {v:'40+', l:'utazás évente'}
+      ],
+      miles:[
+        {y:'1998', t:'Megnyit az iroda Kapuváron, egy busszal.', dot:'#0A6D9F', line:'#CBE7F6'},
+        {y:'2004', t:'MUISZ-tagság, vagyoni biztosíték — első külföldi körutazások.', dot:'#0A6D9F', line:'#CBE7F6'},
+        {y:'2012', t:'Megérkezik az első Setra túrabusz a flottába.', dot:'#0A6D9F', line:'#CBE7F6'},
+        {y:'2019', t:'Megnyílik a győri városi iroda.', dot:'#0A6D9F', line:'#CBE7F6'},
+        {y:'2026', t:'Új online foglalási rendszer — amit most lát.', dot:'#F5A524', line:'transparent'}
+      ],
+      guides:[
+        {slot:'team-g1', n:'Pajter Martina', s:'Német nyelvterület, földrajz', img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Pajter Martina'},
+        {slot:'team-g2', n:'Kálmán Lajos', s:'Olaszország, Horvátország, Szlovénia', img:'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Kálmán Lajos'},
+        {slot:'team-g3', n:'Móritz Adrienn', s:'Városlátogatások, Róma, Balkán', img:'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Móritz Adrienn'},
+        {slot:'team-g4', n:'Sümeghy Gyöngyi', s:'Adria, ünnepi utak', img:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Sümeghy Gyöngyi'}
+      ],
+      trust:[
+        {t:'MUISZ-tag iroda', d:'A Magyar Utazási Irodák Szövetségének tagjaként, hatósági engedéllyel működünk.'},
+        {t:'Vagyoni biztosíték', d:'Befizetett előlegét és részvételi díját jogszabály szerinti biztosíték védi.'},
+        {t:'Útlemondási biztosítás az árban', d:'Minden utunk részvételi díja tartalmazza — külön kérnie sem kell.'},
+        {t:'0–24 ügyelet', d:'Utazás közben éjjel-nappal elérhető ügyeleti telefonszám.'}
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

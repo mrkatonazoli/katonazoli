@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Utazások – buszos utak Európába | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button,select,input{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #E3E9F2;box-shadow:0 2px 8px rgba(13,21,38,.04)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="GalBusz Fooldal v2.dc.html#flotta" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Flotta</a>
+      <a href="#" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Rólunk</a>
+      <a href="#" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<div style="max-width:1240px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+
+  <!-- L0 + L1 -->
+  <nav data-screen-label="L0 Breadcrumb" aria-label="Morzsamenü" style="height:44px;display:flex;align-items:center;gap:8px;font-size:14px;color:#5C6B82">
+    <a href="GalBusz Fooldal v2.dc.html" style="color:#5C6B82">Főoldal</a><span style="color:#5C6B82">›</span>
+    <span style="color:#0D1526;font-weight:500">{{ crumb }}</span>
+  </nav>
+  <section data-screen-label="L1 Fejléc-blokk" style="padding:8px 0 20px">
+    <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:40px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 10px">{{ h1 }}</h1>
+    <p style="font-size:18px;line-height:1.6;color:#5C6B82;margin:0 0 14px;max-width:640px">{{ intro }}</p>
+    <div style="font-size:16px;color:#2B3648;font-variant-numeric:tabular-nums"><strong>{{ metaCount }}</strong> · {{ metaRange }} · {{ metaMin }}-tól</div>
+  </section>
+
+  <!-- L2 chip-sor -->
+  <div data-screen-label="L2 Kategória-chipek" style="display:flex;gap:10px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid #E3E9F2">
+    <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="10">
+      <button onClick="{{ ch.set }}" style="height:40px;padding:0 18px;border-radius:999px;border:1px solid {{ ch.bd }};background:{{ ch.bg }};font-size:14px;font-weight:600;color:{{ ch.fg }};cursor:pointer;transition:all 120ms" style-hover="border-color:#0A6D9F">{{ ch.n }}</button>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:280px minmax(0,1fr);gap:36px;align-items:start;padding:24px 0 48px">
+
+    <!-- L4 Szűrőpanel -->
+    <aside aria-label="Szűrők" data-screen-label="L4 Szűrőpanel" style="position:sticky;top:88px;background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px;max-height:calc(100vh - 112px);overflow:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:18px;color:#0D1526">Szűrők</span>
+        <sc-if value="{{ hasFilters }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearAll }}" style="background:none;border:0;font-size:14px;font-weight:600;color:#0A6D9F;cursor:pointer;padding:0">Törlés ({{ filterCount }})</button></sc-if>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Mikor</div>
+        <div style="font-size:13px;color:#5C6B82;margin-bottom:6px">2026</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ monthOpts }}" as="m" hint-placeholder-count="5">
+            <button onClick="{{ m.tgl }}" disabled="{{ m.dis }}" style="height:32px;padding:0 12px;border-radius:999px;border:1px solid {{ m.bd }};background:{{ m.bg }};font-size:13px;font-weight:600;color:{{ m.fg }};cursor:{{ m.cur }}">{{ m.n }}</button>
+          </sc-for>
+        </div>
+        <a href="#" style="display:inline-block;font-size:13px;font-weight:600;color:#0A6D9F;margin-top:10px">Pontos dátum megadása →</a>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Kategória</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ catOpts }}" as="o" hint-placeholder-count="5">
+            <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:{{ o.fg }};cursor:{{ o.cur }}">
+              <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.tgl }}" disabled="{{ o.dis }}" style="width:18px;height:18px;accent-color:#0A6D9F">
+              <span style="flex:1">{{ o.n }}</span><span style="font-size:13px;color:#5C6B82;font-variant-numeric:tabular-nums">({{ o.c }})</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Úti cél</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ destOpts }}" as="o" hint-placeholder-count="6">
+            <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:{{ o.fg }};cursor:{{ o.cur }}">
+              <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.tgl }}" disabled="{{ o.dis }}" style="width:18px;height:18px;accent-color:#0A6D9F">
+              <span style="flex:1">{{ o.n }}</span><span style="font-size:13px;color:#5C6B82;font-variant-numeric:tabular-nums">({{ o.c }})</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Időtartam</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ durOpts }}" as="o" hint-placeholder-count="3">
+            <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:{{ o.fg }};cursor:{{ o.cur }}">
+              <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.tgl }}" disabled="{{ o.dis }}" style="width:18px;height:18px;accent-color:#0A6D9F">
+              <span style="flex:1">{{ o.n }}</span><span style="font-size:13px;color:#5C6B82;font-variant-numeric:tabular-nums">({{ o.c }})</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Ár / fő</div>
+        <div style="display:flex;gap:10px">
+          <label style="flex:1"><span style="display:block;font-size:13px;color:#5C6B82;margin-bottom:4px">Minimum</span>
+            <select value="{{ pmin }}" onChange="{{ setPmin }}" style="width:100%;height:40px;border:1px solid #E3E9F2;border-radius:10px;padding:0 8px;font-size:14px;color:#0D1526;background:#fff">
+              <option value="0">nincs</option><option value="50000">50 000 Ft</option><option value="100000">100 000 Ft</option><option value="200000">200 000 Ft</option><option value="300000">300 000 Ft</option>
+            </select></label>
+          <label style="flex:1"><span style="display:block;font-size:13px;color:#5C6B82;margin-bottom:4px">Maximum</span>
+            <select value="{{ pmax }}" onChange="{{ setPmax }}" style="width:100%;height:40px;border:1px solid #E3E9F2;border-radius:10px;padding:0 8px;font-size:14px;color:#0D1526;background:#fff">
+              <option value="100000">100 000 Ft</option><option value="200000">200 000 Ft</option><option value="300000">300 000 Ft</option><option value="500000">500 000 Ft</option><option value="750000">nincs</option>
+            </select></label>
+        </div>
+        <div style="font-size:13px;color:#5C6B82;margin-top:8px;font-variant-numeric:tabular-nums">A jelenlegi találatok: {{ priceSpan }}</div>
+      </div>
+      <div style="border-top:1px solid #F1F5F9;padding:16px 0 4px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Felszállási hely</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ boardOpts }}" as="o" hint-placeholder-count="5">
+            <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:#2B3648;cursor:pointer">
+              <input type="radio" name="board" checked="{{ o.on }}" onChange="{{ o.set }}" style="width:18px;height:18px;accent-color:#0A6D9F">
+              <span style="flex:1">{{ o.n }}</span><span style="font-size:13px;color:#5C6B82;font-variant-numeric:tabular-nums">{{ o.c }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Jobb oszlop -->
+    <div>
+      <!-- L3 vezérlősáv -->
+      <div role="toolbar" data-screen-label="L3 Vezérlősáv" style="position:sticky;top:64px;z-index:40;background:#fff;border-bottom:1px solid #E3E9F2;height:56px;display:flex;align-items:center;gap:20px;margin-bottom:16px">
+        <span aria-live="polite" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:18px;color:#0D1526;font-variant-numeric:tabular-nums">{{ resultCount }} találat</span>
+        <span style="display:flex;align-items:center;gap:10px;margin-left:8px">
+          <button onClick="{{ freeTgl }}" role="switch" aria-checked="{{ free }}" style="width:46px;height:26px;border-radius:999px;border:0;background:{{ swBg }};cursor:pointer;position:relative;transition:background 150ms;padding:0">
+            <span style="position:absolute;top:3px;left:{{ swLeft }}px;width:20px;height:20px;border-radius:99px;background:#fff;box-shadow:0 1px 3px rgba(13,21,38,.25);transition:left 150ms;display:block"></span>
+          </button>
+          <span style="font-size:14px;font-weight:600;color:#0D1526">Csak szabad helyek</span>
+          <sc-if value="{{ hiddenSoldShow }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#5C6B82">({{ hiddenSold }} betelt út elrejtve)</span></sc-if>
+        </span>
+        <label style="margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px;color:#5C6B82">Rendezés:
+          <select value="{{ sort }}" onChange="{{ setSort }}" style="height:38px;border:1px solid #E3E9F2;border-radius:10px;padding:0 10px;font-size:14px;font-weight:600;color:#0D1526;background:#fff">
+            <option value="date">Indulás szerint</option>
+            <option value="priceAsc">Ár szerint növekvő</option>
+            <option value="priceDesc">Ár szerint csökkenő</option>
+            <option value="dur">Időtartam szerint</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- L5 aktív chipek -->
+      <sc-if value="{{ hasFilters }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="L5 Aktív szűrők" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px">
+          <sc-for list="{{ activeChips }}" as="ac" hint-placeholder-count="3">
+            <span style="display:inline-flex;align-items:center;gap:6px;background:#EAF6FC;border:1px solid #A5D5EE;border-radius:999px;height:34px;padding:0 6px 0 14px;font-size:14px;font-weight:600;color:#0C3A54">{{ ac.n }}<button onClick="{{ ac.del }}" aria-label="Szűrő törlése" style="width:24px;height:24px;border-radius:99px;border:0;background:none;color:#086A9E;font-size:14px;cursor:pointer" style-hover="background:#CBE7F6">✕</button></span>
+          </sc-for>
+          <button onClick="{{ clearAll }}" style="background:none;border:0;font-size:14px;font-weight:600;color:#5C6B82;cursor:pointer;padding:6px 8px" style-hover="color:#0A6D9F">Összes törlése</button>
+        </div>
+      </sc-if>
+
+      <!-- L6 rács -->
+      <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+        <ul data-screen-label="L6 Találati rács" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+          <sc-for list="{{ rows }}" as="tp" hint-placeholder-count="9">
+            <li style="grid-column:{{ tp.span }};min-width:0">
+              <sc-if value="{{ tp.isBand }}" hint-placeholder-val="{{ false }}">
+                <div data-screen-label="L7 Közbeékelt sáv" style="background:#EAF6FC;border:1px solid #CBE7F6;border-radius:20px;padding:24px 28px">
+                  <sc-if value="{{ nlPending }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+                      <div style="flex:1;min-width:260px">
+                        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526">{{ bandTitle }}</div>
+                        <p style="font-size:14px;line-height:1.55;color:#5C6B82;margin:6px 0 0">Havonta legfeljebb egy levelet küldünk az új indulásokról és a felszabaduló helyekről. Bármikor leiratkozhat, egy kattintással.</p>
+                      </div>
+                      <div style="flex:1;min-width:320px">
+                        <div style="display:flex;gap:10px">
+                          <input value="{{ nlName }}" onChange="{{ nlNameType }}" placeholder="Neve" autoComplete="name" style="flex:1;min-width:0;height:46px;border:1px solid #A5D5EE;border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;background:#fff" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6">
+                          <input value="{{ nlv }}" onChange="{{ nlType }}" placeholder="E-mail címe" inputMode="email" autoComplete="email" style="flex:1.3;min-width:0;height:46px;border:1px solid #A5D5EE;border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;background:#fff" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6">
+                          <button onClick="{{ nlGo }}" disabled="{{ nlBlocked }}" style="background:{{ nlBtnBg }};color:{{ nlBtnFg }};border:0;height:46px;padding:0 20px;border-radius:12px;font-size:16px;font-weight:700;cursor:{{ nlBtnCur }};flex:none" style-hover="background:#D9860B">Kérem</button>
+                        </div>
+                        <label style="display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.5;color:#2B3648;margin-top:10px;cursor:pointer">
+                          <input type="checkbox" checked="{{ nlPriv }}" onChange="{{ nlPrivTgl }}" style="width:17px;height:17px;accent-color:#0A6D9F;margin-top:1px;flex:none">
+                          <span>Elfogadom az <a href="#" style="text-decoration:underline">adatkezelési tájékoztatót</a>, és hozzájárulok, hogy e-mailben értesítsenek az új utakról.</span>
+                        </label>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ nlOk }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#076B42" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+                      <span style="font-size:16px;font-weight:600;color:#076B42">Köszönjük, {{ nlNameOut }}! Küldtünk egy megerősítő e-mailt a {{ nlv }} címre.</span>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tp.isCard }}" hint-placeholder-val="{{ true }}">
+                <article style="border:1px solid #E3E9F2;border-radius:20px;background:#fff;overflow:hidden;cursor:pointer;height:100%;box-sizing:border-box;opacity:{{ tp.op }};transition:all 180ms cubic-bezier(.2,.8,.2,1)" style-hover="opacity:1;transform:translateY(-4px);box-shadow:0 12px 32px rgba(13,21,38,.10)">
+                  <a href="{{ tp.href }}" style="display:block;text-decoration:none;color:inherit" style-hover="text-decoration:none;color:inherit">
+                  <div style="position:relative;height:170px;filter:grayscale({{ tp.gray }});transition:filter 180ms">
+                    <image-slot id="{{ tp.slot }}" shape="rect" src="{{ tp.img }}" placeholder="{{ tp.ph }}" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+                    <span style="position:absolute;left:12px;bottom:12px;background:{{ tp.bBg }};color:{{ tp.bFg }};font-size:13px;font-weight:600;border-radius:6px;padding:4px 9px;pointer-events:none">{{ tp.badge }}</span>
+                  </div>
+                  <div style="padding:15px 17px 17px">
+                    <div style="font-size:13px;color:#5C6B82;margin-bottom:4px">{{ tp.meta }}</div>
+                    <h3 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:17px;line-height:1.3;color:#0D1526;margin:0 0 10px;min-height:44px">{{ tp.title }}</h3>
+                    <div style="font-size:13px;color:#2B3648;font-variant-numeric:tabular-nums">{{ tp.date }}</div>
+                    <div style="font-size:13px;color:#5C6B82;margin-top:3px">{{ tp.guide }}</div>
+                    <sc-if value="{{ tp.mate }}" hint-placeholder-val="{{ false }}">
+                      <div style="background:#FFF8E6;border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;color:#7A4806;margin-top:10px">Van szobatárs-lehetőség</div>
+                    </sc-if>
+                    <div style="border-top:1px solid #F1F5F9;margin-top:12px;padding-top:11px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+                      <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:{{ tp.priceFg }};font-variant-numeric:tabular-nums">{{ tp.price }} <span style="font-size:13px;font-weight:600;color:#5C6B82">/fő</span></span>
+                      <span style="border:1px solid #E3E9F2;background:#fff;color:{{ tp.ctaFg }};height:38px;padding:0 13px;border-radius:12px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap">{{ tp.cta }}</span>
+                    </div>
+                  </div>
+                  </a>
+                </article>
+              </sc-if>
+            </li>
+          </sc-for>
+        </ul>
+        <div style="display:flex;justify-content:center;margin-top:32px">
+          <button style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:52px;padding:0 28px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="border-color:#CBD5E1">Még 18 utazás betöltése</button>
+        </div>
+      </sc-if>
+
+      <!-- Csak betelt -->
+      <sc-if value="{{ onlySold }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Csak betelt állapot" style="text-align:center;padding:56px 24px;border:1px dashed #CBD5E1;border-radius:20px">
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin-bottom:8px">A szűrésnek megfelelő {{ hiddenSold }} út mind betelt.</div>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:16px">
+            <button onClick="{{ freeTgl }}" style="background:#0A6D9F;color:#fff;border:0;height:46px;padding:0 20px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#086A9E">Megmutatjuk őket</button>
+            <button style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:46px;padding:0 20px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Értesítést kérek, ha felszabadul hely</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- Üres találat -->
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Üres találat" style="text-align:center;padding:56px 24px;border:1px dashed #CBD5E1;border-radius:20px">
+          <div style="width:64px;height:64px;border-radius:99px;background:#EAF6FC;margin:0 auto 18px;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A6D9F" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3M8 11h6"></path></svg></div>
+          <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:24px;color:#0D1526;margin:0 0 8px">Nincs találat erre a szűrésre</h2>
+          <p style="font-size:16px;color:#5C6B82;margin:0 0 22px">{{ emptyDesc }}</p>
+          <div style="font-size:14px;font-weight:600;color:#5C6B82;margin-bottom:12px">Próbálja meg így:</div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px">
+            <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
+              <button onClick="{{ sg.go }}" style="border:1px solid #A5D5EE;background:#EAF6FC;color:#0C3A54;height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer" style-hover="border-color:#0A6D9F">{{ sg.n }} ({{ sg.c }} út)</button>
+            </sc-for>
+          </div>
+          <button onClick="{{ clearAll }}" style="background:none;border:0;font-size:14px;font-weight:600;color:#0A6D9F;cursor:pointer;text-decoration:underline">Összes szűrő törlése</button>
+          <p style="font-size:16px;color:#2B3648;margin:22px 0 0">Vagy hívjon: <a href="tel:+3696595080" style="font-weight:700">+36 96 595 080</a> — segítünk megtalálni a megfelelő utat.</p>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+
+<!-- L9 SEO-blokk -->
+<section data-screen-label="L9 SEO-blokk" style="background:#F8FAFC;padding:56px 0">
+  <div style="max-width:1240px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="max-width:680px;font-size:16px;line-height:1.7;color:#5C6B82">
+      <p style="margin:0 0 12px">Utazásaink saját Setra túrabuszokkal indulnak Kapuvárról, Győrből és Sopronból, minden úton magyar nyelvű, saját idegenvezetővel. A részvételi díj tartalmazza az útlemondási biztosítást; a belépődíjakat mindig előre, tételesen kiírjuk.</p>
+      <p style="margin:0">Az egynapos kirándulásoktól a 8 napos körutazásokig évente több mint 40 útra várjuk utasainkat — 1998 óta, MUISZ-tag irodaként.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:32px;max-width:900px">
+      <div><div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Kapcsolódó kategóriák</div><div style="display:flex;flex-direction:column;gap:7px;font-size:14px"><a href="#">Egynapos utazások</a><a href="#">Körutazások</a><a href="#">Színházi utak</a><a href="#">Adventi utak</a></div></div>
+      <div><div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Népszerű úti célok</div><div style="display:flex;flex-direction:column;gap:7px;font-size:14px"><a href="#">Olaszország</a><a href="#">Ausztria</a><a href="#">Csehország</a><a href="#">Horvátország</a></div></div>
+      <div><div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Indulás innen</div><div style="display:flex;flex-direction:column;gap:7px;font-size:14px"><a href="#">Utazások Kapuvárról</a><a href="#">Utazások Győrből</a><a href="#">Utazások Sopronból</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:4px solid #F5A524">
+  <div style="max-width:1240px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#7C93A5">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {chip:'Mind', months:{}, cats:{}, dests:{}, durs:{}, pmin:0, pmax:750000, board:'Bármelyik', free:true, sort:'date', nlv:'', nlName:'', nlPriv:false, nlOk:false};
+
+  trips(){
+    return [
+      {id:'szlo', title:'Szlovénia kincsei', dest:'Szlovénia', meta:'Szlovénia · 2 nap / 1 éj', date:'2026-09-05', dateL:'2026. szept. 5–6.', days:2, price:84000, guide:'Móritz Adrienn', st:'spots', cats:['2–4 napos','Külföld'], img:'', boards:['Kapuvár','Győr','Sopron']},
+      {id:'fir', title:'Firenze, Toszkána kulturális központja', dest:'Olaszország', meta:'Olaszország · 4 nap / 3 éj', date:'2026-10-04', dateL:'2026. okt. 4–7.', days:4, price:215000, guide:'Sümeghy Gyöngyi', st:'gar', cats:['2–4 napos','Külföld'], img:'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr','Sopron']},
+      {id:'roma', title:'Róma, az örök város', dest:'Olaszország', meta:'Olaszország · 6 nap / 5 éj', date:'2026-10-13', dateL:'2026. okt. 13–18.', days:6, price:339000, guide:'Móritz Adrienn', st:'gar', cats:['5–12 napos','Körutazás','Külföld'], img:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr','Sopron'], href:'GalBusz Utazas Aloldal.dc.html'},
+      {id:'tosz', title:'Toszkán — olaj- és szarvasgomba fesztivál', dest:'Olaszország', meta:'Olaszország · 4 nap / 3 éj', date:'2026-11-13', dateL:'2026. nov. 13–16.', days:4, price:190000, guide:'Sümeghy Gyöngyi', st:'mate', cats:['2–4 napos','Külföld'], img:'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr','Sopron']},
+      {id:'szic', title:'Szicília narancsszüret idején', dest:'Olaszország', meta:'Olaszország · 8 nap / 7 éj', date:'2026-11-05', dateL:'2026. nov. 5–12.', days:8, price:413000, guide:'Pajter Martina', st:'gar', cats:['5–12 napos','Körutazás','Külföld'], img:'https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr']},
+      {id:'prag', title:'Prága és Karlovy Vary', dest:'Csehország', meta:'Csehország · 3 nap / 2 éj', date:'2026-10-23', dateL:'2026. okt. 23–25.', days:3, price:129000, guide:'Sümeghy Gyöngyi', st:'sold', cats:['2–4 napos','Külföld'], img:'', boards:['Kapuvár','Győr','Sopron']},
+      {id:'vel', title:'Velence bővebben', dest:'Olaszország', meta:'Olaszország · 3 nap / 2 éj', date:'2026-09-13', dateL:'2026. szept. 13–15.', days:3, price:122500, guide:'Sümeghy Gyöngyi', st:'sold', cats:['2–4 napos','Külföld'], img:'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr','Sopron']},
+      {id:'krak', title:'Dél-Lengyelország és Krakkó', dest:'Lengyelország', meta:'Lengyelország · 4 nap / 3 éj', date:'2026-08-22', dateL:'2026. aug. 22–25.', days:4, price:158000, guide:'Kálmán Lajos', st:'sold', cats:['2–4 napos','Külföld'], img:'', boards:['Kapuvár','Győr','Sopron']},
+      {id:'ors', title:'Őrségi Tökfesztivál', dest:'Magyarország', meta:'Magyarország · 1 nap', date:'2026-09-19', dateL:'2026. szept. 19.', days:1, price:21700, guide:'Sümeghy Gyöngyi', st:'gar', cats:['Egynapos','Belföld'], img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80', boards:['Kapuvár','Győr','Sopron']},
+      {id:'port', title:'Portugália — repülős körutazás', dest:'Portugália', meta:'Portugália · 7 nap / 6 éj', date:'2026-08-31', dateL:'2026. aug. 31. – szept. 6.', days:7, price:719000, guide:'Kálmán Lajos', st:'fly', cats:['Repülős','5–12 napos','Külföld'], img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1600&q=80', boards:['Budapest']}
+    ];
+  }
+  match(t, o){
+    const S={...this.state, ...o};
+    if(S.chip!=='Mind' && !t.cats.includes(S.chip)) return false;
+    const mKeys=Object.keys(S.months).filter(k=>S.months[k]);
+    if(mKeys.length && !mKeys.includes(t.date.slice(0,7))) return false;
+    const cKeys=Object.keys(S.cats).filter(k=>S.cats[k]);
+    if(cKeys.length && !cKeys.some(c=>t.cats.includes(c))) return false;
+    const dKeys=Object.keys(S.dests).filter(k=>S.dests[k]);
+    if(dKeys.length && !dKeys.includes(t.dest)) return false;
+    const uKeys=Object.keys(S.durs).filter(k=>S.durs[k]);
+    if(uKeys.length){
+      const bucket=t.days===1?'1 nap':t.days<=4?'2–4 nap':'5–12 nap';
+      if(!uKeys.includes(bucket)) return false;
+    }
+    if(t.price<S.pmin || t.price>S.pmax) return false;
+    if(S.board!=='Bármelyik' && !t.boards.includes(S.board)) return false;
+    return true;
+  }
+  tglSet(group,key){return ()=>this.setState(st=>({[group]:{...st[group],[key]:!st[group][key]}}));}
+  renderVals(){
+    const S=this.state, NB='\u202f';
+    const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'Ft';
+    const all=this.trips();
+    const matched=all.filter(t=>this.match(t,{}));
+    const bookable=matched.filter(t=>t.st!=='sold');
+    const soldCnt=matched.length-bookable.length;
+    let vis=S.free?bookable:matched.slice();
+    const key={date:(a,b)=>a.date<b.date?-1:1, priceAsc:(a,b)=>a.price-b.price, priceDesc:(a,b)=>b.price-a.price, dur:(a,b)=>a.days-b.days}[S.sort];
+    vis.sort((a,b)=>{const sa=a.st==='sold'?1:0, sb=b.st==='sold'?1:0; return sa!==sb?sa-sb:key(a,b);});
+    const BG={gar:{t:'Garantált indulás',bg:'#E7F7EF',fg:'#076B42'},spots:{t:'2 szabad hely',bg:'#FFF7E6',fg:'#B45309'},mate:{t:'Garantált indulás',bg:'#E7F7EF',fg:'#076B42'},fly:{t:'Repülős',bg:'#EAF6FC',fg:'#086A9E'},sold:{t:'Betelt',bg:'#F1F5F9',fg:'#5C6B82'}};
+    const cards=vis.map(t=>({
+      isCard:true, isBand:false, span:'auto', slot:'list-'+t.id, img:t.img, ph:t.title+' fotó',
+      title:t.title, meta:t.meta, date:t.dateL, guide:t.guide==='—'?'':('Idegenvezető: '+t.guide),
+      badge:BG[t.st].t, bBg:BG[t.st].bg, bFg:BG[t.st].fg,
+      mate:t.st==='mate', price:fmt(t.price),
+      op:t.st==='sold'?'0.7':'1', gray:t.st==='sold'?'70%':'0%',
+      priceFg:t.st==='sold'?'#5C6B82':'#0D1526',
+      cta:t.st==='sold'?'Értesítést kérek':'Részletek', ctaFg:t.st==='sold'?'#5C6B82':'#0D1526',
+      href:t.href||'#'
+    }));
+    const rows=cards.slice(0,6);
+    if(cards.length>0) rows.push({isBand:true, isCard:false, span:'1 / -1'});
+    rows.push(...cards.slice(6));
+    const cnt=(group,val)=>{
+      const o={[group]:{[val]:true}};
+      if(group==='board')return all.filter(t=>this.match(t,{board:val})&&(!S.free||t.st!=='sold')).length;
+      return all.filter(t=>this.match(t,{[group]:{[val]:true}})&&(!S.free||t.st!=='sold')).length;
+    };
+    const mk=(group,names)=>names.map(n=>{
+      const c=cnt(group,n), on=!!S[group][n];
+      return {n, c, on, dis:c===0&&!on, fg:c===0&&!on?'#8A97AC':'#2B3648', cur:c===0&&!on?'default':'pointer', tgl:this.tglSet(group,n)};
+    });
+    const catOpts=mk('cats',['Egynapos','2–4 napos','5–12 napos','Körutazás','Színház','Advent','Repülős']);
+    const destOpts=mk('dests',['Olaszország','Ausztria','Csehország','Magyarország','Szlovénia','Lengyelország','Portugália']);
+    const durOpts=mk('durs',['1 nap','2–4 nap','5–12 nap']);
+    const MN=['aug.','szept.','okt.','nov.','dec.'];
+    const monthOpts=MN.map((n,i)=>{
+      const k='2026-'+String(i+8).padStart(2,'0');
+      const c=cnt('months',k), on=!!S.months[k];
+      return {n, on, dis:c===0&&!on, cur:c===0&&!on?'default':'pointer',
+        bg:on?'#0A6D9F':'#fff', fg:on?'#fff':(c===0?'#8A97AC':'#2B3648'), bd:on?'#0A6D9F':'#E3E9F2',
+        tgl:this.tglSet('months',k)};
+    });
+    const boardOpts=['Bármelyik','Kapuvár','Győr','Sopron','Budapest'].map(n=>({
+      n, c:n==='Bármelyik'?'':'('+cnt('board',n)+')', on:S.board===n, set:()=>this.setState({board:n})}));
+    const activeChips=[];
+    Object.keys(S.months).forEach(k=>{if(S.months[k])activeChips.push({n:MN[+k.slice(5)-8]+' 2026', del:this.tglSet('months',k)});});
+    ['cats','dests','durs'].forEach(g=>Object.keys(S[g]).forEach(k=>{if(S[g][k])activeChips.push({n:k, del:this.tglSet(g,k)});}));
+    if(S.pmin>0||S.pmax<750000)activeChips.push({n:(S.pmin/1000)+'–'+(S.pmax/1000)+' e Ft', del:()=>this.setState({pmin:0,pmax:750000})});
+    if(S.board!=='Bármelyik')activeChips.push({n:'Indulás: '+S.board, del:()=>this.setState({board:'Bármelyik'})});
+    const filterCount=activeChips.length;
+    const clearAll=()=>this.setState({months:{},cats:{},dests:{},durs:{},pmin:0,pmax:750000,board:'Bármelyik'});
+    const suggestions=[];
+    if(vis.length===0&&soldCnt===0){
+      const cand=[
+        {n:'Bármelyik hónap', o:{months:{}}, has:Object.values(S.months).some(Boolean)},
+        {n:'Bármelyik úti cél', o:{dests:{}}, has:Object.values(S.dests).some(Boolean)},
+        {n:'Bármilyen időtartam', o:{durs:{}}, has:Object.values(S.durs).some(Boolean)},
+        {n:'Ársáv tágítása', o:{pmin:0,pmax:750000}, has:S.pmin>0||S.pmax<750000},
+        {n:'Bármelyik felszállási hely', o:{board:'Bármelyik'}, has:S.board!=='Bármelyik'},
+        {n:'Minden kategória', o:{cats:{}}, has:Object.values(S.cats).some(Boolean)}
+      ].filter(c=>c.has).map(c=>({...c, c:all.filter(t=>this.match(t,c.o)&&t.st!=='sold').length}))
+       .filter(c=>c.c>0).sort((a,b)=>b.c-a.c).slice(0,3)
+       .map(c=>({n:c.n, c:c.c, go:()=>this.setState(c.o)}));
+      suggestions.push(...cand);
+    }
+    const chipNames=['Mind','Egynapos','2–4 napos','5–12 napos','Belföld','Külföld','Körutazás','Színház','Advent','Szilveszter','Repülős','Last minute'];
+    const chips=chipNames.map(n=>({n, set:()=>this.setState({chip:n}),
+      bg:S.chip===n?'#0A6D9F':'#fff', fg:S.chip===n?'#fff':'#0D1526', bd:S.chip===n?'#0A6D9F':'#E3E9F2'}));
+    const H1={'Mind':'Utazások 2026–2027','Egynapos':'Egynapos kirándulások','2–4 napos':'2–4 napos utazások','5–12 napos':'5–12 napos körutazások','Belföld':'Belföldi utazások','Külföld':'Külföldi utazások','Körutazás':'Körutazások','Színház':'Színházi utak','Advent':'Adventi utazások 2026','Szilveszter':'Szilveszteri utak','Repülős':'Repülős utazások','Last minute':'Last minute ajánlatok'}[S.chip];
+    const dates=bookable.length?bookable.map(t=>t.dateL):[''];
+    const minP=bookable.length?Math.min(...bookable.map(t=>t.price)):0;
+    const range=bookable.length?bookable.map(t=>t.date).sort():[];
+    const shortD=iso=>{const M=['jan.','febr.','márc.','ápr.','máj.','jún.','júl.','aug.','szept.','okt.','nov.','dec.'];const[y,m,d]=iso.split('-');return M[+m-1]+' '+(+d)+'.';};
+    const emptyBits=activeChips.map(c=>c.n).join(', ');
+    return {
+      crumb:S.chip==='Mind'?'Utazások':'Utazások › '+H1,
+      h1:H1,
+      intro:'Saját busszal, magyar nyelvű idegenvezetővel, felszállás Kapuváron, Győrben és Sopronban. Minden ár teljes — a belépőket előre, tételesen kiírjuk.',
+      metaCount:matched.length+' utazás',
+      metaRange:range.length?shortD(range[0])+' – '+shortD(range[range.length-1]):'—',
+      metaMin:fmt(minP),
+      chips,
+      monthOpts, catOpts, destOpts, durOpts, boardOpts,
+      pmin:String(S.pmin), pmax:String(S.pmax),
+      setPmin:(e)=>this.setState({pmin:+e.target.value}), setPmax:(e)=>this.setState({pmax:+e.target.value}),
+      priceSpan:bookable.length?fmt(Math.min(...bookable.map(t=>t.price)))+' – '+fmt(Math.max(...bookable.map(t=>t.price))):'—',
+      hasFilters:filterCount>0, filterCount, clearAll, activeChips,
+      resultCount:vis.length, free:S.free, freeTgl:()=>this.setState(st=>({free:!st.free})),
+      swBg:S.free?'#0A6D9F':'#CBD5E1', swLeft:S.free?23:3,
+      hiddenSold:soldCnt, hiddenSoldShow:S.free&&soldCnt>0,
+      rows, hasResults:vis.length>0,
+      onlySold:vis.length===0&&soldCnt>0&&S.free,
+      isEmpty:vis.length===0&&(soldCnt===0||!S.free),
+      emptyDesc:emptyBits?'Nincs olyan utunk, amelyre a beállított szűrők ('+emptyBits+') mind igazak.':'Erre a kategóriára jelenleg nincs meghirdetett utunk.',
+      suggestions,
+      bandTitle:Object.keys(S.dests).some(k=>S.dests[k])?'Szóljunk, ha új '+Object.keys(S.dests).filter(k=>S.dests[k])[0].toLowerCase().replace('ország','országi')+' út indul?':'Szóljunk, ha új út indul?',
+      nlv:S.nlv, nlType:(e)=>this.setState({nlv:e.target.value}),
+      nlName:S.nlName, nlNameType:(e)=>this.setState({nlName:e.target.value}),
+      nlPriv:S.nlPriv, nlPrivTgl:()=>this.setState(st=>({nlPriv:!st.nlPriv})),
+      nlBlocked:!(S.nlPriv&&/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.nlv)),
+      nlBtnBg:(S.nlPriv&&/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.nlv))?'#F5A524':'#F1F5F9',
+      nlBtnFg:(S.nlPriv&&/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.nlv))?'#0D1526':'#8A97AC',
+      nlBtnCur:(S.nlPriv&&/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.nlv))?'pointer':'not-allowed',
+      nlNameOut:S.nlName||'utasunk',
+      nlPending:!S.nlOk, nlOk:S.nlOk, nlGo:()=>this.setState({nlOk:true}),
+      sort:S.sort, setSort:(e)=>this.setState({sort:e.target.value})
+    };
+  }
+}
+</script>
+</body>
+</html>

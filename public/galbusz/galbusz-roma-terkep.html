@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Róma, az örök város — útvonaltérkép | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  html,body{margin:0;height:100%;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648}
+  #app{display:grid;grid-template-columns:360px 1fr;height:100%}
+  #side{background:#fff;border-right:1px solid #E3E9F2;overflow:auto;display:flex;flex-direction:column}
+  #map{height:100%}
+  .hdr{padding:20px 22px 16px;border-bottom:1px solid #E3E9F2}
+  .brand{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.03em;color:#0B2B40;text-decoration:none;display:inline-block}
+  .brand b{color:#0A6D9F}
+  .hdr h1{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:21px;letter-spacing:-0.02em;color:#0D1526;margin:12px 0 4px}
+  .hdr p{font-size:14px;color:#5C6B82;margin:0}
+  .day{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #F1F5F9;padding:14px 22px;cursor:pointer;font-family:inherit}
+  .day:hover{background:#F8FAFC}
+  .day.on{background:#EAF6FC}
+  .day .n{flex:none;width:28px;height:28px;border-radius:99px;background:#0A6D9F;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .day .t{font-size:15px;font-weight:600;color:#0D1526}
+  .day .s{font-size:13px;color:#5C6B82;margin-top:2px;line-height:1.45}
+  .all{margin:16px 22px;height:44px;border:1px solid #E3E9F2;border-radius:12px;background:#fff;font-size:14px;font-weight:600;color:#0D1526;cursor:pointer;font-family:inherit}
+  .all:hover{border-color:#0A6D9F;color:#0A6D9F}
+  .back{display:block;padding:14px 22px 20px;font-size:14px;font-weight:600;color:#0A6D9F;text-decoration:none}
+  .back:hover{text-decoration:underline}
+  .pin{background:#0A6D9F;color:#fff;border:3px solid #fff;border-radius:99px;box-shadow:0 2px 6px rgba(13,21,38,.35);font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .pin.home{background:#F5A524;color:#0D1526}
+  .leaflet-popup-content{font-family:Inter,sans-serif;font-size:14px;line-height:1.5}
+  .leaflet-popup-content b{font-family:'Plus Jakarta Sans',Inter,sans-serif;color:#0D1526}
+  @media (max-width:760px){#app{grid-template-columns:1fr;grid-template-rows:1fr 45vh}#side{order:2;border-right:0;border-top:1px solid #E3E9F2}}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <div class="hdr">
+      <a class="brand" href="GalBusz Utazas Aloldal.dc.html">Gál<b>Busz</b></a>
+      <h1>Róma, az örök város — útvonal</h1>
+      <p>2026. okt. 13–18. · 6 nap · kb. 2 600 km összesen</p>
+    </div>
+    <div id="days"></div>
+    <button class="all" id="fitAll">Teljes útvonal mutatása</button>
+    <a class="back" href="GalBusz Utazas Aloldal.dc.html">← Vissza az utazás oldalára</a>
+  </aside>
+  <div id="map"></div>
+</div>
+<script>
+const P = {
+  gyor:[47.687,17.635], csorna:[47.612,17.251], kapuvar:[47.592,17.029],
+  fszm:[47.591,16.874], sopron:[47.685,16.591],
+  villach:[46.615,13.846], verona:[45.438,10.993],
+  tivoli:[41.963,12.798], roma:[41.902,12.496], vatikan:[41.906,12.454],
+  sanmarino:[43.936,12.447], rimini:[44.060,12.565]
+};
+const stops = [
+  {k:'gyor', n:'1', t:'Győr — indulás 04:30', d:'Városháza. Innen indul a busz az 1. napon.', home:true},
+  {k:'kapuvar', n:'F', t:'Kapuvár — felszállás 05:20', d:'Spar parkoló. Köztes felszállási hely (Csorna 05:00, Fertőszentmiklós 05:35, Sopron 06:00).', home:true},
+  {k:'villach', n:'P', t:'Villach — pihenő', d:'1. nap: rövid pihenő Ausztriában.'},
+  {k:'verona', n:'P', t:'Verona — pihenő', d:'1. nap: pihenő a Pó-síkságon át vezető úton. Éjszaka: köztes szállás Észak-Olaszországban.'},
+  {k:'tivoli', n:'2', t:'Tivoli — Villa d’Este', d:'2. nap: a reneszánsz kertek, UNESCO-világörökség.'},
+  {k:'roma', n:'3–4', t:'Róma — 3 teljes nap', d:'2–4. nap: bazilikák, Vatikán (előre foglalt belépővel), antik és barokk belváros. Szállás: Róma környéke, 3★.'},
+  {k:'sanmarino', n:'5', t:'San Marino', d:'5. nap: egész napos megálló a világ legrégebbi köztársaságában.'},
+  {k:'rimini', n:'5', t:'Rimini környéke — szállás', d:'5. nap éjszakája, hazaút előtt.'}
+];
+const days = [
+  {t:'1. nap · Indulás — Észak-Olaszország', s:'Győr → Sopron → Villach → Verona · kb. 780 km', path:['gyor','csorna','kapuvar','fszm','sopron','villach','verona']},
+  {t:'2. nap · Tivoli és Róma', s:'Verona → Tivoli → Róma · kb. 570 km', path:['verona','tivoli','roma']},
+  {t:'3. nap · A Vatikán napja', s:'Vatikáni Múzeumok, Szent Péter-bazilika · városi program', path:['roma','vatikan','roma']},
+  {t:'4. nap · Antik és barokk Róma', s:'Colosseum, Forum Romanum, Trevi-kút · városi program', path:['roma','vatikan','roma']},
+  {t:'5. nap · San Marino', s:'Róma → San Marino → Rimini · kb. 330 km', path:['roma','sanmarino','rimini']},
+  {t:'6. nap · Hazaút', s:'Rimini → Villach → Sopron → Győr · kb. 900 km', path:['rimini','verona','villach','sopron','fszm','kapuvar','csorna','gyor']}
+];
+
+const map = L.map('map', {scrollWheelZoom:true});
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'© OpenStreetMap contributors', maxZoom:18}).addTo(map);
+
+stops.forEach(s => {
+  const icon = L.divIcon({className:'', html:'<div class="pin'+(s.home?' home':'')+'" style="width:30px;height:30px">'+s.n+'</div>', iconSize:[30,30], iconAnchor:[15,15]});
+  L.marker(P[s.k], {icon}).addTo(map).bindPopup('<b>'+s.t+'</b><br>'+s.d);
+});
+
+const full = L.polyline(['gyor','csorna','kapuvar','fszm','sopron','villach','verona','tivoli','roma'].map(k=>P[k]).concat([P.sanmarino,P.rimini,P.verona,P.villach,P.sopron,P.gyor]),
+  {color:'#0A6D9F', weight:3.5, opacity:.85, dashArray:'8 7'}).addTo(map);
+let hl = null;
+const list = document.getElementById('days');
+days.forEach((d,i)=>{
+  const b = document.createElement('button');
+  b.className='day';
+  b.innerHTML = '<span class="n">'+(i+1)+'</span><span><span class="t">'+d.t+'</span><br><span class="s">'+d.s+'</span></span>';
+  b.onclick = ()=>{
+    document.querySelectorAll('.day').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    if (hl) map.removeLayer(hl);
+    hl = L.polyline(d.path.map(k=>P[k]), {color:'#F5A524', weight:6, opacity:.95}).addTo(map);
+    map.fitBounds(hl.getBounds().pad(0.25));
+  };
+  list.appendChild(b);
+});
+document.getElementById('fitAll').onclick = ()=>{
+  document.querySelectorAll('.day').forEach(x=>x.classList.remove('on'));
+  if (hl) { map.removeLayer(hl); hl = null; }
+  map.fitBounds(full.getBounds().pad(0.08));
+};
+const fitAll = ()=>{map.invalidateSize();map.fitBounds(full.getBounds().pad(0.08));};
+fitAll();
+setTimeout(fitAll,0);
+setTimeout(fitAll,300);
+window.addEventListener('load',fitAll);
+window.addEventListener('resize',()=>map.invalidateSize());
+</script>
+</body>
+</html>

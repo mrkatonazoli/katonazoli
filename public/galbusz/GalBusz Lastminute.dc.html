@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Last minute buszos utak – indulás 30 napon belül | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#0B2B40;-webkit-font-smoothing:antialiased}
+a{color:#7CC3E8;text-decoration:none}
+a:hover{color:#A5D5EE;text-decoration:underline}
+button,input{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#0B2B40;border-bottom:1px solid rgba(255,255,255,.12)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="GalBusz Flotta.dc.html" style="font-size:16px;font-weight:500;color:#E3F2FA;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:rgba(255,255,255,.08);color:#fff">Flotta</a>
+      <a href="GalBusz Rolunk.dc.html" style="font-size:16px;font-weight:500;color:#E3F2FA;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:rgba(255,255,255,.08);color:#fff">Rólunk</a>
+      <a href="GalBusz Kapcsolat.dc.html" style="font-size:16px;font-weight:500;color:#E3F2FA;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:rgba(255,255,255,.08);color:#fff">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#fff;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<!-- LM1 Hero -->
+<section data-screen-label="LM1 Hero" style="position:relative;overflow:hidden;background:#0B2B40">
+  <div aria-hidden="true" style="position:absolute;right:-180px;top:-180px;width:560px;height:560px;border-radius:99em;background:radial-gradient(circle,rgba(245,165,36,.22) 0%,rgba(245,165,36,0) 70%)"></div>
+  <div aria-hidden="true" style="position:absolute;left:-220px;bottom:-260px;width:640px;height:640px;border-radius:99em;background:radial-gradient(circle,rgba(10,109,159,.35) 0%,rgba(10,109,159,0) 70%)"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto;padding:96px 40px 72px;box-sizing:border-box;text-align:center">
+    <span style="display:inline-block;position:relative;transform:rotate(-3deg)">
+      <span style="font-family:Caveat,cursive;font-weight:700;font-size:44px;line-height:1;color:#FFD24D">Last minute</span>
+      <svg width="100%" height="12" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-8px" aria-hidden="true"><path d="M8 12 Q100 2 192 9" fill="none" stroke="#F5A524" stroke-width="3" stroke-linecap="round"></path></svg>
+    </span>
+    <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin:26px 0 18px">Két hét múlva már<br><span style="color:#FFD24D">úton lehet.</span></h1>
+    <p style="font-size:19px;line-height:1.6;color:#A5D5EE;margin:0 auto 36px;max-width:54ch">A 30 napon belül induló útjaink megmaradt helyeit kedvezménnyel adjuk — ugyanaz a busz, ugyanaz az idegenvezető, alacsonyabb ár.</p>
+    <a href="#ajanlatok" style="display:inline-flex;align-items:center;background:#F5A524;color:#0D1526;height:56px;padding:0 34px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;transition:background 120ms ease-out" style-hover="background:#D9860B;color:#0D1526;text-decoration:none">Mutasd az ajánlatokat ↓</a>
+    <div style="display:flex;justify-content:center;gap:36px;margin-top:44px;font-size:14px;color:#A5D5EE">
+      <span>✓ Útlemondási biztosítás az árban</span>
+      <span>✓ Foglaláskor nem kell fizetni</span>
+      <span>✓ MUISZ-tag iroda</span>
+    </div>
+  </div>
+</section>
+
+<!-- LM2 Ajánlatok -->
+<section id="ajanlatok" data-screen-label="LM2 Ajánlatok" style="background:#0B2B40;padding:24px 0 88px;scroll-margin-top:80px">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <sc-for list="{{ deals }}" as="d" hint-placeholder-count="3">
+        <article style="background:#fff;border-radius:24px;overflow:hidden;transition:transform 180ms cubic-bezier(.2,.8,.2,1),box-shadow 180ms" style-hover="transform:translateY(-6px);box-shadow:0 24px 48px rgba(0,0,0,.35)">
+          <div style="position:relative;height:200px">
+            <image-slot id="{{ d.slot }}" shape="rect" src="{{ d.img }}" placeholder="{{ d.ph }}" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+            <span style="position:absolute;left:0;top:16px;background:#F5A524;color:#0D1526;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:18px;border-radius:0 10px 10px 0;padding:8px 16px;pointer-events:none">−{{ d.pct }}%</span>
+            <span style="position:absolute;right:12px;bottom:12px;background:rgba(13,21,38,.82);backdrop-filter:blur(4px);color:#FFD24D;font-size:13px;font-weight:700;border-radius:8px;padding:6px 12px;pointer-events:none;font-variant-numeric:tabular-nums">{{ d.left }}</span>
+          </div>
+          <div style="padding:20px 22px 22px">
+            <div style="font-size:14px;color:#5C6B82;margin-bottom:4px">{{ d.meta }}</div>
+            <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;line-height:1.3;color:#0D1526;margin:0 0 8px;min-height:52px">{{ d.t }}</h2>
+            <div style="font-size:14px;color:#2B3648;font-variant-numeric:tabular-nums">{{ d.date }}</div>
+            <div style="font-size:14px;color:#5C6B82;margin-top:2px">{{ d.spots }}</div>
+            <div style="border-top:1px solid #F1F5F9;margin-top:14px;padding-top:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+              <div>
+                <span style="display:block;font-size:14px;color:#5C6B82;text-decoration:line-through;font-variant-numeric:tabular-nums">{{ d.was }}</span>
+                <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:26px;color:#0D1526;font-variant-numeric:tabular-nums">{{ d.now }} <span style="font-size:14px;font-weight:600;color:#5C6B82">/fő</span></span>
+              </div>
+              <button style="background:#0A6D9F;color:#fff;border:0;height:46px;padding:0 20px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background 120ms" style-hover="background:#086A9E">Lefoglalom</button>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+    <p style="text-align:center;font-size:14px;color:#7C93A5;margin:28px 0 0">Az árak a megmaradt helyekre érvényesek, a készlet erejéig. Az akciós helyek száma korlátozott.</p>
+  </div>
+</section>
+
+<!-- LM3 Hogyan működik -->
+<section data-screen-label="LM3 Hogyan működik" style="background:#fff;padding:80px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 8px;text-align:center">Miért olcsóbb?</h2>
+    <p style="font-size:17px;color:#5C6B82;margin:0 auto 44px;text-align:center;max-width:54ch">Nincs trükk: a busz akkor is elindul, ha marad néhány üres hely. Inkább adjuk kedvezménnyel, mint hogy üresen menjen a szék.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div style="text-align:center;padding:0 20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:44px;color:#F5A524;line-height:1">1</div>
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin:12px 0 8px">Az út már garantált</div>
+        <p style="font-size:15px;line-height:1.6;color:#5C6B82;margin:0">Minden last minute út elérte a minimum létszámot — biztosan indul, a program változatlan.</p>
+      </div>
+      <div style="text-align:center;padding:0 20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:44px;color:#F5A524;line-height:1">2</div>
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin:12px 0 8px">A megmaradt helyek olcsóbbak</div>
+        <p style="font-size:15px;line-height:1.6;color:#5C6B82;margin:0">Az indulás előtti utolsó 30 napban a szabad helyeket 10–20% kedvezménnyel hirdetjük meg.</p>
+      </div>
+      <div style="text-align:center;padding:0 20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:44px;color:#F5A524;line-height:1">3</div>
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;margin:12px 0 8px">Gyors döntés, teljes szolgáltatás</div>
+        <p style="font-size:15px;line-height:1.6;color:#5C6B82;margin:0">Ugyanaz jár, mint mindenki másnak: saját busz, magyar idegenvezető, útlemondási biztosítás.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LM4 Értesítő -->
+<section data-screen-label="LM4 Értesítő" style="background:#0C3A54;padding:72px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+    <div>
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.02em;color:#fff;margin:0 0 12px">A legjobb ajánlatok órák alatt elfogynak</h2>
+      <p style="font-size:16px;line-height:1.65;color:#A5D5EE;margin:0">Kérjen értesítést, és e-mailt küldünk, amint új last minute hely szabadul fel — még mielőtt kikerülne az oldalra.</p>
+    </div>
+    <div>
+      <sc-if value="{{ nlPending }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:10px">
+          <input value="{{ nlv }}" onChange="{{ nlType }}" placeholder="E-mail címe" inputMode="email" autoComplete="email" style="flex:1;height:52px;border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:0 16px;font-size:16px;color:#0D1526;background:#fff;box-sizing:border-box;outline:none" style-focus="border-color:#F5A524;box-shadow:0 0 0 3px rgba(245,165,36,.3)">
+          <button onClick="{{ nlGo }}" disabled="{{ nlBlocked }}" style="background:{{ nlBtnBg }};color:{{ nlBtnFg }};border:0;height:52px;padding:0 24px;border-radius:12px;font-size:16px;font-weight:700;cursor:{{ nlBtnCur }};flex:none;transition:background 120ms" style-hover="background:#D9860B">Kérem az értesítőt</button>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:9px;font-size:14px;line-height:1.5;color:#A5D5EE;margin-top:12px;cursor:pointer">
+          <input type="checkbox" checked="{{ nlPriv }}" onChange="{{ nlPrivTgl }}" style="width:17px;height:17px;accent-color:#F5A524;margin-top:1px;flex:none">
+          <span>Elfogadom az <a href="#" style="text-decoration:underline">adatkezelési tájékoztatót</a>. Bármikor leiratkozhat.</span>
+        </label>
+      </sc-if>
+      <sc-if value="{{ nlOk }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(231,247,239,.12);border:1px solid rgba(187,231,206,.4);border-radius:14px;padding:18px 20px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7CE8AE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+          <span style="font-size:16px;font-weight:600;color:#fff">Kész! Szólunk, amint új hely szabadul fel.</span>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:1px solid rgba(255,255,255,.12)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#A5B3C7">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {nlv:'', nlPriv:false, nlOk:false};
+  renderVals(){
+    const S=this.state, NB='\u202f';
+    const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'Ft';
+    const today=new Date();
+    const daysTo=iso=>{const d=Math.ceil((new Date(iso)-today)/86400000);return d<=0?'Ma indul':d+' nap múlva indul';};
+    const deals=[
+      {slot:'lm-port', img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1600&q=80', ph:'Lisszabon fotó',
+       meta:'Portugália · 7 nap / 6 éj', t:'Portugália — repülős körutazás', date:'2026. aug. 31. – szept. 6.', spots:'Még 5 szabad hely',
+       pct:10, was:fmt(719000), now:fmt(649000), left:daysTo('2026-08-31')},
+      {slot:'lm-ferto', img:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80', ph:'Fertő-tó fotó',
+       meta:'Magyarország · 1 nap', t:'Fertő-táj hajókázással', date:'2026. szept. 5.', spots:'Még 11 szabad hely',
+       pct:16, was:fmt(18900), now:fmt(15900), left:daysTo('2026-09-05')},
+      {slot:'lm-szlo', img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80', ph:'Szlovénia fotó',
+       meta:'Szlovénia · 2 nap / 1 éj', t:'Szlovénia kincsei', date:'2026. szept. 5–6.', spots:'Utolsó 2 hely',
+       pct:12, was:fmt(84000), now:fmt(74000), left:daysTo('2026-09-05')}
+    ];
+    const mailOk=/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.nlv);
+    const ok=mailOk&&S.nlPriv;
+    return {
+      deals,
+      nlv:S.nlv, nlType:e=>this.setState({nlv:e.target.value}),
+      nlPriv:S.nlPriv, nlPrivTgl:()=>this.setState(st=>({nlPriv:!st.nlPriv})),
+      nlBlocked:!ok, nlBtnBg:ok?'#F5A524':'rgba(255,255,255,.15)', nlBtnFg:ok?'#0D1526':'rgba(255,255,255,.5)', nlBtnCur:ok?'pointer':'not-allowed',
+      nlPending:!S.nlOk, nlOk:S.nlOk, nlGo:()=>this.setState({nlOk:true})
+    };
+  }
+}
+</script>
+</body>
+</html>

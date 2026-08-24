@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
         { source: "/roomlytics", destination: "/roomlytics.html" },
         { source: "/roomlytics-plan", destination: "/roomlytics-plan.html" },
         { source: "/v2", destination: "/v2.html" },
+        { source: "/galbusz", destination: "/galbusz/index.html" },
       ],
     };
   },

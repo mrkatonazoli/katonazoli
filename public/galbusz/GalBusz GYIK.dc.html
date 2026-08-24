@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Gyakori kérdések – foglalás, fizetés, utazás | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button,input{font-family:inherit}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #E3E9F2;box-shadow:0 2px 8px rgba(13,21,38,.04)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="GalBusz Fooldal v2.dc.html#flotta" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Flotta</a>
+      <a href="GalBusz Rolunk.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Rólunk</a>
+      <a href="#" style="font-size:16px;font-weight:600;color:#0A6D9F;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9">Gyakori kérdések</a>
+      <a href="GalBusz Kapcsolat.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<!-- G1 Hero + kereső -->
+<section data-screen-label="G1 Hero" style="background:#F8FAFC;border-bottom:1px solid #E3E9F2">
+  <div style="max-width:1200px;margin:0 auto;padding:64px 40px 48px;box-sizing:border-box">
+    <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:44px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 14px">Gyakori kérdések</h1>
+    <p style="font-size:18px;line-height:1.6;color:#5C6B82;margin:0 0 28px;max-width:56ch">Összegyűjtöttük, amit utasaink a leggyakrabban kérdeznek — a foglalástól a hazaérkezésig.</p>
+    <div style="position:relative;max-width:560px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5C6B82" stroke-width="2" stroke-linecap="round" style="position:absolute;left:18px;top:50%;transform:translateY(-50%)" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <input value="{{ q }}" onChange="{{ setQ }}" placeholder="Keressen a kérdések között…" style="width:100%;height:54px;border:1px solid #E3E9F2;border-radius:14px;padding:0 18px 0 48px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;background:#fff" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6">
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+        <a href="{{ c.href }}" style="display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid #E3E9F2;background:#fff;font-size:14px;font-weight:600;color:#0D1526;text-decoration:none" style-hover="border-color:#0A6D9F;color:#0A6D9F;text-decoration:none">{{ c.n }}<span style="font-size:13px;color:#5C6B82;font-variant-numeric:tabular-nums">{{ c.c }}</span></a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- G2 Kérdések -->
+<section data-screen-label="G2 Kérdéslista" style="background:#fff;padding:64px 0 80px">
+  <div style="max-width:860px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <sc-if value="{{ noHit }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:48px 24px;border:1px dashed #CBD5E1;border-radius:20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin-bottom:8px">Erre nincs találat</div>
+        <p style="font-size:16px;color:#5C6B82;margin:0 0 4px">Próbáljon rövidebb kulcsszót — vagy kérdezzen minket közvetlenül:</p>
+        <p style="font-size:16px;margin:12px 0 0"><a href="tel:+3696595080" style="font-weight:700">+36 96 595 080</a> · <a href="GalBusz Kapcsolat.dc.html" style="font-weight:600">Üzenetküldés →</a></p>
+      </div>
+    </sc-if>
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+      <div id="{{ g.id }}" style="scroll-margin-top:96px;margin-bottom:44px;display:{{ g.disp }}">
+        <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 16px;display:flex;align-items:center;gap:12px"><span style="flex:none;width:10px;height:10px;border-radius:99px;background:#F5A524"></span>{{ g.n }}</h2>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ g.items }}" as="fq" hint-placeholder-count="4">
+            <details style="border:1px solid #E3E9F2;border-radius:14px;padding:0 22px;background:#fff">
+              <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:17px;font-weight:600;color:#0D1526;padding:18px 0">{{ fq.q }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5C6B82" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M6 9l6 6 6-6"></path></svg></summary>
+              <p style="margin:0;padding:0 0 20px;font-size:16px;line-height:1.65;color:#2B3648;max-width:64ch">{{ fq.a }}</p>
+            </details>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- G3 CTA -->
+<section data-screen-label="G3 CTA" style="background:#F8FAFC;border-top:1px solid #E3E9F2;padding:56px 0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 6px">Nem találta a választ?</h2>
+      <p style="font-size:16px;color:#5C6B82;margin:0">Hívjon munkaidőben, vagy írjon — egy munkanapon belül válaszolunk.</p>
+    </div>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <a href="tel:+3696595080" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#0C3A54;white-space:nowrap;font-variant-numeric:tabular-nums">+36 96 595 080</a>
+      <a href="GalBusz Kapcsolat.dc.html" style="display:inline-flex;align-items:center;background:#0A6D9F;color:#fff;height:50px;padding:0 24px;border-radius:14px;font-size:16px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background 120ms ease-out" style-hover="background:#086A9E;color:#fff;text-decoration:none">Üzenetet írok →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:4px solid #F5A524">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#A5B3C7">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {q:''};
+  data(){
+    return [
+      {id:'foglalas', n:'Foglalás és fizetés', items:[
+        {q:'Hogyan tudok jelentkezni egy útra?', a:'Online a kiválasztott út oldalán, telefonon (+36 96 595 080), vagy személyesen a kapuvári és győri irodánkban. A jelentkezés után írásos visszaigazolást küldünk.'},
+        {q:'Foglaláskor kell fizetni?', a:'Nem. A jelentkezés után előleget kérünk, a végösszeget általában az indulás előtt 30 nappal kell rendezni. A pontos határidőket a visszaigazolásban írjuk le.'},
+        {q:'Milyen fizetési módok vannak?', a:'Átutalás, bankkártya az irodában, valamint készpénz. Több útnál SZÉP-kártyát is elfogadunk — kérdezze kollégánkat.'},
+        {q:'Kapok számlát?', a:'Igen, minden befizetésről elektronikus számlát állítunk ki a megadott névre és címre.'},
+        {q:'Mit jelent a „garantált indulás"?', a:'Azt, hogy az út elérte a minimum létszámot, tehát biztosan elindul — nem fordulhat elő, hogy a jelentkezése után lemondjuk.'}
+      ]},
+      {id:'ar', n:'Árak és kedvezmények', items:[
+        {q:'Mit tartalmaz a részvételi díj?', a:'Az utazást saját buszunkkal, a szállást a megadott ellátással, a magyar nyelvű idegenvezetést és az útlemondási biztosítást. A belépődíjakat mindig külön, tételesen kiírjuk az út oldalán.'},
+        {q:'Miért nincsenek a belépők az árban?', a:'Mert nem mindenki kér minden programot. Így csak azért fizet, amire tényleg kíváncsi — a várható belépőösszeget előre kiírjuk, és helyben, az idegenvezetőnél kell rendezni.'},
+        {q:'Van gyermekkedvezmény?', a:'A legtöbb úton igen, jellemzően a 2–17 éves korosztálynak. A pontos mértéke utanként eltér — az út oldalán vagy telefonon tájékozódhat.'},
+        {q:'Egyedül utazom. Kell egyágyas felárat fizetnem?', a:'Nem feltétlenül. Kérésére azonos nemű szobatársat keresünk a csoportból — ha találunk, nincs felár. Ha egyedül szeretne lenni, egyágyas felárat számítunk fel.'}
+      ]},
+      {id:'felszallas', n:'Indulás és felszállás', items:[
+        {q:'Hol tudok felszállni?', a:'Kapuváron (Piac tér 1.), Győrben (Aradi vértanúk útja 2.) és Sopronban. Budapestről a legtöbb úthoz csatlakozó transzfert biztosítunk. Útvonaltól függően köztes megállók is vannak (pl. Csorna, Fertőszentmiklós).'},
+        {q:'Honnan tudom a pontos indulási időt?', a:'Az utazás előtti héten e-mailben megerősítjük a pontos időpontokat és helyszíneket. Kérjük, az indulás előtt 10 perccel érkezzen.'},
+        {q:'Hol tudok parkolni a felszállásnál?', a:'Kapuváron a Piac téri, Győrben az iroda melletti nyilvános parkolót javasoljuk. Többnapos útnál kérje kollégánk segítségét hosszabb távú parkolóhelyhez.'},
+        {q:'Mennyi csomagot vihetek?', a:'Fejenként egy bőröndöt a csomagtérbe és egy kézipoggyászt az utastérbe. Nagyobb csomagigénynél (pl. síléc) utánfutót biztosítunk — kérjük, előre jelezze.'}
+      ]},
+      {id:'buszon', n:'A buszon', items:[
+        {q:'Milyen buszokkal utazunk?', a:'Két saját Setra túrabusszal (46–47 fő). Légkondicionálás, WC, kávéfőző, italhűtő, állítható, lábtartós ülések és hővédő üvegezés minden járaton.'},
+        {q:'Van WC a buszon?', a:'Igen, mindkét buszunkon. Emellett 2,5–3 óránként pihenőt tartunk benzinkutaknál, ahol mosdó és büfé is elérhető.'},
+        {q:'Kérhetek helyet előre?', a:'Az ülésrendet a jelentkezés sorrendjében alakítjuk ki — minél korábban foglal, annál előrébb ül. Egészségügyi indok esetén kérjük, jelezze, és igyekszünk megoldani.'},
+        {q:'Vihetek ételt, italt a buszra?', a:'Igen, szendvicset és alkoholmentes italt nyugodtan. A fedélzeten kávét és hűtött üdítőt is kínálunk jelképes áron.'}
+      ]},
+      {id:'utkozben', n:'Út közben', items:[
+        {q:'Milyen nyelven zajlik az idegenvezetés?', a:'Minden utunkon magyar nyelvű, saját idegenvezető kísér — négy állandó idegenvezetőnk van, akik évek óta viszik csoportjainkat.'},
+        {q:'Mi történik, ha út közben gond adódik?', a:'0–24 órás ügyeleti telefonszámunk (+36 30 754 0260) utazás alatt mindig elérhető. Az idegenvezető és a sofőr helyben is azonnal segít.'},
+        {q:'Mennyi szabadidő van a programok között?', a:'Útjainkat nyugodt tempóra tervezzük: minden nap jut idő kávéra, fotóra, sétára, és a legtöbb többnapos úton van fél vagy egész szabad délután.'},
+        {q:'Kell útlevél, vagy elég a személyi?', a:'Az EU-n belül érvényes személyi igazolvány elegendő. EU-n kívüli úti célnál (pl. Törökország, Balkán egyes országai) útlevél szükséges — ezt az út oldalán mindig jelezzük.'}
+      ]},
+      {id:'lemondas', n:'Lemondás és biztosítás', items:[
+        {q:'Meddig mondhatom le az utat?', a:'A lemondási feltételek az utazási szerződésben szerepelnek; általában indulás előtt 60 napig kedvezményes a lemondás. Az indulást megelőző két hónapon belül a névre szólóan vásárolt belépőjegyek árát ki kell fizetni.'},
+        {q:'Mi az az útlemondási biztosítás, és kell külön kérnem?', a:'Nem kell — minden utunk részvételi díja tartalmazza. Ha igazolt okból (pl. betegség) nem tud elutazni, a biztosító a lemondási költség jelentős részét megtéríti.'},
+        {q:'Mi a BBP biztosítás, és kötelező?', a:'A baleset-, betegség- és poggyászbiztosítás külföldi úton kötelező — nálunk is megkötheti (9 800 Ft-tól), vagy írásban jelezheti, hogy van saját érvényes biztosítása.'},
+        {q:'Mi történik, ha az iroda mondja le az utat?', a:'Ha egy út nem éri el a minimum létszámot, legkésőbb 20 nappal az indulás előtt értesítjük, és a teljes befizetett összeget visszatérítjük, vagy másik utat ajánlunk. MUISZ-tag irodaként vagyoni biztosíték is védi a befizetéseit.'}
+      ]}
+    ];
+  }
+  renderVals(){
+    const S=this.state, q=S.q.trim().toLowerCase();
+    const data=this.data();
+    const groups=data.map(g=>{
+      const items=q?g.items.filter(i=>(i.q+' '+i.a).toLowerCase().includes(q)):g.items;
+      return {...g, items, disp:items.length?'block':'none', cnt:items.length};
+    });
+    const total=groups.reduce((a,g)=>a+g.cnt,0);
+    return {
+      q:S.q, setQ:e=>this.setState({q:e.target.value}),
+      cats:data.map(g=>({n:g.n, c:g.items.length, href:'#'+g.id})),
+      groups, noHit:total===0
+    };
+  }
+}
+</script>
+</body>
+</html>

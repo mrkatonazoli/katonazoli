@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Utazások időrendben – indulási naptár | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button{font-family:inherit}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+</style>
+</helmet>
+
+<div style="min-width:1280px">
+
+<!-- Fejléc -->
+<header data-screen-label="Fejléc" style="position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #E3E9F2;box-shadow:0 2px 8px rgba(13,21,38,.04)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:28px;box-sizing:border-box">
+    <a href="GalBusz Fooldal v2.dc.html" style="display:flex;align-items:center;text-decoration:none">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:4px;margin-left:auto" aria-label="Fő navigáció">
+      <dc-import name="UtazasokMenu" hint-size="130px,44px"></dc-import>
+      <a href="GalBusz Flotta.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Flotta</a>
+      <a href="GalBusz Rolunk.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Rólunk</a>
+      <a href="GalBusz GYIK.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Gyakori kérdések</a>
+      <a href="GalBusz Kapcsolat.dc.html" style="font-size:16px;font-weight:500;color:#0D1526;padding:9px 13px;border-radius:10px;text-decoration:none" style-hover="background:#F1F5F9;color:#0D1526">Kapcsolat</a>
+    </nav>
+    <a href="tel:+3696595080" style="font-size:16px;font-weight:600;color:#0C3A54;white-space:nowrap">+36 96 595 080</a>
+  </div>
+</header>
+
+<!-- I1 Fejléc-blokk + hónapváltó -->
+<section data-screen-label="I1 Hónapváltó" style="background:#F8FAFC;border-bottom:1px solid #E3E9F2">
+  <div style="max-width:1200px;margin:0 auto;padding:56px 40px 0;box-sizing:border-box">
+    <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:40px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 10px">Utazások időrendben</h1>
+    <p style="font-size:17px;color:#5C6B82;margin:0 0 32px;max-width:56ch">Minden indulásunk hónapról hónapra. Lapozzon a hónapok között, és foglalja le a helyét.</p>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+      <div>
+        <div style="display:flex;align-items:center;gap:20px">
+          <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:46px;line-height:1.1;letter-spacing:-0.03em;color:#0D1526;min-width:480px;font-variant-numeric:tabular-nums"><span style="color:#0A6D9F">{{ yearBig }}.</span> {{ monthName }}</span>
+          <span style="display:inline-flex;border:1px solid #E3E9F2;border-radius:999px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(13,21,38,.06)">
+            <button onClick="{{ prev }}" disabled="{{ prevDis }}" aria-label="Előző hónap" style="width:46px;height:44px;border:0;background:none;color:{{ prevFg }};font-size:19px;cursor:{{ prevCur }};display:flex;align-items:center;justify-content:center" style-hover="background:#F1F5F9">‹</button>
+            <span style="width:1px;background:#E3E9F2"></span>
+            <button onClick="{{ next }}" disabled="{{ nextDis }}" aria-label="Következő hónap" style="width:46px;height:44px;border:0;background:none;color:{{ nextFg }};font-size:19px;cursor:{{ nextCur }};display:flex;align-items:center;justify-content:center" style-hover="background:#F1F5F9">›</button>
+          </span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;padding-bottom:10px">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E9F2;border-radius:999px;height:38px;padding:0 16px;font-size:14px;color:#2B3648;font-variant-numeric:tabular-nums"><strong style="color:#0D1526">{{ statAll }}</strong>&nbsp;indulás</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E9F2;border-radius:999px;height:38px;padding:0 16px;font-size:14px;color:#2B3648;font-variant-numeric:tabular-nums"><span style="width:8px;height:8px;border-radius:99px;background:#0EA05E;display:inline-block"></span><strong style="color:#0D1526">{{ statFree }}</strong>&nbsp;foglalható</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E9F2;border-radius:999px;height:38px;padding:0 16px;font-size:14px;color:#2B3648;font-variant-numeric:tabular-nums"><strong style="color:#0D1526">{{ statMin }}</strong>-tól</span>
+      </div>
+    </div>
+    <div style="display:inline-flex;background:#EEF2F7;border-radius:999px;padding:4px;margin-top:28px;margin-bottom:24px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <button onClick="{{ t.set }}" style="height:38px;padding:0 20px;border:0;border-radius:999px;background:{{ t.bg }};font-size:15px;font-weight:600;color:{{ t.fg }};cursor:pointer;font-variant-numeric:tabular-nums;box-shadow:{{ t.sh }};transition:all 180ms cubic-bezier(.2,.8,.2,1);outline:none" style-hover="color:#0D1526">{{ t.n }}</button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- I2 Indulások -->
+<section data-screen-label="I2 Indulások" style="background:#fff;padding:56px 0 80px">
+  <div style="max-width:1000px;margin:0 auto;padding:0 40px;box-sizing:border-box">
+    <sc-if value="{{ hasTrips }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:0">
+        <sc-for list="{{ trips }}" as="t" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:96px 1fr;gap:28px;position:relative">
+            <div style="text-align:center;position:relative">
+              <div style="position:absolute;left:50%;top:0;bottom:0;width:2px;background:{{ t.rail }};transform:translateX(-50%)"></div>
+              <div style="position:relative;display:inline-block;background:#fff;padding:6px 0">
+                <div style="width:72px;border:1px solid #E3E9F2;border-radius:16px;background:#fff;padding:10px 0;box-shadow:0 2px 8px rgba(13,21,38,.06)">
+                  <div style="font-size:12px;font-weight:700;color:#0A6D9F;letter-spacing:.06em;text-transform:uppercase">{{ t.mon }}</div>
+                  <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:26px;line-height:1.1;color:#0D1526;font-variant-numeric:tabular-nums">{{ t.day }}</div>
+                  <div style="font-size:12px;color:#5C6B82">{{ t.dow }}</div>
+                </div>
+              </div>
+            </div>
+            <a href="{{ t.href }}" style="display:grid;grid-template-columns:200px 1fr auto;gap:22px;align-items:center;border:1px solid #E3E9F2;border-radius:20px;overflow:hidden;text-decoration:none;margin-bottom:22px;background:#fff;opacity:{{ t.op }};transition:all 180ms cubic-bezier(.2,.8,.2,1)" style-hover="box-shadow:0 12px 32px rgba(13,21,38,.10);transform:translateY(-2px);text-decoration:none;opacity:1">
+              <div style="height:132px;position:relative;filter:grayscale({{ t.gray }})">
+                <image-slot id="{{ t.slot }}" shape="rect" src="{{ t.img }}" placeholder="{{ t.ph }}" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+              </div>
+              <div style="padding:16px 0;min-width:0">
+                <div style="font-size:13px;color:#5C6B82;margin-bottom:3px">{{ t.meta }}</div>
+                <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:19px;color:#0D1526;line-height:1.3">{{ t.title }}</div>
+                <div style="font-size:14px;color:#2B3648;margin-top:5px;font-variant-numeric:tabular-nums">{{ t.dates }} · {{ t.guide }}</div>
+                <span style="display:inline-block;margin-top:8px;background:{{ t.stBg }};color:{{ t.stFg }};font-size:13px;font-weight:600;border-radius:6px;padding:3px 9px">{{ t.st }}</span>
+              </div>
+              <div style="padding:16px 22px 16px 0;text-align:right;white-space:nowrap">
+                <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:22px;color:{{ t.priceFg }};font-variant-numeric:tabular-nums">{{ t.price }}</div>
+                <div style="font-size:13px;color:#5C6B82">/fő</div>
+                <span style="display:inline-flex;align-items:center;margin-top:10px;border:1px solid #E3E9F2;border-radius:12px;height:38px;padding:0 16px;font-size:14px;font-weight:600;color:{{ t.ctaFg }}">{{ t.cta }}</span>
+              </div>
+            </a>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:64px 24px;border:1px dashed #CBD5E1;border-radius:20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:22px;color:#0D1526;margin-bottom:8px">Ebben a hónapban nincs meghirdetett indulás</div>
+        <p style="font-size:16px;color:#5C6B82;margin:0 0 20px">Lapozzon a következő hónapra, vagy kérjen értesítést az új utakról.</p>
+        <button onClick="{{ nextFromEmpty }}" style="background:#0A6D9F;color:#fff;border:0;height:48px;padding:0 24px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer" style-hover="background:#086A9E">Következő hónap →</button>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer data-screen-label="Footer" style="background:#0B2B40;color:#E3E9F2;padding:40px 0;border-top:4px solid #F5A524">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:20px;color:#fff">Gál<span style="color:#7CC3E8">Busz</span></span>
+    <span style="font-size:14px;color:#A5D5EE">Kapuvár, Piac tér 1. · <a href="tel:+3696595080" style="color:#fff">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="color:#fff">info@galbusz.hu</a></span>
+    <span style="font-size:13px;color:#A5B3C7">© 1998–2026 Gál-Busz Utazási Iroda · MUISZ-tag</span>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {mi:1};
+  months(){
+    const NB='\u202f';
+    const T=(day,dow,title,meta,dates,guide,price,st,img,slot,href)=>({day,dow,title,meta,dates,guide,price,st,img,slot,href});
+    return [
+      {y:'2026', name:'augusztus', tab:'aug.', mon:'aug.', trips:[
+        T('22','szombat','Dél-Lengyelország és Krakkó','Lengyelország · 4 nap / 3 éj','aug. 22–25.','Kálmán Lajos',158000,'sold','','id-krak',''),
+        T('31','hétfő','Portugália — repülős körutazás','Portugália · 7 nap / 6 éj','aug. 31. – szept. 6.','Kálmán Lajos',719000,'gar','https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=80','id-port','GalBusz Listaoldal.dc.html')
+      ]},
+      {y:'2026', name:'szeptember', tab:'szept.', mon:'szept.', trips:[
+        T('5','szombat','Szlovénia kincsei','Szlovénia · 2 nap / 1 éj','szept. 5–6.','Móritz Adrienn',84000,'spots','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80','id-szlo','GalBusz Listaoldal.dc.html'),
+        T('13','vasárnap','Velence bővebben','Olaszország · 3 nap / 2 éj','szept. 13–15.','Sümeghy Gyöngyi',122500,'sold','https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=80','id-vel',''),
+        T('19','szombat','Őrségi Tökfesztivál','Magyarország · 1 nap','szept. 19.','Pancsik Károly',21700,'gar','https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80','id-ors','GalBusz Listaoldal.dc.html'),
+        T('27','vasárnap','Budapest — Parlament és a Duna-part','Magyarország · 1 nap','szept. 27.','Pancsik Károly',21000,'gar','https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1200&q=80','id-bp','GalBusz Listaoldal.dc.html')
+      ]},
+      {y:'2026', name:'október', tab:'okt.', mon:'okt.', trips:[
+        T('4','vasárnap','Firenze, Toszkána kulturális központja','Olaszország · 4 nap / 3 éj','okt. 4–7.','Sümeghy Gyöngyi',215000,'gar','https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1200&q=80','id-fir','GalBusz Listaoldal.dc.html'),
+        T('13','kedd','Róma, az örök város','Olaszország · 6 nap / 5 éj','okt. 13–18.','Móritz Adrienn',339000,'gar','https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80','id-roma','GalBusz Utazas Aloldal.dc.html'),
+        T('23','péntek','Prága és Karlovy Vary','Csehország · 3 nap / 2 éj','okt. 23–25.','Sümeghy Gyöngyi',129000,'sold','','id-prag','')
+      ]},
+      {y:'2026', name:'november', tab:'nov.', mon:'nov.', trips:[
+        T('4','szerda','Balkán őszi színei','Balkán · 7 nap / 6 éj','nov. 4–10.','Móritz Adrienn',284000,'spots','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80','id-balk','GalBusz Listaoldal.dc.html'),
+        T('5','csütörtök','Szicília narancsszüret idején','Olaszország · 8 nap / 7 éj','nov. 5–12.','Pajter Martina',413000,'gar','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1200&q=80','id-szic','GalBusz Listaoldal.dc.html'),
+        T('13','péntek','Toszkán olaj- és szarvasgomba fesztivál','Olaszország · 4 nap / 3 éj','nov. 13–16.','Sümeghy Gyöngyi',190000,'gar','https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1200&q=80','id-tosz','GalBusz Listaoldal.dc.html')
+      ]},
+      {y:'2026', name:'december', tab:'dec.', mon:'dec.', trips:[
+        T('5','szombat','Advent Bécsben','Ausztria · 1 nap','dec. 5.','Pancsik Károly',19900,'gar','https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=1200&q=80','id-advent','GalBusz Listaoldal.dc.html'),
+        T('30','szerda','Szilveszter az Adrián','Horvátország · 4 nap / 3 éj','dec. 30. – jan. 2.','Sümeghy Gyöngyi',245000,'spots','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80','id-szilv','GalBusz Listaoldal.dc.html')
+      ]},
+      {y:'2027', name:'április', tab:'\u201927 ápr.', mon:'ápr.', trips:[
+        T('12','hétfő','Róma, az örök város','Olaszország · 6 nap / 5 éj','ápr. 12–17.','Móritz Adrienn',349000,'gar','https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80','id-roma27a','GalBusz Utazas Aloldal.dc.html')
+      ]},
+      {y:'2027', name:'május', tab:'\u201927 máj.', mon:'máj.', trips:[
+        T('18','kedd','Róma, az örök város','Olaszország · 6 nap / 5 éj','máj. 18–23.','Kálmán Lajos',359000,'gar','https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80','id-roma27b','GalBusz Utazas Aloldal.dc.html'),
+        T('29','szombat','Toszkána tavasszal','Olaszország · 4 nap / 3 éj','máj. 29. – jún. 1.','Sümeghy Gyöngyi',219000,'gar','https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1200&q=80','id-tosz27','GalBusz Listaoldal.dc.html')
+      ]}
+    ];
+  }
+  renderVals(){
+    const NB='\u202f';
+    const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'Ft';
+    const M=this.months();
+    const i=Math.max(0,Math.min(M.length-1,this.state.mi));
+    const ST={gar:{t:'Garantált indulás',bg:'#E7F7EF',fg:'#076B42'},spots:{t:'Utolsó helyek',bg:'#FFF7E6',fg:'#B45309'},sold:{t:'Betelt',bg:'#F1F5F9',fg:'#5C6B82'}};
+    const cur=M[i];
+    const trips=cur.trips.map((t,j)=>({
+      ...t, mon:cur.mon, slotPh:t.title+' fotó', ph:t.title+' fotó',
+      price:fmt(t.price), st:ST[t.st].t, stBg:ST[t.st].bg, stFg:ST[t.st].fg,
+      op:t.st==='sold'?'0.72':'1', gray:t.st==='sold'?'70%':'0%',
+      priceFg:t.st==='sold'?'#5C6B82':'#0D1526',
+      cta:t.st==='sold'?'Értesítést kérek':'Részletek →', ctaFg:t.st==='sold'?'#5C6B82':'#0A6D9F',
+      href:t.href||'GalBusz Listaoldal.dc.html',
+      rail:j===cur.trips.length-1?'linear-gradient(180deg,#CBE7F6 0%,rgba(203,231,246,0) 80%)':'#CBE7F6'
+    }));
+    const free=cur.trips.filter(t=>t.st!=='sold').length;
+    const min=cur.trips.length?Math.min(...cur.trips.map(t=>t.price)):0;
+    return {
+      monthName:cur.name, yearBig:cur.y,
+      statAll:cur.trips.length, statFree:free, statMin:fmt(min),
+      prev:()=>this.setState({mi:i-1}), next:()=>this.setState({mi:i+1}),
+      nextFromEmpty:()=>this.setState({mi:Math.min(M.length-1,i+1)}),
+      prevDis:i===0, nextDis:i===M.length-1,
+      prevFg:i===0?'#CBD5E1':'#0D1526', nextFg:i===M.length-1?'#CBD5E1':'#0D1526',
+      prevCur:i===0?'default':'pointer', nextCur:i===M.length-1?'default':'pointer',
+      tabs:M.map((m,j)=>({n:m.tab, set:()=>this.setState({mi:j}),
+        bg:j===i?'#fff':'transparent', fg:j===i?'#0A6D9F':'#5C6B82',
+        sh:j===i?'0 1px 4px rgba(13,21,38,.14)':'none'})),
+      trips, hasTrips:trips.length>0, empty:trips.length===0
+    };
+  }
+}
+</script>
+</body>
+</html>

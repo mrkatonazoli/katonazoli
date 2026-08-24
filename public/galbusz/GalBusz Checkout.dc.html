@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Foglalás — Róma, az örök város | GálBusz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#2B3648;background:#F8FAFC;-webkit-font-smoothing:antialiased}
+a{color:#0C3A54;text-decoration:none}
+a:hover{color:#0A6D9F;text-decoration:underline}
+button,input,textarea{font-family:inherit}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+
+<div style="min-width:1180px;min-height:100vh;display:flex;flex-direction:column">
+
+<!-- Fejléc -->
+<header data-screen-label="Checkout fejléc" style="background:#fff;border-bottom:1px solid #E3E9F2;height:68px;flex:none">
+  <div style="max-width:1140px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;gap:18px;box-sizing:border-box">
+    <button onClick="{{ exitAsk }}" style="background:none;border:0;cursor:pointer;padding:0;display:flex;align-items:center" aria-label="Kilépés a foglalásból">
+      <span style="position:relative;display:inline-block;padding-bottom:4px">
+        <span style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:21px;letter-spacing:-0.03em;color:#0B2B40">Gál<span style="color:#0A6D9F">Busz</span></span>
+        <svg width="100%" height="8" viewBox="0 0 200 16" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-2px" aria-hidden="true"><path d="M4 12 Q100 -8 196 8" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round"></path></svg>
+      </span>
+    </button>
+    <span style="font-size:14px;color:#5C6B82;border-left:1px solid #E3E9F2;padding-left:18px">Foglalás · <strong style="color:#0D1526">Róma, az örök város</strong></span>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:20px">
+      <sc-if value="{{ showHold }}" hint-placeholder-val="{{ true }}">
+        <span style="display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:{{ holdColor }};font-variant-numeric:tabular-nums" aria-live="off"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>{{ holdLabel }}</span>
+      </sc-if>
+      <a href="tel:+3696595080" style="font-size:14px;font-weight:600;color:#0C3A54;font-variant-numeric:tabular-nums">+36 96 595 080</a>
+    </span>
+  </div>
+</header>
+
+<sc-if value="{{ onSteps }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1">
+  <!-- Lépésjelző -->
+  <div data-screen-label="Lépésjelző" style="background:#fff;border-bottom:1px solid #E3E9F2;padding:18px 0">
+    <ol style="max-width:1140px;margin:0 auto;padding:0 32px;display:flex;align-items:center;list-style:none;box-sizing:border-box">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
+        <li style="display:flex;align-items:center;flex:{{ st.flex }}">
+          <button onClick="{{ st.go }}" disabled="{{ st.locked }}" style="display:flex;align-items:center;gap:9px;background:none;border:0;cursor:{{ st.cursor }};padding:0">
+            <span style="width:30px;height:30px;border-radius:99px;background:{{ st.cBg }};color:{{ st.cFg }};border:2px solid {{ st.cBd }};box-shadow:0 0 0 {{ st.ring }}px #CBE7F6;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;box-sizing:border-box">{{ st.mark }}</span>
+            <span style="font-size:14px;font-weight:{{ st.w }};color:{{ st.lFg }};white-space:nowrap">{{ st.n }}</span>
+          </button>
+          <sc-if value="{{ st.hasLine }}" hint-placeholder-val="{{ true }}"><span style="flex:1;height:2px;background:{{ st.lineBg }};margin:0 14px;display:block"></span></sc-if>
+        </li>
+      </sc-for>
+    </ol>
+  </div>
+
+  <sc-if value="{{ holdWarn }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1140px;margin:16px auto 0;padding:0 32px;box-sizing:border-box">
+      <div style="background:#FFF7E6;border:1px solid #FFEDB8;border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <span style="font-size:16px;color:#B45309;font-weight:600">Kevés az idő maradt a fenntartásból.</span>
+        <button onClick="{{ extendHold }}" style="background:#F5A524;color:#0D1526;border:0;height:40px;padding:0 16px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer" style-hover="background:#D9860B">Kérek még 15 percet</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Fő rács -->
+  <div style="max-width:1140px;margin:0 auto;padding:28px 32px 64px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,640px) 380px;gap:44px;justify-content:space-between;align-items:start">
+
+    <!-- BAL: lépések -->
+    <div>
+      <sc-if value="{{ errSummaryShow }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="background:#FDECE8;border:1px solid #F5C6BB;border-radius:14px;padding:14px 18px;margin-bottom:20px">
+          <div style="font-size:16px;font-weight:700;color:#C0341D;margin-bottom:4px">{{ errSummaryTitle }}</div>
+          <div style="font-size:14px;color:#C0341D">{{ errSummaryList }}</div>
+        </div>
+      </sc-if>
+
+      <!-- L1 -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <h1 data-screen-label="L1 Utazás beállításai" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Ellenőrizze az utazás adatait</h1>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:6px">Időpont</div>
+            <div style="font-size:16px;font-weight:700;color:#0D1526;font-variant-numeric:tabular-nums">2026. október 13–18. · 6 nap / 5 éj</div>
+            <a href="GalBusz Utazas Aloldal.dc.html#idopontok" style="font-size:14px;font-weight:600;color:#0A6D9F">Ez az út más időpontban is indul →</a>
+          </div>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:10px">Felszállási hely</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ boardOpts }}" as="b" hint-placeholder-count="5">
+                <label style="display:flex;align-items:center;gap:12px;border:1px solid {{ b.bd }};background:{{ b.bg }};border-radius:12px;padding:11px 14px;cursor:pointer">
+                  <input type="radio" name="board" checked="{{ b.on }}" onChange="{{ b.set }}" style="width:18px;height:18px;accent-color:#0A6D9F">
+                  <strong style="font-variant-numeric:tabular-nums;width:48px;color:#0D1526">{{ b.time }}</strong>
+                  <span style="font-size:16px;color:#2B3648">{{ b.place }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:12px">Utasok és elhelyezés</div>
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+              <span style="font-size:16px;color:#2B3648;width:70px">Felnőtt</span>
+              <button onClick="{{ adDn }}" aria-label="Kevesebb" style="width:38px;height:38px;border-radius:99px;border:1px solid #E3E9F2;background:#fff;font-size:17px;cursor:pointer">−</button>
+              <span style="font-weight:700;min-width:16px;text-align:center;font-variant-numeric:tabular-nums">{{ adults }}</span>
+              <button onClick="{{ adUp }}" aria-label="Több" style="width:38px;height:38px;border-radius:99px;border:1px solid #E3E9F2;background:#fff;font-size:17px;cursor:pointer">+</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:#2B3648;cursor:pointer"><input type="radio" name="room" checked="{{ roomDouble }}" onChange="{{ setDouble }}" style="width:18px;height:18px;accent-color:#0A6D9F">{{ doubleLabel }}</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:16px;color:#2B3648;cursor:pointer"><input type="radio" name="room" checked="{{ roomSingle }}" onChange="{{ setSingle }}" style="width:18px;height:18px;accent-color:#0A6D9F">{{ singleLabel }} <span style="color:#B45309;font-weight:600;font-variant-numeric:tabular-nums">{{ singleFeeLabel }}</span></label>
+            </div>
+            <div style="background:#EAF6FC;border-radius:10px;padding:10px 14px;font-size:14px;color:#0C3A54;margin-top:14px">Ha egyedül utazik, kérhet szobatársat — így nem kell egyágyas felárat fizetnie.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- L2 -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+        <h1 data-screen-label="L2 Utasok adatai" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Kik utaznak?</h1>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">1. utas · <span style="color:#0A6D9F">kapcsolattartó</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Vezetéknév *</span><input value="{{ p1last }}" onChange="{{ setP1last }}" autoComplete="family-name" style="width:100%;height:48px;border:1px solid {{ eP1lastBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP1last }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a nevet.</span></sc-if></label>
+              <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Keresztnév *</span><input value="{{ p1first }}" onChange="{{ setP1first }}" autoComplete="given-name" style="width:100%;height:48px;border:1px solid {{ eP1firstBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP1first }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a nevet.</span></sc-if></label>
+            </div>
+            <label style="display:block;margin-top:14px;max-width:200px"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Születési év *</span><input value="{{ p1year }}" onChange="{{ setP1year }}" inputMode="numeric" style="width:100%;height:48px;border:1px solid {{ eP1yearBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;font-variant-numeric:tabular-nums" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP1year }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Négy számjegyű évszámot kérünk, például 1964.</span></sc-if></label>
+            <div style="font-size:13px;color:#5C6B82;margin-top:8px">A biztosításhoz szükséges. Kérjük, az okmányban szereplő módon adja meg a nevet — a névre szóló belépők ezzel készülnek.</div>
+          </div>
+          <sc-if value="{{ hasP2 }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+              <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">2. utas</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Vezetéknév *</span><input value="{{ p2last }}" onChange="{{ setP2last }}" style="width:100%;height:48px;border:1px solid {{ eP2lastBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP2last }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a nevet.</span></sc-if></label>
+                <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Keresztnév *</span><input value="{{ p2first }}" onChange="{{ setP2first }}" style="width:100%;height:48px;border:1px solid {{ eP2firstBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP2first }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a nevet.</span></sc-if></label>
+              </div>
+              <label style="display:block;margin-top:14px;max-width:200px"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Születési év *</span><input value="{{ p2year }}" onChange="{{ setP2year }}" inputMode="numeric" style="width:100%;height:48px;border:1px solid {{ eP2yearBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;font-variant-numeric:tabular-nums" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eP2year }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Négy számjegyű évszámot kérünk, például 1964.</span></sc-if></label>
+              <label style="display:flex;align-items:center;gap:9px;font-size:14px;color:#2B3648;margin-top:12px;cursor:pointer"><input type="checkbox" checked="{{ sameLast }}" onChange="{{ sameLastTgl }}" style="width:18px;height:18px;accent-color:#0A6D9F">Ugyanaz a vezetéknév, mint az 1. utasé</label>
+            </div>
+          </sc-if>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Megjegyzés az utazással kapcsolatban <span style="font-weight:400;color:#5C6B82">(nem kötelező)</span></span>
+            <textarea value="{{ notes }}" onChange="{{ setNotes }}" placeholder="Pl. étkezési igény, mozgásában korlátozott utas, ülésigény a buszon…" style="width:100%;min-height:84px;border:1px solid #E3E9F2;border-radius:10px;padding:12px 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;resize:vertical" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"></textarea></label>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- L3 -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+        <h1 data-screen-label="L3 Kiegészítők" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Biztosítás és kiegészítők</h1>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:12px">BBP biztosítás · <span style="color:#B45309">kötelező</span></div>
+            <label style="display:flex;gap:12px;border:1px solid {{ bbpGbBd }};background:{{ bbpGbBg }};border-radius:14px;padding:14px 16px;cursor:pointer;margin-bottom:10px">
+              <input type="radio" name="bbp" checked="{{ bbpGb }}" onChange="{{ setBbpGb }}" style="width:18px;height:18px;accent-color:#0A6D9F;margin-top:2px">
+              <span><span style="display:block;font-size:16px;font-weight:600;color:#0D1526">Kérem a GálBusz biztosítását</span><span style="display:block;font-size:14px;color:#5C6B82;margin-top:3px;font-variant-numeric:tabular-nums">9&#8239;800 Ft/fő · {{ adults }} fő = {{ bbpSum }}</span><span style="display:block;font-size:14px;color:#5C6B82;margin-top:2px">Betegség, baleset, poggyász — a teljes útra. <a href="#" style="text-decoration:underline">Biztosítási feltételek (PDF) ↗</a></span></span>
+            </label>
+            <label style="display:flex;gap:12px;border:1px solid {{ bbpOwnBd }};background:{{ bbpOwnBg }};border-radius:14px;padding:14px 16px;cursor:pointer">
+              <input type="radio" name="bbp" checked="{{ bbpOwn }}" onChange="{{ setBbpOwn }}" style="width:18px;height:18px;accent-color:#0A6D9F;margin-top:2px">
+              <span><span style="display:block;font-size:16px;font-weight:600;color:#0D1526">Van saját, érvényes utasbiztosításom</span><span style="display:block;font-size:14px;color:#5C6B82;margin-top:3px">A biztosító nevét és a kötvényszámot az indulás előtt írásban kell megadnia.</span></span>
+            </label>
+            <div style="background:#EAF6FC;border-radius:10px;padding:10px 14px;font-size:14px;color:#0C3A54;margin-top:12px">Az útlemondási biztosítás már benne van a részvételi díjban.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:12px">Választható programok</div>
+            <label style="display:flex;gap:14px;border:1px solid {{ coloBd }};background:{{ coloBg }};border-radius:14px;padding:14px;cursor:pointer">
+              <input type="checkbox" checked="{{ colo }}" onChange="{{ coloTgl }}" style="width:18px;height:18px;accent-color:#0A6D9F;margin-top:2px">
+              <span style="width:96px;height:72px;border-radius:10px;overflow:hidden;flex:none"><image-slot id="chk-colosseum" shape="rect" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80" placeholder="Colosseum" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></span>
+              <span><span style="display:block;font-size:16px;font-weight:600;color:#0D1526">Colosseum belépő</span><span style="display:block;font-size:14px;color:#5C6B82;margin-top:3px">4. nap · kb. 18 EUR/fő · helyszínen fizetendő, az idegenvezetőnél</span><span style="display:block;font-size:13px;color:#B45309;margin-top:3px">Foglaláskor kell jelezni — később nem pótolható.</span></span>
+            </label>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- L4 -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+        <h1 data-screen-label="L4 Kapcsolat és számlázás" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Hogyan érjük el?</h1>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">Kapcsolat</div>
+            <label style="display:block;margin-bottom:4px"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">E-mail cím *</span><input value="{{ email }}" onChange="{{ setEmail }}" inputMode="email" autoComplete="email" style="width:100%;height:48px;border:1px solid {{ eEmailBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Ez az e-mail cím hiányosnak tűnik.</span></sc-if></label>
+            <sc-if value="{{ emailSuggest }}" hint-placeholder-val="{{ false }}"><button onClick="{{ applySuggest }}" style="background:none;border:0;font-size:14px;color:#0A6D9F;cursor:pointer;padding:0;text-decoration:underline">Úgy értette: {{ suggestion }}?</button></sc-if>
+            <div style="font-size:13px;color:#5C6B82;margin:4px 0 14px">Ide küldjük a visszaigazolást és a foglalási linket. Ellenőrizze, jól írta-e be.</div>
+            <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Telefonszám *</span><input value="{{ phone }}" onChange="{{ setPhone }}" inputMode="tel" autoComplete="tel" placeholder="+36 30 123 4567" style="width:100%;height:48px;border:1px solid {{ ePhoneBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;font-variant-numeric:tabular-nums" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ ePhone }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adjon meg egy telefonszámot, ahol elérjük.</span></sc-if></label>
+            <div style="font-size:13px;color:#5C6B82;margin-top:4px">Csak akkor hívjuk, ha valami változik.</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">Számlázási adatok</div>
+            <div style="display:inline-flex;background:#F1F5F9;border-radius:999px;padding:4px;margin-bottom:16px">
+              <button onClick="{{ setPerson }}" style="border:0;border-radius:999px;height:36px;padding:0 18px;font-size:14px;font-weight:600;cursor:pointer;background:{{ personBg }};color:{{ personFg }}">Magánszemély</button>
+              <button onClick="{{ setCompany }}" style="border:0;border-radius:999px;height:36px;padding:0 18px;font-size:14px;font-weight:600;cursor:pointer;background:{{ companyBg }};color:{{ companyFg }}">Cég</button>
+            </div>
+            <label style="display:block;margin-bottom:14px"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">{{ billNameLabel }} *</span><input value="{{ billName }}" onChange="{{ setBillName }}" autoComplete="name" style="width:100%;height:48px;border:1px solid {{ eBillNameBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eBillName }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a nevet.</span></sc-if></label>
+            <sc-if value="{{ isCompany }}" hint-placeholder-val="{{ false }}">
+              <label style="display:block;margin-bottom:14px;max-width:260px"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Adószám *</span><input value="{{ taxno }}" onChange="{{ setTaxno }}" placeholder="12345678-1-23" style="width:100%;height:48px;border:1px solid {{ eTaxnoBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;font-variant-numeric:tabular-nums" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eTaxno }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Az adószám formátuma: 12345678-1-23.</span></sc-if></label>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:150px 1fr;gap:14px;margin-bottom:14px">
+              <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Irányítószám *</span><input value="{{ zip }}" onChange="{{ setZip }}" inputMode="numeric" autoComplete="postal-code" style="width:100%;height:48px;border:1px solid {{ eZipBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none;font-variant-numeric:tabular-nums" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eZip }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Négy számjegyű irányítószámot kérünk.</span></sc-if></label>
+              <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Város *</span><input value="{{ city }}" onChange="{{ setCity }}" autoComplete="address-level2" style="width:100%;height:48px;border:1px solid {{ eCityBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eCity }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a várost.</span></sc-if></label>
+            </div>
+            <label style="display:block"><span style="display:block;font-size:14px;font-weight:600;color:#0D1526;margin-bottom:5px">Cím *</span><input value="{{ addr }}" onChange="{{ setAddr }}" autoComplete="address-line1" style="width:100%;height:48px;border:1px solid {{ eAddrBd }};border-radius:10px;padding:0 14px;font-size:16px;color:#0D1526;box-sizing:border-box;outline:none" style-focus="border-color:#0A6D9F;box-shadow:0 0 0 3px #CBE7F6"><sc-if value="{{ eAddr }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:13px;color:#C0341D;margin-top:4px">⚠ Kérjük, adja meg a címet.</span></sc-if></label>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- L5 -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+        <h1 data-screen-label="L5 Áttekintés" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Mindent ellenőrizzen, mielőtt fizet</h1>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ reviewBlocks }}" as="rb" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #E3E9F2;border-radius:16px;padding:16px 20px;display:flex;justify-content:space-between;gap:16px">
+              <div>
+                <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:6px">{{ rb.t }}</div>
+                <div style="font-size:16px;line-height:1.6;color:#2B3648;white-space:pre-line">{{ rb.body }}</div>
+              </div>
+              <button onClick="{{ rb.go }}" style="background:none;border:0;font-size:14px;font-weight:600;color:#0A6D9F;cursor:pointer;padding:0;align-self:flex-start;white-space:nowrap">Módosítom</button>
+            </div>
+          </sc-for>
+          <div style="background:#fff;border:2px solid #A5D5EE;border-radius:20px;padding:20px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:.05em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">Fizetési ütemezés</div>
+            <div style="display:flex;flex-direction:column;gap:12px;font-variant-numeric:tabular-nums">
+              <div style="display:flex;justify-content:space-between;gap:14px;background:#EAF6FC;border-radius:12px;padding:12px 16px"><span><strong style="color:#0D1526">Most</strong><br><span style="font-size:13px;color:#5C6B82">előleg (40%) + BBP biztosítás</span></span><strong style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:19px;color:#0D1526">{{ payNow }}</strong></div>
+              <div style="display:flex;justify-content:space-between;gap:14px;padding:0 16px"><span><strong style="color:#0D1526">2026. szeptember 13-ig</strong><br><span style="font-size:13px;color:#5C6B82">a részvételi díj fennmaradó része — e-mailben emlékeztetjük</span></span><strong style="font-size:16px;color:#0D1526">{{ payLater }}</strong></div>
+              <div style="display:flex;justify-content:space-between;gap:14px;padding:0 16px;color:#5C6B82"><span>Helyszínen, az idegenvezetőnél<br><span style="font-size:13px">belépődíjak{{ coloNote }} · kb. {{ onsiteEur }} EUR</span></span><span style="font-weight:600">{{ payOnsite }}</span></div>
+            </div>
+          </div>
+          <div style="background:#FFF7E6;border:1px solid #FFEDB8;border-radius:14px;padding:14px 18px;font-size:14px;line-height:1.55;color:#7A4806">Lemondási kikötés erre az útra: „Az indulást megelőző két hónapon belüli lemondás esetén a névre szólóan megvásárolt belépőjegyek árát ki kell fizetni."</div>
+          <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+            <label style="display:flex;align-items:flex-start;gap:10px;font-size:16px;color:#2B3648;cursor:pointer"><input type="checkbox" checked="{{ c1 }}" onChange="{{ c1Tgl }}" style="width:19px;height:19px;accent-color:#0A6D9F;margin-top:1px">Elfogadom az <a href="#" style="text-decoration:underline">Általános Szerződési Feltételeket ↗</a></label>
+            <label style="display:flex;align-items:flex-start;gap:10px;font-size:16px;color:#2B3648;cursor:pointer"><input type="checkbox" checked="{{ c2 }}" onChange="{{ c2Tgl }}" style="width:19px;height:19px;accent-color:#0A6D9F;margin-top:1px">Megismertem az <a href="#" style="text-decoration:underline">utazási szerződés és a lemondás feltételeit ↗</a></label>
+            <label style="display:flex;align-items:flex-start;gap:10px;font-size:16px;color:#2B3648;cursor:pointer"><input type="checkbox" checked="{{ c3 }}" onChange="{{ c3Tgl }}" style="width:19px;height:19px;accent-color:#0A6D9F;margin-top:1px">Elfogadom az <a href="#" style="text-decoration:underline">adatkezelési tájékoztatót ↗</a></label>
+            <div style="border-top:1px solid #F1F5F9;padding-top:12px">
+              <label style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#5C6B82;cursor:pointer"><input type="checkbox" checked="{{ nl }}" onChange="{{ nlTgl }}" style="width:18px;height:18px;accent-color:#0A6D9F;margin-top:1px">Kérek hírlevelet az új utakról (nem kötelező)</label>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- L6 -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+        <h1 data-screen-label="L6 Fizetési mód" style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 22px">Hogyan szeretné rendezni a {{ payNow }} előleget?</h1>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ payOpts }}" as="po" hint-placeholder-count="3">
+            <label style="display:flex;gap:14px;align-items:flex-start;border:2px solid {{ po.bd }};background:{{ po.bg }};border-radius:16px;padding:18px 20px;cursor:pointer;min-height:88px;box-sizing:border-box">
+              <input type="radio" name="pay" checked="{{ po.on }}" onChange="{{ po.set }}" style="width:19px;height:19px;accent-color:#0A6D9F;margin-top:2px">
+              <span style="flex:1">
+                <span style="display:block;font-size:16px;font-weight:700;color:#0D1526">{{ po.t }}</span>
+                <span style="display:block;font-size:14px;color:#5C6B82;margin-top:4px;line-height:1.5">{{ po.d }}</span>
+                <sc-if value="{{ po.cards }}" hint-placeholder-val="{{ false }}">
+                  <span style="display:flex;gap:6px;margin-top:8px">
+                    <span style="border:1px solid #E3E9F2;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:700;color:#0C3A54">VISA</span>
+                    <span style="border:1px solid #E3E9F2;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:700;color:#0C3A54">Mastercard</span>
+                    <span style="border:1px solid #E3E9F2;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:700;color:#0C3A54">Maestro</span>
+                  </span>
+                </sc-if>
+              </span>
+            </label>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- Navigáció -->
+      <div style="display:flex;justify-content:space-between;gap:16px;margin-top:28px">
+        <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ goBack }}" style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:52px;padding:0 24px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="border-color:#CBD5E1">← Vissza</button>
+        </sc-if>
+        <sc-if value="{{ noBack }}" hint-placeholder-val="{{ true }}"><span></span></sc-if>
+        <sc-if value="{{ backToReview }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ goReview }}" style="border:1px solid #A5D5EE;background:#EAF6FC;color:#0C3A54;height:52px;padding:0 22px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;margin-left:auto;margin-right:12px">Vissza az áttekintéshez</button>
+        </sc-if>
+        <button onClick="{{ goNext }}" disabled="{{ nextDisabled }}" style="background:{{ nextBg }};color:{{ nextFg }};border:0;height:52px;padding:0 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:{{ nextCursor }};transition:background 120ms;opacity:{{ nextOpacity }}" style-active="transform:translateY(1px)">{{ nextLabel }}</button>
+      </div>
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ consMissing }}" hint-placeholder-val="{{ true }}"><div aria-live="polite" style="font-size:13px;color:#5C6B82;margin-top:10px;text-align:right">A továbblépéshez el kell fogadnia a három kötelező feltételt.</div></sc-if></sc-if>
+    </div>
+
+    <!-- JOBB: összegző -->
+    <aside role="complementary" aria-label="Foglalás összegzése" data-screen-label="Összegző panel" style="position:sticky;top:24px;background:#fff;border:1px solid #E3E9F2;border-radius:20px;box-shadow:0 12px 32px rgba(13,21,38,.08);overflow:hidden">
+      <div style="height:130px"><image-slot id="chk-summary" shape="rect" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80" placeholder="Róma fotó" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+      <div style="padding:18px 20px">
+        <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:17px;color:#0D1526">Róma, az örök város</div>
+        <div style="font-size:13px;color:#5C6B82;margin-top:3px;font-variant-numeric:tabular-nums">2026. okt. 13–18. · 6 nap / 5 éj</div>
+        <div style="font-size:13px;color:#5C6B82;margin-top:2px">{{ boardShort }} · Móritz Adrienn</div>
+        <div style="font-size:13px;color:#2B3648;border-top:1px solid #F1F5F9;margin-top:12px;padding-top:12px">{{ occLabel }}</div>
+        <div style="display:flex;flex-direction:column;gap:7px;font-size:14px;color:#2B3648;font-variant-numeric:tabular-nums;margin-top:10px">
+          <sc-for list="{{ sumLines }}" as="l" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:10px;background:{{ l.hl }};border-radius:6px;transition:background 600ms"><span style="color:#5C6B82">{{ l.l }}</span><span style="font-weight:600;color:#0D1526">{{ l.v }}</span></div>
+          </sc-for>
+          <div style="display:flex;justify-content:space-between;gap:10px;border-top:1px solid #E3E9F2;padding-top:8px"><span style="font-weight:600;color:#0D1526">Fizetendő összesen</span><span style="font-weight:700;color:#0D1526">{{ totalSum }}</span></div>
+        </div>
+        <div aria-live="polite" style="background:#EAF6FC;border:1px solid #A5D5EE;border-radius:14px;padding:14px 16px;margin-top:14px">
+          <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#086A9E;text-transform:uppercase">Most fizetendő</div>
+          <div style="font-size:13px;color:#5C6B82;margin-top:2px">Előleg (40%) + biztosítás</div>
+          <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:26px;color:#0D1526;font-variant-numeric:tabular-nums;margin-top:4px">{{ payNow }}</div>
+        </div>
+        <div style="font-size:14px;color:#2B3648;margin-top:12px;font-variant-numeric:tabular-nums">Később: <strong>{{ payLater }}</strong> — 2026. szept. 13.</div>
+        <div style="font-size:13px;color:#5C6B82;margin-top:6px;font-variant-numeric:tabular-nums">Helyszínen, az idegenvezetőnél: {{ payOnsite }}<br>(belépők{{ coloNote }})</div>
+      </div>
+    </aside>
+  </div>
+</div>
+</sc-if>
+
+<!-- Interstitial -->
+<sc-if value="{{ onInterstitial }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="L7a Interstitial" style="flex:1;display:flex;align-items:center;justify-content:center;padding:64px 32px">
+    <div style="background:#fff;border:1px solid #E3E9F2;border-radius:28px;box-shadow:0 12px 32px rgba(13,21,38,.08);padding:48px;text-align:center;max-width:440px">
+      <span style="width:44px;height:44px;border:4px solid #CBE7F6;border-top-color:#0A6D9F;border-radius:99px;display:inline-block;animation:spin 800ms linear infinite" aria-hidden="true"></span>
+      <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:22px;color:#0D1526;margin:22px 0 8px">Átirányítjuk a bank biztonságos oldalára…</h1>
+      <p style="font-size:16px;color:#5C6B82;margin:0">Ne zárja be az ablakot. A kártyaadatait a bank védett felületén adja meg — mi nem látjuk és nem tároljuk őket.</p>
+    </div>
+  </div>
+</sc-if>
+
+<!-- Elutasítva -->
+<sc-if value="{{ onDeclined }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="L7a Elutasítva" style="flex:1;display:flex;align-items:center;justify-content:center;padding:64px 32px">
+    <div style="background:#fff;border:1px solid #E3E9F2;border-radius:28px;box-shadow:0 12px 32px rgba(13,21,38,.08);padding:40px;max-width:520px">
+      <span style="width:52px;height:52px;border-radius:99px;background:#FDECE8;color:#C0341D;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700" aria-hidden="true">!</span>
+      <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:24px;color:#0D1526;margin:18px 0 8px">A bank nem hagyta jóvá a fizetést</h1>
+      <p style="font-size:16px;color:#2B3648;margin:0 0 14px;line-height:1.6">A foglalása megvan, a helyét továbbra is tartjuk. A leggyakoribb okok:</p>
+      <ul style="margin:0 0 22px;padding-left:20px;font-size:16px;color:#5C6B82;line-height:1.7">
+        <li>a kártyán nincs engedélyezve az internetes fizetés,</li>
+        <li>a napi limit alacsonyabb az összegnél,</li>
+        <li>a banki jóváhagyás (3D Secure) megszakadt.</li>
+      </ul>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button onClick="{{ retryCard }}" style="background:#F5A524;color:#0D1526;border:0;height:52px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer" style-hover="background:#D9860B">Újrapróbálom más kártyával</button>
+        <button onClick="{{ payByTransfer }}" style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:52px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="border-color:#CBD5E1">Inkább átutalással fizetek</button>
+        <a href="tel:+3696595080" style="display:flex;align-items:center;justify-content:center;height:52px;border:1px solid #E3E9F2;border-radius:14px;font-size:16px;font-weight:600;color:#0D1526;text-decoration:none" style-hover="border-color:#A5D5EE;text-decoration:none;color:#0D1526">Hívom az irodát: +36 96 595 080</a>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- L8 Siker -->
+<sc-if value="{{ onSuccess }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="L8 Sikeroldal" style="flex:1;padding:56px 32px 72px">
+    <div style="max-width:640px;margin:0 auto;text-align:center">
+      <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ true }}">
+        <span style="width:72px;height:72px;border-radius:99px;background:#E7F7EF;display:inline-flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#076B42" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg></span>
+        <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:34px;letter-spacing:-0.02em;color:#0D1526;margin:20px 0 8px">Megvan a helye!</h1>
+        <p style="font-size:17px;color:#5C6B82;margin:0 0 32px">Köszönjük, {{ leadFirst }}. Foglalását visszaigazoltuk.</p>
+      </sc-if>
+      <sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+        <span style="width:72px;height:72px;border-radius:99px;background:#FFF7E6;display:inline-flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        <h1 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:34px;letter-spacing:-0.02em;color:#0D1526;margin:20px 0 8px">Foglalását rögzítettük</h1>
+        <p style="font-size:17px;color:#5C6B82;margin:0 0 32px">A helyét <strong style="color:#B45309">2026. augusztus 20-ig</strong> fenntartjuk.</p>
+      </sc-if>
+
+      <sc-if value="{{ showTransfer }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:2px solid #FFEDB8;border-radius:20px;padding:24px;text-align:left;margin-bottom:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#B45309;text-transform:uppercase">Átutalási adatok</span><button onClick="{{ copyAll }}" style="border:1px solid #E3E9F2;background:#fff;border-radius:10px;height:36px;padding:0 14px;font-size:13px;font-weight:600;color:#0D1526;cursor:pointer">{{ copyLabel }}</button></div>
+          <div style="display:grid;grid-template-columns:150px 1fr;gap:9px 16px;font-size:16px;color:#2B3648;font-variant-numeric:tabular-nums">
+            <span style="color:#5C6B82">Kedvezményezett</span><strong>Gál-Busz Kft.</strong>
+            <span style="color:#5C6B82">Bankszámlaszám</span><strong>[kitöltendő]</strong>
+            <span style="color:#5C6B82">Összeg</span><strong>{{ payNow }}</strong>
+            <span style="color:#5C6B82">Közlemény</span><strong>GB-2026-04871</strong>
+            <span style="color:#5C6B82">Határidő</span><strong>2026. augusztus 20. 23:59</strong>
+          </div>
+          <div style="background:#FFF7E6;border-radius:10px;padding:10px 14px;font-size:14px;color:#7A4806;margin-top:14px">A közlemény rovatba feltétlenül írja be a foglalási azonosítót — enélkül nem tudjuk beazonosítani.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ showOffice }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:2px solid #FFEDB8;border-radius:20px;padding:24px;text-align:left;margin-bottom:20px">
+          <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#B45309;text-transform:uppercase;margin-bottom:14px">Hol fizethet</div>
+          <div style="font-size:16px;color:#2B3648;line-height:1.7">
+            <strong>Kapuvár, Piac tér 1.</strong> · +36 96 595 080<br>
+            <strong>Győr, Aradi vértanúk útja 2.</strong> · +36 20 952 8310<br>
+            <span style="color:#5C6B82">Fizetendő: <strong style="color:#0D1526;font-variant-numeric:tabular-nums">{{ payNow }}</strong> · Hivatkozás: <strong style="color:#0D1526">GB-2026-04871</strong> · Határidő: 2026. augusztus 20.</span><br>
+            <span style="color:#5C6B82">Készpénz és bankkártya egyaránt elfogadható.</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="background:#fff;border:1px solid #E3E9F2;border-radius:20px;overflow:hidden;text-align:left;box-shadow:0 12px 32px rgba(13,21,38,.06)">
+        <div style="background:#F8FAFC;border-bottom:1px solid #E3E9F2;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px">
+          <span><span style="display:block;font-size:13px;font-weight:600;letter-spacing:.06em;color:#5C6B82;text-transform:uppercase">Foglalási azonosító</span><span style="display:block;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:24px;color:#0D1526;font-variant-numeric:tabular-nums">GB-2026-04871</span></span>
+          <button onClick="{{ copyRef }}" style="border:1px solid #E3E9F2;background:#fff;border-radius:10px;height:38px;padding:0 14px;font-size:13px;font-weight:600;color:#0D1526;cursor:pointer">{{ copyRefLabel }}</button>
+        </div>
+        <div style="padding:18px 22px;font-size:16px;color:#2B3648;line-height:1.8">
+          <strong style="color:#0D1526">Róma, az örök város</strong> · 2026. október 13–18. · 6 nap / 5 éj<br>
+          Felszállás: {{ boardShort }}<br>
+          Utasok: {{ paxNames }}<br>
+          Idegenvezető: Móritz Adrienn
+        </div>
+        <div style="border-top:1px solid #F1F5F9;padding:16px 22px;display:flex;flex-direction:column;gap:8px;font-size:16px;font-variant-numeric:tabular-nums">
+          <div style="display:flex;justify-content:space-between"><span style="color:#5C6B82">{{ paidLabel }}</span><strong style="color:{{ paidColor }}">{{ payNow }}{{ paidMark }}</strong></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:#5C6B82">Még fizetendő · 2026. szept. 13.</span><strong style="color:#0D1526">{{ payLater }}</strong></div>
+          <div style="display:flex;justify-content:space-between;color:#5C6B82"><span>Helyszínen</span><span>{{ payOnsite }}</span></div>
+        </div>
+      </div>
+
+      <div style="text-align:left;margin-top:28px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#5C6B82;text-transform:uppercase;margin-bottom:14px">Mi történik ezután?</div>
+        <ol style="margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px">
+          <li style="display:flex;gap:12px;font-size:16px;color:#2B3648;line-height:1.6"><span style="width:26px;height:26px;border-radius:99px;background:#EAF6FC;color:#086A9E;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">1</span>{{ next1 }}</li>
+          <li style="display:flex;gap:12px;font-size:16px;color:#2B3648;line-height:1.6"><span style="width:26px;height:26px;border-radius:99px;background:#EAF6FC;color:#086A9E;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">2</span>Szeptember elején e-mailben emlékeztetjük a fennmaradó összegről.</li>
+          <li style="display:flex;gap:12px;font-size:16px;color:#2B3648;line-height:1.6"><span style="width:26px;height:26px;border-radius:99px;background:#EAF6FC;color:#086A9E;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">3</span>Az indulás előtti héten megküldjük a részletes útitervet és a pontos indulási időt.</li>
+        </ol>
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap">
+        <button style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:48px;padding:0 20px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer" style-hover="border-color:#CBD5E1">Naptárba mentem (.ics)</button>
+        <button style="background:#0A6D9F;color:#fff;border:0;height:48px;padding:0 22px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#086A9E">Foglalás megnyitása</button>
+        <button style="border:1px solid #E3E9F2;background:#fff;color:#0D1526;height:48px;padding:0 20px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer" style-hover="border-color:#CBD5E1">Útiterv letöltése PDF</button>
+      </div>
+      <div style="font-size:13px;color:#5C6B82;margin-top:10px">A foglalás-megnyitó linket e-mailben is elküldtük.</div>
+      <div style="font-size:16px;color:#5C6B82;margin-top:24px">Kérdése van? <a href="tel:+3696595080" style="font-weight:600">+36 96 595 080</a> · <a href="mailto:info@galbusz.hu" style="font-weight:600">info@galbusz.hu</a></div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- Footer -->
+<footer style="background:#fff;border-top:1px solid #E3E9F2;padding:16px 0;flex:none">
+  <div style="max-width:1140px;margin:0 auto;padding:0 32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:22px;font-size:13px;color:#5C6B82;flex-wrap:wrap">
+    <span style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#076B42" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>Biztonságos kapcsolat</span>
+    <a href="#" style="color:#5C6B82">ÁSZF</a>
+    <a href="#" style="color:#5C6B82">Adatvédelem</a>
+    <a href="#" style="color:#5C6B82">Utazási feltételek</a>
+    <span>Segítség: <a href="tel:+3696595080" style="color:#0C3A54;font-weight:600">+36 96 595 080</a></span>
+  </div>
+</footer>
+
+<!-- Modálok -->
+<sc-if value="{{ modalExit }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" style="position:fixed;inset:0;background:rgba(13,21,38,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="background:#fff;border-radius:20px;padding:28px;max-width:400px;box-shadow:0 20px 48px rgba(11,43,64,.25)">
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin:0 0 8px">Elhagyja a foglalást?</h2>
+      <p style="font-size:16px;color:#5C6B82;margin:0 0 20px;line-height:1.6">Az adatait 20 percig megőrizzük, és a foglalási linkről bármikor folytathatja.</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <a href="GalBusz Utazas Aloldal.dc.html" style="display:flex;align-items:center;height:44px;padding:0 18px;border:1px solid #E3E9F2;border-radius:12px;font-size:14px;font-weight:600;color:#0D1526;text-decoration:none" style-hover="border-color:#CBD5E1;color:#0D1526;text-decoration:none">Elhagyom</a>
+        <button onClick="{{ modalClose }}" style="background:#0A6D9F;color:#fff;border:0;height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#086A9E">Folytatom a foglalást</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ modalExpired }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" style="position:fixed;inset:0;background:rgba(13,21,38,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="background:#fff;border-radius:20px;padding:28px;max-width:400px;box-shadow:0 20px 48px rgba(11,43,64,.25)">
+      <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526;margin:0 0 8px">Lejárt a fenntartás</h2>
+      <p style="font-size:16px;color:#5C6B82;margin:0 0 20px;line-height:1.6">Az adatai megmaradtak. Ha folytatja, újra ellenőrizzük a szabad helyeket, és új 20 perces fenntartás indul.</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <a href="GalBusz Utazas Aloldal.dc.html" style="display:flex;align-items:center;height:44px;padding:0 18px;border:1px solid #E3E9F2;border-radius:12px;font-size:14px;font-weight:600;color:#0D1526;text-decoration:none" style-hover="border-color:#CBD5E1;color:#0D1526;text-decoration:none">Elhagyom</a>
+        <button onClick="{{ restartHold }}" style="background:#F5A524;color:#0D1526;border:0;height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer" style-hover="background:#D9860B">Folytatom ugyanezzel</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cardOutcome&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;success&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;success&quot;,&quot;declined&quot;],&quot;section&quot;:&quot;Demó&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen:'steps', step:1, hold:1200, extended:false, modal:null,
+    adults:2, room:'double', board:'Kapuvár, Spar parkoló — 05:20',
+    p1:{last:'Kovács',first:'Éva',year:'1964'}, p2:{last:'',first:'',year:''}, sameLast:false, notes:'',
+    bbp:'gb', colo:true,
+    email:'', phone:'', billType:'person', billName:'', zip:'', city:'', addr:'', taxno:'',
+    c1:false, c2:false, c3:false, nl:false,
+    pay:'card', errors:{}, showErr:false, fromReview:false,
+    copied:false, copiedRef:false, outcome:null
+  };
+  componentDidMount(){
+    this.timer=setInterval(()=>{
+      const S=this.state;
+      if(S.screen!=='steps'||S.modal)return;
+      if(S.hold<=0)return;
+      const h=S.hold-1;
+      this.setState({hold:h, modal:h<=0?'expired':S.modal});
+    },1000);
+  }
+  componentWillUnmount(){clearInterval(this.timer);}
+  set(path){return (e)=>{
+    const v=e.target?e.target.value:e;
+    this.setState(st=>{
+      if(path.includes('.')){const [a,b]=path.split('.');return {[a]:{...st[a],[b]:v}, errors:{...st.errors,[path]:null}};}
+      return {[path]:v, errors:{...st.errors,[path]:null}};
+    });
+  };}
+  validate(step){
+    const S=this.state, e={};
+    const nm=v=>v&&v.trim().length>=2;
+    const yr=v=>/^\d{4}$/.test(v)&&+v>=1900&&+v<=2026;
+    if(step===2){
+      if(!nm(S.p1.last))e['p1.last']=1; if(!nm(S.p1.first))e['p1.first']=1; if(!yr(S.p1.year))e['p1.year']=1;
+      if(S.adults>=2){
+        const l2=S.sameLast?S.p1.last:S.p2.last;
+        if(!nm(l2))e['p2.last']=1; if(!nm(S.p2.first))e['p2.first']=1; if(!yr(S.p2.year))e['p2.year']=1;
+      }
+    }
+    if(step===4){
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(S.email))e['email']=1;
+      if(!S.phone||S.phone.replace(/\D/g,'').length<8)e['phone']=1;
+      if(!nm(S.billName))e['billName']=1;
+      if(!/^\d{4}$/.test(S.zip))e['zip']=1;
+      if(!nm(S.city))e['city']=1;
+      if(!S.addr||S.addr.trim().length<4)e['addr']=1;
+      if(S.billType==='company'&&!/^\d{8}-\d-\d{2}$/.test(S.taxno))e['taxno']=1;
+    }
+    return e;
+  }
+  next(){
+    const S=this.state;
+    if(S.step===6){
+      if(S.pay==='card'){
+        this.setState({screen:'interstitial'});
+        setTimeout(()=>{
+          const out=(this.props.cardOutcome ?? 'success');
+          this.setState({screen:out==='declined'?'declined':'success', outcome:'card', hold:S.hold});
+        },2200);
+      } else {
+        this.setState({screen:'success', outcome:S.pay});
+      }
+      return;
+    }
+    const e=this.validate(S.step);
+    if(Object.keys(e).length){this.setState({errors:e, showErr:true}); window.scrollTo({top:0,behavior:'smooth'}); return;}
+    const goingTo=S.fromReview&&S.step<5?5:S.step+1;
+    this.setState({step:goingTo, errors:{}, showErr:false, fromReview:S.fromReview&&goingTo===5?false:S.fromReview});
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  renderVals(){
+    const S=this.state, NB='\u202f';
+    const fmt=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'Ft';
+    const pax=S.adults;
+    const single=S.room==='single';
+    const base=pax*339000, singleFee=single?pax*75000:0;
+    const part=base+singleFee;
+    const bbpSum=S.bbp==='gb'?pax*9800:0;
+    const total=part+bbpSum;
+    const deposit=Math.round(part*0.4);
+    const now=deposit+bbpSum, later=part-deposit;
+    const onsiteEur=pax*(78+(S.colo?18:0));
+    const onsite=onsiteEur*400;
+    const mm=Math.floor(Math.max(0,S.hold)/60), ss=String(Math.max(0,S.hold)%60).padStart(2,'0');
+    const holdColor=S.hold<120?'#C0341D':S.hold<300?'#B45309':'#5C6B82';
+    const E=S.errors;
+    const bd=k=>E[k]?'#C0341D':'#E3E9F2';
+    const stepNames=['Utazás','Utasok','Kiegészítők','Adatok','Áttekintés'];
+    const cur=Math.min(S.step,5);
+    const steps=stepNames.map((n,i)=>{
+      const num=i+1, done=num<cur||S.step===6, act=num===cur&&S.step!==6;
+      return {n, mark:done?'✓':String(num), flex:i<4?'1':'0 0 auto',
+        cBg:done||act?'#0A6D9F':'#fff', cFg:done||act?'#fff':'#8A97AC', cBd:done||act?'#0A6D9F':'#E3E9F2',
+        ring:act?4:0, w:act?700:500, lFg:done?'#0D1526':act?'#0D1526':'#8A97AC',
+        hasLine:i<4, lineBg:num<cur||S.step===6?'#0A6D9F':'#E3E9F2',
+        locked:!done, cursor:done?'pointer':'default',
+        go:()=>{if(done&&S.step!==6)this.setState({step:num,errors:{},showErr:false});}};
+    });
+    const boardData=[
+      {time:'04:30',place:'Győr, Városháza'},{time:'05:00',place:'Csorna, Kórházzal szemben'},
+      {time:'05:20',place:'Kapuvár, Spar parkoló'},{time:'05:35',place:'Fertőszentmiklós, elkerülő'},
+      {time:'06:00',place:'Sopron, GYSEV pályaudvar'}
+    ];
+    const boardOpts=boardData.map(b=>{const key=b.place+' — '+b.time; const on=S.board===key;
+      return {...b,on,bg:on?'#EAF6FC':'#fff',bd:on?'#0A6D9F':'#E3E9F2',set:()=>this.setState({board:key})};});
+    const errCount=Object.values(E).filter(Boolean).length;
+    const errNames={'p1.last':'1. utas vezetékneve','p1.first':'1. utas keresztneve','p1.year':'1. utas születési éve','p2.last':'2. utas vezetékneve','p2.first':'2. utas keresztneve','p2.year':'2. utas születési éve',email:'e-mail cím',phone:'telefonszám',billName:'számlázási név',zip:'irányítószám',city:'város',addr:'cím',taxno:'adószám'};
+    const consOk=S.c1&&S.c2&&S.c3;
+    const nextDisabled=S.step===5&&!consOk;
+    const nextLabel=S.step===5?'Tovább a fizetéshez →':S.step===6?'Fizetés '+fmt(now)+' →':['Tovább az utasokhoz →','Tovább a kiegészítőkhöz →','Tovább az adatokhoz →','Tovább az áttekintéshez →'][S.step-1];
+    const suggestion=(()=>{const m=S.email.match(/@(.+)$/); if(!m)return null;
+      const map={'gmial.com':'gmail.com','gmal.com':'gmail.com','gmail.co':'gmail.com','gmail.hu':'gmail.com','freemal.hu':'freemail.hu','citromai.hu':'citromail.hu'};
+      return map[m[1].toLowerCase()]?S.email.replace(/@.+$/,'@'+map[m[1].toLowerCase()]):null;})();
+    const p2last=S.sameLast?S.p1.last:S.p2.last;
+    const paxNames=[S.p1.last+' '+S.p1.first+' ('+S.p1.year+')', ...(pax>=2?[(p2last||'—')+' '+(S.p2.first||'—')+(S.p2.year?' ('+S.p2.year+')':'')]:[])].join(', ');
+    const occ=pax+' felnőtt · '+(single?pax+' db egyágyas szoba':Math.ceil(pax/2)+' db 2 ágyas szoba');
+    const coloNote=S.colo?' + Colosseum':'';
+    const reviewBlocks=[
+      {t:'Utazás', body:'Róma, az örök város · 2026. okt. 13–18.\nFelszállás: '+S.board+'\n'+occ+' · félpanzió', go:()=>this.setState({step:1,fromReview:true})},
+      {t:'Utasok', body:'1. '+S.p1.last+' '+S.p1.first+' ('+S.p1.year+') · kapcsolattartó'+(pax>=2?'\n2. '+(p2last||'—')+' '+(S.p2.first||'—')+(S.p2.year?' ('+S.p2.year+')':''):''), go:()=>this.setState({step:2,fromReview:true})},
+      {t:'Kiegészítők', body:(S.bbp==='gb'?'BBP biztosítás — GálBusz · '+pax+' fő':'Saját utasbiztosítás — írásban jelzi')+(S.colo?'\nColosseum belépő · '+pax+' fő (helyszínen)':''), go:()=>this.setState({step:3,fromReview:true})},
+      {t:'Elérhetőség', body:(S.email||'—')+' · '+(S.phone||'—')+'\nSzámla: '+(S.billName||'—')+', '+(S.zip||'')+' '+(S.city||'')+', '+(S.addr||''), go:()=>this.setState({step:4,fromReview:true})}
+    ];
+    const sumLines=[
+      {l:'Részvételi díj · '+pax+' × 339'+NB+'000', v:fmt(base), hl:'transparent'},
+      ...(singleFee?[{l:'Egyágyas felár · '+pax+' × 75'+NB+'000', v:fmt(singleFee), hl:'transparent'}]:[]),
+      ...(bbpSum?[{l:'BBP biztosítás · '+pax+' × 9'+NB+'800', v:fmt(bbpSum), hl:'transparent'}]:[])
+    ];
+    const payOpts=[
+      {k:'card',t:'Bankkártyával, most',d:'A foglalása azonnal véglegessé válik.',cards:true},
+      {k:'transfer',t:'Banki átutalással',d:'Díjbekérőt küldünk e-mailben. A helyet 3 munkanapig tartjuk fenn.',cards:false},
+      {k:'office',t:'Személyesen, az irodánkban',d:'Kapuvár, Piac tér 1. vagy Győr, Aradi vértanúk útja 2. Készpénz vagy kártya. A helyet 3 munkanapig tartjuk fenn.',cards:false}
+    ].map(o=>({...o,on:S.pay===o.k,bg:S.pay===o.k?'#EAF6FC':'#fff',bd:S.pay===o.k?'#0A6D9F':'#E3E9F2',set:()=>this.setState({pay:o.k})}));
+    return {
+      onSteps:S.screen==='steps', onInterstitial:S.screen==='interstitial', onDeclined:S.screen==='declined', onSuccess:S.screen==='success',
+      showHold:S.screen==='steps', holdLabel:mm+':'+ss, holdColor,
+      holdWarn:S.screen==='steps'&&S.hold<120&&S.hold>0&&!S.extended,
+      extendHold:()=>this.setState(st=>({hold:st.hold+900,extended:true})),
+      steps,
+      s1:S.step===1&&S.screen==='steps', s2:S.step===2, s3:S.step===3, s4:S.step===4, s5:S.step===5, s6:S.step===6,
+      exitAsk:()=>this.setState({modal:'exit'}), modalExit:S.modal==='exit', modalExpired:S.modal==='expired',
+      modalClose:()=>this.setState({modal:null}),
+      restartHold:()=>this.setState({modal:null,hold:1200,extended:false}),
+      adults:pax, adUp:()=>this.setState(st=>({adults:Math.min(6,st.adults+1)})), adDn:()=>this.setState(st=>({adults:Math.max(1,st.adults-1)})),
+      roomDouble:!single, roomSingle:single, setDouble:()=>this.setState({room:'double'}), setSingle:()=>this.setState({room:'single'}),
+      doubleLabel:Math.ceil(pax/2)+' db kétágyas szoba', singleLabel:pax+' db egyágyas szoba', singleFeeLabel:'+'+fmt(pax*75000),
+      boardOpts, boardShort:S.board,
+      p1last:S.p1.last, p1first:S.p1.first, p1year:S.p1.year,
+      setP1last:this.set('p1.last'), setP1first:this.set('p1.first'), setP1year:this.set('p1.year'),
+      eP1last:!!E['p1.last'], eP1first:!!E['p1.first'], eP1year:!!E['p1.year'],
+      eP1lastBd:bd('p1.last'), eP1firstBd:bd('p1.first'), eP1yearBd:bd('p1.year'),
+      hasP2:pax>=2,
+      p2last:p2last, p2first:S.p2.first, p2year:S.p2.year,
+      setP2last:this.set('p2.last'), setP2first:this.set('p2.first'), setP2year:this.set('p2.year'),
+      eP2last:!!E['p2.last'], eP2first:!!E['p2.first'], eP2year:!!E['p2.year'],
+      eP2lastBd:bd('p2.last'), eP2firstBd:bd('p2.first'), eP2yearBd:bd('p2.year'),
+      sameLast:S.sameLast, sameLastTgl:()=>this.setState(st=>({sameLast:!st.sameLast})),
+      notes:S.notes, setNotes:this.set('notes'),
+      bbpGb:S.bbp==='gb', bbpOwn:S.bbp==='own',
+      setBbpGb:()=>this.setState({bbp:'gb'}), setBbpOwn:()=>this.setState({bbp:'own'}),
+      bbpGbBg:S.bbp==='gb'?'#EAF6FC':'#fff', bbpGbBd:S.bbp==='gb'?'#0A6D9F':'#E3E9F2',
+      bbpOwnBg:S.bbp==='own'?'#EAF6FC':'#fff', bbpOwnBd:S.bbp==='own'?'#0A6D9F':'#E3E9F2',
+      bbpSum:fmt(pax*9800),
+      colo:S.colo, coloTgl:()=>this.setState(st=>({colo:!st.colo})),
+      coloBg:S.colo?'#EAF6FC':'#fff', coloBd:S.colo?'#0A6D9F':'#E3E9F2',
+      email:S.email, setEmail:this.set('email'), eEmail:!!E['email'], eEmailBd:bd('email'),
+      emailSuggest:!!suggestion, suggestion:suggestion||'', applySuggest:()=>this.setState({email:suggestion}),
+      phone:S.phone, setPhone:this.set('phone'), ePhone:!!E['phone'], ePhoneBd:bd('phone'),
+      isCompany:S.billType==='company',
+      setPerson:()=>this.setState({billType:'person'}), setCompany:()=>this.setState({billType:'company'}),
+      personBg:S.billType==='person'?'#fff':'transparent', personFg:S.billType==='person'?'#0D1526':'#5C6B82',
+      companyBg:S.billType==='company'?'#fff':'transparent', companyFg:S.billType==='company'?'#0D1526':'#5C6B82',
+      billNameLabel:S.billType==='company'?'Cégnév':'Név',
+      billName:S.billName, setBillName:this.set('billName'), eBillName:!!E['billName'], eBillNameBd:bd('billName'),
+      taxno:S.taxno, setTaxno:this.set('taxno'), eTaxno:!!E['taxno'], eTaxnoBd:bd('taxno'),
+      zip:S.zip, setZip:this.set('zip'), eZip:!!E['zip'], eZipBd:bd('zip'),
+      city:S.city, setCity:this.set('city'), eCity:!!E['city'], eCityBd:bd('city'),
+      addr:S.addr, setAddr:this.set('addr'), eAddr:!!E['addr'], eAddrBd:bd('addr'),
+      errSummaryShow:S.showErr&&errCount>0,
+      errSummaryTitle:errCount+' mező kitöltése hiányzik vagy hibás.',
+      errSummaryList:Object.keys(E).filter(k=>E[k]).map(k=>errNames[k]).join(' · '),
+      reviewBlocks,
+      c1:S.c1, c2:S.c2, c3:S.c3, nl:S.nl,
+      c1Tgl:()=>this.setState(st=>({c1:!st.c1})), c2Tgl:()=>this.setState(st=>({c2:!st.c2})),
+      c3Tgl:()=>this.setState(st=>({c3:!st.c3})), nlTgl:()=>this.setState(st=>({nl:!st.nl})),
+      consMissing:!consOk,
+      payOpts,
+      canBack:S.step>1, noBack:S.step===1,
+      goBack:()=>this.setState(st=>({step:Math.max(1,st.step-1),errors:{},showErr:false})),
+      backToReview:S.fromReview&&S.step<5,
+      goReview:()=>this.setState({step:5,fromReview:false,errors:{},showErr:false}),
+      goNext:()=>this.next(),
+      nextDisabled, nextBg:nextDisabled?'#F1F5F9':(S.step>=5?'#F5A524':'#0A6D9F'),
+      nextFg:nextDisabled?'#8A97AC':(S.step>=5?'#0D1526':'#fff'),
+      nextCursor:nextDisabled?'not-allowed':'pointer', nextOpacity:nextDisabled?'0.8':'1',
+      nextLabel,
+      occLabel:occ, sumLines, totalSum:fmt(total),
+      payNow:fmt(now), payLater:fmt(later), payOnsite:'~ '+fmt(onsite), onsiteEur, coloNote,
+      isConfirmed:S.outcome==='card', isPending:S.outcome==='transfer'||S.outcome==='office',
+      showTransfer:S.outcome==='transfer', showOffice:S.outcome==='office',
+      leadFirst:S.p1.first||'utasunk', paxNames,
+      paidLabel:S.outcome==='card'?'Befizetve':'Fizetendő 2026. aug. 20-ig',
+      paidColor:S.outcome==='card'?'#076B42':'#B45309', paidMark:S.outcome==='card'?' ✓':'',
+      next1:S.outcome==='card'?'A visszaigazolást elküldtük a '+(S.email||'megadott')+' címre. Ha 10 percen belül nem érkezik meg, nézze meg a levélszemét mappát.':'Amint befizetése megérkezik, e-mailben véglegesítjük a foglalást.',
+      retryCard:()=>this.setState({screen:'steps',step:6,hold:1200}),
+      payByTransfer:()=>this.setState({screen:'success',outcome:'transfer'}),
+      copyLabel:S.copied?'Másolva ✓':'Adatok másolása',
+      copyAll:()=>{try{navigator.clipboard.writeText('Gál-Busz Kft. · Összeg: '+fmt(now)+' · Közlemény: GB-2026-04871 · Határidő: 2026. augusztus 20.');}catch(e){} this.setState({copied:true}); setTimeout(()=>this.setState({copied:false}),2000);},
+      copyRefLabel:S.copiedRef?'Másolva ✓':'Másolás',
+      copyRef:()=>{try{navigator.clipboard.writeText('GB-2026-04871');}catch(e){} this.setState({copiedRef:true}); setTimeout(()=>this.setState({copiedRef:false}),2000);}
+    };
+  }
+}
+</script>
+</body>
+</html>
