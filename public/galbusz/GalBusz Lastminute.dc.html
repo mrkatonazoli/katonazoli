@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./responsive.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -169,13 +171,13 @@ class Component extends DCLogic {
     const today=new Date();
     const daysTo=iso=>{const d=Math.ceil((new Date(iso)-today)/86400000);return d<=0?'Ma indul':d+' nap múlva indul';};
     const deals=[
-      {slot:'lm-port', img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1600&q=80', ph:'Lisszabon fotó',
+      {slot:'lm-port', img:'./img/kep-09.jpg', ph:'Lisszabon fotó',
        meta:'Portugália · 7 nap / 6 éj', t:'Portugália — repülős körutazás', date:'2026. aug. 31. – szept. 6.', spots:'Még 5 szabad hely',
        pct:10, was:fmt(719000), now:fmt(649000), left:daysTo('2026-08-31')},
-      {slot:'lm-ferto', img:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80', ph:'Fertő-tó fotó',
+      {slot:'lm-ferto', img:'./img/kep-06.jpg', ph:'Fertő-tó fotó',
        meta:'Magyarország · 1 nap', t:'Fertő-táj hajókázással', date:'2026. szept. 5.', spots:'Még 11 szabad hely',
        pct:16, was:fmt(18900), now:fmt(15900), left:daysTo('2026-09-05')},
-      {slot:'lm-szlo', img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80', ph:'Szlovénia fotó',
+      {slot:'lm-szlo', img:'./img/kep-10.jpg', ph:'Szlovénia fotó',
        meta:'Szlovénia · 2 nap / 1 éj', t:'Szlovénia kincsei', date:'2026. szept. 5–6.', spots:'Utolsó 2 hely',
        pct:12, was:fmt(84000), now:fmt(74000), left:daysTo('2026-09-05')}
     ];

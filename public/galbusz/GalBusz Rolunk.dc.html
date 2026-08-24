@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./responsive.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -55,7 +57,7 @@ button{font-family:inherit}
     </div>
     <div style="position:relative">
       <div style="border-radius:24px;overflow:hidden;height:340px;box-shadow:0 20px 48px rgba(0,0,0,.35)">
-        <image-slot id="rolunk-hero" shape="rect" src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" placeholder="Családi / csapat fotó a busz előtt (4:3)" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+        <image-slot id="rolunk-hero" shape="rect" src="./img/kep-35.jpg" placeholder="Családi / csapat fotó a busz előtt (4:3)" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
       </div>
       <div style="position:absolute;left:-24px;bottom:-20px;background:#fff;border-radius:16px;padding:14px 20px;box-shadow:0 12px 32px rgba(13,21,38,.25)">
         <span style="display:block;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;font-size:26px;color:#0D1526;font-variant-numeric:tabular-nums">1998</span>
@@ -136,7 +138,7 @@ button{font-family:inherit}
     <p style="font-size:17px;color:#5C6B82;margin:0 0 40px;max-width:56ch">Az irodában a tulajdonosok fogadják, az úton a négy állandó idegenvezetőnk kíséri.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px">
       <div style="display:flex;gap:24px;align-items:center;background:#F8FAFC;border-radius:24px;padding:28px">
-        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-1" shape="circle" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&h=400&q=80" placeholder="Tulajdonos 1 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-1" shape="circle" src="./img/kep-36.jpg" placeholder="Tulajdonos 1 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
         <div>
           <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Tulajdonos 1</div>
           <div style="font-size:14px;font-weight:600;color:#0A6D9F;margin-top:2px">alapító-tulajdonos</div>
@@ -144,7 +146,7 @@ button{font-family:inherit}
         </div>
       </div>
       <div style="display:flex;gap:24px;align-items:center;background:#F8FAFC;border-radius:24px;padding:28px">
-        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-2" shape="circle" src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&h=400&q=80" placeholder="Tulajdonos 2 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+        <div style="flex:none;width:120px;height:120px;border-radius:99px;overflow:hidden"><image-slot id="team-tulaj-2" shape="circle" src="./img/kep-37.jpg" placeholder="Tulajdonos 2 portré" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
         <div>
           <div style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#0D1526">Tulajdonos 2</div>
           <div style="font-size:14px;font-weight:600;color:#0A6D9F;margin-top:2px">ügyvezető, második generáció</div>
@@ -252,10 +254,10 @@ class Component extends DCLogic {
         {y:'2026', t:'Új online foglalási rendszer — amit most lát.', dot:'#F5A524', line:'transparent'}
       ],
       guides:[
-        {slot:'team-g1', n:'Pajter Martina', s:'Német nyelvterület, földrajz', img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Pajter Martina'},
-        {slot:'team-g2', n:'Kálmán Lajos', s:'Olaszország, Horvátország, Szlovénia', img:'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Kálmán Lajos'},
-        {slot:'team-g3', n:'Móritz Adrienn', s:'Városlátogatások, Róma, Balkán', img:'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Móritz Adrienn'},
-        {slot:'team-g4', n:'Sümeghy Gyöngyi', s:'Adria, ünnepi utak', img:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&h=400&q=80', ph:'Portré: Sümeghy Gyöngyi'}
+        {slot:'team-g1', n:'Pajter Martina', s:'Német nyelvterület, földrajz', img:'./img/kep-16.jpg', ph:'Portré: Pajter Martina'},
+        {slot:'team-g2', n:'Kálmán Lajos', s:'Olaszország, Horvátország, Szlovénia', img:'./img/kep-17.jpg', ph:'Portré: Kálmán Lajos'},
+        {slot:'team-g3', n:'Móritz Adrienn', s:'Városlátogatások, Róma, Balkán', img:'./img/kep-18.jpg', ph:'Portré: Móritz Adrienn'},
+        {slot:'team-g4', n:'Sümeghy Gyöngyi', s:'Adria, ünnepi utak', img:'./img/kep-19.jpg', ph:'Portré: Sümeghy Gyöngyi'}
       ],
       trust:[
         {t:'MUISZ-tag iroda', d:'A Magyar Utazási Irodák Szövetségének tagjaként, hatósági engedéllyel működünk.'},

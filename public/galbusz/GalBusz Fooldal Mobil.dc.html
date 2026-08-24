@@ -54,7 +54,7 @@ button,input{font-family:inherit}
 
 <!-- M1 Hero -->
 <section data-screen-label="M1 Hero" style="position:relative;background:#0B2B40">
-  <div style="position:absolute;inset:0"><image-slot id="m-hero" shape="rect" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80" placeholder="Hero fotó" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+  <div style="position:absolute;inset:0"><image-slot id="m-hero" shape="rect" src="./img/kep-06.jpg" placeholder="Hero fotó" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,43,64,.78) 0%,rgba(11,43,64,.55) 50%,rgba(11,43,64,.82) 100%);pointer-events:none"></div>
   <div style="position:relative;padding:40px 20px 96px">
     <div style="color:#FFD24D;font-size:13px;font-weight:600;letter-spacing:.05em;margin-bottom:12px">1998 óta úton — 28 év, 2 busz</div>
@@ -186,7 +186,7 @@ button,input{font-family:inherit}
   <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;color:#0D1526;margin:0 0 18px">Milyen útra vágyik?</h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <a href="GalBusz Listaoldal.dc.html" style="position:relative;grid-column:1/3;height:180px;border-radius:16px;overflow:hidden;display:block;text-decoration:none" style-hover="text-decoration:none">
-      <image-slot id="m-bento-advent" shape="rect" src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=1600&q=80" placeholder="Advent fotó" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
+      <image-slot id="m-bento-advent" shape="rect" src="./img/kep-07.jpg" placeholder="Advent fotó" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot>
       <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,21,38,0) 35%,rgba(13,21,38,.75) 100%);pointer-events:none"></span>
       <span style="position:absolute;left:16px;right:16px;bottom:14px;pointer-events:none">
         <span style="display:block;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:20px;color:#fff">Adventi városok</span>
@@ -246,7 +246,7 @@ button,input{font-family:inherit}
 <section id="flotta" data-screen-label="M9 Flotta" style="background:#F8FAFC;padding:32px 16px">
   <div style="color:#0A6D9F;font-size:13px;font-weight:600;letter-spacing:.05em;margin-bottom:8px">A flottánk</div>
   <h2 style="font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:24px;line-height:1.2;letter-spacing:-0.02em;color:#0D1526;margin:0 0 16px">Setra túrabuszok — mert 8 óra út hosszú tud lenni</h2>
-  <div style="height:200px;border-radius:16px;overflow:hidden"><image-slot id="m-fleet" shape="rect" src="https://www.galbusz.hu/upload/flotta/4/setra-001_uwgo_8w61.jpg" placeholder="Setra busz" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
+  <div style="height:200px;border-radius:16px;overflow:hidden"><image-slot id="m-fleet" shape="rect" src="./img/kep-02.jpg" placeholder="Setra busz" credit="Photo on Unsplash" credit-href="https://unsplash.com"></image-slot></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:16px">
     <sc-for list="{{ fleetFeats }}" as="f" hint-placeholder-count="8">
       <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:#2B3648"><span style="width:5px;height:5px;border-radius:99px;background:#F5A524;flex:none"></span>{{ f }}</span>
@@ -327,12 +327,12 @@ class Component extends DCLogic {
     const S=this.state, NB='\u202f';
     const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'Ft';
     const trips=[
-      {slot:'m-trip-bp', img:'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1600&q=80', slotPh:'Parlament', meta:'Magyarország · 1 nap', title:'Budapest — Parlament és a Duna-part', date:'2026. szept. 27.', board:'Kapuvár, Sopron, Győr', price:21000, badge:'gar', cats:['Egynapos']},
-      {slot:'m-trip-pt', img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1600&q=80', slotPh:'Portugália', meta:'Portugália · 7 nap / 6 éj', title:'Portugália — repülős körutazás', date:'2026. aug. 31. – szept. 6.', board:'Budapest', price:719000, badge:'fly', cats:['Repülős']},
-      {slot:'m-trip-ro', img:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80', slotPh:'Róma', meta:'Olaszország · 6 nap / 5 éj', title:'Róma, az örök város', date:'2026. okt. 13–18.', board:'Kapuvár, Sopron, Győr', price:339000, badge:'gar', cats:['5–12 napos'], href:'GalBusz Utazas Aloldal.dc.html'},
-      {slot:'m-trip-bk', img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80', slotPh:'Balkán', meta:'Balkán · 7 nap / 6 éj', title:'Balkán őszi színei', date:'2026. nov. 4–10.', board:'Kapuvár, Győr', price:284000, badge:'last', cats:['5–12 napos']},
-      {slot:'m-trip-sz', img:'https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1600&q=80', slotPh:'Szicília', meta:'Olaszország · 8 nap / 7 éj', title:'Szicília — narancsszüret', date:'2026. nov. 5–12.', board:'Kapuvár, Győr', price:413000, badge:'gar', cats:['5–12 napos']},
-      {slot:'m-trip-ad', img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80', slotPh:'Adria', meta:'Horvátország · 4 nap / 3 éj', title:'Szilveszter az Adrián', date:'2026. dec. 30. – jan. 2.', board:'Kapuvár, Sopron, Győr', price:245000, badge:'last', cats:['2–4 napos']}
+      {slot:'m-trip-bp', img:'./img/kep-08.jpg', slotPh:'Parlament', meta:'Magyarország · 1 nap', title:'Budapest — Parlament és a Duna-part', date:'2026. szept. 27.', board:'Kapuvár, Sopron, Győr', price:21000, badge:'gar', cats:['Egynapos']},
+      {slot:'m-trip-pt', img:'./img/kep-09.jpg', slotPh:'Portugália', meta:'Portugália · 7 nap / 6 éj', title:'Portugália — repülős körutazás', date:'2026. aug. 31. – szept. 6.', board:'Budapest', price:719000, badge:'fly', cats:['Repülős']},
+      {slot:'m-trip-ro', img:'./img/kep-01.jpg', slotPh:'Róma', meta:'Olaszország · 6 nap / 5 éj', title:'Róma, az örök város', date:'2026. okt. 13–18.', board:'Kapuvár, Sopron, Győr', price:339000, badge:'gar', cats:['5–12 napos'], href:'GalBusz Utazas Aloldal.dc.html'},
+      {slot:'m-trip-bk', img:'./img/kep-10.jpg', slotPh:'Balkán', meta:'Balkán · 7 nap / 6 éj', title:'Balkán őszi színei', date:'2026. nov. 4–10.', board:'Kapuvár, Győr', price:284000, badge:'last', cats:['5–12 napos']},
+      {slot:'m-trip-sz', img:'./img/kep-11.jpg', slotPh:'Szicília', meta:'Olaszország · 8 nap / 7 éj', title:'Szicília — narancsszüret', date:'2026. nov. 5–12.', board:'Kapuvár, Győr', price:413000, badge:'gar', cats:['5–12 napos']},
+      {slot:'m-trip-ad', img:'./img/kep-12.jpg', slotPh:'Adria', meta:'Horvátország · 4 nap / 3 éj', title:'Szilveszter az Adrián', date:'2026. dec. 30. – jan. 2.', board:'Kapuvár, Sopron, Győr', price:245000, badge:'last', cats:['2–4 napos']}
     ];
     const BG={gar:{t:'Garantált indulás',bg:'#E7F7EF',fg:'#076B42'},last:{t:'Utolsó helyek',bg:'#FFF7E6',fg:'#B45309'},fly:{t:'Repülős',bg:'#EAF6FC',fg:'#086A9E'}};
     const visTrips=(S.tab==='Mind'?trips:trips.filter(t=>t.cats.includes(S.tab))).map(t=>({
@@ -357,10 +357,10 @@ class Component extends DCLogic {
       chips:['Egynapos','Belföld','Külföld','Körutazás','Színház','Advent','Szilveszter','Repülős','Last minute'].map(n=>({n,dot:n==='Last minute'?'#F5A524':'transparent',dotDisp:n==='Last minute'?'inline-block':'none'})),
       tabs, visTrips,
       bentos:[
-        {slot:'m-bento-egynapos',img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80',ph:'Egynapos',t:'Egynapos kirándulás',m:'12 utazás · 14\u202f900 Ft-tól'},
-        {slot:'m-bento-tenger',img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80',ph:'Tengerpart',t:'Tengerparti nyaralás',m:'6 utazás · 189\u202f000 Ft-tól'},
+        {slot:'m-bento-egynapos',img:'./img/kep-13.jpg',ph:'Egynapos',t:'Egynapos kirándulás',m:'12 utazás · 14\u202f900 Ft-tól'},
+        {slot:'m-bento-tenger',img:'./img/kep-14.jpg',ph:'Tengerpart',t:'Tengerparti nyaralás',m:'6 utazás · 189\u202f000 Ft-tól'},
         {slot:'m-bento-szinhaz',img:'',ph:'Színház fotó',t:'Színházi esték',m:'5 utazás · 12\u202f900 Ft-tól'},
-        {slot:'m-bento-korut',img:'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1600&q=80',ph:'Körutazás',t:'Európai körutazás',m:'9 utazás · 284\u202f000 Ft-tól'}
+        {slot:'m-bento-korut',img:'./img/kep-15.jpg',ph:'Körutazás',t:'Európai körutazás',m:'9 utazás · 284\u202f000 Ft-tól'}
       ],
       lastMin:[
         {t:'Portugália — repülős körutazás',d:'aug. 31. – szept. 6.',was:fmt(719000),now:fmt(649000),pct:10},
@@ -368,10 +368,10 @@ class Component extends DCLogic {
         {t:'Prágai hosszú hétvége',d:'szept. 10–13.',was:fmt(132000),now:fmt(112000),pct:15}
       ],
       guides:[
-        {n:'Pajter Martina',s:'Német nyelvterület',img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80'},
-        {n:'Kálmán Lajos',s:'Olaszo., Horváto.',img:'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80'},
-        {n:'Móritz Adrienn',s:'Róma, Balkán',img:'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80'},
-        {n:'Sümeghy Gyöngyi',s:'Adria, ünnepi utak',img:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&h=400&q=80'}
+        {n:'Pajter Martina',s:'Német nyelvterület',img:'./img/kep-16.jpg'},
+        {n:'Kálmán Lajos',s:'Olaszo., Horváto.',img:'./img/kep-17.jpg'},
+        {n:'Móritz Adrienn',s:'Róma, Balkán',img:'./img/kep-18.jpg'},
+        {n:'Sümeghy Gyöngyi',s:'Adria, ünnepi utak',img:'./img/kep-19.jpg'}
       ].map((g,i)=>({...g,slot:'m-guide-'+(i+1),ph:'Portré: '+g.n,bg:['#EAF6FC','#FFF8E6','#E7F7EF'][i%3]})),
       fleetFeats:['Légkondi és fűtés','WC a fedélzeten','Kávéfőző','Italhűtő','Állítható ülés','Hővédő üvegezés','DVD és rádió','Utánfutó csomagnak'],
       reviews:[
