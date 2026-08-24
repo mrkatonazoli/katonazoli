@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /$
+Allow: /en$
+Allow: /sitemap.xml
+Disallow: /
+
+Sitemap: https://katonazoli.hu/sitemap.xml
