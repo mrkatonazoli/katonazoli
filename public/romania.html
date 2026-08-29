@@ -1,0 +1,432 @@
+<meta name="robots" content="noindex, nofollow">
+<title>Román szállodák digitális audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#F4F1EA;
+    --surface:#FFFFFF;
+    --surface-2:#FBF9F4;
+    --ink:#1E2530;
+    --ink-soft:#414B59;
+    --muted:#6B7583;
+    --line:#E4DFD3;
+    --line-strong:#D3CCBC;
+    --accent:#1C6E68;
+    --accent-soft:#DCEDEA;
+    --good:#2F7D64;
+    --warn:#C08A2C;
+    --crit:#B14B3F;
+    --c1:#1C6E68;
+    --c2:#C08A2C;
+    --c3:#B14B3F;
+    --c4:#4B6A8A;
+    --c5:#8A6D9E;
+    --c6:#A6A093;
+    --shadow:0 1px 2px rgba(30,37,48,.05),0 6px 20px rgba(30,37,48,.06);
+    color-scheme:light;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --ground:#14171D;
+      --surface:#1B1F27;
+      --surface-2:#20252E;
+      --ink:#EAEDF2;
+      --ink-soft:#C2C9D4;
+      --muted:#8A94A2;
+      --line:#2C323C;
+      --line-strong:#3A424E;
+      --accent:#4FB8AE;
+      --accent-soft:#1E3A38;
+      --good:#5CBFA0;
+      --warn:#E0AC55;
+      --crit:#E27C6E;
+      --c1:#4FB8AE;
+      --c2:#E0AC55;
+      --c3:#E27C6E;
+      --c4:#7FA0C4;
+      --c5:#B79BCC;
+      --c6:#B4AE9F;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#14171D;
+    --surface:#1B1F27;
+    --surface-2:#20252E;
+    --ink:#EAEDF2;
+    --ink-soft:#C2C9D4;
+    --muted:#8A94A2;
+    --line:#2C323C;
+    --line-strong:#3A424E;
+    --accent:#4FB8AE;
+    --accent-soft:#1E3A38;
+    --good:#5CBFA0;
+    --warn:#E0AC55;
+    --crit:#E27C6E;
+    --c1:#4FB8AE;
+    --c2:#E0AC55;
+    --c3:#E27C6E;
+    --c4:#7FA0C4;
+    --c5:#B79BCC;
+    --c6:#B4AE9F;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;margin:0}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px) 96px}
+
+  h1,h2,h3{font-family:"Spectral",Georgia,serif;text-wrap:balance;line-height:1.12;margin:0}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);font-weight:500}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+
+  /* header */
+  header.masthead{border-bottom:1px solid var(--line-strong);padding-bottom:28px;margin-bottom:8px}
+  header.masthead h1{font-size:clamp(30px,5.2vw,50px);font-weight:700;letter-spacing:-.01em;margin:14px 0 12px}
+  header.masthead p.lead{font-size:clamp(16px,2.1vw,19px);color:var(--ink-soft);max-width:62ch;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:13px;color:var(--muted);
+    font-family:"IBM Plex Mono",monospace}
+  .meta span b{color:var(--ink-soft);font-weight:500}
+
+  /* kpi strip */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:32px 0 8px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .kpi .num{font-family:"Spectral",serif;font-size:34px;font-weight:700;line-height:1;letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums}
+  .kpi .lab{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.35}
+  .kpi.hl .num{color:var(--accent)}
+
+  section{margin-top:56px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);
+    padding-bottom:14px;margin-bottom:24px}
+  .sec-head .idx{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--accent);font-weight:600;
+    border:1px solid var(--line-strong);border-radius:6px;padding:3px 9px;flex:none}
+  .sec-head h2{font-size:clamp(22px,3.4vw,30px);font-weight:600}
+  .sec-head .sub{margin-left:auto;font-size:13px;color:var(--muted);font-family:"IBM Plex Mono",monospace;
+    text-align:right;flex:none}
+
+  p.note{color:var(--ink-soft);max-width:70ch;font-size:15.5px}
+  .lead-in{color:var(--ink-soft);max-width:72ch;font-size:16px;margin:-6px 0 26px}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:720px){.grid2{grid-template-columns:1.15fr .85fr}}
+  .grid2.even{grid-template-columns:1fr}
+  @media(min-width:720px){.grid2.even{grid-template-columns:1fr 1fr}}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;box-shadow:var(--shadow)}
+  .card h3{font-size:18px;font-weight:600;margin-bottom:4px}
+  .card .cap{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:"IBM Plex Mono",monospace}
+
+  /* horizontal bars */
+  .bars{display:flex;flex-direction:column;gap:11px}
+  .bar-row{display:grid;grid-template-columns:1fr;gap:5px}
+  .bar-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px}
+  .bar-top .name{color:var(--ink-soft);font-weight:500}
+  .bar-top .val{font-family:"IBM Plex Mono",monospace;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+  .bar-top .val b{color:var(--ink);font-weight:600}
+  .track{height:9px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .fill{height:100%;border-radius:5px 0 0 5px;background:var(--accent);
+    animation:grow .9s cubic-bezier(.2,.8,.25,1) both}
+  @keyframes grow{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+  @media(prefers-reduced-motion:reduce){.fill{animation:none}}
+
+  /* donut */
+  .donut-wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .donut{flex:none}
+  .legend{display:flex;flex-direction:column;gap:12px;font-size:14px}
+  .legend .li{display:flex;gap:10px;align-items:flex-start}
+  .legend .dot{width:12px;height:12px;border-radius:3px;margin-top:4px;flex:none}
+  .legend .li .t{color:var(--ink-soft)}
+  .legend .li .t b{color:var(--ink);font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  .legend .li .t small{display:block;color:var(--muted);font-size:12px}
+
+  /* maturity segment cards */
+  .seg{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:22px}
+  @media(min-width:760px){.seg{grid-template-columns:repeat(3,1fr)}}
+  .segcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .segcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--sc)}
+  .segcard .pct{font-family:"Spectral",serif;font-size:40px;font-weight:700;line-height:1;color:var(--sc);
+    font-variant-numeric:tabular-nums}
+  .segcard .cnt{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-top:6px}
+  .segcard .ttl{font-weight:600;font-size:15px;margin-top:12px}
+  .segcard .dsc{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.45}
+
+  .stacked{height:34px;display:flex;border-radius:9px;overflow:hidden;border:1px solid var(--line);margin-bottom:8px}
+  .stacked > div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;
+    font-family:"IBM Plex Mono",monospace;min-width:0}
+  .stacked-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--muted);
+    font-family:"IBM Plex Mono",monospace;margin-bottom:4px}
+  .stacked-key i{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:6px;vertical-align:baseline}
+
+  .callout{background:var(--accent-soft);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:10px;padding:16px 20px;margin:24px 0 0;font-size:15px;color:var(--ink-soft)}
+  .callout b{color:var(--ink)}
+
+  .takeaways{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:14px}
+  .takeaways li{display:flex;gap:14px;font-size:15.5px;color:var(--ink-soft);max-width:78ch}
+  .takeaways li .k{font-family:"IBM Plex Mono",monospace;color:var(--accent);font-weight:600;flex:none;
+    font-variant-numeric:tabular-nums}
+  .takeaways li b{color:var(--ink)}
+
+  footer{margin-top:64px;border-top:1px solid var(--line-strong);padding-top:22px;color:var(--muted);
+    font-size:13px;font-family:"IBM Plex Mono",monospace;line-height:1.6}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;
+    text-decoration:none;font-weight:600;font-size:14.5px;padding:12px 20px;border-radius:10px;
+    border:1px solid transparent;box-shadow:var(--shadow);transition:transform .12s ease,filter .12s ease;
+    font-family:"IBM Plex Sans",sans-serif}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .btn .ar{font-family:"IBM Plex Mono",monospace;font-weight:500}
+  .btn .sub{font-weight:400;font-size:12px;opacity:.82}
+  :root[data-theme="dark"] .btn, :root:not([data-theme="light"]) .btn{color:#0d1412}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0d1412}}
+  .btn-row{margin-top:24px}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Digitális jelenlét audit · Románia</div>
+    <h1>Milyen weboldal- és foglalási rendszert használnak a román szállodák?</h1>
+    <p class="lead">1547 lekutatott romániai szálláshely CMS- és foglalómotor-térképe, majd a 853 valódi szálloda külön elemzése — apartmanok, aparthotelek és panziók nélkül.</p>
+    <div class="meta">
+      <span><b>Forrás:</b> „Hotels" fül</span>
+      <span><b>Minta:</b> 1547 szálláshely</span>
+      <span><b>Ár-referencia:</b> 2026-09-13 – 09-15</span>
+      <span><b>Készült:</b> 2026-08-29</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn" href="https://docs.google.com/spreadsheets/d/1daLpV5VRWutQxQpTByVk93RVb8ENEx_z22r45lYJO58/edit?gid=0#gid=0" target="_blank" rel="noopener">
+        Részletes elemzés <span class="sub">— nyisd meg a teljes táblázatot</span> <span class="ar">↗</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="num mono">1547</div><div class="lab">Elemzett szálláshely összesen</div></div>
+    <div class="kpi hl"><div class="num mono">853</div><div class="lab">Ebből valódi <b>szálloda</b> (55%)</div></div>
+    <div class="kpi"><div class="num mono">72%</div><div class="lab">Van saját weboldala (1119 db)</div></div>
+    <div class="kpi"><div class="num mono">42%</div><div class="lab">WordPress-alapú oldal</div></div>
+    <div class="kpi hl"><div class="num mono">274</div><div class="lab">Pynbooking — a piacvezető foglalómotor</div></div>
+  </div>
+
+  <!-- ============ SECTION 1 ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="idx">01</span>
+      <h2>Összesítés — mind az 1547 szálláshely</h2>
+      <span class="sub">CMS · foglalási rendszer<br>· weboldal-lefedettség</span>
+    </div>
+    <p class="lead-in">A teljes minta a szektor egészét mutatja: mekkora arányban van egyáltalán saját weboldal, milyen tartalomkezelőre épül, és van-e mögötte valódi foglalómotor vagy csak OTA-ra (Booking, Agoda) támaszkodik a szálláshely.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Weboldalrendszer (CMS)</h3>
+        <div class="cap">n = 1547 · a saját domainek platformja</div>
+        <div class="bars" id="cms-all"></div>
+      </div>
+      <div class="card">
+        <h3>Weboldal-lefedettség</h3>
+        <div class="cap">van-e egyáltalán saját oldal</div>
+        <div class="donut-wrap">
+          <svg class="donut" id="donut1" width="150" height="150" viewBox="0 0 42 42" aria-label="Weboldal-lefedettség"></svg>
+          <div class="legend" id="donut1-leg"></div>
+        </div>
+        <p class="note" style="margin-top:20px;font-size:13.5px">Négyből egy szálláshelynek <b>egyáltalán nincs saját online felülete</b> — kizárólag OTA-profilon keresztül foglalható.</p>
+      </div>
+    </div>
+
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>Foglalási rendszer — típus szerint</h3>
+        <div class="cap">n = 1547 · hogyan lehet közvetlenül foglalni</div>
+        <div class="bars" id="be-cat-all"></div>
+      </div>
+      <div class="card">
+        <h3>Konkrét foglalómotorok (rangsor)</h3>
+        <div class="cap">azonosított direkt-foglaló platformok · 444 szálláshely</div>
+        <div class="bars" id="be-eng-all"></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      A saját foglalómotorok piaca <b>rendkívül koncentrált</b>: a 444 azonosított direkt-foglaló szálláshelyből 274 a román <b>Pynbooking</b> rendszert használja — a második legnagyobb (RoomsWizard) mindössze 29. A „hosszú farok" 40+ különböző motorból áll, egyenként 1–5 szállodával.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="idx">02</span>
+      <h2>Szállodák külön — 853 „Hotel" kategória</h2>
+      <span class="sub">apartman · aparthotel<br>· panzió kiszűrve</span>
+    </div>
+    <p class="lead-in">A teljes mintából kiszűrve azok, amelyek a táblázatban kifejezetten <b>„Szálloda (Hotel)"</b> besorolást kaptak (a 67 apartman, 51 aparthotel, 46 panzió és 530 egyéb szálláshely nélkül). Ez a szegmens a tényleges hotelpiac.</p>
+
+    <h3 style="font-family:'Spectral',serif;font-size:20px;font-weight:600;margin:8px 0 4px">Digitális érettség — a fő tanulság</h3>
+    <p class="note" style="margin:0 0 20px">Minden szállodát három csoportba soroltunk aszerint, hogy mennyire képes <b>közvetlen</b> (OTA-mentes) foglalást fogadni:</p>
+
+    <div class="stacked-key">
+      <span><i style="background:var(--good)"></i>Direkt-kész</span>
+      <span><i style="background:var(--warn)"></i>Oldal, de nincs motor</span>
+      <span><i style="background:var(--crit)"></i>Nincs saját oldal</span>
+    </div>
+    <div class="stacked" id="mat-stack"></div>
+
+    <div class="seg">
+      <div class="segcard" style="--sc:var(--good)">
+        <div class="pct">32,7%</div>
+        <div class="cnt">279 szálloda</div>
+        <div class="ttl">Direkt-kész</div>
+        <div class="dsc">Saját weboldal <b>és</b> valódi foglalómotor — a vendég közvetlenül, jutalék nélkül tud foglalni.</div>
+      </div>
+      <div class="segcard" style="--sc:var(--warn)">
+        <div class="pct">50,4%</div>
+        <div class="cnt">430 szálloda</div>
+        <div class="ttl">Van oldal, de nincs motor</div>
+        <div class="dsc">Van weboldal, de mögötte csak űrlap / e-mail / telefon — a foglalás gyakorlatilag az OTA-kra terelődik. <b>Ez a legnagyobb üzleti lehetőség.</b></div>
+      </div>
+      <div class="segcard" style="--sc:var(--crit)">
+        <div class="pct">16,9%</div>
+        <div class="cnt">144 szálloda</div>
+        <div class="ttl">Nincs saját oldal</div>
+        <div class="dsc">Semmilyen saját online felület — teljesen OTA-függő, a márkájuk fölött nincs kontroll.</div>
+      </div>
+    </div>
+
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Szállodák CMS-e</h3>
+        <div class="cap">n = 853 · weboldalrendszer</div>
+        <div class="bars" id="cms-hotel"></div>
+      </div>
+      <div class="card">
+        <h3>Szállodák foglalómotorjai</h3>
+        <div class="cap">azonosított direkt-foglaló platformok · 280 szálloda</div>
+        <div class="bars" id="be-eng-hotel"></div>
+      </div>
+    </div>
+
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>Méret — szobaszám szerint</h3>
+        <div class="cap">n = 733 (ahol ismert) · medián 25 szoba</div>
+        <div class="bars" id="rooms-hotel"></div>
+      </div>
+      <div class="card">
+        <h3>Földrajzi eloszlás — top városok</h3>
+        <div class="cap">n = 853 · legtöbb szálloda</div>
+        <div class="bars" id="geo-hotel"></div>
+      </div>
+    </div>
+
+    <ul class="takeaways">
+      <li><span class="k">→</span><span><b>A WordPress a de facto standard.</b> A szállodák 47,8%-a (408 db) WordPress-re épül, jellemzően Elementor / WPBakery / Divi builderrel. Aki hotel-webterméket vagy pluginekre épülő megoldást kínál, itt találja a legszélesebb közös nevezőt.</span></li>
+      <li><span class="k">→</span><span><b>Fél piac „félkész".</b> 430 szállodának van weboldala foglalómotor nélkül — nekik nem új site kell, hanem egy beépíthető foglaló + channel manager. Ez a legkonkrétabb értékesítési célcsoport.</span></li>
+      <li><span class="k">→</span><span><b>Pynbooking a beépült szereplő.</b> A direkt-foglalók 58%-a (162/280) Pynbookingot használ. Bármilyen új foglalómotornak ellene, vagy mellé (integrációval) kell pozicionálnia magát.</span></li>
+      <li><span class="k">→</span><span><b>Kis- és közepes hotelek dominálnak.</b> A szobaszám medián 25; a szállodák kétharmada 40 szoba alatti. A megoldásoknak az önálló, kis üzemeltetői csapatra kell szabva lenniük, nem enterprise-ra.</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    Módszertan: a „Hotels" fül 1547 kitöltött sora alapján. A CMS- és foglalómotor-értékek a kutatás oszlopaiból normalizálva (a WordPress-változatok — Elementor, WPBakery, Divi stb. — egy csoportban; az „egyedi/statikus" a saját fejlesztésű oldalak). „Direkt-kész" = saját weboldal + azonosított foglalómotor. „Nem azonosítható / saját űrlap" a foglalómotor nélküli, de weboldallal rendelkező eseteket jelöli. A második (elemző) fül nem került felhasználásra. Százalékok a kategória saját n-jére vetítve.
+    <div class="btn-row">
+      <a class="btn" href="https://docs.google.com/spreadsheets/d/1daLpV5VRWutQxQpTByVk93RVb8ENEx_z22r45lYJO58/edit?gid=0#gid=0" target="_blank" rel="noopener">
+        Részletes elemzés <span class="sub">— teljes forrás-táblázat</span> <span class="ar">↗</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  cmsAll:[["WordPress",645],["Nincs saját weboldal",428],["Egyedi / statikus",219],["Ismeretlen / ellenőrzendő",205],["Joomla",17],["Wix",15],["Drupal",6],["Framer",4],["Webnode",4],["Squarespace",3]],
+  beCatAll:[["Csak OTA (nincs saját foglaló)",430],["Nincs / nem azonosítható",388],["Saját űrlap / bizonytalan",285],["Pynbooking",274],["Egyéb konkrét motor",170]],
+  beEngAll:[["Pynbooking",274],["RoomsWizard",29],["5stardesk",22],["book-onlinenow.net",17],["D-EDGE",16],["4booking",9],["SiteMinder",9],["Previo",4],["Reserve-Online",4],["Profitroom",4]],
+  cmsHotel:[["WordPress",408],["Nincs saját weboldal",144],["Egyedi / statikus",138],["Ismeretlen / ellenőrzendő",134],["Joomla",13],["Wix",8],["Drupal",5],["Framer",2],["Squarespace",1]],
+  beEngHotel:[["Pynbooking",162],["RoomsWizard",27],["book-onlinenow.net",14],["D-EDGE",12],["5stardesk",10],["4booking",8],["SiteMinder",7],["Profitroom",3],["Cloudbeds",2],["SynXis",2]],
+  roomsHotel:[["1–15 szoba (kicsi)",189],["16–40 szoba (közepes)",325],["41–100 szoba (nagy)",154],["100+ szoba (nagyon nagy)",65]],
+  geoHotel:[["Bukarest",101],["Mamaia",37],["Temesvár",37],["Kolozsvár",32],["Craiova",24],["Jászvásár",23],["Nagyvárad",23],["Sinaia",23],["Konstanca",21],["Brassó",20]]
+};
+
+const CB = getComputedStyle(document.documentElement);
+function bars(id, rows, opts={}){
+  const el=document.getElementById(id); if(!el)return;
+  const max=Math.max(...rows.map(r=>r[1]));
+  const total=opts.total||rows.reduce((a,r)=>a+r[1],0);
+  const color=opts.color||'var(--accent)';
+  const palette=opts.palette;
+  el.innerHTML=rows.map((r,i)=>{
+    const w=(r[1]/max*100).toFixed(1);
+    const pct=(r[1]/total*100).toFixed(1).replace('.',',');
+    const c=palette?palette[i%palette.length]:color;
+    const showPct=opts.showPct!==false;
+    return `<div class="bar-row">
+      <div class="bar-top"><span class="name">${r[0]}</span>
+      <span class="val"><b>${r[1]}</b>${showPct?` · ${pct}%`:''}</span></div>
+      <div class="track"><div class="fill" style="width:${w}%;background:${c};animation-delay:${i*55}ms"></div></div>
+    </div>`;
+  }).join('');
+}
+
+const PAL=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)'];
+
+bars('cms-all',DATA.cmsAll,{color:'var(--accent)'});
+bars('be-cat-all',DATA.beCatAll,{palette:['var(--crit)','var(--muted)','var(--warn)','var(--c1)','var(--c4)']});
+bars('be-eng-all',DATA.beEngAll,{color:'var(--accent)',total:444});
+bars('cms-hotel',DATA.cmsHotel,{color:'var(--accent)'});
+bars('be-eng-hotel',DATA.beEngHotel,{color:'var(--accent)',total:280});
+bars('rooms-hotel',DATA.roomsHotel,{color:'var(--c4)'});
+bars('geo-hotel',DATA.geoHotel,{color:'var(--c5)',showPct:true,total:853});
+
+// donut: website coverage
+function donut(svgId,legId,segs){
+  const svg=document.getElementById(svgId);
+  const cx=21,cy=21,r=15.915;
+  let off=25; // start at top
+  svg.innerHTML=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="6"/>`;
+  const tot=segs.reduce((a,s)=>a+s.v,0);
+  segs.forEach(s=>{
+    const len=s.v/tot*100;
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);
+    c.setAttribute('fill','none');c.setAttribute('stroke',s.c);c.setAttribute('stroke-width','6');
+    c.setAttribute('stroke-dasharray',`${len} ${100-len}`);
+    c.setAttribute('stroke-dashoffset',off);
+    svg.appendChild(c);
+    off-=len;
+  });
+  const cen=document.createElementNS('http://www.w3.org/2000/svg','text');
+  cen.setAttribute('x',cx);cen.setAttribute('y',cy+0.5);cen.setAttribute('text-anchor','middle');
+  cen.setAttribute('dominant-baseline','middle');cen.setAttribute('font-size','6');
+  cen.setAttribute('font-family','Spectral,serif');cen.setAttribute('font-weight','700');
+  cen.setAttribute('fill','var(--ink)');cen.textContent='1547';
+  svg.appendChild(cen);
+  document.getElementById(legId).innerHTML=segs.map(s=>{
+    const pct=(s.v/tot*100).toFixed(0);
+    return `<div class="li"><span class="dot" style="background:${s.c}"></span>
+      <span class="t">${s.name} <b>${s.v}</b><small>${pct}% · a mintából</small></span></div>`;
+  }).join('');
+}
+donut('donut1','donut1-leg',[
+  {name:'Saját weboldal',v:1119,c:'var(--accent)'},
+  {name:'Csak OTA-profil',v:428,c:'var(--crit)'}
+]);
+
+// maturity stacked
+const mat=[["Direkt-kész",279,'var(--good)'],["Oldal, nincs motor",430,'var(--warn)'],["Nincs oldal",144,'var(--crit)']];
+const mtot=853;
+document.getElementById('mat-stack').innerHTML=mat.map(m=>{
+  const w=(m[1]/mtot*100);
+  return `<div style="width:${w}%;background:${m[2]}">${w>10?m[1]:''}</div>`;
+}).join('');
+</script>
