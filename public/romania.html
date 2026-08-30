@@ -190,6 +190,52 @@
   :root[data-theme="dark"] .btn, :root:not([data-theme="light"]) .btn{color:#0d1412}
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0d1412}}
   .btn-row{margin-top:24px}
+
+  /* strategy / opportunity */
+  .opp{display:grid;gap:16px;grid-template-columns:1fr;margin-top:4px}
+  @media(min-width:760px){.opp{grid-template-columns:1fr 1fr}}
+  .oppcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px;
+    box-shadow:var(--shadow);position:relative}
+  .oppcard .tag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600}
+  .oppcard h4{font-family:"Spectral",serif;font-size:18px;font-weight:600;margin:9px 0 8px;line-height:1.2}
+  .oppcard p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+  .oppcard .metric{font-family:"IBM Plex Mono",monospace;color:var(--ink);font-weight:600}
+  .oppcard.warnc{border-left:3px solid var(--warn)}
+  .oppcard.warnc .tag{color:var(--warn)}
+
+  /* competitor map */
+  .map-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 18px 8px;
+    box-shadow:var(--shadow);overflow-x:auto}
+  .map-svg{width:100%;min-width:560px;height:auto;display:block}
+  .map-legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:8px 6px 14px;font-size:12.5px;color:var(--muted);
+    font-family:"IBM Plex Mono",monospace}
+  .map-legend .li{display:flex;align-items:center;gap:8px}
+  .map-legend .sw{width:12px;height:12px;border-radius:50%;flex:none}
+  .axis-lab{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--muted)}
+  .axis-end{font-family:"IBM Plex Mono",monospace;font-size:12.5px;fill:var(--ink-soft);font-weight:500}
+  .quad-lab{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;font-weight:600;fill:var(--muted);opacity:.55}
+
+  /* profile + comparison */
+  .profile-box{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--crit);
+    border-radius:12px;padding:20px 22px;margin-bottom:22px}
+  .profile-box h4{font-family:"Spectral",serif;font-size:19px;font-weight:600;margin:0 0 4px}
+  .profile-box .url{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .profile-box p{margin:0 0 10px;font-size:14.5px;color:var(--ink-soft);line-height:1.55;max-width:75ch}
+  .profile-box .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .profile-box .chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-soft);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:20px;padding:4px 11px}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  table.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:620px;background:var(--surface)}
+  table.cmp th,table.cmp td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+  table.cmp thead th{font-family:"IBM Plex Mono",monospace;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--surface)}
+  table.cmp tbody tr:last-child td{border-bottom:none}
+  table.cmp td.dim{font-weight:600;color:var(--ink);white-space:nowrap;font-size:13.5px}
+  table.cmp col.rscol{background:var(--accent-soft)}
+  table.cmp th.rshead{color:var(--accent)}
+  table.cmp td.rscell{color:var(--ink)}
+  table.cmp td.pyncell,table.cmp td.othcell{color:var(--ink-soft)}
 </style>
 
 <div class="wrap">
@@ -337,6 +383,107 @@
     </ul>
   </section>
 
+  <!-- ============ SECTION 3 — STRATEGY ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="idx">03</span>
+      <h2>Stratégiai olvasat — RoomSome-lencse</h2>
+      <span class="sub">hol van a belépő<br>· milyen sorrendben</span>
+    </div>
+    <p class="lead-in">Az adat önmagában semleges; a RoomSome-ökoszisztéma (foglalási mag + adatréteg + Morgens service réteg) felől nézve viszont kirajzolódik, hol és milyen sorrendben érdemes a román piacra lépni. A vezérgondolat: a piac alacsony digitális érettsége nem akadály, hanem pont a <b>„csináljuk helyetted" service-modell</b> belépője.</p>
+
+    <div class="opp">
+      <div class="oppcard">
+        <div class="tag">01 · Belépő</div>
+        <h4>A zöldmező a motor nélküli réteg</h4>
+        <p>Ne a beépült magok ellen indíts. <span class="metric">430</span> szállodának van weboldala foglalómotor nélkül, <span class="metric">144</span>-nek egyáltalán nincs oldala — itt nincs mit kicserélni. A weboldal+motor bundle simán bemegy, és mivel a piac <span class="metric">48%</span>-a WordPress, a webes lábad ismerős terepen mozog.</p>
+      </div>
+      <div class="oppcard">
+        <div class="tag">02 · Modell</div>
+        <h4>A jutalékos modell itt erősebb</h4>
+        <p>Alacsony digitális érettségű piacon a „csináljuk helyetted, jutalékért" ajánlat üt a „veszel egy szoftvert" fölött — a hotelnek nincs house-kapacitása a direkt futtatására. Nulla szoftverköltség + nulla kockázat = könnyű igen. A service réteg (revenue + marketing) itt a valódi termék.</p>
+      </div>
+      <div class="oppcard">
+        <div class="tag">03 · Ék</div>
+        <h4>A PMS-függetlenség a fő fegyver</h4>
+        <p>A legnagyobb helyi versenytárs, a Pynbooking, PMS-központú: a teljes ökoszisztémájához a saját PMS-ét kell használni. A más rendszeren (Mews, Opera, SabeeApp, HostWare) ülő szállodákhoz <b>nem fér hozzá PMS-váltás nélkül</b> — RoomSome viszont igen. Ez a legtisztább nyitott ajtó.</p>
+      </div>
+      <div class="oppcard">
+        <div class="tag">04 · Skálázás</div>
+        <h4>CRS + Roomlytics a hosszú farokra</h4>
+        <p>A medián <span class="metric">25</span> szoba, a hotelek kétharmada 40 alatt — apró tételek, magas per-hotel akvizíciós kockázattal. Egyesével nem skálázható; egy <b>régiós klasztert</b> (pl. erdélyi városok) viszont a CRS és a közös adatréteg egyben ki tud szolgálni, akár Shared Loyaltyval összekötve.</p>
+      </div>
+    </div>
+
+    <div class="opp" style="margin-top:16px">
+      <div class="oppcard warnc">
+        <div class="tag">Fenntartás</div>
+        <h4>A „zöldmező" egy része lehet feltáratlan</h4>
+        <p>A szállodák foglalómotor-oszlopában nagy a „nem azonosítható / saját űrlap" arány (<span class="metric">248 + 181</span> eset) — ezek egy részénél lehet valódi rendszer, csak a kutatás nem tárta fel. A célvárosoknál érdemes kézzel visszaellenőrizni, mielőtt a listára épül a kampány.</p>
+      </div>
+      <div class="oppcard warnc">
+        <div class="tag">Fenntartás</div>
+        <h4>Elsőként a városi, egész éves szegmens</h4>
+        <p>A „visszatérő vendég a legolcsóbb" hurok — a RoomSome fő előnye — egy erősen szezonális tengerparti hotelnél gyengébben üt. A városi, egész éves szállodák (Bukarest, Kolozsvár, Temesvár) jobb első célpont, mint a mamaia–eforie parti sáv.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 — COMPETITOR MAP ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="idx">04</span>
+      <h2>Pynbooking versenytárs-térkép</h2>
+      <span class="sub">ki hol áll<br>· hol nyer a RoomSome</span>
+    </div>
+    <p class="lead-in">A román direkt-foglalási piac egyértelmű beépült szereplője a <b>Pynbooking</b>. Fontos korrekció: nem „csak egy foglalómotor", hanem teljes helyi all-in-one stack — ezért ellene nem foglalómotorként, hanem <b>ökoszisztémaként és service-ként</b> lehet pozicionálni.</p>
+
+    <div class="profile-box">
+      <h4>Pynbooking / pyn.ro</h4>
+      <div class="url">Bukarest, EU · „All-in-one software for hotels and restaurants"</div>
+      <p>Cloud PMS-központú platform, amely a foglalómotort, a channel managert, a weboldal-generátort, a fizetést, a GuestAppot és egy teljes <b>éttermi vonalat</b> (POS, QR-rendelés, konyhai kijelző) is egy felületen adja. <b>0% jutalékos</b> booking engine, azonnali beüzemelés, nincs setup díj, dedikált account manager és helyi support (RO/DE/ES). Saját közlése szerint <b>1500+ property Európában</b>.</p>
+      <p>A modellje: <b>önkiszolgáló szoftver</b>, amit a hotel maga üzemeltet. Erős ott, ahol ő a PMS is — mély a lock-in, nehéz kimozdítani. Ugyanakkor nincs fölötte <b>done-for-you service réteg</b> (revenue management + digital marketing kulcsrakészen), és a teljes érték a saját PMS-ének adoptálásához kötött.</p>
+      <div class="chips">
+        <span class="chip">Cloud PMS</span><span class="chip">Booking Engine · 0% jutalék</span><span class="chip">Channel Manager</span><span class="chip">Website Generator</span><span class="chip">GuestApp</span><span class="chip">Payments</span><span class="chip">Restaurant POS</span><span class="chip">helyi support</span>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <svg class="map-svg" id="cmap" viewBox="0 0 820 560" role="img" aria-label="Versenytárs-pozicionáló térkép"></svg>
+    </div>
+    <div class="map-legend">
+      <span class="li"><span class="sw" style="background:var(--accent)"></span>RoomSome (célpozíció)</span>
+      <span class="li"><span class="sw" style="background:var(--crit)"></span>Pynbooking (beépült)</span>
+      <span class="li"><span class="sw" style="background:var(--c4)"></span>Nemzetközi platformok</span>
+      <span class="li"><span class="sw" style="background:var(--c6)"></span>Helyi kis motorok</span>
+      <span class="li">Buborékméret ≈ romániai jelenlét (foglalómotor-találat a mintában)</span>
+    </div>
+
+    <h3 style="font-family:'Spectral',serif;font-size:20px;font-weight:600;margin:36px 0 6px">RoomSome vs. Pynbooking — hol dől el</h3>
+    <p class="note" style="margin:0 0 18px">A két helyi ökoszisztéma ugyanazt a vendégutat célozza, de más modellel. A különbség nem a funkciólistában van, hanem a <b>hozzáférésben és a felelősségvállalásban</b>.</p>
+    <div class="tbl-scroll">
+      <table class="cmp">
+        <colgroup><col><col class="rscol"><col><col></colgroup>
+        <thead>
+          <tr><th>Dimenzió</th><th class="rshead">RoomSome</th><th>Pynbooking</th><th>Nemzetközi (D-EDGE, SiteMinder, Cloudbeds…)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="dim">Alapmodell</td><td class="rscell">Ökoszisztéma <b>+ done-for-you service</b> (Morgens)</td><td class="pyncell">Önkiszolgáló all-in-one szoftver</td><td class="othcell">Önkiszolgáló szoftver / disztribúció</td></tr>
+          <tr><td class="dim">Eladott termék</td><td class="rscell">Az <b>eredmény</b> (bevétel), a szoftver csak eszköz</td><td class="pyncell">A szoftver-licenc</td><td class="othcell">A szoftver-licenc</td></tr>
+          <tr><td class="dim">PMS-viszony</td><td class="rscell"><b>PMS-független</b> (Mews, Opera, SabeeApp, HostWare…)</td><td class="pyncell">PMS-központú — a saját PMS a mag</td><td class="othcell">Vegyes; több a saját PMS-hez kötött</td></tr>
+          <tr><td class="dim">Árazás</td><td class="rscell">Rugalmas, akár <b>tiszta jutalékos</b> (0 szoftver- és marketingköltség a hotelnek)</td><td class="pyncell">Licenc, 0% foglalási jutalék</td><td class="othcell">Licenc + tranzakciós díj</td></tr>
+          <tr><td class="dim">Marketing / revenue</td><td class="rscell"><b>Kulcsrakész</b>: pricing, hirdetés, guest journey — coordinated</td><td class="pyncell">Eszközök, de a hotel futtatja</td><td class="othcell">Eszközök; service jellemzően külön</td></tr>
+          <tr><td class="dim">Adatréteg / hurok</td><td class="rscell">Roomlytics + Loyalty/Shared Loyalty — visszatérő vendég</td><td class="pyncell">Analytics a saját stacken belül</td><td class="othcell">Erős BI, de zártabb ökoszisztéma</td></tr>
+          <tr><td class="dim">Helyi jelenlét RO-ban</td><td class="rscell">Belépő (cél)</td><td class="pyncell"><b>Domináns</b> — 274 találat / 1500+ property</td><td class="othcell">Szórt, jellemzően a nagyobb/4–5★ hotelek</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <b>A nyerő szög:</b> a Pynbookinggal szemben nem foglalómotor-párbajban, hanem két dimenzióban van nyitott terep — a <b>PMS-függetlenség</b> (a más rendszeren ülő hotelek felé) és a <b>done-for-you service</b> (amit egyetlen helyi szoftvervendor sem ad). A frontális ütközést ott kerüld, ahol a Pynbooking a PMS is; a zöldmezős, más PMS-en ülő, egész éves városi szállodáknál viszont a RoomSome-nak strukturális előnye van.
+    </div>
+  </section>
+
   <footer>
     Módszertan: a „Hotels" fül 1547 kitöltött sora alapján. A CMS- és foglalómotor-értékek a kutatás oszlopaiból normalizálva (a WordPress-változatok — Elementor, WPBakery, Divi stb. — egy csoportban; az „egyedi/statikus" a saját fejlesztésű oldalak). „Direkt-kész" = saját weboldal + azonosított foglalómotor. „Nem azonosítható / saját űrlap" a foglalómotor nélküli, de weboldallal rendelkező eseteket jelöli. A második (elemző) fül nem került felhasználásra. Százalékok a kategória saját n-jére vetítve.
     <div class="btn-row">
@@ -429,4 +576,63 @@ document.getElementById('mat-stack').innerHTML=mat.map(m=>{
   const w=(m[1]/mtot*100);
   return `<div style="width:${w}%;background:${m[2]}">${w>10?m[1]:''}</div>`;
 }).join('');
+
+// ===== competitor positioning map =====
+(function(){
+  const svg=document.getElementById('cmap'); if(!svg)return;
+  const X0=100,X1=772,Y0=58,Y1=452; // plot box
+  const fx=v=>X0+v/100*(X1-X0);
+  const fy=v=>Y1-v/100*(Y1-Y0);
+  const rad=s=>s==null?22:9+Math.sqrt(s/274)*30;
+  const NS='http://www.w3.org/2000/svg';
+  const el=(t,a,txt)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;};
+  const g=el('g',{});
+
+  // quadrant fills (very faint)
+  const midX=fx(50),midY=fy(50);
+  // cross grid
+  g.appendChild(el('line',{x1:midX,y1:Y0,x2:midX,y2:Y1,stroke:'var(--line-strong)','stroke-dasharray':'3 5','stroke-width':1}));
+  g.appendChild(el('line',{x1:X0,y1:midY,x2:X1,y2:midY,stroke:'var(--line-strong)','stroke-dasharray':'3 5','stroke-width':1}));
+
+  // quadrant labels (bottom-left omitted — the local-software cluster defines it)
+  [['Helyi + kulcsrakész',14,94,'start'],['Nemzetközi service',86,94,'end'],
+   ['Nemzetközi szoftver',86,6,'end']].forEach(q=>{
+    g.appendChild(el('text',{x:fx(q[1]),y:fy(q[2]),'text-anchor':q[3],class:'quad-lab'},q[0]));
+  });
+
+  // axis ends
+  g.appendChild(el('text',{x:X0,y:Y1+34,'text-anchor':'start',class:'axis-end'},'◄ Lokális / regionális'));
+  g.appendChild(el('text',{x:X1,y:Y1+34,'text-anchor':'end',class:'axis-end'},'Nemzetközi / enterprise ►'));
+  const yl1=el('text',{x:34,y:fy(50),'text-anchor':'middle',class:'axis-end',transform:`rotate(-90 34 ${fy(50)})`},'Önkiszolgáló szoftver  ▲  Done-for-you service');
+  g.appendChild(yl1);
+
+  const comp=[
+    {n:'Pynbooking',t:'RO · all-in-one, PMS-first',x:27,y:32,s:274,c:'var(--crit)',lp:'right'},
+    {n:'RoomSome',t:'PMS-független + service',x:31,y:85,s:null,c:'var(--accent)',lp:'below',target:true},
+    {n:'Profitroom',t:'CEE · marketing-erős',x:52,y:60,s:4,c:'var(--c5)',lp:'left'},
+    {n:'Mews',t:'nemzetközi PMS',x:82,y:18,s:3,c:'var(--c4)',lp:'left'},
+    {n:'D-EDGE',t:'nemzetközi disztribúció',x:87,y:34,s:16,c:'var(--c4)',lp:'left'},
+    {n:'SiteMinder',t:'nemzetközi CM + BE',x:83,y:49,s:9,c:'var(--c4)',lp:'left'},
+    {n:'Cloudbeds',t:'nemzetközi all-in-one',x:77,y:63,s:2,c:'var(--c4)',lp:'left'},
+    {n:'Helyi kis motorok',t:'RoomsWizard · 5stardesk · 4booking…',x:13,y:19,s:90,c:'var(--c6)',lp:'below'}
+  ];
+
+  comp.forEach(d=>{
+    const cx=fx(d.x),cy=fy(d.y),r=rad(d.s);
+    if(d.target){
+      g.appendChild(el('circle',{cx,cy,r:r+6,fill:'none',stroke:'var(--accent)','stroke-width':1.5,'stroke-dasharray':'4 4',opacity:.9}));
+    }
+    g.appendChild(el('circle',{cx,cy,r,fill:d.c,opacity:d.target?.92:.82,stroke:'var(--surface)','stroke-width':1.5}));
+    // label
+    let lx,ly,anc;
+    if(d.lp==='below'){lx=cx;ly=cy+r+18;anc='middle';}
+    else if(d.lp==='right'){lx=cx+r+9;ly=cy-2;anc='start';}
+    else {lx=cx-r-9;ly=cy-2;anc='end';}
+    const name=el('text',{x:lx,y:ly,'text-anchor':anc,class:'bub-name','font-size':13.5,'font-weight':700,fill:'var(--ink)','font-family':'"IBM Plex Sans",sans-serif'},d.n);
+    g.appendChild(name);
+    g.appendChild(el('text',{x:lx,y:ly+15,'text-anchor':anc,'font-size':10.5,fill:'var(--muted)','font-family':'"IBM Plex Mono",monospace'},d.t));
+  });
+
+  svg.appendChild(g);
+})();
 </script>
