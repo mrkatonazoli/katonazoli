@@ -520,8 +520,21 @@
       </div>
     </div>
 
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>Méret — szobaszám</h3>
+        <div class="cap">n = 161 (99% ismert) · medián 23 · átlag 30</div>
+        <div class="bars" id="pyn-rooms"></div>
+      </div>
+      <div class="card">
+        <h3>Mit jelent a méret</h3>
+        <div class="cap">üzemeltetői profil</div>
+        <p class="note" style="margin:0;font-size:14.5px">A bázis <b>kétharmada 40 szoba alatti</b>, a medián 23 — kis-közepes, önállóan üzemeltetett hotelek, ugyanaz a méretprofil, mint a piac egészénél. Nagy lánc nincs köztük: a legnagyobb is 153 szoba. A döntéshozó tehát jellemzően maga a tulajdonos/üzemeltető, akinek nincs house-kapacitása a direkt futtatására — pont ide szól a <b>done-for-you service</b> value prop.</p>
+      </div>
+    </div>
+
     <div class="callout">
-      <b>Olvasat:</b> a Pynbooking-ügyfelek a piac <b>erős fele</b> — magas értékelésűek (61% 9,0+), a csak-OTA szegmensnél magasabb ADR-rel, jellemzően városi/hegyi, egész éves hotelek. Ezek elégedettek és teljesítenek, ezért <b>frontálisan drága őket kimozdítani</b>. A támadási pont nem a motor-párbaj, hanem a WordPress-en ülő, engine-only 60%, ahol a PMS-függetlenség + a done-for-you service réteg valódi többletet kínál a puszta foglalómotor fölött. Szobaszám-medián 23 — kis-közepes, önálló üzemeltetők.
+      <b>Olvasat:</b> a Pynbooking-ügyfelek a piac <b>erős fele</b> — magas értékelésűek (61% 9,0+), a csak-OTA szegmensnél magasabb ADR-rel, jellemzően városi/hegyi, egész éves hotelek. Ezek elégedettek és teljesítenek, ezért <b>frontálisan drága őket kimozdítani</b>. A támadási pont nem a motor-párbaj, hanem a WordPress-en ülő, engine-only 60%, ahol a PMS-függetlenség + a done-for-you service réteg valódi többletet kínál a puszta foglalómotor fölött.
     </div>
   </section>
 
@@ -717,4 +730,5 @@ bars('pyn-town',[['Bukarest',22],['Kolozsvár',10],['Temesvár',10],['Mamaia',8]
 bars('pyn-cms',[['WordPress',97],['Egyedi / statikus',38],['Ismeretlen',23],['Wix',2],['Nincs saját',1],['Joomla',1]],{color:'var(--crit)',total:162});
 bars('pyn-rating',[['9,0+ (kiváló)',97,'var(--good)'],['8,0–8,9 (jó)',53,'var(--accent)'],['7,0–7,9',7,'var(--warn)'],['< 7,0',1,'var(--c3)']],{total:158});
 bars('pyn-price',[['< 40e',36],['40–60e',70],['60–90e',45],['90e+ (prémium)',11,'var(--c2)']],{color:'var(--crit)',total:162});
+bars('pyn-rooms',[['1–15 szoba (kicsi)',46],['16–40 szoba (közepes)',76],['41–100 szoba (nagy)',34],['100+ szoba',5]],{color:'var(--c4)',total:161});
 </script>
