@@ -1,0 +1,1212 @@
+<meta charset="utf-8">
+<title>Meta Ads Booster</title>
+<meta name="description" content="A VIVRE Agency luxushotel Meta Ads rendszerének ultra részletes magyar feldolgozása — struktúra, tracking, kreatív, skálázás.">
+<style>
+:root{
+  --paper:#EDEEEA; --surface:#F7F8F4; --surface-2:#E4E7E0;
+  --ink:#161C1D; --ink-soft:#38423F; --muted:#5C665F; --faint:#7C857E;
+  --line:#CDD3CB; --line-soft:#DCE0D8;
+  --teal:#0C6B5E; --teal-soft:#0f8474; --teal-wash:#E1EBE6; --teal-line:#B8CFC6;
+  --amber:#9C6B12; --amber-soft:#b17e1e; --amber-wash:#F1E8D6; --amber-line:#DCC79A;
+  --red:#9A3520; --red-wash:#F1E1DB;
+  --shadow:0 1px 2px rgba(20,28,29,.05), 0 8px 28px -18px rgba(20,28,29,.25);
+  --shadow-lift:0 2px 4px rgba(20,28,29,.06), 0 22px 50px -30px rgba(20,28,29,.4);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#10161A; --surface:#171E22; --surface-2:#1F282C;
+    --ink:#E7EBE6; --ink-soft:#C3CBC5; --muted:#949E97; --faint:#727C76;
+    --line:#2B353A; --line-soft:#232C31;
+    --teal:#4FBBAA; --teal-soft:#6ecbbb; --teal-wash:#152A29; --teal-line:#2C4844;
+    --amber:#D6A552; --amber-soft:#e4b869; --amber-wash:#2A2416; --amber-line:#4C4128;
+    --red:#D98368; --red-wash:#2E1C17;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.4), 0 26px 60px -34px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10161A; --surface:#171E22; --surface-2:#1F282C;
+  --ink:#E7EBE6; --ink-soft:#C3CBC5; --muted:#949E97; --faint:#727C76;
+  --line:#2B353A; --line-soft:#232C31;
+  --teal:#4FBBAA; --teal-soft:#6ecbbb; --teal-wash:#152A29; --teal-line:#2C4844;
+  --amber:#D6A552; --amber-soft:#e4b869; --amber-wash:#2A2416; --amber-line:#4C4128;
+  --red:#D98368; --red-wash:#2E1C17;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.7);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.4), 0 26px 60px -34px rgba(0,0,0,.85);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:19px;line-height:1.62;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+.mono{font-family:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace}
+.disp{font-family:"Bricolage Grotesque","Newsreader",sans-serif}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Newsreader",sans-serif;font-weight:700;text-wrap:balance;line-height:1.12;margin:0}
+a{color:var(--teal);text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2.5px solid var(--teal);outline-offset:3px;border-radius:3px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:18px;
+  padding:11px clamp(16px,4vw,40px);}
+.nav-brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;
+  color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:9px}
+.nav-brand .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:none}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;-webkit-overflow-scrolling:touch}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.03em;color:var(--muted);
+  text-decoration:none;padding:6px 10px;border-radius:7px;white-space:nowrap;transition:.15s}
+.nav-links a:hover{color:var(--ink);background:var(--surface-2)}
+.theme-btn{flex:none;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;transition:.15s}
+.theme-btn:hover{color:var(--ink);border-color:var(--teal)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.col{max-width:720px}
+section{padding:clamp(48px,7vw,88px) 0;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:0}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--teal);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--teal);flex:none}
+.eyebrow.amber{color:var(--amber)}.eyebrow.amber::before{background:var(--amber)}
+h2{font-size:clamp(28px,4.4vw,42px);letter-spacing:-.015em;margin-bottom:18px;max-width:20ch}
+h3{font-size:clamp(21px,2.6vw,26px);letter-spacing:-.01em;margin:44px 0 14px}
+h4{font-size:17px;letter-spacing:.01em;margin:0 0 6px}
+p{margin:0 0 18px}
+.lead{font-size:clamp(20px,2.4vw,23px);line-height:1.5;color:var(--ink-soft)}
+.sub{color:var(--muted);font-size:17px}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(40px,7vw,72px);padding-bottom:clamp(40px,6vw,64px)}
+.hero h1{font-size:clamp(40px,8vw,82px);letter-spacing:-.03em;line-height:.98;margin-bottom:22px;font-weight:800}
+.hero h1 .thin{font-weight:300;font-style:italic;font-family:"Newsreader",serif;letter-spacing:-.01em}
+.hero .lead{max-width:34ch}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:26px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.kicker b{color:var(--teal);font-weight:600}
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;margin-top:40px}
+.stat{background:var(--surface);padding:20px 18px}
+.stat .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(26px,4vw,38px);
+  letter-spacing:-.02em;line-height:1;color:var(--ink)}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--muted);
+  text-transform:uppercase;margin-top:9px;line-height:1.35}
+@media(max-width:640px){.statrow{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- how to use ---------- */
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-top:36px;box-shadow:var(--shadow)}
+.howto h4{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.howto ol{margin:0;padding-left:22px}
+.howto li{margin-bottom:8px;color:var(--ink-soft)}
+.howto li::marker{color:var(--teal);font-family:"IBM Plex Mono",monospace;font-size:14px}
+
+/* ---------- part divider ---------- */
+.part{border-top:2px solid var(--ink);padding-top:22px;margin-top:8px}
+.part-tag{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.part-tag b{color:var(--ink)}
+.part h2{margin-top:14px}
+
+/* ---------- setting block (ads manager style) ---------- */
+.settings{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:22px 0;background:var(--surface);box-shadow:var(--shadow)}
+.settings .row{display:grid;grid-template-columns:minmax(0,42%) minmax(0,58%);gap:14px;padding:13px 18px;border-top:1px solid var(--line-soft);align-items:baseline}
+.settings .row:first-child{border-top:0}
+.settings .k{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.settings .v{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--ink);font-weight:500}
+.settings .v.on{color:var(--teal)}.settings .v.off{color:var(--red)}
+@media(max-width:560px){.settings .row{grid-template-columns:1fr;gap:3px}}
+
+/* ---------- callouts ---------- */
+.rule{border-left:3px solid var(--teal);background:var(--teal-wash);border-radius:0 12px 12px 0;padding:18px 22px;margin:24px 0}
+.rule.amber{border-left-color:var(--amber);background:var(--amber-wash)}
+.rule.warn{border-left-color:var(--red);background:var(--red-wash)}
+.rule .rl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);font-weight:500;margin-bottom:7px;display:block}
+.rule.amber .rl{color:var(--amber)}.rule.warn .rl{color:var(--red)}
+.rule p:last-child{margin-bottom:0}
+.rule p{font-size:17.5px;line-height:1.55}
+
+/* magyar adaptation */
+.hu{border:1px dashed var(--amber-line);background:var(--amber-wash);border-radius:12px;padding:20px 24px;margin:26px 0;position:relative}
+.hu .flag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.hu .flag::before{content:"◆";font-size:10px}
+.hu p{font-size:17px;line-height:1.55}.hu p:last-child{margin-bottom:0}
+
+/* pull quote */
+.pq{margin:40px 0;padding:6px 0 6px 26px;border-left:3px solid var(--amber)}
+.pq p{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(22px,3vw,28px);line-height:1.32;color:var(--ink);font-weight:300;margin:0}
+
+/* ---------- cards / grids ---------- */
+.grid{display:grid;gap:14px;margin:24px 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.05em}
+.card h4{margin:8px 0 7px;font-size:17.5px}
+.card p{font-size:16px;line-height:1.5;color:var(--ink-soft);margin:0}
+.card.am .num{color:var(--amber)}
+
+/* numbered list steps */
+.steps{list-style:none;margin:24px 0;padding:0;counter-reset:s}
+.steps>li{position:relative;padding:0 0 22px 52px;counter-increment:s;border-left:1px solid var(--line);margin-left:16px}
+.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:-16px;top:-2px;
+  width:32px;height:32px;background:var(--surface);border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;
+  font-size:12px;font-weight:600;color:var(--teal)}
+.steps h4{font-size:17.5px;margin-bottom:5px}
+.steps p{font-size:16px;color:var(--ink-soft);margin:0}
+
+/* bank chips */
+.bank{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+.bank .bh{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.bank .bt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px}
+.bank .bn{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.bank p{font-size:15.5px;line-height:1.5;color:var(--ink-soft);margin:0}
+.hooks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hooks li{font-family:"Newsreader",serif;font-style:italic;font-size:17px;color:var(--ink);padding-left:18px;position:relative}
+.hooks li::before{content:"—";position:absolute;left:0;color:var(--amber);font-style:normal}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 4px;margin:22px 0;column-count:2;column-gap:28px}
+@media(max-width:640px){.check{column-count:1}}
+.check div{break-inside:avoid;display:flex;gap:11px;padding:9px 16px;font-size:15.5px;line-height:1.4;color:var(--ink-soft)}
+.check .box{flex:none;width:16px;height:16px;border:1.5px solid var(--teal);border-radius:4px;margin-top:3px}
+
+/* glossary */
+.gloss{border-top:1px solid var(--line);margin-top:20px}
+.gloss .gr{display:grid;grid-template-columns:minmax(0,180px) 1fr;gap:18px;padding:14px 2px;border-bottom:1px solid var(--line-soft)}
+.gloss .gt{font-family:"IBM Plex Mono",monospace;font-size:13.5px;font-weight:600;color:var(--teal);letter-spacing:.01em}
+.gloss .gd{font-size:16.5px;color:var(--ink-soft);line-height:1.45}
+@media(max-width:560px){.gloss .gr{grid-template-columns:1fr;gap:3px}}
+
+/* mistakes */
+.dont{list-style:none;margin:22px 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.dont li{display:flex;gap:13px;padding:12px 16px;background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:9px;font-size:16.5px;line-height:1.45;color:var(--ink-soft)}
+.dont li .x{flex:none;color:var(--red);font-family:"IBM Plex Mono",monospace;font-weight:700}
+
+/* worked example box */
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0;box-shadow:var(--shadow)}
+.calc .ch{background:var(--amber-wash);border-bottom:1px solid var(--amber-line);padding:14px 20px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);font-weight:600}
+.calc .cr{display:grid;grid-template-columns:1fr auto;gap:14px;padding:12px 20px;border-top:1px solid var(--line-soft);align-items:baseline}
+.calc .cr:nth-child(2){border-top:0}
+.calc .cl{font-size:16px;color:var(--ink-soft)}
+.calc .cv{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--ink);text-align:right;white-space:nowrap}
+.calc .cr.tot{background:var(--teal-wash);border-top:1px solid var(--teal-line)}
+.calc .cr.tot .cv{color:var(--teal)}
+
+/* calendar */
+.cal{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0}
+.cal .cm{background:var(--surface);display:grid;grid-template-columns:minmax(0,150px) 1fr;gap:16px;padding:14px 20px;align-items:baseline}
+.cal .cmn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;color:var(--teal);letter-spacing:.02em;text-transform:uppercase}
+.cal .cmd{font-size:16px;color:var(--ink-soft);line-height:1.45}
+.cal .cm.allyear .cmn{color:var(--amber)}
+@media(max-width:560px){.cal .cm{grid-template-columns:1fr;gap:3px}}
+
+/* ---------- figures & galleries ---------- */
+figure.fig{margin:26px 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+figure.fig.shot{max-width:840px}
+figure.fig img{display:block;width:100%;height:auto}
+figure.fig figcaption{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);
+  padding:11px 16px;border-top:1px solid var(--line-soft);letter-spacing:.01em;line-height:1.45}
+figure.fig figcaption b{color:var(--teal);font-weight:600}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin:24px 0}
+.gallery figure{margin:0;display:flex;flex-direction:column;gap:7px}
+.gallery img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:var(--surface-2)}
+.gallery figcaption{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);line-height:1.3;letter-spacing:.01em}
+.gallery figcaption b{color:var(--ink);font-weight:600;display:block;font-size:11px}
+.gal-note{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--faint);margin:-8px 0 20px;letter-spacing:.02em}
+hr.soft{border:0;border-top:1px solid var(--line-soft);margin:34px 0}
+.foot{padding:60px 0 80px;color:var(--muted);font-size:15px}
+.foot .disp{font-size:22px;color:var(--ink);font-style:italic;font-family:"Newsreader",serif;font-weight:300;margin-bottom:16px;display:block}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;border:1px solid var(--teal-line);color:var(--teal);background:var(--teal-wash);margin-right:6px}
+.tag.am{border-color:var(--amber-line);color:var(--amber);background:var(--amber-wash)}
+.note{font-size:15.5px;color:var(--muted);font-style:italic}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+
+<nav class="nav">
+  <div class="nav-in">
+    <span class="nav-brand"><span class="dot"></span>Meta&nbsp;Ads&nbsp;Booster</span>
+    <div class="nav-links">
+      <a href="#r1">1 · Rendszer</a>
+      <a href="#r2">2 · Prospecting</a>
+      <a href="#track">Tracking</a>
+      <a href="#r3">3 · Retention</a>
+      <a href="#rt">Retargeting</a>
+      <a href="#r4">4 · Andromeda</a>
+      <a href="#r5">5 · Instagram</a>
+      <a href="#r6">6 · Kreatív</a>
+      <a href="#r7">7 · Futtatás</a>
+      <a href="#gloss">Szótár</a>
+    </div>
+    <button class="theme-btn" id="tg" aria-label="Téma váltása">☾/☀</button>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div class="col">
+    <div class="kicker"><span>VIVRE Agency Masterclass</span><span>·</span><b>Ultra részletes magyar feldolgozás</b></div>
+    <h1>A Meta Ads<br><span class="thin">Booster</span></h1>
+    <p class="lead">A teljes account-architektúra, amit luxushotelekre és e-commerce brandekre futtatnak — kampánystruktúra, kreatív-csomagok, tesztelés és skálázás, kattintásról kattintásra az Ads Managerben.</p>
+  </div>
+  <div class="statrow">
+    <div class="stat"><div class="n">100</div><div class="l">oldal, 7 részbe rendezve</div></div>
+    <div class="stat"><div class="n">2+2</div><div class="l">kampány: 2 mag, 2 opcionális</div></div>
+    <div class="stat"><div class="n">8.0+</div><div class="l">cél event match quality</div></div>
+    <div class="stat"><div class="n">1–3</div><div class="l">új pack hetente — a motor</div></div>
+  </div>
+  <div class="howto col">
+    <h4>Hogyan használd ezt a dokumentumot</h4>
+    <ol>
+      <li><strong>Az 1. részt</strong> olvasd el egyszer, hogy értsd az architektúrát — miért pont így épül fel az egész.</li>
+      <li><strong>A 2. és 3. részt</strong> tartsd nyitva az Ads Manager mellett, és építs, ahogy olvasol.</li>
+      <li><strong>A 4. rész</strong> az, amihez minden héten visszatérsz: mit indítasz, hogyan olvasod, hogyan fokozod.</li>
+      <li><strong>Az 5. rész</strong> a bónuszkampány — akkor futtasd, ha a két mag már él.</li>
+      <li>A <span class="mono" style="font-size:13px">◆ MAGYAR PIACI ADAPTÁCIÓ</span> jelölésű borostyán dobozok az én kiegészítéseim — az eredeti anyag mediterrán példáit ültetik át a magyar/CEE hotelkontextusra.</li>
+    </ol>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ PART ONE ============ -->
+<section id="r1">
+  <div class="part col">
+    <div class="part-tag"><b>Első rész</b> — Az architektúra</div>
+    <h2>A rendszer</h2>
+    <p class="lead">Az architektúra minden általuk kezelt account mögött: két mag- és két opcionális kampány, és az ok, amiért az egész pontosan így épül fel.</p>
+  </div>
+
+  <div class="col">
+    <h3>Az alapelv, ami mindent összetart</h3>
+    <p>A Meta-hirdetésben az a rendszer teljesít a legjobban, amelyiket <strong>te ismered a legjobban</strong>. Egy struktúra, amit teljesen átlátsz, mindig veri azt az okos konstrukciót, amit nem tudsz elolvasni. Építsd fel egyszer rendesen, és onnantól minden döntés könnyebb lesz.</p>
+
+    <h3>Mit tanulsz meg</h3>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>Struktúra, ami megtart</h4><p>Két mag- és két opcionális kampány, hogy mindig tudd, mit csinál minden egyes euród.</p></div>
+      <div class="card"><div class="num">02</div><h4>A pack-rendszer</h4><p>Hogyan indítasz kreatívot csomagokban minden héten, és hagyod, hogy a CBO a nyertesekre tolja a büdzsét.</p></div>
+      <div class="card"><div class="num">03</div><h4>Minden beállítás, kattintásról kattintásra</h4><p>Büdzsé, bid-stratégia, attribúció, célközönség, elhelyezések, kreatív és tracking — képernyőképekkel.</p></div>
+      <div class="card am"><div class="num">04</div><h4>Retention kampány</h4><p>Ahol a profit valójában él, és hogyan választod el a prospecting-költéstől.</p></div>
+      <div class="card"><div class="num">05</div><h4>A kreatív mint célzás</h4><p>Miért van vége az érdeklődés-célzásnak, és hogyan lesz az <em>avatar + sablon</em> az a koncepció, ami megtalálja a közönséget.</p></div>
+      <div class="card"><div class="num">06</div><h4>Adatolvasás és skálázás</h4><p>Hogyan különíted el a nyertest a zajtól, mikor duplikálj, mikor emelj büdzsét, mikor ölj.</p></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Az account-struktúra — itt kezdődik minden</h3>
+    <p>Minden account struktúrával kezdődik. Lehet jó a kreatívod és jó a terméked, de tiszta struktúra nélkül nem jutsz messzire — mert soha nem fogod tudni, a gépezet melyik része működik valójában.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">MAG · 01</div><h4>Prospecting CBO</h4><p>Ahol új vendégeket találsz. Több packet (ad set) tartalmaz, mindegyik több kreatívval, egy avatar és egy koncepció köré építve.</p></div>
+      <div class="card am"><div class="num">MAG · 02</div><h4>Retention</h4><p>Mindenki, aki már foglalt. Nyertes hirdetések, upsell-ek és ajánlatok egy helyre csoportosítva, hogy a korábbi vendégek magas gyakorisággal lássák és visszatérjenek.</p></div>
+      <div class="card"><div class="num">OPCIÓ · 03</div><h4>Retargeting</h4><p>14 napos FB/IG interakciózók, 30 napos oldal-látogatók, 90 napos kosárba-tevés és pénztár-indítás. Csak akkor kell, ha túlköltesz a meleg közönségekre a prospectingen belül.</p></div>
+      <div class="card"><div class="num">OPCIÓ · 04</div><h4>Testing / Szezonális</h4><p>Ha védett büdzsét akarsz egy új ajánlatnak, egy új szög-banknak vagy egy szezonális kampánynak, ami nem zavarhatja meg a két magot.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Miért csak két mag-kampány</span>
+      <p>Mert egyetlen breakdown megnyitása nélkül tudnod kell: azért költesz-e pénzt, hogy <strong>új embert szerezz</strong>, vagy hogy <strong>ismét eladj</strong> valakinek, aki már ismer. A legtöbb e-commerce nem az első vásárláson keres. A kettő szétválasztása teszi ezt láthatóvá.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>1. mag — Prospecting</h3>
+    <p>Ennek a kampánynak egy dolga van: új vendégeket találni. Campaign budget optimalizáción (CBO) fut, és <strong>packeket</strong> — ad seteket — tartalmaz, mindegyikben több, ugyanarra az avatarra és koncepcióra épített kreatívval.</p>
+    <ul class="steps">
+      <li><h4>Egy kampány-büdzsé, nem ad set-büdzsék</h4><p>A CBO dönti el, hova megy a pénz. A te dolgod, hogy folyamatosan opciókat adj neki, nem az, hogy minden ad setet manuálisan bíráskodj.</p></li>
+      <li><h4>Minden pack egy avatar és egy koncepció</h4><p>A packet arról nevezed el, amit tesztel — ezért számít a névkonvenció sokkal többet, mint amennyinek látszik.</p></li>
+      <li><h4>4–8 kreatív koncepciónként, packenként</h4><p>Különböző hook-ok és szögek ugyanazon az ötleten belül, hogy megtudd: a koncepció működik, vagy csak egyetlen vágás.</p></li>
+      <li><h4>Új packek minden héten</h4><p>A varázslat nem egy pack. Hanem a packek folyamatos hozzáadása, ami idővel a legjobban teljesítő ad setekre kényszeríti a büdzsét.</p></li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <h3>2. mag — Retention</h3>
+    <p>A második kampány, amit minden branddel futtatnak. Teljes egészében a korábbi vendégekre fókuszál — nyertes hirdetések, upsell-ek és ajánlatok egy helyre csoportosítva, hogy a vásárlók magas gyakorisággal lássák és újra meg újra visszajöjjenek.</p>
+    <div class="grid g2">
+      <div class="card am"><div class="num">MI KERÜL BE</div><h4>A bizonyított nyertesek</h4><p>Hirdetések, amelyek már kiérdemelték a helyüket a prospectingben. Ide ne tesztelj hideg kreatívot — ez a kampány a <em>lezárásról</em> szól, nem a felfedezésről.</p></div>
+      <div class="card am"><div class="num">KI LÁTJA</div><h4>Vásárlók, 180 nap</h4><p>Csak egy vagy két ad set. Minden egy helyen, hogy a gyakoriság magas maradjon, ahelyett hogy egy tucat pici közönségre szakadna szét.</p></div>
+    </div>
+    <div class="pq"><p>„A legtöbb e-commerce nem az első vásárláson keresi meg a pénzét. Hanem a másodikon, a harmadikon és a negyediken."</p></div>
+    <div class="rule amber">
+      <span class="rl">Miért van elválasztva a prospectingtől</span>
+      <p>Mert az összemosás elrejti az igazságot. Ha a meglévő vendégek a prospecting-kampányodban ülnek, az akvizíciós számaid jobbnak tűnnek, mint amilyenek — és egy olyan vásárlási költséget skálázol, ami nem is létezik. Válaszd szét a kettőt, és végre megválaszolhatod az egyetlen igazán fontos kérdést: <strong>mennyibe kerül egy valóban új vendég?</strong></p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>3. (opcionális) — Retargeting</h3>
+    <p>Ez tényleg opcionális. A retargeting legtöbbször már a prospecting-kampányon belül megtörténik, mert a broad kiszállítás úgyis eléri a meleg embereket. Csak akkor építed külön, ha látod, hogy túlköltesz a meleg közönségekre.</p>
+    <div class="rule warn">
+      <span class="rl">A szabály</span>
+      <p>Ha külön retargeting-kampányt építesz, <strong>ki kell zárnod</strong> azokat a közönségeket a prospectingből. Különben magad ellen licitálsz, és kétszer fizetsz ugyanannak az embernek az eléréséért.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="num">AD SET 01</div><h4>14 napos interakciózók</h4><p>Akik az elmúlt 14 napban interakcióba léptek a Facebook-oldallal vagy az Instagram-profillal. A legmelegebb, legkisebb kör.</p></div>
+      <div class="card"><div class="num">AD SET 02</div><h4>30 napos látogatók</h4><p>Mindenki, aki az elmúlt 30 napban az oldalra érkezett, de nem foglalt.</p></div>
+      <div class="card"><div class="num">AD SET 03</div><h4>90 napos kosár / pénztár</h4><p>Kosárba tevés és pénztár-indítás az elmúlt 90 napban — a legnagyobb szándékú közönség, ami a tiéd.</p></div>
+    </div>
+    <p>Itt az <strong>ajánlat</strong> végzi a munkát. Hoteleknél ezt a forgalmat egy ajánlati oldalra küldik — szezonális ár, egy −20%-os tartózkodás, egy csomag reggelivel vagy transzferrel. E-commerce-nél a kedvezmény, a bundle vagy a bestseller. A kreatív egyszerűbb lehet, mint a prospectingben, mert ezek az emberek már tudják, ki vagy; nem bemutatkozásra van szükségük, hanem okra, hogy <em>most</em> cselekedjenek.</p>
+  </div>
+
+  <div class="col">
+    <h3>Ahogy az account valójában kinéz az Ads Managerben</h3>
+    <p>Az első rész a diagram. Ez ugyanaz élő accountokban — a kampánylista, amit akkor látnál, ha megnyitnád az Ads Managert az általuk kezelt szállodákon. Más országok, más büdzsék, ugyanazok a rétegek ugyanabban a sorrendben, minden alkalommal.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p012_2.jpg" alt="Kampánylista élő szálloda-accountban" loading="lazy"><figcaption><b>ÉLŐ ACCOUNT ·</b> A négy réteg property-nként ismételve — prospecting piaconként, RT-kampányok, profil-kampány és külön lookalike (LL/LAA).</figcaption></figure>
+  <div class="col">
+    <div class="rule">
+      <span class="rl">A kampánylista a te egyetlen dokumentációd</span>
+      <p><b>CBO</b> = a büdzsé kampányszinten ül, <b>ABO</b> = ad set szinten, <b>RT</b> = meleg, <b>LL/LAA</b> = lookalike. Fél év múlva senki nem emlékszik, mit teszteltek — a nevek árulják el. Ezért érnek meg harminc másodpercet, amikor építed.</p>
+    </div>
+    <h3>Új property: előbb a formátum-teszt</h3>
+    <p>Egy szállodán, amit még sosem futtattak, nem tudják előre, hogy a piac egy fotóra, egy klipre vagy egy carouselre válaszol-e. Ezért az első prospecting-kampányt <strong>formátum szerint</strong> bontják — ad setenként egyet —, és nagyjából tizenöt kreatív megy mindegyikbe.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p013_1.jpg" alt="Három ad set, három formátum" loading="lazy"><figcaption><b>FORMÁTUM-TESZT ·</b> Ad set 01 statikus képek, 02 videók (9:16, 4:5 safe zone), 03 carouselek — ~15 kreatív mindegyikben. A pack-rendszer <em>erre épül rá</em>, miután tudod, milyen formátumon fut az account.</figcaption></figure>
+
+  <figure class="fig shot"><img src="/metaads/images/p014_2.jpg" alt="Retargeting és prospecting egymás mellett" loading="lazy"><figcaption><b>MELEG RÉTEG ·</b> A retargeting ott van, ahol valójában konvertál — de a returnje sosem a te CPA-d: olyan emberek ellen költesz, akiket a prospecting már megfizetett. Olvasd a kettőt egymás mellett, sose egyiket a másik helyett.</figcaption></figure>
+
+  <div class="col">
+    <h3>Lookalike-ok: 1%, 2%, 3% — külön olvasva</h3>
+    <p>A broad marad az alapértelmezés mindenhol. De ha egy accountnak már van valódi vásárlói listája, a broad kampányok <em>mellett</em> tesztelnek lookalike-okat — vásárlókból építve, és úgy bontva, hogy minden hasonlósági sáv önmagában olvasható legyen.</p>
+    <ul class="steps">
+      <li><h4>Vásárlókból építsd</h4><p>Nem oldal-interakciózókból, nem videónézőkből. A vásárlói lista az egyetlen forrás, amit érdemes modellezni.</p></li>
+      <li><h4>Egy százalék, egy ad set</h4><p>1%, 2% és 3% mind kap saját ad setet, hogy lásd, melyik sáv fizet — ne átlagold őket egy számba.</p></li>
+      <li><h4>Ugyanaz a kreatív mindháromban</h4><p>Ha a kreatív is változik a közönséggel, két dolgot tesztelsz, és egyiket sem tudod elolvasni.</p></li>
+      <li><h4>A broadhoz mérd</h4><p>A lookalike kiegészítés, ha a lista elég nagy a modellezéshez — sosem helyettesíti a már működő kampányt.</p></li>
+      <li><h4>Zárd ki a vásárlóidat</h4><p>Egy vásárlói lookalike boldogan megmutatja a hirdetést a vásárlóidnak, ha hagyod.</p></li>
+      <li><h4>Adj neki türelmet</h4><p>Háromszoros cél-CPA költés, mielőtt döntesz, gördülő hét napon nézve. Egy második napon megölt lookalike semmit sem tanított.</p></li>
+    </ul>
+    <figure class="fig shot"><img src="/metaads/images/p015_1.jpg" alt="Photo, video, carousel kampányok a lookalike-ok mellett" loading="lazy"><figcaption><b>TENUTA DI MURLO ·</b> Fotó-, videó- és carousel-kampányok a lookalike-ok mellett, Olaszország és USA. A lookalike rövidítés, nem stratégia — a legjobban azokon az accountokon működik, amelyeknek a legkevésbé van rá szükségük.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ PART TWO ============ -->
+<section id="r2">
+  <div class="part col">
+    <div class="part-tag"><b>Második rész</b> — A prospecting-kampány felépítése</div>
+    <h2>Minden beállítás, kattintásról kattintásra</h2>
+    <p class="lead">Minden beállítás abban a sorrendben, ahogy az Ads Managerben találkozol vele. Tartsd nyitva a képernyőd mellett, és építs, ahogy olvasol.</p>
+  </div>
+
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 01 — Hozd létre a kampányt</h3>
+    <p>Az Ads Managerben kattints a <strong>Create</strong> gombra, válaszd célként a <strong>Sales</strong>-t, és folytasd. A vásárlási típus (buying type) maradjon <strong>Auction</strong>. Nevezd el a kampányt <span class="mono" style="color:var(--teal)">Prospecting CBO</span> — egyszerű, egyértelmű, és fél év múlva is azonnal olvasható, amikor tele lesz az account.</p>
+    <div class="rule">
+      <span class="rl">Névkonvenció</span>
+      <p><b>Kampány:</b> Prospecting CBO · Retention · Retargeting. &nbsp;<b>Ad set:</b> Avatar_Concept_Pack 1. &nbsp;<b>Hirdetés:</b> a szög vagy hook, amit tesztel. Ha egy név nem árulja el, mit tesztel, akkor rossz a név.</p>
+    </div>
+
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 02 — Állítsd be a kampány-büdzsét</h3>
+    <p>Görgess a Budgethez, és hagyd a <strong>Campaign budget</strong>-et kiválasztva — ez a CBO, és ez engedi a rendszernek, hogy a ténylegesen működő packekre tolja a költést. A napi büdzsét állítsd be legalább <strong>a cél-CPA egyszeresére</strong>.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p018_1.jpg" alt="Campaign budget beállítás — CBO" loading="lazy"><figcaption><b>CBO ·</b> Campaign budget kiválasztva, napi büdzsé. Ha a cél-CPA €25, indíts €25/nappal. A Metának elég napi büdzsé kell, hogy kilépjen a tanulási fázisból — de ne annyi, hogy egy rossz hét az accountba kerüljön.</figcaption></figure>
+  <div class="col">
+    <div class="rule warn">
+      <span class="rl">Amit hagyj figyelmen kívül</span>
+      <p>A Meta által ajánlott büdzsét és az ad set alatti költési limiteket (spending limits). A limiteket hagyd üresen. A CBO egész lényege, hogy szabadon mozgatja a pénzt — az ad setek megsapkázása pont azt a mechanizmust töri el, amit épp választottál.</p>
+    </div>
+
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 03 — Bid-stratégia és szegmens-riport</h3>
+    <p>A kampány bid-stratégiája maradjon <strong>Highest volume</strong>. Aztán állítsd be az <strong>Audience segment reporting</strong>-et — ez az, ami később megmutatja, tippelés nélkül, hogy a prospecting-költésed mennyi hányada landol olyanokon, akik már ismernek.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p019_1.jpg" alt="Bid strategy és segment reporting" loading="lazy"><figcaption><b>DIAGNOSZTIKA ·</b> Engaged audience = Add to Cart 90 nap + Site Visitors 90 nap. Existing customers = minden idők vásárlói. Ez mondja meg, kell-e egyáltalán külön retargeting-kampány.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 04 — Pack 01 · Avatar_Concept_Pack</h3>
+    <p>Most az első ad set. Nevezd el <span class="mono" style="color:var(--teal)">Avatar_Concept_Pack 1</span>-nek. Avatar és koncepció nélkül semmi sem működik az Andromeda-korszakban. Aztán állítsd a customer lifecycle stratégiát <strong>Acquire new customers</strong>-re, és <strong>zárd ki a vásárlóidat</strong>.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p020_1.jpg" alt="Customer lifecycle — acquire new customers" loading="lazy"><figcaption><b>PÉLDA NÉV ·</b> Couples_QuietLuxury_Pack 1 vagy Families_SummerEscape_Pack 1. Az „Acquire new customers" megmondja a Metának, hogy ennek az ad setnek a dolga az akvizíció. A vásárlók kizárása (pixel, ügyféllista, Shopify-közönség) tartja becsületesen a prospectinget.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 05 — Konverzió és attribúció</h3>
+    <p>A konverziós hely maradjon <strong>Website</strong>. Ha most kezded, a performance goal legyen <strong>Maximize number of conversions</strong>, a konverziós esemény pedig <strong>Purchase</strong> — mindig Purchase, nem add to cart, nem view content.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p021_1.jpg" alt="Konverzió és attribúció beállítás" loading="lazy"><figcaption><b>ATTRIBÚCIÓ ·</b> Standard → More settings → 7 napos klikk, 1 napos interakció, 1 napos view. A lehető legtöbb jelet akarod adni a kampánynak — minél több konverziót tud attribuálni a rendszer, annál gyorsabban tanulja meg, kinek mutassa.</figcaption></figure>
+  <div class="settings col">
+    <div class="row"><div class="k">Conversion location</div><div class="v">Website</div></div>
+    <div class="row"><div class="k">Performance goal</div><div class="v">Maximize number of conversions</div></div>
+    <div class="row"><div class="k">Conversion event</div><div class="v on">Purchase</div></div>
+    <div class="row"><div class="k">Attribution</div><div class="v">7-day click · 1-day eng · 1-day view</div></div>
+  </div>
+  <div class="col">
+    <p class="note">Később, ha az account már volumennel és stabil adattal rendelkezik, érdemes tesztelni a <em>value</em> optimalizálást a <em>number</em> helyett. Ne itt kezdd — a value-optimalizáláshoz előzmény kell.</p>
+
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 06 — Tartsd a közönséget broadon</h3>
+    <p>A büdzsé és ütemezés ad set szinten marad, ahogy van. Menj a közönséghez, és tedd teljesen <strong>broaddá</strong>: az országod vagy piacod, a korosztályod, <strong>Advantage+ audience bekapcsolva</strong>, és semmi más. Nincs érdeklődés-halmozás, nincs lookalike az első teszteknél.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p022_1.jpg" alt="Broad audience — Advantage+ on" loading="lazy"><figcaption><b>MIÉRT BROAD ·</b> Mert most a kreatív a célzás. Ha tisztán megnevezed az avatarodat magában a hirdetésben, a rendszer egyetlen érdeklődés megadása nélkül kiszállítja neki. Az érdeklődés-halmozás csak kisebbé teszi a kört és drágábbá az aukciót — hozadék nélkül.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 07 — Tartsd az elhelyezéseket broadon</h3>
+    <p>Az elhelyezések maradjanak teljesen broadon. Minden eszköz, minden platform, minden elérhető elhelyezés bekapcsolva. Ne zárd ki az Audience Networköt, ne kapcsold ki a Threadset, ne válogass kézzel a feedek között azért, mert neked személy szerint nem tetszik, ahogy ott kinéz a hirdetés.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p023_1.jpg" alt="Minden elhelyezés broadon" loading="lazy"><figcaption><b>KIVÉTEL — MÁRKABIZTONSÁG ·</b> Minden eltávolított elhelyezés egy szelet készlet, amit a rendszer már nem tud olcsón megvenni neked. Ha egy propertynek valódi megkötése van, hol jelenhet meg — kezeld egyszer, account szinten, ne minden ad setben külön.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 08 — Hirdetés-beállítás és identitás</h3>
+    <p>Most építsd a hirdetést. Állítsd be a helyes Facebook-oldalt és Instagram-profilt az <strong>Identity</strong> alatt — ez az a fiók, amiről a hirdetés érkezni látszik, és hotel-accountoknál érdemes kétszer ellenőrizni. Aztán <strong>vedd ki a multi-advertiser ads</strong> pipát.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p024_1.jpg" alt="Ad setup és identity" loading="lazy"><figcaption><b>IDENTITÁS ·</b> A rossz identitás azt jelenti, hogy a hirdetésed valaki más social proofját építi, és a rossz profilra küldi a forgalmat. A multi-advertiser ads kikapcsolva — nem akarod a hoteledet egy rácsban a versenytársak mellett látni.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 09 — Céloldal (destination)</h3>
+    <p>A fő cél a <strong>Website</strong>, és az URL legyen pontosan az az oldal, ahová ezt a forgalmat szánod — a foglalási oldal, az ajánlati oldal, a kollekció, nem a főoldal. Aztán kapcsold <strong>ki a Personalized destinations</strong>-t.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p025_1.jpg" alt="Destination — personalized off" loading="lazy"><figcaption><b>MIÉRT KI ·</b> Mert teljes kontrollt akarsz afölött, hova megy a forgalom. Ha a rendszer szabadon átirányíthat más oldalra, mint amit a kreatívod ígért, a landing és a hirdetés nem stimmel többé — és elveszíted a képességet, hogy elolvasd: a hirdetés működött, vagy az oldal.</figcaption></figure>
+  <div class="hu col">
+    <div class="flag">Magyar piaci adaptáció — UTM és RoomSome</div>
+    <p>Ez a pillanat az UTM-paraméterek ellenőrzésére is. Ha a foglalómotorod (pl. RoomSome) külön aldomainen vagy harmadik fél hostján ül, győződj meg róla, hogy a <span class="mono" style="font-size:13px">utm_*</span> paraméterek <strong>átélik a redirectet</strong> a motorba — különben a két hétig költő kampányod nem lesz megtalálható az analitikádban, és nem tudod megvédeni az ügyfél előtt.</p>
+  </div>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 10 — Állítsd össze a kreatívot</h3>
+    <p>Az <strong>Ad creative</strong> alatt kattints a <strong>Set up creative</strong>-re, válaszd a képet vagy videót, és töltsd fel. Tartsd egyszerűen — a legtöbb opcionális réteget itt <em>ki</em>kapcsolod, nem be.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p026_2.jpg" alt="Kreatív beállítás — branding off" loading="lazy"><figcaption><b>KREATÍV ·</b> Feltöltött média kiválasztva, branding és site link-ek kikapcsolva. Minél kevesebb réteget hagysz a rendszerre, annál tisztább lesz, mit tesztelsz.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--amber)">LÉPÉS 11 · KREATÍV SZABÁLY — A 9:16 feltöltés és a 4:5 safe zone</h3>
+    <p>Ez megváltozott, és sokakat megfog. Most <strong>egyetlen 9:16-os vertikális</strong> asset-et töltesz fel — már nem tudsz elhelyezésenként más kivágást feltölteni. Minden, ami számít, a középső <strong>4:5-ös safe zone</strong>-ban kell legyen, mert a teteje és az alja levágódhat.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p027_1.jpg" alt="9:16 upload, 4:5 safe zone" loading="lazy"><figcaption><b>A GYAKORLATBAN ·</b> Forgass és exportálj 9:16-ban. Vágáskor a középső 4:5-ös téglalapot kezeld az egyetlen valódi vászonként: termék, arc, logó, felirat, ár, CTA — mind ott él. A felső/alsó sávot csak atmoszférára (ég, víz, homok).</figcaption></figure>
+  <div class="col">
+    <div class="rule amber">
+      <span class="rl">A teszt</span>
+      <p>Takard le a hüvelykujjaddal a hirdetés tetejét és alját. Ha még mindig elad, kész. Ha a hook eltűnik, vágd újra.</p>
+    </div>
+
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 12 — Format display options</h3>
+    <p>Alapból a Meta a hirdetésedet carousellé vagy collection-né alakítja aszerint, ki látja. Ezt nem akarjuk. Kattints az <strong>Edit</strong>-re a Format display options mellett, és távolítsd el a <strong>Carousel</strong> és <strong>Collection</strong> opciókat — maradjon csak a <strong>Single media</strong>.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p028_2.jpg" alt="Single media only" loading="lazy"><figcaption><b>MIÉRT ·</b> Egy konkrét kreatívot tesztelsz. Ha a rendszer szabadon háromféle formátumba szerelheti újra, már nem tudod megmondani, a koncepció nyert-e, vagy csak egy automata elrendezés teljesített. Kontrolláld a változót, aztán olvasd az eredményt.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 13 — Szöveg, headline, CTA</h3>
+    <p>Tartsd egyszerűen. Általában <strong>2–3 primary text</strong>et és <strong>2–3 headline</strong>-t írnak hirdetésenként, a kezelt hoteleknél pedig a CTA szinte mindig <strong>Learn more</strong>.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">PRIMARY TEXT — 2–3 variáció</div><p>Egy, ami közvetlenül az avatarhoz szól. Egy, ami a legerősebb funkcióval nyit. Egy, ami az ajánlattal vagy a szezonnal. Rövid — az első sor végzi szinte az összes munkát.</p></div>
+      <div class="card"><div class="num">HEADLINE — 2–3 variáció</div><p>Rövid, konkrét, öncélú okoskodás nélkül. „Privát medencés lakosztályok Mykonoson" veri az „Egy felejthetetlen szökést" — mindig.</p></div>
+    </div>
+    <div class="rule amber">
+      <span class="rl">CTA — Learn more, ne Book now</span>
+      <p>Hoteleknél <b>Learn more</b>-t használnak, nem Book now-t. A prospecting-fázisban a vendég még nem áll készen foglalni — ha túl korán kéred a foglalást, elveszíted a kattintást. A Book now-t tartsd meg a retentionnek és a retargetingnek, ahol a szándék már megvan.</p>
+    </div>
+    <p><strong>Az avatarnak írj.</strong> A legerősebb hirdetések megnevezik, kinek szólnak, az első három másodpercben, anélkül hogy űrlapnak hangzanának. „Ha két éve nem voltál igazi nyaraláson" — ez egy avatar. „Újragondolt luxus" — ez egy szlogen. Csak az egyik állít meg valakit.</p>
+
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 14 — Kapcsold ki a Creative Enhancements-et</h3>
+    <p>Görgess az <strong>Advantage+ creative enhancements</strong>-hez, és kapcsold ki. Zene, overlay, animáció, vizuális retusálás, fényerő- és kontrasztállítás — mind ki. Nem akarjuk, hogy a rendszer újraírja azt a kreatívot, amire egy forgatást költöttél.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p030_1.jpg" alt="Creative enhancements off" loading="lazy"><figcaption><b>KÉT OK ·</b> (1) Márka: egy automata overlay vagy random zene egy ötcsillagos propertyn olcsón néz ki, és az ügyfél előbb látja meg, mint te. (2) Teszt: ha a rendszer módosítja a kreatívot, már nem a saját kreatívodat teszteled, hanem egy vágást, amit sosem hagytál jóvá és nem tudsz reprodukálni.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 15 — Állítsd be a trackinget</h3>
+    <p>A hirdetés utolsó lépése. A <strong>Tracking</strong> alatt győződj meg róla, hogy a <strong>Website events</strong> be van pipálva, és a jelenlegi pixeledre/dataset-edre mutat. Ha van offline eseményed is — telefonos foglalás, walk-in, a szállodai csapat által lezárt foglalás —, azokat is kapcsold be.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p031_1.jpg" alt="Tracking — website events + offline" loading="lazy"><figcaption><b>ELLENŐRZÉS PUBLIKÁLÁS ELŐTT ·</b> Publikáld ezt az egy ad setet, és nézd meg mobilon: a safe zone, az első frame, a caption, a célURL. Most javítani egy szerkesztés. Duplikálás után ötször annyi.</figcaption></figure>
+  <div class="hu col">
+    <div class="flag">Magyar piaci adaptáció — offline események a foglalásokra</div>
+    <p>A hospitalityben az offline események <strong>többet érnek, mint máshol</strong>. A magyar szállodák bevételének jelentős része sosem érinti a foglalómotort: telefonon, e-mailben, a recepción vagy visszatérő vendégként zárul. Ha ezek láthatatlanok a Meta számára, a kampányaid rosszabbnak tűnnek, mint amilyenek, és a rendszer a rossz emberekre optimalizál. Ahol tudod, tápláld be őket — az <span class="mono" style="font-size:13px">action source = phone call</span> paraméterrel ezek elkülöníthetők maradnak a weboldali foglalásoktól.</p>
+  </div>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 16 — Duplikáld a packet · a motor</h3>
+    <p>Most duplikáld ezt az ad setet nagyjából <strong>ötször</strong>, és cseréld a szöget és a hookot mindegyikben, amíg nyertest nem találsz. Általában <strong>4–8 hirdetés</strong>t futtatnak koncepciónként, packenként.</p>
+    <div class="rule">
+      <span class="rl">Miért működik a rendszer</span>
+      <p>A varázslat nem az, hogy egy pack teljesít. Nem is kettő vagy három. Hanem a packek <strong>folyamatos hozzáadása</strong> az idő során, ami automatikusan a legjobban teljesítő ad setekre kényszeríti a kampány-büdzsét. Ha egy ad set nyertes, több büdzsét kap. Ha vesztes, leáll. Nem büdzséket menedzselsz — opciókat szállítasz.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="num">HETENTE</div><h4>1–3 új pack</h4><p>Mindegyik friss avatar vagy friss koncepció, nem a múlt heti vágás újraexportja.</p></div>
+      <div class="card"><div class="num">PACKENKÉNT</div><h4>4–8 kreatív</h4><p>Ugyanaz a koncepció, más hookok — hogy az ötletről tanulj, ne csak a vágásról.</p></div>
+      <div class="card am"><div class="num">SOHA</div><h4>Ne nyúlj a nyertesekhez</h4><p>Ne szerkeszd a nyertes ad setet. Duplikáld, és a másolatban cseréld a szöveget.</p></div>
+    </div>
+    <div class="rule warn">
+      <span class="rl">A kadencia — a legnagyobb különbség</span>
+      <p>Indíts <strong>1–3 új packet minden héten</strong>. Ez a ritmus a legnagyobb egyetlen különbség a platózó és a folyamatosan kamatozó accountok között. Egy hét új kreatív nélkül egy hét, amiben a legjobb hirdetésed egy héttel jobban elfárad, és semmi új nincs, ami leváltsa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRACKING LAYER ============ -->
+<section id="track">
+  <div class="part col">
+    <div class="part-tag"><b>A tracking réteg</b> — Events Manager</div>
+    <h2>A dataset maga az egész account</h2>
+    <p class="lead">A második rész minden beállítása feltételezi, hogy az alatta lévő adat valódi. Itt dől el. Egy dataset propertynként, mindkét integráció élőben, és minden domain, amit a vendég érint a foglalás felé, ebbe riportál.</p>
+    <div class="rule warn" style="margin-top:24px">
+      <span class="rl">Ez a legmagasabb megtérülésű dolog, amit egy hotel-accounton megjavíthatsz</span>
+      <p>A negyedik rész minden száma ez alatt az oldal alatt van. Az adatolvasás, egy pack megítélése, egy nyertes skálázása — mind feltételezi, hogy az események igazak. Javítsd meg előbb a trackinget, és minden más döntés könnyebb lesz; hagyd ki, és egyik sem jelent semmit.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Egy dataset propertynként</h3>
+    <p>A szálloda weboldala és a foglalómotor két domain és egy üzlet. <strong>Ugyanabba a datasetbe</strong> riportálnak, különben a foglalásaid felére optimalizálsz. Írd le a dataset ID-t: több propertyt futtató accounton ez az egyetlen egyértelmű módja megtudni, melyik pixel ellen optimalizál egy kampány — a nevek duplikálódnak, az ID-k nem.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p033_1.jpg" alt="Events Manager — egy dataset, CAPI és pixel aktív" loading="lazy"><figcaption><b>EVENTS MANAGER ·</b> Egy dataset propertynként, Conversions API és Meta Pixel <em>mindkettő aktív</em>. Egy tiszta beállítási oldal két nap esemény nélkül = törött dataset. A grafikont olvasod, nem a beállításokat — az események megjelenése akár 30 percet is késhet.</figcaption></figure>
+  <div class="col">
+    <h3>Pixel és Conversions API — mindkettő élőben</h3>
+    <p>A böngésző eldobja az eseményeket. A szerver nem. A pixel a vendég böngészőjéből tüzel, így elveszíti, amit az ad blockerek, iOS-beállítások, cookie-bannerek és megszakadt kapcsolatok kivesznek belőle. A <strong>Conversions API</strong> ugyanazt az eseményt a szerverről küldi, ahol ezek egyike sem érvényes. Mindkettőt akarod, és mindkettőt <em>Active</em> státuszban.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p034_1.jpg" alt="Pixel és CAPI integráció, deduplikáció" loading="lazy"><figcaption><b>DEDUPLIKÁCIÓ ·</b> Mindkét esemény ugyanazt az event name-et és event ID-t viszi; a Meta párosítja és egyet tart meg. Ha a fejlesztő nem küld event ID-t, dupla számolás. Az érték és a pénznem is utazik — különben a ROAS-oszlopod üres marad.</figcaption></figure>
+  <div class="col">
+    <div class="rule">
+      <span class="rl">Active ≠ helyes</span>
+      <p>Egy integráció lehet élő, és mégis érték nélkül küldi a vásárlásokat, vagy minden újratöltéskor tüzel a megerősítő oldalon. Az <em>Active</em> csak annyit jelent: csatlakoztatva. Az eseménylista mondja meg, hogy <strong>becsületes-e</strong>.</p>
+    </div>
+    <h3>Az event match quality — a szám minden esemény mellett</h3>
+    <p>Az a tízből kapott szám az <strong>event match quality</strong>: mennyire megbízhatóan tudja a Meta a küldött eseményt egy valódi emberhez kötni. Nem hiúsági mutató. Az alacsony érték azt jelenti, hogy a valóban létrejött foglalásaid sosem attribuálódnak, a rendszer az igazság töredékéből tanul, és zajra optimalizálsz.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p035_1.jpg" alt="Event match quality — Purchase 9.3" loading="lazy"><figcaption><b>CÉL: 8.0 FÖLÖTT ·</b> Itt a Purchase 9.3-on áll és tizenegy ad set optimalizál ellene, míg a csak-böngésző események 6.1-en, „update recommended" jelöléssel. Javítsd a Purchase-t elsőként, aztán az Initiate Checkoutot, aztán a többit.</figcaption></figure>
+
+  <div class="col">
+    <h3>A Conversions API bekötése — négy út, egy helyes válasz</h3>
+    <p>Nincs egyetlen CAPI-beállítás — négy útvonal van, és hogy melyiket járod, azt dönti el, mit támogat már a weboldalad és a foglalómotorod. Haladj lefelé a listán, és állj meg az elsőnél, ami passzol.</p>
+    <ul class="steps">
+      <li><h4>Út 01 · Partner-integráció</h4><p>Ha a site olyan platformon fut, amivel a Meta már integrál, ez egy beállítási oldal és húsz perc. Nincs fejlesztő, nincs szerver. Ezt nézd meg elsőként — a legtöbben olyat építenek egyedileg, ami már létezett.</p></li>
+      <li><h4>Út 02 · Szerveroldali tag manager</h4><p>Egy szerver-konténer fogadja a böngésző-eseményeket, és a vevő-paraméterekkel együtt továbbítja a Metának. A legtöbb hotel-site ezen köt ki, mert a foglalómotor külön domainen ül.</p></li>
+      <li><h4>Út 03 · Conversions API Gateway</h4><p>A Meta saját hostolt megoldása, a te felhő-fiókodon futtatva. Kevésbé rugalmas, mint egy tag manager, jóval kevesebb munka, mint megépíteni — és a deduplikációt is kezeli.</p></li>
+      <li><h4>Út 04 · Közvetlenül az API-hoz</h4><p>A fejlesztőd arról a szerverről posztolja az eseményeket, ami már tudja, hogy foglalás történt. A legpontosabb út, és az egyetlen, ami elkapja a foglalásokat, amiket a böngésző sosem lát.</p></li>
+      <li><h4>Előbb kérdezd a foglalómotort</h4><p>Sok motor engedi egy dataset ID beillesztését; jóval kevesebb támogatja a Conversions API-t. Kérdezd meg a szolgáltatót közvetlenül, melyiket támogatja, mielőtt bármit terveznél — a válasz dönti el az utat.</p></li>
+      <li><h4>Aztán ellenőrizz, ne feltételezz</h4><p>Egy kapcsolat, ami az első napon Active és a kilencediken leáll, gyakori. Az eseménylista és a diagnostics tab mondja meg, nem az integrációs képernyő.</p></li>
+    </ul>
+    <div class="rule amber">
+      <span class="rl">Küldd az értéket, mindig</span>
+      <p>Egy érték nélküli vásárlás-esemény minden ROAS-oszlopot gondolatjellé változtat, és egy szálloda, ahol egy €400-os és egy €4000-os tartózkodás ugyanannyit számít, a rossz kampányt fogja skálázni.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>A paraméterek, amelyek nyolcra visznek</h3>
+    <p>A pontszám nem beállítás, amit feltekersz. Az esemény, amit küldesz, minden paramétere összeadódik. Minden alábbi paraméter, amit a foglalómotorod már ismer a megerősítés pillanatában, egy pont, amit az asztalon hagysz.</p>
+  </div>
+  <div class="settings col">
+    <div class="row"><div class="k">Email</div><div class="v">A legnagyobb emelés. Hashelve küldve, sosem tisztán.</div></div>
+    <div class="row"><div class="k">Telefonszám</div><div class="v">Hashelve, teljes nemzetközi formátumban.</div></div>
+    <div class="row"><div class="k">Név, város, ország, irsz.</div><div class="v">Mindegyik ad egy kicsit; együtt a hatosból nyolcba visznek.</div></div>
+    <div class="row"><div class="k">External ID</div><div class="v">Saját foglalási/vevő-referencia. Összeköti a visszatérő vendégeket.</div></div>
+    <div class="row"><div class="k">fbc és fbp</div><div class="v off">A klikk- és böngésző-azonosítók. A szerver-útnak külön oda kell adni — ez hiányzik a leggyakrabban.</div></div>
+    <div class="row"><div class="k">IP és user agent</div><div class="v">Ahogy van, nem hashelve. Szerver-eseményeknél kötelező.</div></div>
+    <div class="row"><div class="k">Event ID</div><div class="v on">Nem matching-paraméter — a deduplikációs kulcs. Ugyanaz pixelből és szerverből.</div></div>
+    <div class="row"><div class="k">Action source</div><div class="v">Website a motornak, phone call a csapat által zárt foglalásoknak.</div></div>
+  </div>
+  <div class="hu col">
+    <div class="flag">Magyar piaci adaptáció — GDPR és a hashelés</div>
+    <p>Minden személyes adat <strong>hashelve hagyja el a szervert</strong>: az email, telefon és név SHA-256 hashként megy, sosem szövegként — ez egyszerre a követelmény és az ok, amiért ez GDPR-kompatibilis módon biztonságos. Ha bárki azt javasolja, hogy nyers vendéglistát küldjetek, az a pont, ahol megállsz, és rendes adatvédelmi tanácsot kérsz. A hashelés a foglalómotorod vagy a szerveroldali konténer feladata — nem kézzel exportált CSV-ké.</p>
+  </div>
+
+  <div class="col">
+    <h3>Csatlakoztatva egyszer ≠ csatlakoztatva</h3>
+    <p>A tracking az egyetlen része ennek a rendszernek, ami hétfőn tökéletes lehet és péntekre törött, anélkül hogy bárki hozzáért volna az ad accounthoz. Ezek a checkek fogják el, mielőtt egy hónap költés megteszi.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>Test events, mielőtt bízol benne</h4><p>A Test events tab valós időben mutatja az érkező eseményeket egy tesztkóddal. Csinálj egy valódi foglalást a motoron át, és nézd, ahogy landol — tíz perc, és minden vitát elrendez.</p></div>
+      <div class="card"><div class="num">02</div><h4>A párt nézd, ne az összeget</h4><p>Ugyanannak a vásárlásnak egyszer kell megjelennie, mindkét forrásból, deduplikálva. Két sor egy foglalásra = hiányzik az event ID.</p></div>
+      <div class="card"><div class="num">03</div><h4>Olvasd a diagnostics-et</h4><p>Az Actions tab jelzi a hiányzó paramétereket, eldobott eseményeket, érvénytelen értékeket. Az a piros pont az account, ami szól, hogy valami eltört.</p></div>
+      <div class="card"><div class="num">04</div><h4>Figyeld a last-received időt</h4><p>Egy esemény, ami két napja érkezett utoljára egy napi foglalásokat fogadó propertyn, leállt — bármit is állít a beállítási oldal.</p></div>
+      <div class="card"><div class="num">05</div><h4>Ellenőrizz minden site-változás után</h4><p>Új foglalómotor, redesign, cookie-banner, plugin-frissítés. A tracking nem hangosan törik — csendben, és egy hónap rossz számból tudod meg.</p></div>
+      <div class="card"><div class="num">06</div><h4>Tedd a heti review-ba</h4><p>Harminc másodperc a teljesítmény olvasása előtt: fogad-e még a Purchase, ott van-e még a match quality. Aztán olvasd a kampányokat.</p></div>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="num">A TÜNET</div><h4>Az eredmény leszakad</h4><p>Költés változatlan, konverzió eltűnt. Tízből kilencszer a kampány jó, a tracking nem.</p></div>
+      <div class="card"><div class="num">A MÁSIK TÜNET</div><h4>Lehetetlenül jó</h4><p>A vásárlások megduplázódnak foglalás-változás nélkül. Ez deduplikáció, nem egy jó hét.</p></div>
+      <div class="card am"><div class="num">AMITŐL FÉLJ</div><h4>Lassan romlik</h4><p>A match quality egy hónap alatt lefelé sodródik, ahogy a paraméterek csendben elmaradnak. Semmi nem riaszt. A heti pillantás a riasztó.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART THREE ============ -->
+<section id="r3">
+  <div class="part col">
+    <div class="part-tag" style="border-top-color:var(--amber)"><b>Harmadik rész</b> — A retention-kampány</div>
+    <h2>Ahol a profit lakik</h2>
+    <p class="lead">A jó hír: ennek már kilencven százalékát felépítetted. A retention a prospecting duplikátuma, néhány célzott változtatással.</p>
+  </div>
+
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--amber)">LÉPÉS 17 — Duplikálás retention-kampányba</h3>
+    <p>Ez a rész egyszerű. Duplikáld a teljes <strong>Prospecting</strong> kampányt, és nevezd át a másolatot <span class="mono" style="color:var(--amber)">Retention</span>-re. Minden más pontosan ugyanaz marad: még mindig Sales, még mindig Auction, még mindig CBO, ugyanaz a szegmens-riport.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p040_1.jpg" alt="Duplikált kampány átnevezve Retention-re" loading="lazy"><figcaption><b>VÁLTOZATLAN ·</b> Buying type Auction · Objective Sales · Budget CBO · Segment reporting ugyanaz. <em>Aztán töröld a plusz ad seteket:</em> a retentionnek csak egy-két ad set kell. Töröld a harmadikat, és nevezd a maradékot <b>Purchase_180</b>-nak.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--amber)">LÉPÉS 18 — A Purchase_180 ad set</h3>
+    <p>Nevezd az ad setet <span class="mono" style="color:var(--amber)">Purchase_180</span>-nak. Aztán változtasd meg a customer lifecycle stratégiát: ezúttal <strong>nem</strong> zárod ki a 180 napos vásárlóidat — ők az egész lényeg. Állítsd <strong>Get more conversions</strong>-re. A konverziós hely marad Website.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p041_1.jpg" alt="Purchase_180 ad set — get more conversions" loading="lazy"><figcaption><b>PURCHASE_180 ·</b> Customer lifecycle strategy → Get more conversions → Website. A prospecting kizárja a vásárlókat; a retention pontosan rájuk céloz.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--amber)">LÉPÉS 19 — Csak a vásárlóidat érd el</h3>
+    <p>Menj le az Audience szekcióhoz. Kattints a <strong>Further limit the reach of your ads</strong>-ra, és amikor a párbeszédablak megjelenik, válaszd újra a <strong>Further limit the reach of your ads</strong>-t, és folytasd. A Meta le akar majd beszélni róla — ebben a kampányban hagyd figyelmen kívül.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p042_1.jpg" alt="Further limit the reach" loading="lazy"><figcaption><b>A HARMADIK OPCIÓ ·</b> Válaszd a „Further limit the reach of your ads"-t, aztán Continue. Máshol a rendszerben a szűk közönség probléma — itt a specifikáció.</figcaption></figure>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--amber)">LÉPÉS 20 — Építsd a custom audience-t</h3>
+    <p>Most nyisd meg a Custom audiences-t, és add hozzá a <strong>Purchasers 180 days</strong> közönséget. Aztán vedd ki a <strong>Use as a suggestion</strong> pipát — ez kritikus. A közönség-definíciódnak most szűknek kell mutatnia, és pontosan ezt akarod itt.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p043_1.jpg" alt="Custom audience — use as suggestion unticked" loading="lazy"><figcaption><b>A SZŰK A CÉL, NEM A FIGYELMEZTETÉS ·</b> Azt akarod, hogy ezek a hirdetések olyanokra landoljanak, akik már fizettek — magas gyakorisággal, a bizonyított nyerteseiddel és a legjobb ajánlatoddal.</figcaption></figure>
+  <div class="col">
+    <div class="rule amber">
+      <span class="rl">A magod kész</span>
+      <p>A prospecting új vendégeket hajt. A retention a meglévőket. És mivel el vannak választva, mindig tudni fogod, a kettő közül melyikre költesz valójában — ez a különbség a skálázás és a tippelés között.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RETARGETING BUILD ============ -->
+<section id="rt">
+  <div class="part col">
+    <div class="part-tag"><b>A retargeting-build</b> — mikor és miért</div>
+    <h2>A retargeting utána jön, sosem elsőként</h2>
+    <p class="lead">A meleg kampányt akkor építed, ha a prospecting feltöltötte a köröket — nagyjából egy hét —, ami egyben az első pont, ahol látod, melyik kreatív működik valóban.</p>
+  </div>
+
+  <div class="col">
+    <ul class="steps">
+      <li><h4>A prospecting fut előbb, egyedül</h4><p>Nem tudsz olyat retargetelni, aki még nem létezik. Az első hét csak akvizíció.</p></li>
+      <li><h4>Egy hét után olvasd a kreatívot</h4><p>Az első becsületes olvasat: melyik hirdetést nézték, kattintották, mentették, osztották meg — nem melyik tetszett neked.</p></li>
+      <li><h4>Vidd át a nyerteseket</h4><p>Ami teljesített a prospectingben, átmegy a meleg kampányba. Ami megállított valakit, annak követnie kell.</p></li>
+      <li><h4>A standard build</h4><p>Instagram-interakciózók 365 nap, Facebook-interakciózók 365 nap, oldal-látogatók — mind egy ad setben, hogy a gyakoriság magas maradjon.</p></li>
+      <li><h4>A szűk build</h4><p>Ha gyorsabban kell foglalás, dobj el mindent a foglalómotort elérőkön kívül. Sokkal kisebb kör, a legnagyobb szándék, a leggyorsabb megtérülés.</p></li>
+      <li><h4>A vásárlók kikerülnek</h4><p>A friss foglalók ki vannak zárva mindenből. Egy már meghozott döntést fizetnél meg.</p></li>
+    </ul>
+    <div class="rule">
+      <span class="rl">A meleg ablakok</span>
+      <p><b>Instagram-interakciózók</b> 365 nap — hotel-accounton szinte mindig a legnagyobb meleg kör. <b>Facebook-interakciózók</b> 365 nap. <b>Oldal-látogatók</b> 180 nap (365, ha ritka a forgalom). <b>Csak foglalómotor</b> — a szűk build. <b>Mindenhonnan kizárva:</b> a vásárlások.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Az ABO-build — hat lépés</h3>
+    <p>Create, Sales, Auction. Kampányszinten minden ugyanaz, mint a prospecting-buildnél, <strong>egy beállítás kivételével</strong> — és az az oka, hogy ezt a kampányt ABO-nak hívják.</p>
+  </div>
+  <div class="grid g2 col" style="max-width:840px">
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p045_1.jpg" alt="ABO kampány név és büdzsé" loading="lazy"><figcaption><b>LÉPÉS 01–02 ·</b> Név: ABO – RT – US (büdzsé-szint, mit csinál, melyik piac). Buying type Auction, objective Sales.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p046_1.jpg" alt="Szegmensek és event" loading="lazy"><figcaption><b>LÉPÉS 03–04 ·</b> A/B test off, ugyanaz a szegmens-definíció mint prospectingben, event marad Purchase. Ellenőrizd a datasetet kétszer.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p047_2.jpg" alt="Bid, büdzsé, ütemezés" loading="lazy"><figcaption><b>LÉPÉS 05–06 ·</b> Highest volume, standard attribúció (7d/1d/1d). Számíts a „limited by budget" jelzésre — a kör kicsi, nem a szám rossz.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p048_1.jpg" alt="Advantage+ audience off, három ablak" loading="lazy"><figcaption><b>LÉPÉS 07–08 ·</b> Advantage+ audience <em>OFF</em> (a prospecting ellentéte). Inclusion: IG/FB engagers 365, site visitors 180. Exclusion: vásárlások.</figcaption></figure>
+  </div>
+  <div class="col">
+    <div class="rule">
+      <span class="rl">Miért ABO és nem CBO itt</span>
+      <p>A prospectingben szabad büdzsét akarsz, mert a packek ugyanazért a hideg piacért versenyeznek. Itt az ad setek <em>nem</em> versenyeznek — különböző emberek, különböző távolságra a foglalástól. A CBO csendben a legolcsóbb körbe tolná az egészet, és kiéheztetné a többit. Az ad set-büdzsé garantálja, hogy minden ablak ténylegesen elérésre kerül.</p>
+    </div>
+    <figure class="fig shot"><img src="/metaads/images/p049_1.jpg" alt="Placements broad, majd a hirdetések" loading="lazy"><figcaption><b>LÉPÉS 09 ·</b> Advantage+ placements ON, semmi kizárva. Aztán a hirdetések: creative enhancements off, carouselek üdvözölve, <b>Book now</b> a Learn more helyett, és a cél az ajánlati oldal, amit a hirdetés ígért.</figcaption></figure>
+  </div>
+
+  <div class="col">
+    <h3>Hotel-retargeting ≠ shop-retargeting</h3>
+    <p>Hospitality-accountokon másképp futtatják, mert a döntés hónapokig tart, és a meleg közönség nagy része sosem érintette a weboldalt — <strong>egy Reelt néztek meg</strong>.</p>
+    <ul class="steps">
+      <li><h4>Minden 365 napon</h4><p>Aki januárban elmentett egy Reelt, áprilisban foglalja a nyarat. Egy 30 napos ablak eldobja ezt az embert.</p></li>
+      <li><h4>A videónézők a kör, ami valóban a tiéd</h4><p>Hotel-accounton sokkal többen nézik a Reeleket, mint ahányan valaha elérik a foglalási oldalt. Az IG-videónézők és profil-interakciózók általában a legnagyobb meleg közönség.</p></li>
+      <li><h4>Egy ad set, vagy három</h4><p>Kis account: egy kombinált ad set 365 napon. Nagyobb account: három szegmens, külön olvasva.</p></li>
+      <li><h4>Itt a kérés Book now</h4><p>Az ajánlat végzi a munkát: szezonális ár, csomag, reggeli vagy transzfer, minimum-éj deal. Küldd az ajánlati oldalra, sose a főoldalra.</p></li>
+    </ul>
+    <div class="grid g3">
+      <div class="card"><div class="num">SOCIAL 365</div><p>IG-interakciózók, FB-interakciózók és IG-videónézők, 365 nap.</p></div>
+      <div class="card"><div class="num">SITE 180</div><p>Oldal-látogatók az elmúlt 180 napból, akik nem foglaltak.</p></div>
+      <div class="card"><div class="num">HIGH INTENT 90</div><p>Foglalómotort elindította, nem fejezte be, elmúlt 90 nap.</p></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Retargeting-kreatívok élő ügyfél-accountokból</h3>
+    <p>Ugyanaz a property, több szög egy hirdetésben; az offer-ad, ahol a szám a frame-re kerül; és a hook-sor a videón. A meleg közönségnek nem kell meggyőzni, hogy a hely szép — a saját verziójukat kell megtalálniuk belőle.</p>
+  </div>
+  <p class="gal-note">Offer-adek és carouselek · Cavo Tagoo, Myconian, Tenuta di Murlo</p>
+  <div class="gallery"><figure><img src="/metaads/images/p065_1.jpg" loading="lazy" alt="Offer-ad · −20/−30%"><figcaption><b>Offer-ad · −20/−30%</b></figcaption></figure><figure><img src="/metaads/images/p065_2.jpg" loading="lazy" alt="Offer-ad · −20/−30%"><figcaption><b>Offer-ad · −20/−30%</b></figcaption></figure><figure><img src="/metaads/images/p065_3.jpg" loading="lazy" alt="Offer-ad · −20/−30%"><figcaption><b>Offer-ad · −20/−30%</b></figcaption></figure><figure><img src="/metaads/images/p065_4.jpg" loading="lazy" alt="Offer-ad · −20/−30%"><figcaption><b>Offer-ad · −20/−30%</b></figcaption></figure><figure><img src="/metaads/images/p066_1.jpg" loading="lazy" alt="Royal Myconian · offer pack"><figcaption><b>Royal Myconian · offer pack</b></figcaption></figure><figure><img src="/metaads/images/p066_2.jpg" loading="lazy" alt="Royal Myconian · offer pack"><figcaption><b>Royal Myconian · offer pack</b></figcaption></figure><figure><img src="/metaads/images/p066_3.jpg" loading="lazy" alt="Royal Myconian · offer pack"><figcaption><b>Royal Myconian · offer pack</b></figcaption></figure><figure><img src="/metaads/images/p066_4.jpg" loading="lazy" alt="Royal Myconian · offer pack"><figcaption><b>Royal Myconian · offer pack</b></figcaption></figure><figure><img src="/metaads/images/p072_1.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p072_2.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p072_3.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p072_4.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p072_5.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p072_6.jpg" loading="lazy" alt="Myconian Utopia · offer carousel"><figcaption><b>Myconian Utopia · offer carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_1.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_2.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_3.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_4.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_5.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_6.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_7.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p063_8.jpg" loading="lazy" alt="Villa Subtilia · carousel"><figcaption><b>Villa Subtilia · carousel</b></figcaption></figure><figure><img src="/metaads/images/p064_1.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p064_2.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p064_3.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p064_4.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p064_5.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p064_6.jpg" loading="lazy" alt="Cavo Tagoo · 6 kártya"><figcaption><b>Cavo Tagoo · 6 kártya</b></figcaption></figure><figure><img src="/metaads/images/p062_1.jpg" loading="lazy" alt="Tenuta di Murlo · Villa Torre"><figcaption><b>Tenuta di Murlo · Villa Torre</b></figcaption></figure></div>
+  <p class="gal-note">Videók, hook-sorok és stillek meleg közönségnek</p>
+  <div class="gallery"><figure><img src="/metaads/images/p067_1.jpg" loading="lazy" alt="Myconian Utopia · 4 film"><figcaption><b>Myconian Utopia · 4 film</b></figcaption></figure><figure><img src="/metaads/images/p067_2.jpg" loading="lazy" alt="Myconian Utopia · 4 film"><figcaption><b>Myconian Utopia · 4 film</b></figcaption></figure><figure><img src="/metaads/images/p067_3.jpg" loading="lazy" alt="Myconian Utopia · 4 film"><figcaption><b>Myconian Utopia · 4 film</b></figcaption></figure><figure><img src="/metaads/images/p067_4.jpg" loading="lazy" alt="Myconian Utopia · 4 film"><figcaption><b>Myconian Utopia · 4 film</b></figcaption></figure><figure><img src="/metaads/images/p069_1.jpg" loading="lazy" alt="Hook-sor a videón"><figcaption><b>Hook-sor a videón</b></figcaption></figure><figure><img src="/metaads/images/p069_2.jpg" loading="lazy" alt="Hook-sor a videón"><figcaption><b>Hook-sor a videón</b></figcaption></figure><figure><img src="/metaads/images/p069_3.jpg" loading="lazy" alt="Hook-sor a videón"><figcaption><b>Hook-sor a videón</b></figcaption></figure><figure><img src="/metaads/images/p069_4.jpg" loading="lazy" alt="Hook-sor a videón"><figcaption><b>Hook-sor a videón</b></figcaption></figure><figure><img src="/metaads/images/p070_1.jpg" loading="lazy" alt="Cavo Tagoo · nyertes + hookok"><figcaption><b>Cavo Tagoo · nyertes + hookok</b></figcaption></figure><figure><img src="/metaads/images/p070_2.jpg" loading="lazy" alt="Cavo Tagoo · nyertes + hookok"><figcaption><b>Cavo Tagoo · nyertes + hookok</b></figcaption></figure><figure><img src="/metaads/images/p070_3.jpg" loading="lazy" alt="Cavo Tagoo · nyertes + hookok"><figcaption><b>Cavo Tagoo · nyertes + hookok</b></figcaption></figure><figure><img src="/metaads/images/p070_4.jpg" loading="lazy" alt="Cavo Tagoo · nyertes + hookok"><figcaption><b>Cavo Tagoo · nyertes + hookok</b></figcaption></figure><figure><img src="/metaads/images/p071_1.jpg" loading="lazy" alt="Cavo Tagoo · stillek"><figcaption><b>Cavo Tagoo · stillek</b></figcaption></figure><figure><img src="/metaads/images/p071_2.jpg" loading="lazy" alt="Cavo Tagoo · stillek"><figcaption><b>Cavo Tagoo · stillek</b></figcaption></figure><figure><img src="/metaads/images/p071_3.jpg" loading="lazy" alt="Cavo Tagoo · stillek"><figcaption><b>Cavo Tagoo · stillek</b></figcaption></figure></div>
+  <div class="col">
+    <div class="rule amber">
+      <span class="rl">A share a jelzés egy offer-aden</span>
+      <p>Egy reakció bólintás. Egy megosztás valaki elküldi a tartózkodást annak, akivel utazna — hotel-accounton ez a legközelebbi ingyenes jel a szándékhoz. Négy film, egy ár, azonos szöveg: a 41 és 147 megosztás közötti különbség pusztán a napszakból jött. És ha egy nyertes világosan előrébb van: <strong>duplikáld, ne szerkeszd</strong>, és használd újra a meglévő posztot, hogy a reakciók, kommentek és megosztások átvigyék a social proofot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART FOUR ============ -->
+<section id="r4">
+  <div class="part col">
+    <div class="part-tag"><b>Negyedik rész</b> — Az Andromeda-korszak</div>
+    <h2>A rész, amihez minden héten visszatérsz</h2>
+    <p class="lead">A struktúra csak a fele. Most jön a rész, ami valóban eldönti, skálázol-e: mit indítasz bele, hogyan olvasod, és hogyan kamatoztatod.</p>
+  </div>
+
+  <div class="col">
+    <h3>A hirdetésekből lett a célzás</h3>
+    <p>A Meta-hirdetés régen így működött: kiválasztottál egy közönséget, elé raktál egy halom hirdetést, és reménykedtél. Ez megváltozott. Most <strong>a hirdetés a célzás</strong> — a koncepció találja meg a közönséget, nem a közönség kapja a koncepciót.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p051_1.jpg" alt="A régi modell és az új" loading="lazy"><figcaption><b>FELÜL A RÉGI, ALUL AZ ÚJ ·</b> Nincs többé szükséged érdeklődés-célzásra — ezt már sokan tudják. Amit kevesebben csinálnak: ha megnevezed az avatart és megoldás-orientált kreatívot készítesz annak a konkrét embernek, az avatart maga a hirdetés célozza.</figcaption></figure>
+  <div class="col">
+    <p>Nevezz meg ingatlanosokat, és ingatlanosokat érsz el. Nevezz meg tanárokat, építőmunkásokat, friss szülőket, párokat, akik két éve nem utaztak — bármilyen identitásnak felel meg egy ember, a kreatív odaszállítja. Ezért nevezed a packet egy avatarról és egy koncepcióról, nem egy érdeklődésről.</p>
+
+    <h3>Avatar + Sablon = Koncepció</h3>
+    <p>Ez az egész kreatív-rendszer egy oldalon. Egy avatar, plusz egy sablon, egyenlő egy koncepció — és az a koncepció megy és megtalálja a közönségét. Cseréld a sablont, tartsd az avatart, és van egy új koncepciód új forgatás nélkül.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p052_1.jpg" alt="Egy avatar, három sablon, három koncepció" loading="lazy"><figcaption><b>A KÉPLET ·</b> AVATAR (ki) — a konkrét ember. TEMPLATE (hogyan) — a hirdetés szerkezete: testimonial, before/after, POV, listicle, walkthrough, offer-led, UGC. CONCEPT (mi fut) — a kombináció, amiről a packet elnevezed, és amit valójában tesztelsz.</figcaption></figure>
+  <div class="col">
+    <h3>A kreatív-lendkerék</h3>
+    <p>Ha az első packjeid futnak, abbahagyod a véletlenszerű kreatív-indítást, és egy hurkot kezdesz futtatni. Minden hét táplálja a következőt, és a kerék minden fordulata olcsóbb az előzőnél, mert többet tudsz.</p>
+    <ul class="steps">
+      <li><h4>Indíts</h4><p>1–3 új pack élesbe. Mindegyik egy avatar és egy koncepció, 4–8 kreatívval.</p></li>
+      <li><h4>Hagyd költeni</h4><p>Adj egy packnek nagyjából háromszoros cél-CPA költést, mielőtt megítéled, és ne nyúlj hozzá, amíg tanul. Egy élő ad set szerkesztése újraindítja a folyamatot és tönkreteszi az olvasatot.</p></li>
+      <li><h4>Koncepció-szinten olvass, ne hirdetés-szinten</h4><p>Azt kérdezd, melyik <em>ötlet</em> működött, ne melyik fájl. Egy nyertes vágás szerencse; egy koncepció, ami három hookon át nyer, egy eszköz.</p></li>
+      <li><h4>Vágj tisztán</h4><p>A vesztes ad setek CBO alatt maguktól leállnak. A heti review-ban kapcsold ki őket, hogy az account olvasható maradjon.</p></li>
+      <li><h4>Sokszorozd a nyertest</h4><p>Vedd a nyertes koncepciót, és építsd belőle a következő packet: ugyanaz az ötlet, új hookok, új nyitóframe-ek, új avatar-variáció. A növekedésed nagy része innen jön.</p></li>
+      <li><h4>Léptesd elő a retentionbe</h4><p>A bizonyított nyertesek átkerülnek a retention-kampányba, ahol tovább keresnek azokon, akik már foglaltak.</p></li>
+    </ul>
+    <div class="pq"><p>„Nem egy tökéletes hirdetést keresel. Egy megismételhető okot keresel, amiért ezen az accounton nyernek a hirdetések."</p></div>
+  </div>
+
+  <div class="col">
+    <h3>Az adatok olvasása — a sorrend, amiben egy accountot elolvasol</h3>
+    <p>A legtöbb accountot nem a rossz kreatív öli meg. Hanem az, hogy túl korán, túl kevés költésen, rossz szinten reagálnak a számokra.</p>
+    <ul class="steps">
+      <li><h4>Account-szint elsőként</h4><p>Teljes költés, teljes konverziós érték, blended return. Ha az account egészséges, egy csúnya ad set nem számít.</p></li>
+      <li><h4>Prospecting vs. retention</h4><p>A szétválasztás, amiért a struktúrát építetted. Ha a retention visz mindent, az akvizíciód nem működik — semmi büdzsé nem javítja meg.</p></li>
+      <li><h4>Pack-szint</h4><p>Melyik koncepciók viszik a büdzsét? A CBO már szavazott. A te dolgod megérteni, miért szavazott így.</p></li>
+      <li><h4>Kreatív-szint, utoljára</h4><p>Csak most nézd az egyes hirdetéseket — főleg a mintát keresve: a hook, a nyitóframe, a szög, amit érdemes újraépíteni.</p></li>
+    </ul>
+    <div class="rule warn">
+      <span class="rl">A legdrágább szokás a Meta-hirdetésben</span>
+      <p>Naponta ki-be kapcsolgatni a dolgokat. Minden szerkesztés egy élő ad seten újraindítja a tanulást. Egy minden reggel megbabrált account sosem hagyja el a tanulási fázist — a tulajdonosa pedig arra jut, hogy a Meta elromlott. Egy packnek kb. <strong>háromszoros cél-CPA</strong> költés kell, mielőtt a számai bármit jelentenek. Ítélj gördülő hétnapos ablakon, ne tegnapon.</p>
+    </div>
+
+    <h3>Hogyan skáláznak</h3>
+    <p>A skálázás nem a büdzsé emelése. A skálázás a jó opciók számának növelése, amelyek közül a rendszer választhat — aztán hagyni, hogy a büdzsé kövesse. Csak két kar van, és ebben a sorrendben használják őket.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">KAR 01 · ELŐBB</div><h4>Horizontális — több pack</h4><p>Több avatar, több koncepció, több szög ugyanabban a kampányban. Ez a biztonságos kar, és innen jön a tartós növekedés szinte teljes egésze. Nem zavarja meg azt, ami már nyer.</p></div>
+      <div class="card am"><div class="num">KAR 02 · AZTÁN</div><h4>Vertikális — több büdzsé</h4><p>Emeld a kampány-büdzsét kb. <strong>20–30%</strong>-kal egyszerre, aztán hagyd békén több napig. Az egyik napról a másikra duplázás visszadobja a kampányt a tanulásba, és általában pont a teljesítménybe kerül, amit venni akartál.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Jelek, hogy készen állsz büdzsét emelni</span>
+      <p>Legalább 2–3 pack teljesít a célon vagy fölötte (nem csak egy) · a prospecting-gyakoriság még alacsony és a cost per result több napja stabil · van új kreatívod indításra <em>erre</em> a hétre · a retention magától termel · és az üzlet ténylegesen ki tudja szolgálni a volument — szobák, kapacitás, személyzet.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Hirdetések, amelyek meghozták a pénzt</h3>
+    <p>Nézd az első frame-et mindegyikben — emberi mozgás, víz, fény, egy hely, ahol lenni akarsz. A szöveg rövid, az ígéret konkrét. Egy ígéret hirdetésenként, egy ember a képben, és egy hely, amit a néző azonnal akar — egy másodperc alatt. Egy forgatás, sok szög.</p>
+  </div>
+  <p class="gal-note">Prospecting-kreatívok · Cavo Tagoo, San Luis, Tenuta di Murlo, Royal Myconian, Lichnos Beach</p>
+  <div class="gallery"><figure><img src="/metaads/images/p057_1.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p057_2.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p057_3.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p057_4.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p057_5.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p057_6.jpg" loading="lazy" alt="Egy property, hat szög"><figcaption><b>Egy property, hat szög</b></figcaption></figure><figure><img src="/metaads/images/p058_1.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p058_2.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p058_3.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p058_4.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p058_5.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p058_6.jpg" loading="lazy" alt="Bestseller frame-ek"><figcaption><b>Bestseller frame-ek</b></figcaption></figure><figure><img src="/metaads/images/p060_1.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p060_2.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p060_3.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p060_4.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p060_5.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p060_6.jpg" loading="lazy" alt="Mykonos · 5 property"><figcaption><b>Mykonos · 5 property</b></figcaption></figure><figure><img src="/metaads/images/p061_1.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure><figure><img src="/metaads/images/p061_2.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure><figure><img src="/metaads/images/p061_3.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure><figure><img src="/metaads/images/p061_4.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure><figure><img src="/metaads/images/p061_5.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure><figure><img src="/metaads/images/p061_6.jpg" loading="lazy" alt="Tenuta di Murlo · San Luis"><figcaption><b>Tenuta di Murlo · San Luis</b></figcaption></figure></div>
+
+  <div class="col">
+    <h3>Hibák, amelyek elégetik a büdzsét</h3>
+    <p>Szinte minden auditált account ugyanahhoz a maroknyi szokáshoz veszít pénzt. Egyik sem egzotikus.</p>
+    <ul class="dont">
+      <li><span class="x">×</span>Élő ad setek szerkesztése minden reggel, újra meg újra nullázva a tanulást.</li>
+      <li><span class="x">×</span>Egy pack megítélése két nap és negyven euró költés alapján.</li>
+      <li><span class="x">×</span>Meglévő vásárlók keverése a prospectingbe, majd egy nem valódi CPA ünneplése.</li>
+      <li><span class="x">×</span>Ad set-büdzsék megsapkázása egy CBO-kampányban — ami kikapcsolja a használatának egész okát.</li>
+      <li><span class="x">×</span>Érdeklődések halmozása a broad célzásra, és több fizetés kevesebb ember eléréséért.</li>
+      <li><span class="x">×</span>A creative enhancements bekapcsolva hagyása, hagyva a rendszert újraírni egy ötcsillagos márkát.</li>
+      <li><span class="x">×</span>A 4:5 safe zone-t ignoráló kreatív feltöltése, így a hook levágódik.</li>
+      <li><span class="x">×</span>Havi egy új kreatív indítása, majd a platform hibáztatása a fáradásért.</li>
+      <li><span class="x">×</span>Minden kampány a főoldalra küldése az ígért oldal helyett.</li>
+      <li><span class="x">×</span>A büdzsé duplázása egy jó napon, majd csodálkozás, miért omlott össze másnap.</li>
+      <li><span class="x">×</span>Retargeting-kampány futtatása anélkül, hogy kizárnád azokat a közönségeket a prospectingből.</li>
+      <li><span class="x">×</span>Gyönyörű kreatív ajánlat, céloldal-logika és tracking nélkül mögötte.</li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <h3>Az első 30 napod</h3>
+    <p>Négyhetes felszállópálya egy üres ad accounttól egy valóban olvasható kampányig — egy szándékos szakasz egyszerre.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">1. HÉT — Építs</div><p>Állítsd fel a Prospecting CBO kampányt pontosan a 2. rész szerint. Ellenőrizd a pixelt, az eseményeket, a céloldalt és a safe zone-t. Indítsd a Pack 01-et 4–8 kreatívval, aztán hagyd békén.</p></div>
+      <div class="card"><div class="num">2. HÉT — Tápláld</div><p>Indítsd a Pack 02-t és 03-at — új avatarok, új koncepciók. Építsd a Retention kampányt és a Purchase_180 ad setet. Még mindig napi szerkesztés nélkül.</p></div>
+      <div class="card"><div class="num">3. HÉT — Olvass</div><p>Első valódi review. Account-szint, aztán prospecting vs. retention, aztán pack, aztán kreatív. Azonosítsd, melyik koncepció nyer, és írd le, <em>miért</em> gondolod, hogy nyert.</p></div>
+      <div class="card am"><div class="num">4. HÉT — Kamatoztass</div><p>Építsd a következő packeket a nyertes koncepcióból. Léptesd elő a bizonyított nyerteseket a retentionbe. Csak most, ha a jelek megvannak, emelj kampány-büdzsét 20–30%-kal.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Harminc nap után</span>
+      <p>Már nem beállítasz — futtatod a hurkot. 1–3 új pack hetente, egy heti review, büdzsé emelése csak akkor, ha az accountnak több jó opciója van, mint pénze. Ez az egész munka, megismételve.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART FIVE ============ -->
+<section id="r5">
+  <div class="part col">
+    <div class="part-tag"><b>Ötödik rész · Bónusz</b> — Az Instagram növekedési kampány</div>
+    <h2>Növeld az accountot, ne csak a foglalásokat</h2>
+    <p class="lead">A harmadik kampány azoknak a hoteleknek, akik azt akarják, hogy maga a fiók nőjön. Nem szobát ad el — olcsón vesz figyelmet, hogy minden, amit a 2. és 3. részben építesz, egy nagyobb, melegebb közönség ellen dolgozhasson.</p>
+  </div>
+
+  <div class="col">
+    <div class="rule">
+      <span class="rl">Valós eredmény — San Luis Retreat Hotel &amp; Lodges</span>
+      <p><strong>€5&thinsp;523,79 költés → 158&thinsp;264 Instagram profil-látogatás → 50&thinsp;624 Instagram-követés.</strong> Nagyjából három és fél cent profil-látogatásonként, és körülbelül egy követés minden három látogatásra — egyetlen kampányból.</p>
+    </div>
+    <p>A cél nem hamis követők vásárlása — hanem hogy a legerősebb tartalmadat valódi emberek elé tedd, akik valószínűleg meglátogatják és követik a profilt. Ez egy <strong>negyedik kampány</strong>, szándékosan távol tartva a két magtól: ha a sales-objektívvel egy kampányba teszed, elszennyezed az egyetlen számot, amit az 1. rész védeni épült — mennyibe kerül egy valóban új vendég.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">OBJECTIVE</div><h4>Traffic</h4><p>Nem Sales. Profil-látogatásokra és követésekre optimalizálsz, nem vásárlásokra.</p></div>
+      <div class="card"><div class="num">BÜDZSÉ</div><h4>Külön</h4><p>Saját kampány-büdzsé, hogy sose versenyezzen az akvizíciós költéssel.</p></div>
+      <div class="card"><div class="num">KREATÍV</div><h4>Organikus nyertesek</h4><p>A legjobban teljesítő Reeljeid, nem hirdetések. A hirdetés nézzen ki tartalomnak.</p></div>
+    </div>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p076_1.jpg" alt="San Luis eredmény — profil-látogatások" loading="lazy"><figcaption><b>SAN LUIS LODGES ·</b> Maximum dátumtartomány, eredmények Instagram profil-látogatásként riportálva.</figcaption></figure>
+
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 01–02 — Hozd létre helyesen</h3>
+    <p>Kezdd a <strong>Traffic</strong> objektívvel, majd válaszd a <strong>manuális beállítást</strong>, hogy megtartsd a kontrollt a cél, a közönség és az elhelyezések fölött. Buying type marad Auction. Indíts kb. <strong>öt euró/nap</strong>-pal — azt teszteled, tud-e a kreatív hatékonyan profil-látogatást termelni, mielőtt rendesen költesz. Itt nincs cél-CPA; a <strong>cost per profile visit</strong>-et figyeled.</p>
+  </div>
+  <div class="grid g2 col" style="max-width:840px">
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p077_1.jpg" alt="Traffic objective, manuális" loading="lazy"><figcaption><b>LÉPÉS 01–02 ·</b> Traffic + Manual traffic campaign. A recommended setup a rendszerre bízná a célt és az elhelyezéseket — a manuális enged minden kattintást egy helyre küldeni: az IG-profilra.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p078_1.jpg" alt="Send traffic to Instagram" loading="lazy"><figcaption><b>LÉPÉS 03–05 ·</b> Conversion location Instagram/Facebook, performance goal <b>Maximise Instagram profile visits</b>, destination csak az IG-profil — sose weboldal. Ellenőrizd az identitást kétszer.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p079_1.jpg" alt="Keep audience broad" loading="lazy"><figcaption><b>LÉPÉS 06–07 ·</b> Csak lokáció és korosztály, detailed targeting üresen. Ugyanaz az Andromeda-logika: egy Umbriában forgatott slow-living Reel megtalálja azokat, akik Umbriát akarják.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metaads/images/p080_1.jpg" alt="Instagram-only placements" loading="lazy"><figcaption><b>LÉPÉS 08 · A KIVÉTEL ·</b> Az egyetlen hely a rendszerben, ahol szándékosan szűkítesz elhelyezést: manual placements, csak Instagram. Itt a konverzió <em>maga</em> az IG profil-látogatás — egy FB-feed impresszió nem tudja ugyanolyan arányban előállítani, szóval fizetni érte szivárgás.</figcaption></figure>
+  </div>
+  <div class="col">
+    <h3 class="mono" style="font-size:14px;letter-spacing:.1em;color:var(--teal)">LÉPÉS 09 — A Reel és a caption</h3>
+    <p>A hirdetés érződjön tartalomnak, amit valaki szívesen megnéz. Végy egy Reelt, ami organikusan már figyelmet szerzett, nyiss atmoszférával vagy mozgással, és tartsd a captiont egyetlen világos okra.</p>
+  </div>
+  <figure class="fig shot"><img src="/metaads/images/p081_1.jpg" alt="Reel és rövid caption" loading="lazy"><figcaption><b>CAPTION-PÉLDA ·</b> „slow living paradise — Save this hidden gem for your next vacation. #chalet #slowliving". Két szabály a 2. részből: creative enhancements off, és a 4:5 safe zone érvényben — ha a hook a felső/alsó sávban ül, levágódik, mielőtt bárki a profilra kattintana.</figcaption></figure>
+  <div class="col">
+    <h3>Mi számít jó eredménynek</h3>
+    <p>A követőszám a hiúsági szám. Ez a három az, amit valóban figyelsz:</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">01</div><h4>Cost per profile visit</h4><p>Az elsődleges mutató. A San Luis-kampányon kb. €0,03. A te számod piac és szezon szerint más lesz — az számít, hogy stabil maradjon, míg skálázol.</p></div>
+      <div class="card"><div class="num">02</div><h4>Follow rate a látogatásokból</h4><p>A látogatások, amik nem lesznek követéssé, profil-probléma, nem hirdetés-probléma. Javítsd a gridet, a pinned posztokat és a biót, mielőtt büdzsét emelsz.</p></div>
+      <div class="card"><div class="num">03</div><h4>Mit csinál az új közönség</h4><p>Egy nagyobb meleg közönségnek később fel kell bukkannia a prospecting szegmens-riportodban és a retargeting-körökben. Ha sosem teszi, elérést vettél, nem vendégeket.</p></div>
+    </div>
+    <div class="pq"><p>„A fizetett növekedés gyorsabban megveszi a közönséget. A tartalom az, ami ott tartja őket."</p></div>
+    <div class="rule warn">
+      <span class="rl">Amit itt elrontanak</span>
+      <p>A forgalmat a weboldalra küldeni a profil helyett · Advantage+ placementen futtatni és profil-látogatást nem termelő impressziókért fizetni · egy Reelt az appból boostolni a kampány felépítése helyett · a prospectingbe keverni · pusztán a követőszámon ítélni, míg a cost per profile visit csendben megháromszorozódik.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART SIX ============ -->
+<section id="r6">
+  <div class="part col">
+    <div class="part-tag"><b>Hatodik rész</b> — A kreatív motor</div>
+    <h2>Ahonnan a kreatív jön</h2>
+    <p class="lead">Minden eddigi feltételezi, hogy van mit indítanod. Innen jön: egy forgatás, egy avatar-bank, egy sablon-bank, és elég hook, hogy a packek egy egész szezonon át jöjjenek minden héten.</p>
+  </div>
+
+  <div class="col">
+    <h3>Mit forgass egyetlen nap alatt</h3>
+    <p>Egy produkciónak nagyjából <strong>három hónapnyi packet</strong> kell táplálnia. Ez csak úgy lehetséges, ha a rendszernek forgatsz, nem egy highlight-reelnek — vertikálisan, 9:16-ban, minden lényeg a 4:5 safe zone-ban, és minden alábbi frame elkapva, mielőtt elhagyod a helyet.</p>
+    <div class="settings col">
+      <div class="row"><div class="k">A légifelvétel</div><div class="v" style="text-transform:none">Egy tág frame, ami egy másodperc alatt elmagyarázza, hol van ez a hely.</div></div>
+      <div class="row"><div class="k">A medence, benépesítve</div><div class="v" style="text-transform:none">Valaki a vízben vagy a szélén. Üres medence = katalógusfotó.</div></div>
+      <div class="row"><div class="k">Víz három órában</div><div class="v" style="text-transform:none">Ugyanaz a medence délben, golden hourban, blue hourban. Három hirdetés egy helyszínből.</div></div>
+      <div class="row"><div class="k">A szoba, belépve</div><div class="v" style="text-transform:none">Sétálj be az ajtón a kamerával. A mozdulat többet számít, mint a szoba.</div></div>
+      <div class="row"><div class="k">A kilátás az ágyból</div><div class="v" style="text-transform:none">Amire ébrednek. Ez adja el a szobatípust egyetlen felsorolt extra nélkül.</div></div>
+      <div class="row"><div class="k">Az asztal</div><div class="v" style="text-transform:none">Reggeli, az első ital, vacsora ahogy megy le a fény. Az étel a legkönnyebb forgatni.</div></div>
+      <div class="row"><div class="k">Kezek és részletek</div><div class="v" style="text-transform:none">Öntés, nyitás, a víz érintése. Rövid inzertek, amitől egy vágás élő lesz.</div></div>
+      <div class="row"><div class="k">Mozgás keresztül</div><div class="v" style="text-transform:none">Valaki egy folyosón, lépcsőn, teraszon. Ezek viszik a legjobban a hook-sort.</div></div>
+      <div class="row"><div class="k">A csendes frame-ek</div><div class="v" style="text-transform:none">Tág, nyugodt, semmi a középen. Ezek kellenek offer-overlayhez és hook-sorhoz.</div></div>
+      <div class="row"><div class="k">A property éjjel</div><div class="v" style="text-transform:none">Megvilágított medence, gyertyák, az öböl. A legjobb frame-ek fele naplemente után készült.</div></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Forgass több órát, mint szöget</span>
+      <p>Tíz helyszín egy napszakban tíz egyforma hirdetést ad. Három helyszín négy különböző órában tizenkettőt ad, ami nem egyforma — és az <em>óra</em>, nem a helyszín, ami elválasztotta a nyerteseket a negyedik részben.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Az avatar-bank — kinek szól a hirdetés</h3>
+    <p>A packet egy avatarról és egy koncepcióról nevezed el. Nem demográfia — <strong>szituációk</strong>. Mindegyik egy másik ember, más okkal, hogy ugyanazt a szobát akarja.</p>
+  </div>
+  <div class="col">
+    <div class="bank"><div class="bh"><span class="bt">Párok, csendes luxus</span><span class="bn">01</span></div><p>Ketten, gyerek nélkül, a privátságot választva a felszereltség helyett. Látniuk kell a medencét senki mással, és egy szobát, amit nem akarnának elhagyni.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">A nászút</span><span class="bn">02</span></div><p>Egyszer az életben, és tudják. Naplemente, a privát plunge pool, a kettőnek terített asztal. Ez az avatar megbocsát egy magas árat, és ritkán hasonlítgat.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">Családok</span><span class="bn">03</span></div><p>A szülők foglalnak, nem a gyerekek. Tér, biztonság, két szoba vagy lakosztály, hely enni, ami nem igényel esti tervezést.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">A pár, aki két éve nem utazott</span><span class="bn">04</span></div><p>A legerősebb első sor a hospitalityben. Nem hoteleket hasonlítanak — azt döntik el, elmenjenek-e egyáltalán.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">Wellness és reset</span><span class="bn">05</span></div><p>Aludni, úszni, rendesen enni jönnek. Spa, csend, az üres reggeli medence. Ősszel és januárban ad el a legjobban.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">Elő- és utószezon</span><span class="bn">06</span></div><p>Kevesebb ember, puhább ár, a hely a legnyugodtabb állapotában. Teljesen más ígéret ugyanabból a propertyből — és ez tölti meg az évet eldöntő hónapokat.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">Csoportok és ünneplések</span><span class="bn">07</span></div><p>Egy szülinap, egy évforduló, együtt foglaló barátok. A teraszt akarják, a hosszú asztalt, a saját medencés villát.</p></div>
+    <div class="bank"><div class="bh"><span class="bt">A hosszú tartózkodás</span><span class="bn">08</span></div><p>Egy hét vagy több, gyakran részben dolgozva. Konyha, wifi, egy szoba, ami reggel 9-kor is működik. Kis volumen, magas érték.</p></div>
+    <div class="rule amber">
+      <span class="rl">Egy avatar packenként, sosem kettő</span>
+      <p>Egy hirdetés, amit egyszerre pároknak és családoknak írtak, senkinek sincs írva. Ha egy property mindkettőt szolgálja, az két pack, két kreatív-készlet és két első sor — és kétszer annyit tanulsz.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>A sablon-bank — nyolc mód ugyanazt a felvételt vágni</h3>
+    <p>Az <em>avatar + sablon = koncepció</em>. Futtass egy avatart háromon keresztül, és három koncepciód van egy már megfizetett forgatásból.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>A walkthrough</h4><p>A kamera végigmozog a téren, egy folyamatos érzés. Az alapértelmezés szobatípushoz vagy villához.</p></div>
+      <div class="card"><div class="num">02</div><h4>A point of view</h4><p>Úgy forgatva, mintha a néző érkezne, ébredne, úszna. A képbe teszi, nem megmutat neki egy helyet.</p></div>
+      <div class="card"><div class="num">03</div><h4>Az egy pillanat</h4><p>Egy klip, egy mozdulat, nincs vágás. Egy naplemente nyolc másodperce. Azért működik, mert nem próbál semmit mondani.</p></div>
+      <div class="card"><div class="num">04</div><h4>A listicle</h4><p>Három ok, három frame, három sor szöveg. Jól olvas családoknak és bárkinek, aki hasonlítgat.</p></div>
+      <div class="card am"><div class="num">05</div><h4>Az offer-led</h4><p>Az ár viszi a hirdetést. A retargetingbe tartozik, nem a prospectingbe.</p></div>
+      <div class="card"><div class="num">06</div><h4>A testimonial / review</h4><p>Egy valódi vendég-sor a property fölött. Csendesen hatékony majdnem eldöntött meleg közönségen.</p></div>
+      <div class="card"><div class="num">07</div><h4>A creator-cut</h4><p>Olyan valaki forgatta, aki nem a hotelnek dolgozik. Natívnak néz ki, mert az — és saját packbe tartozik.</p></div>
+      <div class="card"><div class="num">08</div><h4>A carousel</h4><p>Több ok egy hirdetésben, egy ígéret kártyánként. Prospectingből kizárva, hogy a teszt tiszta legyen; melegben mindenhol üdvözölve.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Egyszerre egy oldalt cserélj</span>
+      <p>Új avatar, ugyanaz a sablon — vagy ugyanaz az avatar, új sablon. Ha mindkettőt cseréled, a nyertes pack semmit sem mond, amiből a következőt építhetnéd.</p>
+    </div>
+
+    <h3>A hook-bank — sorok, amelyek kiérdemelték a helyüket</h3>
+    <p>Három-négy szó, első személyben vagy kérdés, a klip első másodpercébe ejtve. Ezek a kiindulópontok — nem szkript. Írd át a property saját nyelvén, és jobbak lesznek. Az eredetiek angolok; alább magyar átültetések, ugyanazzal a logikával.</p>
+  </div>
+  <div class="col">
+    <div class="bank"><div class="bh"><span class="bt">Párok és csendes luxus</span></div>
+      <ul class="hooks"><li>csak mi, senki más</li><li>ezt az életet akarom</li><li>valahol, ahol senki sincs</li><li>ez, négy éjszakára</li><li>se telefon, csak ez a kilátás</li><li>az út, amiről folyton beszélünk</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">A nászút</span></div>
+      <ul class="hooks"><li>erre az életre készülök</li><li>az első reggelünk itt</li><li>amiről még évek múlva is beszélünk</li><li>mondd, hogy erre igent mondanál</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Családok</span></div>
+      <ul class="hooks"><li>mindenki boldog, egyszerre</li><li>az év, amikor tényleg megálltunk</li><li>hely mindannyiunknak</li><li>ahol a gyerekek csak lehetnek</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Két éve nem utaztak</span></div>
+      <ul class="hooks"><li>mikor álltál meg utoljára igazán?</li><li>két év épp elég</li><li>emlékszel, milyen érzés volt ez?</li><li>megérdemelted az egész hetet</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Wellness és reset</span></div>
+      <ul class="hooks"><li>aludni, úszni, enni, ismételni</li><li>a csend, amit folyton ígérsz magadnak</li><li>semmi a programon</li><li>gyere vissza másképp</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Elő- és utószezon</span></div>
+      <ul class="hooks"><li>a Balaton, a tömeg nélkül</li><li>szeptemberben itt a titok</li><li>ugyanaz a víz, fele annyi ember</li><li>a hónapok, amikről senki nem szól</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Csoportok és ünneplések</span></div>
+      <ul class="hooks"><li>a hosszú asztal, mindannyian</li><li>negyvenévesnek lenni valahol ilyen helyen</li><li>mindenki egy villában</li><li>küldd el a csoportba</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">Nyitók, amik bárhol működnek</span></div>
+      <ul class="hooks"><li>elmennénk?</li><li>mentsd el jövő nyárra</li><li>ez a lakosztály &gt;&gt;</li><li>létezik egy ilyen hely</li></ul></div>
+    <div class="rule amber">
+      <span class="rl">Sose a property neve, sose az ajánlat</span>
+      <p>Egy hook egy vágyat nevez meg, amivel a néző érkezett. Abban a pillanatban, ahogy a hotelt nevezi meg, újra hirdetéssé válik — és az egész ok, amiért a sor működött, eltűnik.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>A copy — három mód nyitni, és csak három</h3>
+    <p>Egy hotel-hirdetés primary textjének egy dolga van: az első sor hangozzon egyetlen embernek írva.</p>
+    <ul class="steps">
+      <li><h4>1. szerkezet — az avatar elöl</h4><p>Nyiss az ember megnevezésével. „Teret, privátságot és nyugalmat keresel?" Aztán a property mint a válasz, majd egy konkrét részlet. A legjobb hideg forgalomnak.</p></li>
+      <li><h4>2. szerkezet — a legerősebb funkció</h4><p>Vezess azzal az egyetlen dologgal, ami ennek a propertynek megvan, másoknak nem — a barlangmedence, a tó, a szomszéd nélküli villa. Egy funkció, egyszerűen, halmozott jelzők nélkül.</p></li>
+      <li><h4>3. szerkezet — a szezon vagy az ajánlat</h4><p>„Szeptember Umbriában, ettől…" Időhöz kötött és konkrét. Tartsd a retargetingben, ahol a szándék már megvan.</p></li>
+    </ul>
+    <div class="grid g3">
+      <div class="card"><div class="num">HOSSZ</div><h4>Két sor, aztán állj le</h4><p>Mobilon gyorsan jön a vágás. A vágásra írj, ne a karakterlimitre. Minden a „…See more" után bónusz.</p></div>
+      <div class="card"><div class="num">HEADLINE</div><h4>Rövid és szó szerinti</h4><p>Mondd, mire vezet a kattintás, ne azt, milyen érzés lesz. A konkrét veri az emelkedettet, minden accounton.</p></div>
+      <div class="card am"><div class="num">CTA</div><h4>Learn more, aztán Book now</h4><p>Hideg forgalom Learn more-t kap. Meleg forgalom Book now-t. A túl korai foglalás-kérés a kattintásba kerül.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Olvasd fel az első sort hangosan</span>
+      <p>Ha úgy hangzik, mint amit egy ember mondana a saját nyaralásáról, működik. Ha úgy hangzik, mint amit egy hotel mondana magáról, írd át.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>A céloldal — az oldal, amit a hirdetés ígért</h3>
+    <p>A dokumentum legjobb kreatívja sem éli túl egy rossz landinget. Mielőtt egyetlen euró is a kampányba menne, járd végig az oldalt vendégként, telefonon, és ellenőrizd mindet.</p>
+    <div class="check">
+      <div><span class="box"></span><span><b>Az ár stimmel</b> — a szám a hirdetésben és az oldalon ugyanaz. A nemstimmelés több foglalást öl, mint bármely bidding-döntés.</span></div>
+      <div><span class="box"></span><span><b>A dátumok láthatók</b> — mely éjszakákra érvényes az ár, és melyekre nem. Aki tippelni kényszerül, elmegy.</span></div>
+      <div><span class="box"></span><span><b>A kép stimmel</b> — az oldal ugyanarra a szobára, medencére, fényre nyílik, amit a hirdetés eladott.</span></div>
+      <div><span class="box"></span><span><b>A foglalás egy koppintás</b> — az ajánlattól a naptárig menü nélkül. Minden extra kattintás mobilon forgalmat visz.</span></div>
+      <div><span class="box"></span><span><b>Betölt telefonon</b> — mobilneten teszteld, ne irodai wifin. Szinte minden forgalom telefonon van.</span></div>
+      <div><span class="box"></span><span><b>A dataset rajta van</b> — a foglalómotor-domain ugyanazt a datasetet viszi, és a domain verifikált.</span></div>
+      <div><span class="box"></span><span><b>Az UTM túléli</b> — a paraméterek átjutnak a redirecten a motorba, vagy a kampány láthatatlan az analitikában.</span></div>
+      <div><span class="box"></span><span><b>Van most egy ok</b> — minimum-éj, határidő, limitált szoba. Valami igaz, ami megválaszolja a „miért ezen a héten"-t. Sose találj ki egyet.</span></div>
+    </div>
+    <div class="rule warn">
+      <span class="rl">Ha az eredmény leesik, előbb az oldalt nézd</span>
+      <p>Az árak változnak, az ajánlatok lejárnak, a foglalómotorokat frissítik, és senki nem szól a hirdetést futtatónak. Egy halott ajánlatra mutató kampány pontosan úgy néz ki, mint egy, ami leállt.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Creator-tartalom, rendesen futtatva</h3>
+    <p>A legtöbb hotel már fogad creatorokat, aztán semmit sem csinál a felvétellel egy reposton túl. Az ad accounton átfuttatva ugyanaz a tartalom egy egész sablon, amit nem kellett leforgatnod.</p>
+    <ul class="steps">
+      <li><h4>A creator-tartalom sablon, nem csatorna</h4><p>Kezeld úgy, mint bármely sablont: saját pack, saját koncepció-név, a saját felvételedhez mérve — nem feltételezve, hogy jobb.</p></li>
+      <li><h4>Szerezd meg a jogokat írásban</h4><p>Fizetett usage rights az ad accountra, meghatározott időszakra és piacokra. Egy vírusos kollaboráció, amit nem futtathatsz legálisan, csak egy szép poszt.</p></li>
+      <li><h4>Kérd a nyers fájlokat</h4><p>Nem a publikált vágást. A klipeket akarod, hogy a hookok és nyitóframe-ek újraépíthetők legyenek, ahogy a pack fejlődik.</p></li>
+      <li><h4>Partnership ads</h4><p>A Meta engedi a creator posztját az ő handle-jéről futtatni a te büdzséddel. A social proof és a handle az övék marad — ez az egész előny. Kell hozzá egy kód, amit ő generál.</p></li>
+      <li><h4>Olvasd külön</h4><p>Saját ad set vagy saját pack. A saját kreatívod packjébe keverve sosem tudod meg, a creator vagy a koncepció végezte a munkát.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PART SEVEN ============ -->
+<section id="r7">
+  <div class="part col">
+    <div class="part-tag"><b>Hetedik rész</b> — Az account futtatása</div>
+    <h2>A nem látványos fele</h2>
+    <p class="lead">Mennyibe kerülhet egy foglalás, mit futtass melyik hónapban, mit tegyél, ha eltörik, és mit küldj a hotelnek hétfő reggel.</p>
+  </div>
+
+  <div class="col">
+    <h3>A szobaártól a cél-CPA-ig</h3>
+    <p>A negyedik rész minden skálázási döntése egyetlen számon múlik, amit senki nem ír le: <strong>mennyibe kerülhet egy foglalás</strong>. Dolgozd ki egyszer, a tulajdonossal a szobában, és az account többi része aritmetikává válik.</p>
+  </div>
+  <div class="calc col">
+    <div class="ch">Kidolgozott példa — a foglalás értékétől a napi büdzséig</div>
+    <div class="cr"><div class="cl">Átlagos éjszakai ár (amit ténylegesen elér, nem rack rate)</div><div class="cv">€200</div></div>
+    <div class="cr"><div class="cl">Átlagos tartózkodás (ALOS)</div><div class="cv">× 3 éj</div></div>
+    <div class="cr tot"><div class="cl"><b>A foglalás értéke — amit a kampány valóban vesz</b></div><div class="cv">€600</div></div>
+    <div class="cr"><div class="cl">Contribution margin (amit a kiszolgálás után megtartasz — a tulajdonostól kérd, ne becsüld)</div><div class="cv">magas a szobán</div></div>
+    <div class="cr"><div class="cl">OTA-összehasonlítás — amit már fizetsz egy platformnak ugyanezért</div><div class="cv">15–20%</div></div>
+    <div class="cr"><div class="cl">Cél-CPA (a foglalásérték elfogadott hányada, pl. 10%)</div><div class="cv">€60</div></div>
+    <div class="cr"><div class="cl">Cél-ROAS (1 ÷ a hányad — 10% = 10-szeres)</div><div class="cv">10,0×</div></div>
+    <div class="cr tot"><div class="cl"><b>Napi büdzsé — a cél-CPA egyszerese (a 09. szakasz szerint)</b></div><div class="cv">€60/nap</div></div>
+  </div>
+  <div class="col">
+    <div class="rule amber">
+      <span class="rl">A legerősebb érv, amit valaha egy hotelnek elmondasz</span>
+      <p>Már fizetnek egy foglalási platformnak minden foglalás <strong>15–20%</strong>-át, szemrebbenés nélkül. Ha a direkt foglalások az ad accounton át ez alatt jönnek be, a beszélgetés már nem a hirdetési költésről szól — hanem a <strong>megspórolt jutalékról</strong>.</p>
+    </div>
+    <div class="rule">
+      <span class="rl">A becsületes kikötés</span>
+      <p>A Meta azt a foglalást riportálja, amit attribuálni tud. A telefonos foglalások, walk-inek és a két hónappal később foglaló vendégek is a tiéd — ezért számítanak az offline események.</p>
+    </div>
+  </div>
+  <div class="hu col">
+    <div class="flag">Magyar piaci adaptáció — OTA-jutalék és a devizakérdés</div>
+    <p>Magyar és CEE-viszonylatban az OTA-jutalék ténylegesen gyakran <strong>15–25%</strong> a Genius/Preferred Partner szintekkel és a VCC-díjakkal együtt — vagyis a cél-CPA-nak még nagyobb a mozgástere, mint a mediterrán 15–20%. A számold ki mindkét devizában, ha a property vegyes piacot szolgál: HUF a belföldi, EUR a DACH/nemzetközi vendégnek. A foglalásérték a döntő szám — egy 55&thinsp;000 Ft/éj × 2,5 éj = ~137&thinsp;500 Ft foglalás 10%-a ~13&thinsp;750 Ft cél-CPA, nem a szobaár 10%-a.</p>
+  </div>
+
+  <div class="col">
+    <h3>Az év egy hotel-accounton</h3>
+    <p>A hospitality nem költ egyenletesen, és nem ugyanazt adja el kétszer. Ez a ritmus mediterrán propertyken — told el egy-két hónappal a hegyeknél, és fordítsd meg teljesen egy síszezonra.</p>
+  </div>
+  <div class="cal col">
+    <div class="cm"><div class="cmn">Január–február</div><div class="cmd">Early booking. A döntés <em>most</em> születik júliusra. Prospecting szélesen, ajánlatok szerények, és minden, amit itt költesz, a tavasszal záruló meleg körökbe kamatozik.</div></div>
+    <div class="cm"><div class="cmn">Március–április</div><div class="cmd">Az év legnehezebb prospecting-hónapjai. Új packek hetente, emelkedő büdzsék, retargeting élőben mögöttük. Amit az account most tanul, viszi az egész szezont.</div></div>
+    <div class="cm"><div class="cmn">Május–június</div><div class="cmd">A retargeting zár. A télen épített körök a legmelegebbek, az ajánlati oldalak végzik a munkát, a kérés Book now lesz.</div></div>
+    <div class="cm"><div class="cmn">Július–augusztus</div><div class="cmd">Last minute és rövid lead time. Rövidebb ablakok, szorosabb ajánlatok, és az első lökések szeptemberre. Magas árak, türelmetlen vevők, alacsony tűrés egy lassú foglalási oldalra.</div></div>
+    <div class="cm"><div class="cmn">Szeptember–október</div><div class="cmd">Az utószezon eladja magát, ha hagyod: kevesebb ember, puhább ár, ugyanaz a tenger. Ekkor forgatsz jövőre is, míg a property még élőnek látszik.</div></div>
+    <div class="cm"><div class="cmn">November–december</div><div class="cmd">Vou/utalvány, ajándék-tartózkodás és az első early-booking árak jövő nyárra. Olcsó figyelem, alacsony verseny, a hónap, amikor újraépíted a közönségeket január előtt.</div></div>
+    <div class="cm allyear"><div class="cmn">Egész évben</div><div class="cmd">Az 5. rész profil-kampánya. Keveset kóstál, sosem áll le, és ez teszi minden retargeting-kört nagyobbá a következő szezonban.</div></div>
+  </div>
+  <div class="col">
+    <div class="rule warn">
+      <span class="rl">A hiba: májusban kezdeni</span>
+      <p>Mire a szezon látható, a döntés már megszületett valakinek a konyhájában februárban. A megtelő accountok azok, amelyek akkor költöttek, amikor semmi sem történt.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Mikor van vége egy nyertesnek — a fáradás</h3>
+    <p>Minden hirdetésnek van lejárati ideje. Tudni, hol keresd, a különbség a nyertes lecserélése a saját feltételeiden és aközött, hogy három hete összeomlott, mire észreveszed.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">01</div><h4>Mit mond a frekvencia</h4><p>Hányszor látta az átlagember. Alacsony és stabil prospectingben egészséges. Emelkedő, míg az eredmény esik = a kör mindent látott.</p></div>
+      <div class="card"><div class="num">02</div><h4>Hideg és meleg más</h4><p>A prospecting-kör alacsonyan maradjon. A retargeting-kör magasan fut — az az egész lényege.</p></div>
+      <div class="card"><div class="num">03</div><h4>A valódi jel a költség, nem a frekvencia</h4><p>Emelkedő cost per result + emelkedő frekvencia + stabil költés = fáradás. Emelkedő költség lapos frekvenciával = általában az aukció, a szezon vagy az oldal.</p></div>
+      <div class="card"><div class="num">04</div><h4>A fáradás kreatív-probléma</h4><p>Nem büdzsé-mozgatással javítod, nem kampány-újraépítéssel. Azzal, hogy van új indítanivalód — ezért van a heti pack-kadencia.</p></div>
+      <div class="card"><div class="num">05</div><h4>Egy nyertes sem tart örökké</h4><p>A legjobb hirdetésnek is van élete. Duplikáld új hookokkal és nyitóframe-ekkel, mielőtt meghal, ne utána.</p></div>
+      <div class="card am"><div class="num">06</div><h4>Tartsd a posztot, cseréld a hirdetést</h4><p>Újraépítéskor használd a meglévő posztot, hogy a reakciók és megosztások átvigyék. A social proof az egyetlen eszköz, ami nem fárad.</p></div>
+    </div>
+    <p class="note">A fáradást hetekben mérik, nem napokban. Egy rossz kedd egy rossz kedd. Ítélj gördülő hét napon, az előző héthez mérve — sose egyetlen reggel száma alapján.</p>
+  </div>
+
+  <div class="col">
+    <h3>Hibaelhárítás — amikor a kampány nem mozdul</h3>
+    <p>Ami elromlik, annak első fele a kiszállítás. Menj végig ezen, mielőtt egyetlen beállításhoz hozzáérnél a buildben — a legtöbb kapcsoló, nem stratégia.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>Egyáltalán nem költ</h4><p>A hirdetés jóváhagyva? Az ad set be? A kampány be? Az ütemezés elindult? Három kapcsoló, és az egyik gyakrabban van kikapcsolva, mint bárki bevallja.</p></div>
+      <div class="card"><div class="num">02</div><h4>A büdzsé töredékét költi</h4><p>A közönség túl kicsi, a bid túl szoros, vagy egy cost cap fojtja. Meleg kampányon ez normális — a válasz szélesebb ablak, nem több pénz.</p></div>
+      <div class="card"><div class="num">03</div><h4>Learning limited</h4><p>Nincs elég konverzió hetente a tanulás elhagyásához. Vonj össze ad seteket, szélesíts, vagy optimalizálj feljebb a tölcsérben, míg van volumen.</p></div>
+      <div class="card"><div class="num">04</div><h4>A tanulás sosem ér véget</h4><p>Valamit szerkesztenek. Minden változás egy élő ad seten újraindítja. Egy minden reggel megbabrált account örökre tanulásban él.</p></div>
+      <div class="card"><div class="num">05</div><h4>Egy ad set visz mindent</h4><p>CBO alatt ez a mechanizmus működik, nem hiba. Csak akkor avatkozz be, ha a többinek egyáltalán nem volt esélye költeni.</p></div>
+      <div class="card"><div class="num">06</div><h4>A kiszállítás éjjel leállt</h4><p>Ellenőrizd a fizetési módot és az account-státuszt a kampány előtt. Egy elutasított kártya pontosan úgy néz ki, mint egy törött kampány.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Változtass egy dolgot, aztán várj</span>
+      <p>Az ösztön, amikor semmi sem költ, hogy hat dolgot javíts egyszerre. Ha ezt teszed, sosem tudod meg, melyik számított — és az ad set hatszor indítja újra a tanulást.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Amikor a számok fordulnak</h3>
+    <p>A második fél a teljesítmény, és a vizsgálat <em>sorrendje</em> többet számít, mint amit tudsz. Adat elsőként, változás másodikként, piac harmadikként.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">ELSŐKÉNT</div><h4>Igaz az adat?</h4><p>Events Manager, aztán az ajánlati oldal. Két perc, és megmagyarázza az összeomlások többségét.</p></div>
+      <div class="card"><div class="num">MÁSODIKKÉNT</div><h4>Változott valami?</h4><p>Új ár, site-frissítés, leállított kampány, emelt büdzsé. Szinte mindig változott valami.</p></div>
+      <div class="card"><div class="num">HARMADIKKÉNT</div><h4>Csak a piac?</h4><p>Szezon, versenytárs-költés, egy ünnepi hétvége. Néhány hét egyszerűen drágább.</p></div>
+    </div>
+    <div class="rule warn">
+      <span class="rl">A legtöbb összeomlás nem a kampány</span>
+      <p>A tapasztalat szerint az ok a <strong>tracking</strong>, egy lejárt ajánlat vagy egy megváltozott oldal — sokkal gyakrabban, mint a célzás, büdzsé vagy bidding. És: ha egy hirdetést elutasítottak, olvasd a konkrét policyt, szerkeszd a hirdetést (ne fellebbezz vakon), és sose duplikálj egy elutasított hirdetést remélve, hogy átcsúszik. Ha az accountot korlátozták, állj le, kérj review-t, és <em>ne</em> hozz létre második accountot — az a leggyorsabb út mindkettő elvesztéséhez.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>Amit a hotel kap hétfőn</h3>
+    <p>Egy hotel nem dashboardot akar. Azt akarja tudni, mi ment be, mi jött vissza, és mit csinálsz legközelebb. Nyolc sor, ugyanaz a nyolc minden héten, hogy a számok összehasonlíthatók legyenek, ne dekoratívak.</p>
+    <div class="settings col">
+      <div class="row"><div class="k">Spend</div><div class="v" style="text-transform:none">Mi ment be, e hét és e hónap a büdzséhez mérve. Mindig elöl, mindig kerekítés nélkül.</div></div>
+      <div class="row"><div class="k">Bookings &amp; value</div><div class="v" style="text-transform:none">Attribuált foglalások és értékük, prospecting és retargeting külön mutatva.</div></div>
+      <div class="row"><div class="k">ROAS</div><div class="v" style="text-transform:none">A kezdetkor megegyezett célhoz mérve, nem a múlt héthez. Kontextus, nem eredményjelző.</div></div>
+      <div class="row"><div class="k">Cost per booking</div><div class="v" style="text-transform:none">Az OTA-jutalék mellett, amit a property fizetett volna ugyanezért. <em>Ez a sor újítja meg a retainert.</em></div></div>
+      <div class="row"><div class="k">Amit indítottunk</div><div class="v" style="text-transform:none">A packek, amik élesbe mentek, és mit tesztel mindegyik. Mutatja a munkát, tanítja a rendszert.</div></div>
+      <div class="row"><div class="k">Mi nyert, és miért</div><div class="v" style="text-transform:none">Egy koncepció, egy mondat arról, miért gondolod, hogy nyert. Néha tévedni ingyen; semmit mondani a kapcsolatba kerül.</div></div>
+      <div class="row"><div class="k">Amire szükségünk van</div><div class="v" style="text-transform:none">Felvétel, árak, dátumok, egy ajánlati oldal javítása. A hotelek lassan mozdulnak, és nem tudnak egy nem megadott kérésre reagálni.</div></div>
+      <div class="row"><div class="k">Mi jön</div><div class="v" style="text-transform:none">Három sor. A jövő heti packek, a következő büdzsé-döntés, a következő tesztelnivaló.</div></div>
+    </div>
+    <p class="note">A rossz heteket ugyanabban a formátumban riportold, mint a jókat. A hosszú riport a jó számoknál és a rövid a rosszaknál elveszti a hitelt, amire a lassú szezonban szükséged lesz.</p>
+  </div>
+
+  <div class="col">
+    <h3>Húsz dolog, minden alkalommal — indítás előtti checklist</h3>
+    <p>A dokumentum egésze, arra a listára redukálva, amit valóban végigfutnak, mielőtt egy kampány élesbe megy. Semmi sem új rajta — ez a lényeg. Ezek azok, amik kimaradnak.</p>
+    <div class="check">
+      <div><span class="box"></span><span>A dataset a helyes ehhez a propertyhez, és fogad.</span></div>
+      <div><span class="box"></span><span>Pixel és Conversions API mindkettő aktív és deduplikálva.</span></div>
+      <div><span class="box"></span><span>A Purchase értéket és pénznemet visz.</span></div>
+      <div><span class="box"></span><span>Domain verifikálva, a foglalómotor beleértve.</span></div>
+      <div><span class="box"></span><span>Custom audience-ök megépítve: vásárlók, látogatók, interakciózók.</span></div>
+      <div><span class="box"></span><span>Vásárlók kizárva minden prospecting-ad setből.</span></div>
+      <div><span class="box"></span><span>A kampány úgy elnevezve, hogy fél év múlva is olvasható.</span></div>
+      <div><span class="box"></span><span>Objective Sales, buying type Auction.</span></div>
+      <div><span class="box"></span><span>Büdzsé legalább a cél-CPA egyszerese naponta.</span></div>
+      <div><span class="box"></span><span>Attribúció: 7d klikk, 1d interakció, 1d view.</span></div>
+      <div><span class="box"></span><span>Közönség broad prospectingben, csak-lista retargetingben.</span></div>
+      <div><span class="box"></span><span>Elhelyezések broadon, semmi kizárva.</span></div>
+      <div><span class="box"></span><span>Identitás: helyes oldal és helyes IG-profil.</span></div>
+      <div><span class="box"></span><span>Multi-advertiser ads kikapcsolva.</span></div>
+      <div><span class="box"></span><span>Personalized destinations kikapcsolva.</span></div>
+      <div><span class="box"></span><span>Creative enhancements kikapcsolva.</span></div>
+      <div><span class="box"></span><span>Formátum: csak single media prospectingben.</span></div>
+      <div><span class="box"></span><span>Kreatív 9:16, minden a 4:5 safe zone-ban.</span></div>
+      <div><span class="box"></span><span>Cél a pontos oldal, amit a hirdetés ígért, UTM-mel.</span></div>
+      <div><span class="box"></span><span>Előnézet ellenőrizve telefonon, mielőtt bármit duplikálsz.</span></div>
+    </div>
+  </div>
+
+  <div class="col" id="gloss">
+    <h3>A szavak, definiálva</h3>
+    <p>Minden fogalom abban az értelemben, ahogy ez a dokumentum használja. Érdemes átadni egy ügyfélnek vagy új csapattagnak az első review-meeting <em>előtt</em>, nem közben.</p>
+    <div class="gloss">
+      <div class="gr"><div class="gt">CBO / ABO</div><div class="gd">A büdzsé kampányszinten, vagy ad set szinten. A prospecting az elsőn fut; a meleg kampány általában a másodikon.</div></div>
+      <div class="gr"><div class="gt">Pack</div><div class="gd">Egy ad set, egy avatarról és egy koncepcióról elnevezve, 4–8 kreatívot tartalmazva.</div></div>
+      <div class="gr"><div class="gt">Avatar</div><div class="gd">A konkrét ember, akinek a hirdetés íródott. Egy szituáció, nem egy demográfia.</div></div>
+      <div class="gr"><div class="gt">Template</div><div class="gd">A hirdetés szerkezete: walkthrough, POV, listicle, offer-led, creator-cut.</div></div>
+      <div class="gr"><div class="gt">Concept</div><div class="gd">Avatar + sablon. Amiről a packet elnevezed, és amit valójában tesztelsz.</div></div>
+      <div class="gr"><div class="gt">Broad</div><div class="gd">Csak lokáció és korosztály. Nincs érdeklődés, nincs lookalike, Advantage+ audience be.</div></div>
+      <div class="gr"><div class="gt">Learning phase</div><div class="gd">A kiszállítás stabilizálódása előtti időszak. Minden szerkesztés egy élő ad seten újraindítja.</div></div>
+      <div class="gr"><div class="gt">Frequency</div><div class="gd">Ahányszor egy ember látta a hirdetést. Alacsony prospectingben, magas — szándékosan — retargetingben.</div></div>
+      <div class="gr"><div class="gt">Event match quality</div><div class="gd">Mennyire megbízhatóan tudja a Meta a küldött eseményt valódi emberhez kötni. Cél: 8.0 fölött a Purchase-nél.</div></div>
+      <div class="gr"><div class="gt">Deduplication</div><div class="gd">A pixel- és a szerver-esemény párosítása, hogy egy foglalás egyszer számítson.</div></div>
+      <div class="gr"><div class="gt">Safe zone</div><div class="gd">A 4:5-ös téglalap egy 9:16-os feltöltés közepén. Minden, ami számít, ott él.</div></div>
+      <div class="gr"><div class="gt">OTA</div><div class="gd">Online utazási ügynökség. A jutaléka a benchmark, amihez a cost per bookingod mérik.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap foot col">
+  <span class="disp">Építsd a struktúrát. Tápláld kreatívval. Olvasd becsületesen. Aztán skálázd.</span>
+  <p><span class="tag">Struktúra</span><span class="tag">Prospecting</span><span class="tag am">Retention</span><span class="tag">Kreatív</span><span class="tag">Tesztelés</span><span class="tag am">Skálázás</span></p>
+  <p style="margin-top:20px">A VIVRE Agency „The Meta Ads Booster" (100 oldal) ultra részletes magyar feldolgozása. A képernyőképek és kreatív-példák az eredeti anyagból származnak; a <span class="mono" style="font-size:13px;color:var(--amber)">◆ magyar piaci adaptáció</span> jegyzetek a saját kiegészítéseim a magyar/CEE hotelkontextusra. Az eredmény-számok múltbeli teljesítmény-példák, nem garanciák — a valós hozam terméktől, ártól, ajánlattól, szezontól és piactól függ.</p>
+</footer>
+
+</main>
+<script>
+(function(){
+  var K='mab-theme',b=document.getElementById('tg'),r=document.documentElement;
+  try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    var isDark=cur?cur==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=isDark?'light':'dark';
+    r.setAttribute('data-theme',next);
+    try{localStorage.setItem(K,next);}catch(e){}
+  });
+})();
+</script>
