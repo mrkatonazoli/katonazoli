@@ -25,6 +25,7 @@ const nextConfig: NextConfig = {
         { source: "/rs2027", destination: "/rs2027.html" },
         { source: "/romania", destination: "/romania.html" },
         { source: "/metaads", destination: "/metaads/meta-ads-booster.html" },
+        { source: "/metacontent", destination: "/metacontent/content-blueprint.html" },
       ],
     };
   },

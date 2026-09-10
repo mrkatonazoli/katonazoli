@@ -1,0 +1,788 @@
+<meta charset="utf-8">
+<title>Content Blueprint</title>
+<meta name="description" content="A VIVRE Agency luxushotel tartalomkészítő rendszerének ultra részletes magyar feldolgozása — reel-formula, hookok, portfólió, pitchelés, árazás, outreach.">
+<style>
+:root{
+  --paper:#EDEEEA; --surface:#F7F8F4; --surface-2:#E4E7E0;
+  --ink:#161C1D; --ink-soft:#38423F; --muted:#5C665F; --faint:#7C857E;
+  --line:#CDD3CB; --line-soft:#DCE0D8;
+  --teal:#0C6B5E; --teal-soft:#0f8474; --teal-wash:#E1EBE6; --teal-line:#B8CFC6;
+  --amber:#9C6B12; --amber-soft:#b17e1e; --amber-wash:#F1E8D6; --amber-line:#DCC79A;
+  --red:#9A3520; --red-wash:#F1E1DB;
+  --shadow:0 1px 2px rgba(20,28,29,.05), 0 8px 28px -18px rgba(20,28,29,.25);
+  --shadow-lift:0 2px 4px rgba(20,28,29,.06), 0 22px 50px -30px rgba(20,28,29,.4);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#10161A; --surface:#171E22; --surface-2:#1F282C;
+    --ink:#E7EBE6; --ink-soft:#C3CBC5; --muted:#949E97; --faint:#727C76;
+    --line:#2B353A; --line-soft:#232C31;
+    --teal:#4FBBAA; --teal-soft:#6ecbbb; --teal-wash:#152A29; --teal-line:#2C4844;
+    --amber:#D6A552; --amber-soft:#e4b869; --amber-wash:#2A2416; --amber-line:#4C4128;
+    --red:#D98368; --red-wash:#2E1C17;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.4), 0 26px 60px -34px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10161A; --surface:#171E22; --surface-2:#1F282C;
+  --ink:#E7EBE6; --ink-soft:#C3CBC5; --muted:#949E97; --faint:#727C76;
+  --line:#2B353A; --line-soft:#232C31;
+  --teal:#4FBBAA; --teal-soft:#6ecbbb; --teal-wash:#152A29; --teal-line:#2C4844;
+  --amber:#D6A552; --amber-soft:#e4b869; --amber-wash:#2A2416; --amber-line:#4C4128;
+  --red:#D98368; --red-wash:#2E1C17;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.7);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.4), 0 26px 60px -34px rgba(0,0,0,.85);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:19px;line-height:1.62;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+.mono{font-family:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace}
+.disp{font-family:"Bricolage Grotesque","Newsreader",sans-serif}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Newsreader",sans-serif;font-weight:700;text-wrap:balance;line-height:1.12;margin:0}
+a{color:var(--teal);text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2.5px solid var(--teal);outline-offset:3px;border-radius:3px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:18px;
+  padding:11px clamp(16px,4vw,40px);}
+.nav-brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;
+  color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:9px}
+.nav-brand .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:none}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;-webkit-overflow-scrolling:touch}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.03em;color:var(--muted);
+  text-decoration:none;padding:6px 10px;border-radius:7px;white-space:nowrap;transition:.15s}
+.nav-links a:hover{color:var(--ink);background:var(--surface-2)}
+.theme-btn{flex:none;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;transition:.15s}
+.theme-btn:hover{color:var(--ink);border-color:var(--teal)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.col{max-width:720px}
+section{padding:clamp(48px,7vw,88px) 0;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:0}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--teal);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--teal);flex:none}
+.eyebrow.amber{color:var(--amber)}.eyebrow.amber::before{background:var(--amber)}
+h2{font-size:clamp(28px,4.4vw,42px);letter-spacing:-.015em;margin-bottom:18px;max-width:20ch}
+h3{font-size:clamp(21px,2.6vw,26px);letter-spacing:-.01em;margin:44px 0 14px}
+h4{font-size:17px;letter-spacing:.01em;margin:0 0 6px}
+p{margin:0 0 18px}
+.lead{font-size:clamp(20px,2.4vw,23px);line-height:1.5;color:var(--ink-soft)}
+.sub{color:var(--muted);font-size:17px}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(40px,7vw,72px);padding-bottom:clamp(40px,6vw,64px)}
+.hero h1{font-size:clamp(40px,8vw,82px);letter-spacing:-.03em;line-height:.98;margin-bottom:22px;font-weight:800}
+.hero h1 .thin{font-weight:300;font-style:italic;font-family:"Newsreader",serif;letter-spacing:-.01em}
+.hero .lead{max-width:34ch}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:26px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.kicker b{color:var(--teal);font-weight:600}
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;margin-top:40px}
+.stat{background:var(--surface);padding:20px 18px}
+.stat .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(26px,4vw,38px);
+  letter-spacing:-.02em;line-height:1;color:var(--ink)}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--muted);
+  text-transform:uppercase;margin-top:9px;line-height:1.35}
+@media(max-width:640px){.statrow{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- how to use ---------- */
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-top:36px;box-shadow:var(--shadow)}
+.howto h4{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.howto ol{margin:0;padding-left:22px}
+.howto li{margin-bottom:8px;color:var(--ink-soft)}
+.howto li::marker{color:var(--teal);font-family:"IBM Plex Mono",monospace;font-size:14px}
+
+/* ---------- part divider ---------- */
+.part{border-top:2px solid var(--ink);padding-top:22px;margin-top:8px}
+.part-tag{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.part-tag b{color:var(--ink)}
+.part h2{margin-top:14px}
+
+/* ---------- setting block (ads manager style) ---------- */
+.settings{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:22px 0;background:var(--surface);box-shadow:var(--shadow)}
+.settings .row{display:grid;grid-template-columns:minmax(0,42%) minmax(0,58%);gap:14px;padding:13px 18px;border-top:1px solid var(--line-soft);align-items:baseline}
+.settings .row:first-child{border-top:0}
+.settings .k{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.settings .v{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--ink);font-weight:500}
+.settings .v.on{color:var(--teal)}.settings .v.off{color:var(--red)}
+@media(max-width:560px){.settings .row{grid-template-columns:1fr;gap:3px}}
+
+/* ---------- callouts ---------- */
+.rule{border-left:3px solid var(--teal);background:var(--teal-wash);border-radius:0 12px 12px 0;padding:18px 22px;margin:24px 0}
+.rule.amber{border-left-color:var(--amber);background:var(--amber-wash)}
+.rule.warn{border-left-color:var(--red);background:var(--red-wash)}
+.rule .rl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);font-weight:500;margin-bottom:7px;display:block}
+.rule.amber .rl{color:var(--amber)}.rule.warn .rl{color:var(--red)}
+.rule p:last-child{margin-bottom:0}
+.rule p{font-size:17.5px;line-height:1.55}
+
+/* magyar adaptation */
+.hu{border:1px dashed var(--amber-line);background:var(--amber-wash);border-radius:12px;padding:20px 24px;margin:26px 0;position:relative}
+.hu .flag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.hu .flag::before{content:"◆";font-size:10px}
+.hu p{font-size:17px;line-height:1.55}.hu p:last-child{margin-bottom:0}
+
+/* pull quote */
+.pq{margin:40px 0;padding:6px 0 6px 26px;border-left:3px solid var(--amber)}
+.pq p{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(22px,3vw,28px);line-height:1.32;color:var(--ink);font-weight:300;margin:0}
+
+/* ---------- cards / grids ---------- */
+.grid{display:grid;gap:14px;margin:24px 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.05em}
+.card h4{margin:8px 0 7px;font-size:17.5px}
+.card p{font-size:16px;line-height:1.5;color:var(--ink-soft);margin:0}
+.card.am .num{color:var(--amber)}
+
+/* numbered list steps */
+.steps{list-style:none;margin:24px 0;padding:0;counter-reset:s}
+.steps>li{position:relative;padding:0 0 22px 52px;counter-increment:s;border-left:1px solid var(--line);margin-left:16px}
+.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:-16px;top:-2px;
+  width:32px;height:32px;background:var(--surface);border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;
+  font-size:12px;font-weight:600;color:var(--teal)}
+.steps h4{font-size:17.5px;margin-bottom:5px}
+.steps p{font-size:16px;color:var(--ink-soft);margin:0}
+
+/* bank chips */
+.bank{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+.bank .bh{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.bank .bt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px}
+.bank .bn{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.bank p{font-size:15.5px;line-height:1.5;color:var(--ink-soft);margin:0}
+.hooks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hooks li{font-family:"Newsreader",serif;font-style:italic;font-size:17px;color:var(--ink);padding-left:18px;position:relative}
+.hooks li::before{content:"—";position:absolute;left:0;color:var(--amber);font-style:normal}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 4px;margin:22px 0;column-count:2;column-gap:28px}
+@media(max-width:640px){.check{column-count:1}}
+.check div{break-inside:avoid;display:flex;gap:11px;padding:9px 16px;font-size:15.5px;line-height:1.4;color:var(--ink-soft)}
+.check .box{flex:none;width:16px;height:16px;border:1.5px solid var(--teal);border-radius:4px;margin-top:3px}
+
+/* glossary */
+.gloss{border-top:1px solid var(--line);margin-top:20px}
+.gloss .gr{display:grid;grid-template-columns:minmax(0,180px) 1fr;gap:18px;padding:14px 2px;border-bottom:1px solid var(--line-soft)}
+.gloss .gt{font-family:"IBM Plex Mono",monospace;font-size:13.5px;font-weight:600;color:var(--teal);letter-spacing:.01em}
+.gloss .gd{font-size:16.5px;color:var(--ink-soft);line-height:1.45}
+@media(max-width:560px){.gloss .gr{grid-template-columns:1fr;gap:3px}}
+
+/* mistakes */
+.dont{list-style:none;margin:22px 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.dont li{display:flex;gap:13px;padding:12px 16px;background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:9px;font-size:16.5px;line-height:1.45;color:var(--ink-soft)}
+.dont li .x{flex:none;color:var(--red);font-family:"IBM Plex Mono",monospace;font-weight:700}
+
+/* worked example box */
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0;box-shadow:var(--shadow)}
+.calc .ch{background:var(--amber-wash);border-bottom:1px solid var(--amber-line);padding:14px 20px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);font-weight:600}
+.calc .cr{display:grid;grid-template-columns:1fr auto;gap:14px;padding:12px 20px;border-top:1px solid var(--line-soft);align-items:baseline}
+.calc .cr:nth-child(2){border-top:0}
+.calc .cl{font-size:16px;color:var(--ink-soft)}
+.calc .cv{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--ink);text-align:right;white-space:nowrap}
+.calc .cr.tot{background:var(--teal-wash);border-top:1px solid var(--teal-line)}
+.calc .cr.tot .cv{color:var(--teal)}
+
+/* calendar */
+.cal{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0}
+.cal .cm{background:var(--surface);display:grid;grid-template-columns:minmax(0,150px) 1fr;gap:16px;padding:14px 20px;align-items:baseline}
+.cal .cmn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;color:var(--teal);letter-spacing:.02em;text-transform:uppercase}
+.cal .cmd{font-size:16px;color:var(--ink-soft);line-height:1.45}
+.cal .cm.allyear .cmn{color:var(--amber)}
+@media(max-width:560px){.cal .cm{grid-template-columns:1fr;gap:3px}}
+
+/* ---------- figures & galleries ---------- */
+figure.fig{margin:26px 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+figure.fig.shot{max-width:840px}
+figure.fig img{display:block;width:100%;height:auto}
+figure.fig figcaption{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);
+  padding:11px 16px;border-top:1px solid var(--line-soft);letter-spacing:.01em;line-height:1.45}
+figure.fig figcaption b{color:var(--teal);font-weight:600}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin:24px 0}
+.gallery figure{margin:0;display:flex;flex-direction:column;gap:7px}
+.gallery img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:var(--surface-2)}
+.gallery figcaption{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);line-height:1.3;letter-spacing:.01em}
+.gallery figcaption b{color:var(--ink);font-weight:600;display:block;font-size:11px}
+.gal-note{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--faint);margin:-8px 0 20px;letter-spacing:.02em}
+hr.soft{border:0;border-top:1px solid var(--line-soft);margin:34px 0}
+.foot{padding:60px 0 80px;color:var(--muted);font-size:15px}
+.foot .disp{font-size:22px;color:var(--ink);font-style:italic;font-family:"Newsreader",serif;font-weight:300;margin-bottom:16px;display:block}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;border:1px solid var(--teal-line);color:var(--teal);background:var(--teal-wash);margin-right:6px}
+.tag.am{border-color:var(--amber-line);color:var(--amber);background:var(--amber-wash)}
+.note{font-size:15.5px;color:var(--muted);font-style:italic}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+
+<nav class="nav">
+  <div class="nav-in">
+    <span class="nav-brand"><span class="dot"></span>Content&nbsp;Blueprint</span>
+    <div class="nav-links">
+      <a href="#p1">1 · Tartalom</a>
+      <a href="#reel">Reel-formula</a>
+      <a href="#hook">Hookok</a>
+      <a href="#portfolio">Portfólió</a>
+      <a href="#pitch">Pitch</a>
+      <a href="#price">Árazás</a>
+      <a href="#p2">2 · Konverzió</a>
+      <a href="#p3">3 · Paid Growth</a>
+      <a href="#concepts">Reel-ötletek</a>
+      <a href="#scripts">Szkriptek</a>
+      <a href="#hotels">Top 100</a>
+    </div>
+    <button class="theme-btn" id="tg" aria-label="Téma váltása">☾/☀</button>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div class="col">
+    <div class="kicker"><span>VIVRE Agency Masterclass</span><span>·</span><b>Ultra részletes magyar feldolgozás</b></div>
+    <h1>The Luxury Hotel<br><span class="thin">Content Blueprint</span></h1>
+    <p class="lead">Teljes rendszer olyan hotel-tartalomhoz, ami terjed — hogyan forgasd, vágd, csomagold portfólióvá, pitcheld a szállodáknak, árazd be, és fordíts egyetlen tartózkodást visszatérő, fizetett munkává.</p>
+  </div>
+  <div class="statrow">
+    <div class="stat"><div class="n">53</div><div class="l">oldal, 4 részbe rendezve</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">klipes reel-formula</div></div>
+    <div class="stat"><div class="n">50+</div><div class="l">hook és outreach szkript</div></div>
+    <div class="stat"><div class="n">100</div><div class="l">céllista luxushotel</div></div>
+  </div>
+  <div class="howto col">
+    <h4>Hogyan használd ezt a dokumentumot</h4>
+    <ol>
+      <li><strong>Az 1. rész</strong> a gyártás: hogyan készíts organikus elérésre tervezett tartalmat, és építs portfóliót, mielőtt egyetlen hotelt is megkeresel.</li>
+      <li><strong>A 2. rész</strong> a konverzió: hogyan lesz egy tartózkodásból visszatérő, fizetett munka és havi social media kezelés.</li>
+      <li><strong>A 3. rész</strong> a fizetett növekedés — a Meta Ads profil-kampány (ez átfedésben van a hirdetéses anyag 5. részével).</li>
+      <li><strong>A 4. rész</strong> a könyvtár: 20 reel-koncepció, 50 outreach szkript és a Top 100 hotel-céllista.</li>
+      <li>A <span class="mono" style="font-size:13px">◆ MAGYAR PIACI ADAPTÁCIÓ</span> borostyán dobozok az én kiegészítéseim — az árazás, a jog és a piac magyar/CEE kontextusra ültetve.</li>
+    </ol>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ PART ONE ============ -->
+<section id="p1">
+  <div class="part col">
+    <div class="part-tag"><b>Első rész</b> — A Content Blueprint</div>
+    <h2>A tartalom, ami terjed</h2>
+    <p class="lead">Hogyan készíts organikus elérésre tervezett hotel-tartalmat, építs portfóliót, ami feltűnik, és pitchelj szállodáknak profin — bonyolult gyártás nélkül.</p>
+  </div>
+
+  <div class="col">
+    <h3>Mit tanulsz meg</h3>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>Tartalom, ami utazik</h4><p>Organikus elérésre épített hotel-tartalom, bonyolult produkció nélkül.</p></div>
+      <div class="card"><div class="num">02</div><h4>Ismételhető forgatás-struktúra</h4><p>Tudd, mit forgass, milyen sorrendben mutasd, és hogyan lesz egy forgatásból több reel.</p></div>
+      <div class="card"><div class="num">03</div><h4>Hookok, amik megállítják a görgetést</h4><p>Egyszerű hookok, amitől megállnak, néznek, mentenek és megosztanak.</p></div>
+      <div class="card"><div class="num">04</div><h4>Prémium jelenlét</h4><p>Prémium kinézetű social jelenlét és portfólió, mielőtt egyetlen hotelt is megkeresel.</p></div>
+      <div class="card am"><div class="num">05</div><h4>Profi outreach</h4><p>Barter-tartózkodásokra és fizetett kollaborációkra pitchelsz úgy, ahogy egy ügynökség tenné.</p></div>
+      <div class="card am"><div class="num">06</div><h4>Árazás, ami megáll</h4><p>Csomagolod és árazod a tartalomgyártást és a folyamatos social media kezelést.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Ami benne van a rendszerben</span>
+      <p>Virális reel-ötletek · hook-formulák · shot listák · vágási workflow · portfólió-struktúra · outreach szkriptek · kollaborációs checklist · árazási útmutató · creator-referenciák.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>A módszer bizonyítéka</h3>
+    <p>A keretrendszer előtt egy válogatás az eredményekből, ugyanazokkal az alapelvekkel: egyszerű rövidfilmes történetmesélés, erős első frame-ek, lifestyle-mozgás, slow-living hookok és következetes, platformokon átívelő terjesztés. A számok múltbeli teljesítmény-példák, nem garancia — a cél ismételhető kreatív-elvek építése, amelyek <em>növelik az esélyét</em> az erős organikus terjedésnek.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">PÉLDA · REEL</div><h4>22,25M megtekintés</h4><p>1,3M kedvelés · 128K mentés · 25,6K követés.</p></div>
+      <div class="card"><div class="num">PÉLDA · REEL</div><h4>11,5M megtekintés</h4><p>526K kedvelés · 62K mentés · 15,7K követés.</p></div>
+      <div class="card"><div class="num">PÉLDA · REEL</div><h4>6,85M megtekintés</h4><p>359K kedvelés · 41,8K mentés · 8,7K követés.</p></div>
+    </div>
+  </div>
+  <p class="gal-note">Organikus reel-példák · slow-living hotel-tartalom (Umbria, Toszkána, tó, hegyvidék)</p>
+  <div class="gallery"><figure><img src="/metacontent/images/p005_1.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p005_2.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p005_3.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_1.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_2.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_3.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_4.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_5.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p006_6.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure></div>
+  <p class="gal-note">További eredmények ugyanabból az organikus keretrendszerből</p>
+  <div class="gallery"><figure><img src="/metacontent/images/p007_1.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p007_2.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p007_3.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p007_4.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p007_5.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p007_6.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_1.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_2.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_3.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_4.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_5.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure><figure><img src="/metacontent/images/p008_6.jpg" loading="lazy" alt="Organikus reel · VIVRE"><figcaption><b>Organikus reel · VIVRE</b></figcaption></figure></div>
+
+  <div id="reel" class="col">
+    <h3>04 — Az 5-klipes reel-formula</h3>
+    <p>A hotel-tartalom sokkal könnyebb lesz, amint felhagysz az „egy tökéletes filmes videó" gondolkodással, és rövid szekvenciákban kezdesz gondolkodni, amelyek gyorsan vágyat keltenek. Organikus tartalomhoz az <strong>iPhone-felvétel gyakran übereli a csiszolt produkciót</strong> — mert azonnali, natív és könnyű tesztelni.</p>
+    <ul class="steps">
+      <li><h4>STOP — előbb az emberi mozgás</h4><p>Ugrás a medencébe, séta a kilátás felé, ajtónyitás, belépés a teraszra.</p></li>
+      <li><h4>FEEL — érzéki részlet</h4><p>Gyümölcs, reggeli, kávé, lenvászon, virág, zuhany, víz vagy más szenzoros pillanat.</p></li>
+      <li><h4>REVEAL — a legerősebb funkció</h4><p>Medence, lakosztály, kilátás, terasz vagy az építészet.</p></li>
+      <li><h4>LIVE — az élet a hotelben</h4><p>Étel, úszás, séta, kikapcsolódás, természetes interakció a hellyel.</p></li>
+      <li><h4>CLOSE — kielégítő zárókép</h4><p>Egy utolsó frame, ami a nézőben ott hagyja a vágyat a tartózkodásra.</p></li>
+    </ul>
+    <div class="grid g2">
+      <div class="card"><div class="num">IDŐZÍTÉS</div><h4>~2,5 mp klipenként vagy rövidebb</h4><p>A nyitás mehet gyorsabban is — gyakran 1,8–3 mp, a mozgástól és a hangtól függően. A szám nem merev; a cél a holtidő kivágása.</p></div>
+      <div class="card"><div class="num">MIÉRT SZÁMÍT A NYITÁS</div><h4>A mozgás azonnali vizuális információ</h4><p>Ha van erős emberi pillanatod, ne egy generikus üres-szoba svenkkel nyiss. Ha megvan a néző, a következő snittek adják el az atmoszférát.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOOKS + EDIT ============ -->
+<section id="hook">
+  <div class="col">
+    <h3>05 — Hookok luxus-hospitalityhez</h3>
+    <p>Vidéki, hegyi, tavi, toszkán, provence-i és más slow-living propertyknél az <strong>egyszerű szöveg gyakran übereli</strong> a hotel túlmagyarázását. Tarts egy sort a képernyőn az elejétől a végéig. Az eredetiek angolok — alább magyar átültetések a magyar közönségnek; nemzetközi tartalomhoz az angol eredetik is működnek.</p>
+    <div class="bank"><div class="bh"><span class="bt">A 20 alap-hook</span><span class="bn">magyar átültetés</span></div>
+      <ul class="hooks"><li>itt kellene lennünk</li><li>erre az életre készülök</li><li>a nyugdíjas tervem</li><li>az én helyem</li><li>élet Santoriniben</li><li>egy ház, tele varázslattal</li><li>az én fajta luxusom</li><li>nem a városi életre születtem</li><li>kell ide egy hétvége</li><li>ezt az életet akarom</li><li>Olaszország, együtt?</li><li>a magány, amire vágyom</li><li>ez a fajta élet</li><li>ahová tartozom</li><li>az áloméletem</li><li>ez kell nekem</li><li>maradj itt örökre</li><li>ez így jó</li><li>vigyél ide</li><li>a boldog helyem</li></ul></div>
+    <div class="bank"><div class="bh"><span class="bt">+30 slow-living hook</span><span class="bn">forgatásonként forgasd őket</span></div>
+      <ul class="hooks"><li>ehhez hozzá tudnék szokni</li><li>talán ennyi elég is</li><li>egy lassabb reggel</li><li>ez a jel, hogy tűnj el egy időre</li><li>semmi terv. csak ez.</li><li>ahol lassabban telik az élet</li><li>mindig ezt választanám</li><li>a reggeleknek ilyennek kéne lenniük</li><li>képzeld el, hogy itt ébredsz</li><li>a semmittevés művészete</li><li>maradhatnánk még kicsit?</li><li>így néz ki a béke</li><li>vannak helyek, amik lelassítanak</li><li>nincs hová visszasietni</li><li>egy élet kevesebb értesítéssel</li><li>a reggel, amire emlékszel</li><li>ez lehetne a vasárnapunk</li><li>talán a luxus egyszerűen az idő</li><li>a reggeli várhat. nézd ezt.</li><li>ahol hosszabbak a napok</li><li>innen jól néz ki a soft life</li><li>valahol a semmi és a tökéletes között</li><li>azt hiszem, megtaláltuk a menedékünk</li><li>képzeld el, hogy ez az otthonod</li><li>egy kis emlékeztető, hogy lassíts</li><li>itt nem kell ébresztő</li><li>ezért utazunk</li><li>a világ várhat</li><li>egy csendes reggel itt</li><li>tudnál így élni?</li></ul></div>
+    <div class="grid g2">
+      <div class="card"><div class="num">HANG</div><h4>Keress desztináció-kifejezésekre</h4><p>Az Edits-ben keress a helyszínre — Tuscany, Provence, Umbria —, és tanulmányozd a vizuálisan hasonló tartalmakhoz párosított hangokat. Madárhang-ambience és visszafogott instrumentálok különösen jól működnek.</p></div>
+      <div class="card"><div class="num">CROSS-POSTING &amp; JOG</div><h4>Kösd össze az IG-t a Facebook-oldallal</h4><p>A hospitality-tartalom ott gyakran messzebb jut. Csak olyan hangot használj, ami elérhető és engedélyezett az adott fiókra, területre és platformra — ne feltételezd, hogy minden trendi hang tisztázott üzleti használatra.</p></div>
+    </div>
+    <div class="hu">
+      <div class="flag">Magyar piaci adaptáció — nyelv és zenei jog</div>
+      <p>Magyar/DACH közönségre lőtt tartalomnál a magyar (vagy semleges, szöveg nélküli) hook gyakran jobban rezonál; nemzetközi elérésre az angol az alap, mert szélesebb piacot ér el. A zenei jog itthon is éles: az Instagram/Facebook üzleti fiókoknál a <em>kereskedelmi</em> hangkönyvtár szűkebb, mint a személyes fiókoké — hotel-oldalról posztolva csak a Meta üzleti könyvtárából engedélyezett hangot használj, különben a Reel némán vagy letiltva futhat.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>06 — Vágj retencióra, aztán tesztelj</h3>
+    <p>Építsd meg a lehető legerősebb verziót, aztán hagyd, hogy a valódi közönségadat — ne a személyes ízlés — döntse el, mi marad.</p>
+    <div class="pq"><p>„Egy reel akkor értékes, ha érdemi elérést, mentést, megosztást, minősített profil-látogatást, követést, megkeresést — vagy egy világos kreatív tanulságot teremt. A megtekintés erős bizonyíték, de nem az egyetlen üzleti eredmény."</p></div>
+    <ul class="steps">
+      <li><h4>Építsd a legtisztább 7–15 mp-es verziót</h4><p>A legerősebb felvételt tedd CapCutba, és először a legletisztultabb változatot vágd meg.</p></li>
+      <li><h4>Készíts 3–5 nyitó-variációt</h4><p>A törzs nagy részét tartsd meg — csak az első klipet, első szöveget, ritmust vagy hangot cseréld.</p></li>
+      <li><h4>Tanuld meg, mi mozdítja a teljesítményt</h4><p>Az első snitt, az első sor, a pacing vagy az audio változtatása mutatja meg, mi számít valójában.</p></li>
+      <li><h4>Használj Trial Reels-t, ahol elérhető</h4><p>Teszteld a kreatívot nem-követőkön, mielőtt a fő fiókra tenné a hangsúlyt.</p></li>
+      <li><h4>Kövess többet, mint a like-ot</h4><p>Megtekintés, watch time, mentés, megosztás, profil-akciók és követés — nem csak a kedvelés.</p></li>
+      <li><h4>Ha egy struktúra nyer, az elvet használd újra</h4><p>Új felvétellel, ahelyett hogy a végtelenségig ugyanazt a vágást reposztolnád.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PROFILE + PORTFOLIO + PITCH ============ -->
+<section id="portfolio">
+  <div class="col">
+    <h3>07 — Építs profilt, amiben egy hotel megbízik</h3>
+    <p>A fiókod az első media kited. Nulla hotel-portfólióval indulsz? Az egyik legokosabb befektetés, ha <strong>magad fizetsz egy tartózkodásért</strong>, és elkészíted az első hospitality esettanulmányt — nagyjából <strong>20–30 valóban erős asset</strong>, ugyanezekkel az elvekkel.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">01 · HERO</div><h4>Drón / Exteriőr</h4><p>Egy kivételes külső vagy légi felvétel, ami a léptéket, a helyszínt és a produkciós értéket kommunikálja.</p></div>
+      <div class="card"><div class="num">02 · MOTION</div><h4>Slow-living Reel</h4><p>Egy 4–5 klipes reel mozgással, atmoszférával, egyszerű hookkal és feszes ritmussal.</p></div>
+      <div class="card"><div class="num">03 · STILLS</div><h4>Fotó-carousel</h4><p>Profi képek: exteriőr, szoba, részletek, lifestyle, étel és a legerősebb kilátás.</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Miért működik a három kitűzött poszt</span>
+      <p>Azonnal megmutatja a döntéshozónak, hogy értesz a prémium vizuálokhoz, az organikus rövidfilmhez és a profi fotózáshoz — így a barter-tartózkodásra vagy fizetett kollaborációra ugrás sokkal könnyebb.</p>
+    </div>
+    <div class="settings">
+      <div class="row"><div class="k">Kamera</div><div class="v" style="text-transform:none">Friss iPhone vagy csúcs okostelefon erős stabilizálással.</div></div>
+      <div class="row"><div class="k">Állvány</div><div class="v" style="text-transform:none">Kompakt tripod, és egy telefon-gimbal, ha stabilan tudod használni.</div></div>
+      <div class="row"><div class="k">Kiegészítők</div><div class="v" style="text-transform:none">Power bank, lencsetörlő és elég tárhely.</div></div>
+      <div class="row"><div class="k">Fény</div><div class="v" style="text-transform:none">Egy kis hordozható lámpa a nehéz belső terekhez.</div></div>
+      <div class="row"><div class="k">Drón</div><div class="v" style="text-transform:none">Ahol a property és a helyi szabályok engedik.</div></div>
+      <div class="row"><div class="k">Fotó</div><div class="v" style="text-transform:none">Egy jó mirrorless/DSLR, széles lencse a belsőkhöz, közép-zoom a lifestyle-hoz.</div></div>
+    </div>
+
+    <h3>08 — Építs luxushotel-portfóliót</h3>
+    <p>Egy hotel-döntéshozónak <strong>két perc alatt</strong> értenie kell az ajánlatodat. A portfólió minden döntése ezt gyorsítsa, ne lassítsa.</p>
+    <div class="rule amber">
+      <span class="rl">Media kit struktúra</span>
+      <p>Borító → rövid pozicionálás → közönség/platform-számok, ha relevánsak → 3–5 hospitality esettanulmány → szolgáltatások → csomagok vagy kezdő árak → felhasználási és utazási megjegyzések → kapcsolat / CTA.</p>
+    </div>
+    <ul class="steps">
+      <li><h4>Vezess a hospitalityvel</h4><p>A legerősebb hotel-munkád jelenjen meg azonnal.</p></li>
+      <li><h4>Mutasd a bizonyítékot</h4><p>Megtekintés, mentés, megosztás, követés vagy profil-aktivitás a releváns vizuál mellett, ha megoszthatod az adatot.</p></li>
+      <li><h4>Magyarázd el a szereped</h4><p>Forgatva + vágva, creator-kampány, social kezelés, drón + fotó, vagy teljes produkció.</p></li>
+      <li><h4>Legyél szelektív</h4><p>Három kiváló hotel-esettanulmány veri a tizenöt átlagosat.</p></li>
+      <li><h4>Prémium layout</h4><p>Nagy képek, whitespace, következetes tipográfia, minimális zsúfoltság.</p></li>
+      <li><h4>Érthető ajánlat</h4><p>Szolgáltatás, deliverable, felhasználás, átfutás, utazás és ár legyen könnyen megtalálható.</p></li>
+    </ul>
+  </div>
+
+  <div id="pitch" class="col">
+    <h3>09 — Keresd meg és pitcheld a hotelt profin</h3>
+    <p>A hotelek social csapata <strong>rengeteg</strong> kollaborációs kérést kaphat. A hosszú copy-paste bemutatkozás gyakran nehezíti a döntést, nem könnyíti — az első DM egyszerűen tegye világossá a szándékod, és érdemeljen ki egy választ.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">ELSŐ DM · A</div><p>„Szia! Nagyon szép a helyetek. Szívesen készítenék nektek tartalmat!"</p></div>
+      <div class="card"><div class="num">ELSŐ DM · B</div><p>„Szia! Érdekelne egy közös kollaboráció?"</p></div>
+    </div>
+    <p>Ha a hotel pozitívan reagál, küldd a media kitet és a legrelevánsabb hotel-példákat. Fizetett munkához <strong>tereld e-mailre</strong> a beszélgetést: „Meg tudnátok adni egy e-mail-címet, hogy elküldhessük az áraikat?" — ez azonnal jelzi, hogy fizetett kollaborációról van szó.</p>
+    <ul class="steps">
+      <li><h4>DM</h4><p>Rövid, világos kollaborációs szándék.</p></li>
+      <li><h4>Érdeklődés</h4><p>Egyeztesd a dátumot, éjszakák számát, vendéglétszámot, tartalmi igényt és a hotel prioritásait.</p></li>
+      <li><h4>Fizetett</h4><p>Tereld e-mailre, küldd a media kitet + rate cardot.</p></li>
+      <li><h4>Barter</h4><p>Definiáld pontosan, mit tartalmaz a tartózkodás, és mit szállítasz.</p></li>
+      <li><h4>Érkezés előtt</h4><p>Erősítsd meg írásban a deliverable-öket, a felhasználást és a határidőket.</p></li>
+      <li><h4>Szállítás után</h4><p>Küldd a rendezett asseteket és az eredményeket, majd ajánld a következő kollaborációt.</p></li>
+    </ul>
+    <div class="rule">
+      <span class="rl">Creator-profilok tanulmányozásra</span>
+      <p>Framinghez, ritmushoz, hookokhoz és profil-struktúrához érdemes tanulmányozni: @raz_kind · @nichodebiasio · @juliagal_ · @momentsofgregory · @pedrofcarreira · @lifewithelliott · @shewandersabroad · @benihunyadi · @pilotluana · @uniquetravelclub · @elenaroadbook · @martadtravels (és a többi az anyagban).</p>
+    </div>
+    <div class="pq"><p>„A luxushotelek nem csak követőket vesznek. Ízlést, megbízhatóságot, tartalomminőséget, brand-illeszkedést és bizalmat vesznek, hogy profin tudod képviselni a propertyt."</p></div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="price">
+  <div class="col">
+    <h3>10 — Árazd a tartalmat szolgáltatásként</h3>
+    <p>A Vivre-nél a tartalomgyártás általában a social media kezelés, influencer- és performance-marketing mellett ül. Egy világos csomag könnyebbé teszi a hotel jóváhagyását.</p>
+    <div class="grid g3">
+      <div class="card am"><div class="num">CSOMAG 01</div><h4>€4&thinsp;500</h4><p>50 profi fotó<br>5 reel</p></div>
+      <div class="card am"><div class="num">CSOMAG 02</div><h4>€6&thinsp;000</h4><p>60 profi fotó<br>8 reel</p></div>
+      <div class="card am"><div class="num">CSOMAG 03</div><h4>€8&thinsp;000</h4><p>80 profi fotó<br>12 reel</p></div>
+    </div>
+    <p class="note">Ezek egy bejáratott ügynökség referencia-árai, inkább az európai luxus-piacokra (Olaszország, Görögország, Franciaország) jellemzők. Ha most kezded, az első célod a bizonyíték, a folyamat és a bizalom felépítése — ne másold egy bejáratott ügynökség rate cardját ugyanaz a portfólió, csapat és kereskedelmi tapasztalat nélkül.</p>
+    <div class="rule warn">
+      <span class="rl">Ne adj el „valamennyi tartalmat"</span>
+      <p>Egy definiált csomag profinak érződik. „20 vágott fotó + 3 reel + egy körös javítás + szállítás 10 napon belül" könnyebben jóváhagyható, mint egy homályos ígéret a tartalomkészítésre.</p>
+    </div>
+    <ul class="steps">
+      <li><h4>Világos belépő-csomag</h4><p>Fél- vagy egésznapos forgatás pontos deliverable-ökkel.</p></li>
+      <li><h4>Válaszd szét a gyártást a havi kezeléstől</h4><p>A tartalomgyártás és a social media menedzsment külön tétel.</p></li>
+      <li><h4>Add meg a mennyiségeket</h4><p>Hány vágott fotó, reel, javítási kör és nyers fájl van benne.</p></li>
+      <li><h4>Válaszd szét az organikus és a fizetett felhasználást</h4><p>Ahol releváns, az ad-usage külön díjazandó.</p></li>
+      <li><h4>Add meg, mit fedez a hotel</h4><p>Utazás, szállás, transzfer, étkezés — tisztázva.</p></li>
+      <li><h4>Fizetési ütemezés</h4><p>Világos payment schedule a fizetett gyártáshoz.</p></li>
+    </ul>
+
+    <h3>11 — Árazd a kezelést felelősség szerint</h3>
+    <p>A hotelek nem csak feltöltésekért fizetnek. Stratégiáért, ízlésért, következetességért, sebességért, tervezésért, vágásért, közösségkezelésért, riportért, tesztelésért — és a brand napi jelenlétéért való <strong>felelősségért</strong>.</p>
+    <div class="grid g3">
+      <div class="card am"><div class="num">SZINT 01</div><h4>Starter kezelés</h4><p>Tervezés és publikálás a hotel által biztosított tartalommal.</p></div>
+      <div class="card am"><div class="num">SZINT 02</div><h4>Growth kezelés</h4><p>Stratégia, vágás, posztolás, közösségkezelés, riport és folyamatos kreatív-tesztelés.</p></div>
+      <div class="card am"><div class="num">SZINT 03</div><h4>Full service</h4><p>Social kezelés + visszatérő gyártás + creator-koordináció + performance-marketing támogatás.</p></div>
+    </div>
+    <div class="pq"><p>„Minél több kereskedelmi felelősséget, gyártást, sebességet, felhasználást és döntést birtokolsz, annál kevésbé nézzen ki a szolgáltatásod egy olcsó »X poszt/hó« csomagnak."</p></div>
+    <div class="hu">
+      <div class="flag">Magyar piaci adaptáció — árazás, deviza és számlázás</div>
+      <p>A fenti €4&thinsp;500–8&thinsp;000 a nyugat-európai luxus-benchmark; a magyar/CEE piacon a belépő reálisan ennek töredéke, és HUF-ban vagy EUR-ban is árazható a vendég piaca szerint. Egyéni vállalkozóként (mint te) a kulcs a <strong>definiált csomag + számla</strong>: adj pontos deliverable-listát, fizetési ütemet (pl. 50% előleg), és tüntesd fel az ÁFA-státuszt (alanyi adómentes vagy ÁFA-körös). Barternél is érdemes a tartózkodás piaci értékét „természetbeni juttatásként" dokumentálni, hogy a felek és a könyvelés is tisztán lássa — és hogy a hotelnek is legyen bizonylata a beszámított éjszakákról.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOT LIST + CHECKLIST + MISTAKES + 30 DAYS ============ -->
+<section>
+  <div class="col">
+    <h3>12 — Hotel shot list</h3>
+    <p>Sose érkezz terv nélkül. Egy működő checklist, amit minden property-látogatáson végigfutsz, abban a sorrendben, ahogy a legtöbb forgatás természetesen halad.</p>
+    <div class="check">
+      <div><span class="box"></span><span>Érkezés, bejárat, tábla, első benyomás.</span></div>
+      <div><span class="box"></span><span>Exteriőr tág snittek — reggel, golden hour, blue hour.</span></div>
+      <div><span class="box"></span><span>Szoba-reveal: ajtó, függöny, ágy, fürdő, amenities, erkély.</span></div>
+      <div><span class="box"></span><span>Emberi mozgás: séta, belépés a medencébe, reggeli, ablaknyitás.</span></div>
+      <div><span class="box"></span><span>Medence: ugrás, szél, tükröződés, törölköző, italok, vízrészletek.</span></div>
+      <div><span class="box"></span><span>Étel-ital: öntés, tálalás, kezek, terítés, kilátás.</span></div>
+      <div><span class="box"></span><span>Wellness: köntös, zuhany, kád, spa, kezelés-részletek (ahol engedik).</span></div>
+      <div><span class="box"></span><span>Desztináció: strand, utca, hegy, tó, szőlő, csónak, helyi textúra.</span></div>
+      <div><span class="box"></span><span>A kulcspillanatokat vertikálisan, 9:16-ra vedd fel — ne utólagos crop.</span></div>
+      <div><span class="box"></span><span>Mindig vegyél fel tiszta, szöveg nélküli verziót is a későbbi újrafelhasználásra.</span></div>
+    </div>
+
+    <h3>13 — Kollaborációs checklist</h3>
+    <p>Védd a kapcsolatot. Ezeket erősítsd meg <strong>írásban</strong> minden kollaboráció előtt — barter vagy fizetett —, hogy mindkét felet védd.</p>
+    <div class="check">
+      <div><span class="box"></span><span>Pontos dátum, éjszakák, szobakategória, vendégszám.</span></div>
+      <div><span class="box"></span><span>Étkezés, transzfer, élmények, amik benne vannak.</span></div>
+      <div><span class="box"></span><span>Reelek, Story-k, fotók és nyers klipek száma.</span></div>
+      <div><span class="box"></span><span>Posztolási és szállítási határidők.</span></div>
+      <div><span class="box"></span><span>Tag, helyszín, collaborator-poszt és kötelező jelölés (reklám-disclosure).</span></div>
+      <div><span class="box"></span><span>Organikus reposzt-jog és fizetett hirdetési felhasználás.</span></div>
+      <div><span class="box"></span><span>Szerkesztheti-e a hotel a leszállított tartalmat.</span></div>
+      <div><span class="box"></span><span>Lemondás, időjárás és átütemezés feltételei.</span></div>
+      <div><span class="box"></span><span>Fizetendő összeg, deviza, számlaadatok, határidő.</span></div>
+    </div>
+
+    <h3>14 — Hibák, amik bizalmat visznek</h3>
+    <p>A leggyorsabb módja kevésbé profinak látszani, mint a creator, akit a hotel épp visszautasított.</p>
+    <ul class="dont">
+      <li><span class="x">×</span>Hosszú, generikus pitch minden propertynek.</li>
+      <li><span class="x">×</span>Semmi hotel-specifikus munka a saját profilodon.</li>
+      <li><span class="x">×</span>Csak üres szobák, lifestyle és mozgás nélkül.</li>
+      <li><span class="x">×</span>Átmenetek, amik elvonják a figyelmet a hotelről.</li>
+      <li><span class="x">×</span>100 átlagos fájl szállítása 20 kiváló helyett.</li>
+      <li><span class="x">×</span>Viralitás garanciaként ígérve.</li>
+      <li><span class="x">×</span>Ár megadása deliverable és felhasználás definiálása nélkül.</li>
+      <li><span class="x">×</span>A fizetett hirdetési felhasználás tisztázásának elmulasztása.</li>
+      <li><span class="x">×</span>A Facebook-terjesztés figyelmen kívül hagyása.</li>
+      <li><span class="x">×</span>Az utánkövetés elmulasztása eredményekkel és következő ajánlattal.</li>
+    </ul>
+
+    <h3>15 — Az első 30 napod</h3>
+    <p>Négyhetes felszállópálya egy üres portfóliótól egy hotel-kész pitchig.</p>
+    <div class="grid g2">
+      <div class="card"><div class="num">1. HÉT — Pozicionálj</div><p>Válaszd ki a hotel-kategóriát, amivel dolgozni akarsz. Tisztítsd a profilod, definiáld az ajánlatod, és építsd fel a media kit vázát.</p></div>
+      <div class="card"><div class="num">2. HÉT — Készíts</div><p>Foglalj vagy szerezz hozzáférést egy megfelelő propertyhez. Készíts egy kiváló esettanulmányt és a három kitűzött posztod.</p></div>
+      <div class="card"><div class="num">3. HÉT — Tesztelj</div><p>Készíts több nyitást, teszteld a hookokat, nézd az eredményeket, és a legerősebb munkát alakítsd esettanulmány-oldallá.</p></div>
+      <div class="card am"><div class="num">4. HÉT — Outreach</div><p>Építs célzott hotel-listát, küldj rövid DM-eket, tereld az érdeklődőket e-mailre, és kövess utána profin.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART TWO ============ -->
+<section id="p2">
+  <div class="part col">
+    <div class="part-tag" style="border-top-color:var(--amber)"><b>Második rész</b> — A Client Conversion Playbook</div>
+    <h2>Egy tartózkodásból fizetett munka</h2>
+    <p class="lead">A hiányzó utolsó lépés: hogyan használd a sikeres kollaborációt bizonyítékként, csomagold profin az értéket, és nyisd meg az ajtót a visszatérő tartalomhoz vagy a havi social media kezeléshez.</p>
+  </div>
+
+  <div class="col">
+    <h3>16 — Fordítsd az egy tartózkodást fizetett munkává</h3>
+    <p>Egy ingyenes tartózkodás vagy egyszeri forgatás <strong>nem a célvonal</strong>. Az első lehetőség bizonyítani három dolgot: érted a propertyt, könnyű veled dolgozni, és a tartalmad értéket teremt.</p>
+    <div class="rule amber">
+      <span class="rl">Az értéklétra</span>
+      <p>Ingyenes tartózkodás → Fizetett tartalomgyártás → Visszatérő tartalom → Havi social media kezelés → Szélesebb creator- / performance-támogatás.</p>
+    </div>
+    <ul class="steps">
+      <li><h4>1. lépés — Túlteljesíts a szervezésben, ne random extrákban</h4><p>Szállítsd pontosan, amiben megegyeztetek, időben. Nevezd el és rendezd a fájlokat kategóriánként: szoba, medence, étel, lifestyle, drón, vertikális videó. Add a végleges vágásokat és a megbeszélt tiszta verziókat is. Ne ígérj 20 assetet és küldj 100 gyengét — a minőség és a rendezettség teremt bizalmat.</p></li>
+      <li><h4>2. lépés — Küldj teljesítmény-utánkövetést</h4><p>Amikor a tartalomnak volt ideje érdemi adatot gyűjteni, küldj rövid frissítést. Ne csak egy megtekintés-screenshotot — magyarázd el, mi történt és miért számít: (1) mi jelent meg · (2) megtekintés/elérés · (3) mentés/megosztás/profil-aktivitás/követés · (4) melyik kreatív elem működött · (5) mit tesztelnél legközelebb.</p></li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <h3>17 — Az utánkövető szkriptek</h3>
+    <p>Tartsd a tónust rövidre. Az eredmény végezze el az eladás nagy részét. (Magyar átültetés; nemzetközi hotelnek az angol eredeti is használható.)</p>
+    <div class="settings">
+      <div class="row"><div class="k">Erős eredmény után</div><div class="v" style="text-transform:none">„Szia! Csak egy gyors frissítés a közös munkánkról. A reel mostanra [X megtekintésnél] tart, [X mentés/megosztás/profil-akció]-val. A nyitó lifestyle-snitt és az egyszerű desztináció-hook különösen jól teljesített. Nagyon szerettünk a propertyvel dolgozni, és már van pár ötletünk egy második tartalomcsomagra, ha szeretnétek, elküldjük."</div></div>
+      <div class="row"><div class="k">Barterből fizetőssé</div><div class="v" style="text-transform:none">„Szívesen folytatnánk a tartalomkészítést a propertynek. A következő kollaborációra összeállíthatunk egy fizetett csomagot meghatározott számú profi fotóval és reellel, hogy a hotelnek nagyobb tartalomkönyvtára is legyen a szezonra. Szívesen küldjük az opciókat és az árakat."</div></div>
+      <div class="row"><div class="k">Havi kezelésbe</div><div class="v" style="text-transform:none">„A közös munka után már látunk pár lehetőséget, hogy a fiók következetesebb legyen, és hónapról hónapra erősebb organikus rendszert építsünk. Ha hasznos, küldünk egy egyszerű ajánlatot: tartalomtervezés, vágás, publikálás, közösségkezelés és folyamatos kreatív-tesztelés."</div></div>
+      <div class="row"><div class="k">Puha utánkövetés (nem jött válasz)</div><div class="v" style="text-transform:none">„Szia! Csak utánakövetek, hátha elveszett. Nagyon élveztük a propertynek készíteni, és szívesen küldünk pár ötletet a következő kampányra / szezonra, amikor hasznos."</div></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>18 — Mutasd az eredményt ügynökségi módra</h3>
+    <p>Egy hotel-tulajdonosnak nem kell 20 oldalas analitika egyetlen kollaboráció után. Építs <strong>egyoldalas eredmény-összefoglalót</strong>, ami egy perc alatt érthető.</p>
+    <div class="calc">
+      <div class="ch">Példa — egyoldalas eredmény-összefoglaló</div>
+      <div class="cr"><div class="cl"><b>EREDMÉNY</b></div><div class="cv">5,65M megtekintés · 270K like · 17,9K mentés · 3&thinsp;661 követés</div></div>
+      <div class="cr"><div class="cl"><b>MI MŰKÖDÖTT</b></div><div class="cv">azonnali emberi mozgás + quiet-luxury környezet + egyszerű felirat</div></div>
+      <div class="cr"><div class="cl"><b>KÖVETKEZŐ TESZT</b></div><div class="cv">ugyanaz a struktúra reggeli-, érkezés- és naplemente-szekvenciákkal</div></div>
+      <div class="cr tot"><div class="cl"><b>KÖVETKEZŐ AJÁNLAT</b></div><div class="cv">2 napos szezonális tartalomcsomag</div></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Az egyoldalas felépítése</span>
+      <p><b>Hero-metrika</b> — vezess a legerősebb számmal. <b>Másodlagos bizonyíték</b> — mentés, like, követés, profil-aktivitás. <b>Kreatív</b> — a reel thumbnailje vagy legerősebb frame-je. <b>Tanulság</b> — egy mondat, miért működött. <b>Következő lehetőség</b> — egy konkrét ötlet a következő forgatásra. <b>Ajánlat</b> — egy egyszerű következő csomag, nem „szólj, ha kell valami".</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>19 — Építs retainert, amit a hotel megért</h3>
+    <p>Ne ugorj egy ingyenes tartózkodásból egyből egy túlméretezett ügynökségi ajánlatba. A következő ajánlat érződjön <strong>logikus megoldásnak</strong> arra, amire a hotelnek már szüksége van.</p>
+    <ul class="steps">
+      <li><h4>Jelenlegi hiány</h4><p>Mi az, ami ma következetlen vagy hiányzik?</p></li>
+      <li><h4>Havi rendszer</h4><p>Pontosan mit fogsz kezelni és szállítani.</p></li>
+      <li><h4>Várható érték</h4><p>Következetesség, erősebb tartalomkönyvtár, tesztelés és kevesebb munka a hotel csapatának.</p></li>
+      <li><h4>Befektetés</h4><p>Egy világos havi díj, plusz a gyártás / ad spend külön feltüntetve, ahol releváns.</p></li>
+    </ul>
+    <div class="rule">
+      <span class="rl">Mit tartalmazhat</span>
+      <p><b>Visszatérő tartalom</b> — havi vagy 6–8 hetenkénti forgatás definiált assetkönyvtárral. <b>Szezonális tartalom</b> — nyitó, főszezon, elő/utószezon, ünnepi kampányok. <b>Social kezelés</b> — stratégia, naptár, vágás, publikálás, közösségkezelés, riport. <b>Creator-koordináció</b> — több volumenhez. <b>Performance-marketing</b> — csak ha profin tudod kezelni a fizetett médiát.</p>
+    </div>
+
+    <h3>20 — A hosszú távú ügyfél-checklist</h3>
+    <p>Fusd végig, mielőtt bármit ajánlanál az első kollaboráción túl.</p>
+    <div class="pq"><p>„Ne kérd a hotelt, hogy »alkalmazzon hosszú távra« indok nélkül. Mutasd a bizonyítékot, azonosítsd a következő lehetőséget, és tedd könnyűvé a következő vásárlást."</p></div>
+    <div class="check">
+      <div><span class="box"></span><span>Leszállítottál mindent, amit ígértél?</span></div>
+      <div><span class="box"></span><span>Könnyűvé tetted a hotelnek a fájlok használatát?</span></div>
+      <div><span class="box"></span><span>Van engedélyed a munkát és a teljesítményt a portfóliódban mutatni?</span></div>
+      <div><span class="box"></span><span>Rögzítetted a legerősebb eredményeket tiszta esettanulmányban?</span></div>
+      <div><span class="box"></span><span>El tudod mondani egy-két mondatban, mi működött?</span></div>
+      <div><span class="box"></span><span>Van 2–3 konkrét ötleted a property következő tartalmára?</span></div>
+      <div><span class="box"></span><span>A következő ajánlatod logikus lépcső az elsőhöz képest?</span></div>
+      <div><span class="box"></span><span>A deliverable, felhasználás, utazás, javítás és fizetés tiszta?</span></div>
+      <div><span class="box"></span><span>Két perc alatt érthető az ajánlatod?</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART THREE ============ -->
+<section id="p3">
+  <div class="part col">
+    <div class="part-tag"><b>Harmadik rész · Bónusz</b> — Paid Growth System</div>
+    <h2>Növeld a fiókot gyorsabban és olcsóbban</h2>
+    <p class="lead">Egy egyszerű Meta Ads beállítás, ami nagyobb bázist épít valódi, releváns követőkből, és több esélyt ad az erős hotel-tartalomnak, hogy felfedezzék.</p>
+    <div class="rule" style="margin-top:24px">
+      <span class="rl">Valós eredmény — San Luis Retreat Hotel &amp; Lodges</span>
+      <p><strong>€5&thinsp;523,79 költés → 158&thinsp;264 Instagram profil-látogatás → 50&thinsp;624 követés.</strong> A cél nem hamis követők vásárlása — hanem a legerősebb tartalmadat valódi emberek elé tenni, akik valószínűleg meglátogatják és követik a profilt.</p>
+    </div>
+  </div>
+  <figure class="fig shot"><img src="/metacontent/images/p030_1.jpg" alt="San Luis eredmény" loading="lazy"><figcaption><b>A BEÁLLÍTÁS ·</b> Traffic kampány · manuális · ~5 $/nap · conversion location Instagram/Facebook · destination csak az IG-profil · broad közönség (lokáció + kor) · csak Instagram elhelyezés · rövid, natív kreatív + caption.</figcaption></figure>
+  <div class="col">
+    <div class="rule amber">
+      <span class="rl">Kereszthivatkozás</span>
+      <p>Ez a kampány lényegében megegyezik a hirdetéses anyag („Meta Ads Booster") 5. részének Instagram növekedési kampányával — ott lépésről lépésre, több képernyőképpel és a mutatók (cost per profile visit ~€0,03, follow rate) részletes olvasatával is megtalálod.</p>
+    </div>
+  </div>
+  <div class="grid g2 col" style="max-width:840px">
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p031_1.jpg" alt="Traffic kampány létrehozása" loading="lazy"><figcaption><b>LÉPÉS 01–02 ·</b> Traffic objective + Manual traffic campaign. Indíts ~5 $/nappal, buying type marad Auction. A manuális enged kontrollt a cél, a közönség és az elhelyezések fölött.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p032_1.jpg" alt="Send traffic to Instagram" loading="lazy"><figcaption><b>LÉPÉS 03–05 ·</b> Conversion location „Instagram or Facebook", performance goal = maximalizáld az IG profil-látogatásokat. Identity: a helyes FB-oldal. Destination: az IG-profil, nem weboldal.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p033_1.jpg" alt="Keep audience broad" loading="lazy"><figcaption><b>LÉPÉS 06–07 ·</b> Broad: a hotel piaca és korosztálya, a detailed targeting üresen az első teszten. A broad több teret ad a Metának, hogy megtalálja a valószínű látogatókat/követőket — hagyd, hogy a kreatív szűrjön.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p034_1.jpg" alt="Instagram-only placements" loading="lazy"><figcaption><b>LÉPÉS 08 ·</b> Manual placements, csak Instagram, vertikális kreatív, ami natív a Reelsben és Storyban. Nyiss atmoszférával, mozgással vagy egy azonnal vágykeltő hotel-pillanattal.</figcaption></figure>
+  </div>
+  <figure class="fig shot"><img src="/metacontent/images/p035_1.jpg" alt="Reel + rövid caption" loading="lazy"><figcaption><b>LÉPÉS 09 ·</b> Tölts fel egy erős reelt, és tartsd rövidre a captiont. A hirdetés érződjön tartalomnak, amit szívesen néznek: egyszerű hook, egy világos ok, és — ahol hasznos — egy mentésre ösztönző sor. Pl. „slow living paradise — Save this hidden gem for your next vacation."</figcaption></figure>
+</section>
+
+<!-- ============ PART FOUR ============ -->
+<section id="concepts">
+  <div class="part col">
+    <div class="part-tag"><b>Negyedik rész · Bónusz</b> — Creative &amp; Outreach Library</div>
+    <h2>20 reel-koncepció és 50 outreach szkript</h2>
+    <p class="lead">Húsz struktúra, amit érdemes tanulmányozni hookért, mozgásért és ritmusért, majd újraforgatni a saját propertyden, a saját hangodon — és ötven kész, személyre szabható megkeresés.</p>
+  </div>
+
+  <div class="col">
+    <h3>23 — 20 reel-koncepció adaptálásra</h3>
+    <div class="grid g2">
+      <div class="card"><div class="num">01</div><h4>Slow-living medence-reveal</h4><p>Jump-cut a vízbe, tartsd a fodrozódáson, vágj egy felülnézeti állóképre a nyugvó medencéről.</p></div>
+      <div class="card"><div class="num">02</div><h4>Desztináció quiet-luxury</h4><p>Tág beállító a tájról, majd lassú ráközelítés a property bejáratára.</p></div>
+      <div class="card"><div class="num">03</div><h4>Lifestyle medence-szekvencia</h4><p>Előbb emberi mozgás — séta a szélhez —, mielőtt a property felfedi magát.</p></div>
+      <div class="card"><div class="num">04</div><h4>Umbria slow-living</h4><p>Vidéki textúrák: kő, lenvászon, olajfák, majd a medence mint a jutalomkép.</p></div>
+      <div class="card"><div class="num">05</div><h4>Vizuális carousel</h4><p>Egyetlen ütős tájkép-frame, mentésre építve, nem csak megtekintésre.</p></div>
+      <div class="card"><div class="num">06</div><h4>Hegyi-tavi reggel</h4><p>Állóvíz, köd, egy alak lép a képbe, hogy léptéket és életet adjon.</p></div>
+      <div class="card"><div class="num">07</div><h4>Emberi mozgás — erdei séta</h4><p>Két ember sétál a kamerától egy fasoron át a property felé.</p></div>
+      <div class="card"><div class="num">08</div><h4>Érkezés-szekvencia</h4><p>Autóajtó, léptek, nyíló bejárati ajtók — a klasszikus „első benyomás" hook.</p></div>
+      <div class="card"><div class="num">09</div><h4>Szoba-reveal</h4><p>Nyílik az ajtó, széthúzódik a függöny, természetes fény önti el a képet.</p></div>
+      <div class="card"><div class="num">10</div><h4>Reggeli a fényben</h4><p>Kéz kávét önt, gőz száll, a kilátás épphogy látszik az asztal mögött.</p></div>
+      <div class="card"><div class="num">11</div><h4>Golden hour terasz</h4><p>Statikus tág snitt, épp elég sokáig tartva, hogy festménynek érződjön.</p></div>
+      <div class="card"><div class="num">12</div><h4>Spa &amp; wellness részlet</h4><p>Köntös-textúra, vízcseppek, egy gyertya — szenzoros közelik a tág előtt.</p></div>
+      <div class="card"><div class="num">13</div><h4>Csónakos / vízi érkezés</h4><p>POV közeledés csónakkal, feszültséget építve, mielőtt a property feltűnik.</p></div>
+      <div class="card"><div class="num">14</div><h4>Szőlőben séta</h4><p>Sorok futnak a távolba, egy alak a fény felé sétál a soron.</p></div>
+      <div class="card"><div class="num">15</div><h4>Naplemente-zárás</h4><p>A nap utolsó frame-je — sziluett a végső fényben, szöveg nélkül.</p></div>
+      <div class="card"><div class="num">16</div><h4>Fürdő-részlet szekvencia</h4><p>Folyó víz, összehajtott törölköző, egy szál virág — quiet luxury három vágásban.</p></div>
+      <div class="card"><div class="num">17</div><h4>Helyi piac-textúra</h4><p>Szín és mozgás magából a desztinációból, hangulat-alapozónak.</p></div>
+      <div class="card"><div class="num">18</div><h4>Éjszakai érkezés</h4><p>Meleg fény, blue hour ég, a property izzik az alkonyatban.</p></div>
+      <div class="card"><div class="num">19</div><h4>Tetőterasz / kilátás-reveal</h4><p>Egy ajtó vagy függöny váratlan kilátásra nyílik — a klasszikus reveal-ütem.</p></div>
+      <div class="card"><div class="num">20</div><h4>Búcsú-snitt</h4><p>Táska az ajtónál, egy utolsó visszapillantás — a szekvencia érzelmes zárása.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 50 SCRIPTS ============ -->
+<section id="scripts">
+  <div class="col">
+    <h3>24 — 50 outreach szkript</h3>
+    <p>Rövid, természetes, copy-paste üzenetek a hotelek profi megkereséséhez. Cseréld a <span class="mono" style="font-size:13px">[SZÖGLETES]</span> részeket küldés előtt. Minden üzenet ugyanazzal a zárósorral megy: <em>„Itt a media kitem az Instagrammal, weboldallal és korábbi munkáimmal: [MEDIA KIT LINK]".</em> Magyar átültetés; nemzetközi hotelnek az angol eredeti is használható.</p>
+    <div class="settings">
+      <div class="row"><div class="k">01 · Egyszerű kollab</div><div class="v" style="text-transform:none">Szia! Hamarosan [HELYSZÍN]-en járok, és szívesen készítenék tartalmat a [HOTEL]-nek. Nyitottak lennétek a közös munkára?</div></div>
+      <div class="row"><div class="k">02 · Nagyon rövid DM</div><div class="v" style="text-transform:none">Szia! Imádom a helyeteket. Érdekelne egy tartalmi kollaboráció?</div></div>
+      <div class="row"><div class="k">03 · Közelgő utazás</div><div class="v" style="text-transform:none">Szia! [HÓNAP]-ban [HELYSZÍN]-re utazom, és szívesen készítenék tartalmat a [HOTEL]-nek. Nyitottak vagytok kollaborációra?</div></div>
+      <div class="row"><div class="k">04 · Travel creator</div><div class="v" style="text-transform:none">Szia! Travel content creator vagyok, hamarosan [HELYSZÍN]-en, és szívesen dolgoznék együtt a [HOTEL]-lel.</div></div>
+      <div class="row"><div class="k">05 · Ingyenes tartózkodás</div><div class="v" style="text-transform:none">Szia! [DÁTUM]-tól [HELYSZÍN]-en leszek, és szívesen beszélnék egy tartózkodás-kollaborációról a [HOTEL]-lel. Érdekelne?</div></div>
+      <div class="row"><div class="k">06 · Fizetett kollab</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék tartalmat a [HOTEL]-nek. Dolgoztok jelenleg creatorokkal fizetett kollaborációban?</div></div>
+      <div class="row"><div class="k">07 · Közvetlen bemutatkozás</div><div class="v" style="text-transform:none">Szia! Rátaláltam a [HOTEL]-re, és szívesen felfedeznék egy közös kollaborációt.</div></div>
+      <div class="row"><div class="k">08 · Fotós</div><div class="v" style="text-transform:none">Szia! Utazási fotós vagyok, hamarosan [HELYSZÍN]-en, és szívesen készítenék egy képsorozatot a [HOTEL]-nek.</div></div>
+      <div class="row"><div class="k">09 · Reel-creator</div><div class="v" style="text-transform:none">Szia! Rövidfilmes tartalmat készítek, és szívesen forgatnék reeleket a [HOTEL]-nek. Nyitottak vagytok creator-kollabra?</div></div>
+      <div class="row"><div class="k">10 · Konkrét dátumok</div><div class="v" style="text-transform:none">Szia! [DÁTUM] és [DÁTUM] között [HELYSZÍN]-en leszek, és szívesen dolgoznék együtt a [HOTEL]-lel, amíg ott vagyok.</div></div>
+      <div class="row"><div class="k">11 · Visszatérés a helyszínre</div><div class="v" style="text-transform:none">Szia! [HÓNAP]-ban visszatérek [HELYSZÍN]-re, és szívesen dolgoznék a [HOTEL]-lel. Nyitottak lennétek?</div></div>
+      <div class="row"><div class="k">12 · Korábbi hotel-tapasztalat</div><div class="v" style="text-transform:none">Szia! Nemrég készítettem tartalmat hoteleknek, és a [HOTEL]-lel dolgoznék legközelebb. Érdekelne a kollaboráció?</div></div>
+      <div class="row"><div class="k">13 · Social media tartalom</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék social media tartalmat a [HOTEL]-nek a közelgő [HELYSZÍN]-i utamon. Érdekelne?</div></div>
+      <div class="row"><div class="k">14 · UGC kollab</div><div class="v" style="text-transform:none">Szia! UGC-t készítek hoteleknek és utazási brandeknek, és imádom a [HOTEL]-t. Nyitottak vagytok most kollaborációra?</div></div>
+      <div class="row"><div class="k">15 · Fotók + reelek</div><div class="v" style="text-transform:none">Szia! Szívesen dolgoznék a [HOTEL]-lel, és készítenék profi fotókat és reeleket a propertynek. Érdekelne?</div></div>
+      <div class="row"><div class="k">16 · Utánkövetés</div><div class="v" style="text-transform:none">Szia újra! Csak utánakövetek a korábbi üzenetemre, hátha elkerülte a figyelmeteket. Nagyon szívesen dolgoznék veletek a [HELYSZÍN]-i utamon.</div></div>
+      <div class="row"><div class="k">17 · Miután érdeklődnek</div><div class="v" style="text-transform:none">Csodás, köszönöm! Szívesen belemennék a részletekbe. Itt a media kitem a korábbi hotel-munkáimmal.</div></div>
+      <div class="row"><div class="k">18 · Fizetett tartalom</div><div class="v" style="text-transform:none">Köszönöm a visszajelzést! Szívesen felfedezném ezt fizetett tartalmi kollaborációként a [HOTEL]-lel.</div></div>
+      <div class="row"><div class="k">19 · Deliverable-ök</div><div class="v" style="text-transform:none">Ez nagyszerűen hangzik! Szívesen megbeszélném a deliverable-öket, és összeállítanék egy mindkettőnknek jó csomagot.</div></div>
+      <div class="row"><div class="k">20 · Ismételt kollab</div><div class="v" style="text-transform:none">Szia! Nagyon élveztem a [HOTEL]-lel dolgozni, és szívesen dolgoznék veletek újra a következő [HELYSZÍN]-i utamon.</div></div>
+      <div class="row"><div class="k">21 · Konkrét szoba</div><div class="v" style="text-transform:none">Szia! Imádom a [SZOBA/LAKOSZTÁLY]-t a [HOTEL]-nél. [HÓNAP]-ban [HELYSZÍN]-en leszek, és tartalmat készítenék az élményről.</div></div>
+      <div class="row"><div class="k">22 · Design-fókusz</div><div class="v" style="text-transform:none">Szia! A [HOTEL] designja megfogott. Szívesen megörökíteném a propertyt a tartalmaimon át a közelgő látogatásomon.</div></div>
+      <div class="row"><div class="k">23 · Új desztináció-sorozat</div><div class="v" style="text-transform:none">Szia! Új tartalomsorozatot indítok [HELYSZÍN] gyönyörű szállásairól, és szívesen beemelném a [HOTEL]-t.</div></div>
+      <div class="row"><div class="k">24 · Hétvégi szökés</div><div class="v" style="text-transform:none">Szia! Egy hétvégét tervezek [HELYSZÍN]-en, és szívesen dolgoznék a [HOTEL]-lel, amíg ott vagyok.</div></div>
+      <div class="row"><div class="k">25 · Közönség-illeszkedés</div><div class="v" style="text-transform:none">Szia! A közönségem nagy része imádja az egyedi hoteleket és desztinációkat, szóval a [HOTEL] szerintem remek match.</div></div>
+      <div class="row"><div class="k">26 · Storytelling-szög</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék egy rövid vizuális történetet a [HOTEL]-ben tartózkodás élményéről. Nyitottak lennétek?</div></div>
+      <div class="row"><div class="k">27 · Slow-living tartalom</div><div class="v" style="text-transform:none">Szia! Slow-living utazási tartalmat készítek, és imádom a [HOTEL] hangulatát. Szívesen dolgoznék veletek [HELYSZÍN]-en.</div></div>
+      <div class="row"><div class="k">28 · Építészet-fókusz</div><div class="v" style="text-transform:none">Szia! A [HOTEL] építészete gyönyörű. Szívesen készítenék fotó- és videótartalmat a designt és az élményt kiemelve.</div></div>
+      <div class="row"><div class="k">29 · Étel + tartózkodás</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék tartalmat a tartózkodásról és a gasztró-élményről is a [HOTEL]-nél a közelgő utamon.</div></div>
+      <div class="row"><div class="k">30 · Wellness-szög</div><div class="v" style="text-transform:none">Szia! Több wellness- és utazási tartalmat készítek idén, és a [HOTEL] gyönyörűen illene. Szívesen megbeszélnék egy kollaborációt.</div></div>
+      <div class="row"><div class="k">31 · „Rejtett gyöngyszem"</div><div class="v" style="text-transform:none">Szia! Imádom a közönségemnek igazán különleges helyeket bemutatni, és a [HOTEL] azonnal kitűnt. Nyitottak lennétek?</div></div>
+      <div class="row"><div class="k">32 · Mentésre érdemes</div><div class="v" style="text-transform:none">Szia! Olyan utazási tartalmat készítek, amit az emberek elmentenek a jövőbeli útjaikhoz. Szívesen szerepeltetném a [HOTEL]-t.</div></div>
+      <div class="row"><div class="k">33 · Mini hotel-guide</div><div class="v" style="text-transform:none">Szia! Egy kis guide-ot állítok össze a kedvenc [HELYSZÍN]-i szállásaimról, és szívesen beemelném a [HOTEL]-t.</div></div>
+      <div class="row"><div class="k">34 · Élmény először</div><div class="v" style="text-transform:none">Szia! Amit szeretek a [HOTEL]-ben, hogy több egy szállásnál. Szívesen megörökíteném ezt az élményt tartalommal.</div></div>
+      <div class="row"><div class="k">35 · Vizuális match</div><div class="v" style="text-transform:none">Szia! Átnéztem a [HOTEL]-t, és a vizuális stílus gyönyörűen illik a tartalmaimhoz. Szívesen alkotnék valamit veletek.</div></div>
+      <div class="row"><div class="k">36 · Utószezon</div><div class="v" style="text-transform:none">Szia! [HÓNAP]-ban [HELYSZÍN]-en járok, és szívesen megmutatnám, milyen a desztináció és a [HOTEL] a főszezonon kívül.</div></div>
+      <div class="row"><div class="k">37 · Hosszabb út</div><div class="v" style="text-transform:none">Szia! [SZÁM] napot töltök [HELYSZÍN]-en, és szívesen beemelném a [HOTEL]-t az út során készülő tartalmakba.</div></div>
+      <div class="row"><div class="k">38 · Story + reel csomag</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék egy reelt Story-kkal együtt, dokumentálva a [HOTEL] élményét. Érdekelne a kollaboráció?</div></div>
+      <div class="row"><div class="k">39 · Tartalom a hotel saját használatára</div><div class="v" style="text-transform:none">Szia! Szívesen készítenék vertikális videók és fotók gyűjteményét, amit a [HOTEL] a saját csatornáin is használhat.</div></div>
+      <div class="row"><div class="k">40 · Új szezon tartalom</div><div class="v" style="text-transform:none">Szia! A közelgő új szezonra szívesen készítenék friss lifestyle-tartalmat a [HOTEL]-nek. Terveztek creator-kollabokat?</div></div>
+      <div class="row"><div class="k">41 · Visszatérő vendég</div><div class="v" style="text-transform:none">Szia! Már jártam a [HOTEL]-ben, és szívesen visszatérnék, ezúttal egy dedikált tartalmi kollaboráció ötletével.</div></div>
+      <div class="row"><div class="k">42 · Ajánlás alapján</div><div class="v" style="text-transform:none">Szia! [SZEMÉLY/CREATOR] ajánlotta, hogy nézzem meg a [HOTEL]-t, és teljesen beleszerettem. Szívesen dolgoznék veletek.</div></div>
+      <div class="row"><div class="k">43 · Esemény / alkalom</div><div class="v" style="text-transform:none">Szia! [ESEMÉNY] miatt leszek [HELYSZÍN]-en, és szívesen dolgoznék a [HOTEL]-lel, amíg ott vagyok.</div></div>
+      <div class="row"><div class="k">44 · Egynapos produkció</div><div class="v" style="text-transform:none">Szia! Úgyis forgatok [HELYSZÍN]-en, és van egy szabad produkciós napom. Szívesen készítenék belőle tartalmat a [HOTEL]-nek.</div></div>
+      <div class="row"><div class="k">45 · Tartalomkönyvtár-szög</div><div class="v" style="text-transform:none">Szia! Szívesen segítenék a [HOTEL]-nek friss lifestyle-fotó- és vertikálisvideó-könyvtárat építeni a közelgő szezonra.</div></div>
+      <div class="row"><div class="k">46 · Kész kreatív koncepció</div><div class="v" style="text-transform:none">Szia! Van pár tartalmi ötletem, ami szerintem gyönyörűen működne a [HOTEL]-nél. Nyitottak lennétek, hogy meghallgassátok?</div></div>
+      <div class="row"><div class="k">47 · Elutasítás után</div><div class="v" style="text-transform:none">Köszönöm a visszajelzést! Teljesen megértem. Szívesen tartanám a kapcsolatot egy másik szezonra vagy jövőbeli lehetőségre.</div></div>
+      <div class="row"><div class="k">48 · Nincs szabad kapacitás</div><div class="v" style="text-transform:none">Köszönöm! Ha a mostani dátumaim nem jók, szívesen nézek egy másik időszakot, amikor a [HOTEL]-nek több kapacitása van.</div></div>
+      <div class="row"><div class="k">49 · Jövőbeli kampányok</div><div class="v" style="text-transform:none">Szia! Vannak közelgő kampányok vagy időszakok, amikor a [HOTEL] creatorokkal tervez dolgozni? Szívesen jelentkeznék.</div></div>
+      <div class="row"><div class="k">50 · Újrakapcsolódás hónapokkal később</div><div class="v" style="text-transform:none">Szia újra! Egy ideje beszéltünk egy lehetséges közös munkáról. [HÓNAP]-ban visszatérek [HELYSZÍN]-re, jó alkalom lenne.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOP 100 + CONTACTS ============ -->
+<section id="hotels">
+  <div class="col">
+    <h3>25 — Top 100 hotel, amit érdemes megkeresni</h3>
+    <p>A VIVRE kézzel válogatott listája a 100 luxus-propertyről, amit elsőként keresnének meg — a fiókok, amelyek tartalomba fektetnek, rendszeresen dolgoznak creatorokkal, és illenek a rendszer esztétikájához. <span class="note">Megjegyzés: a listán szereplés nem jelenti, hogy a hotel jelenleg fogad creator-kollaborációkat, és nem garantál ingyenes tartózkodást vagy fizetett partnerséget.</span></p>
+    <div class="grid g2">
+      <div class="card"><div class="num">GÖRÖGORSZÁG · 20</div><p>Cavo Tagoo Mykonos · Canaves Oia Suites · Kensho Ornos · Katikies Santorini · Grace Hotel (Auberge) · Andronis Boutique · Andronis Arcadia · Domes Noruz Mykonos · Kalesma Mykonos · Santa Marina (Luxury Collection) · Myconian Utopia · Myconian Avaton · Royal Myconian · Panoptis Escape · Bill &amp; Coo Mykonos · Cavo Tagoo Santorini · Santo Mine Oia · Mystique (Luxury Collection) · Cosme (Luxury Collection), Paros · Cali Mykonos</p></div>
+      <div class="card"><div class="num">OLASZORSZÁG · 20</div><p>San Luis Lodges (Dél-Tirol) · Tenuta di Murlo (Umbria) · Borgo Egnazia (Puglia) · Borgo Pignano (Toszkána) · Il Pellicano · Hotel Santa Caterina (Amalfi) · Caruso, A Belmond · Villa Cimbrone (Ravello) · Palazzo Avino · Borgo Santo Pietro · Castello di Reschio · COMO Castello del Nero · Rosewood Castiglion del Bosco · Il San Pietro di Positano · Le Sirenuse · Grand Hotel Tremezzo · Passalacqua · Villa d'Este · FORESTIS (Dolomitok) · Lefay Dolomiti</p></div>
+      <div class="card"><div class="num">FRANCIAORSZÁG · 10</div><p>Hôtel du Cap-Eden-Roc · Airelles Château de la Messardière · Cheval Blanc St-Tropez · Lily of the Valley · Hôtel Lou Pinet · Capelongue (Beaumier) · Crillon le Brave (Beaumier) · Domaine de Fontenille · La Réserve Ramatuelle · The Maybourne Riviera</p></div>
+      <div class="card"><div class="num">SPANYOLO. &amp; PORTUGÁLIA · 15</div><p>Six Senses Ibiza · Finca Cortesin · Nobu Ibiza Bay · OKU Ibiza · Cap Rocat · Son Bunyola · La Residencia (Belmond) · Marbella Club · VILA VITA Parc · Conrad Algarve · Vila Monte · Sublime Comporta · Bairro Alto · Areias do Seixo · Six Senses Douro Valley</p></div>
+      <div class="card"><div class="num">MALDÍV-SZIGETEK · 20</div><p>Soneva Fushi · Soneva Jani · Ayada · Baglioni · Anantara Kihavah · Waldorf Astoria Ithaafushi · St. Regis Vommuli · Ritz-Carlton Fari Islands · Patina · JOALI · JOALI BEING · One&amp;Only Reethi Rah · Six Senses Laamu · Raffles Meradhoo · The Residence · Hurawalhi · Lily Beach · W Maldives · COMO Maalifushi · Vakkaru</p></div>
+      <div class="card"><div class="num">BALI &amp; THAIFÖLD · 15</div><p>W Bali Seminyak · Bulgari Resort Bali · Alila Villas Uluwatu · Six Senses Uluwatu · Mandapa (Ritz-Carlton Reserve) · Capella Ubud · COMO Uma Ubud · Sahana Villas · Viceroy Bali · The Kayon Jungle · Amanpuri · Kata Rocks · Six Senses Yao Noi · SAii Phi Phi · Four Seasons Koh Samui</p></div>
+    </div>
+    <div class="rule">
+      <span class="rl">Hogyan használd a listát</span>
+      <p>Vesd össze minden propertyt a saját niche-eddel és esztétikáddal, mielőtt pitchelsz. Tanulmányozd a fiókot, jelöld a helyszínt és a kreatív csapatot, ahol releváns, és vezess a 09. szakasz rövid DM-jével — ne egy hosszú copy-paste bevezetővel.</p>
+    </div>
+  </div>
+
+  <div class="grid g2 col" style="max-width:840px">
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p051_1.jpg" alt="2000+ hotel kontakt" loading="lazy"><figcaption><b>2&thinsp;000+ HOTEL-KONTAKT ·</b> A teljes munkalista: több mint 2000 luxushotel közvetlen e-mailekkel, desztinációkkal és Instagram-handle-ökkel. Szűrj desztinációra, válogass ki húszat a niche-edhez, és a 09. szakasz rövid DM-jével kezdj.</figcaption></figure>
+    <figure class="fig" style="margin:0"><img src="/metacontent/images/p052_1.jpg" alt="VIVRE portfólió referencia" loading="lazy"><figcaption><b>A VIVRE PORTFÓLIÓ ·</b> Referencia ahhoz, amit építeni fogsz: borító, pozicionálás, esettanulmányok, eredmények — abban a sorrendben, amit egy döntéshozó két perc alatt elolvas. Másold a sorrendet, ne a tartalmat.</figcaption></figure>
+  </div>
+
+  <div class="hu col">
+    <div class="flag">Magyar piaci adaptáció — hol kezdd itthon, és a kontaktlista joga</div>
+    <p>A Top 100 a nemzetközi luxus felső vége — remek tanulmány, de <strong>reális első barter-célok</strong> közelebb vannak: balatoni és nyugat-magyarországi wellness- és boutique-hotelek, budapesti design-szállodák, tokaji és villányi borbirtok-szállások, valamint a könnyen elérhető osztrák, horvát és észak-olasz propertyk. Ezek gyakrabban mondanak igent egy induló creatornak, és a földrajzi közelség olcsóbbá teszi a forgatást. A 2000+ kontaktos hidegemailnél tartsd szem előtt a GDPR-t: B2B céges címre a „jogos érdek" alapján lehet megkeresést küldeni, de minden levélben legyen valós leiratkozási lehetőség, és a visszautasítást tiszteld — a listát kis kötegekben, személyre szabva dolgozd, és egyszer, egy hét után kövess utána.</p>
+  </div>
+</section>
+
+<footer class="wrap foot col">
+  <span class="disp">Készítsd el a munkát. Bizonyítsd az értéket. Építsd a kapcsolatot. Csomagold a következő lépést.</span>
+  <p><span class="tag">Tartalom</span><span class="tag">Portfólió</span><span class="tag am">Outreach</span><span class="tag am">Árazás</span><span class="tag">Paid Growth</span></p>
+  <p style="margin-top:20px">A VIVRE Agency „The Luxury Hotel Content Blueprint" (53 oldal) ultra részletes magyar feldolgozása. A képernyőképek és reel-példák az eredeti anyagból; a <span class="mono" style="font-size:13px;color:var(--amber)">◆ magyar piaci adaptáció</span> jegyzetek a saját kiegészítéseim a magyar/CEE creator- és hotelpiacra. A megtekintés- és eredmény-számok múltbeli teljesítmény-példák, nem garanciák.</p>
+</footer>
+
+<!--DONE-->
+</main>
+
+<script>
+(function(){
+  var K='bp-theme',b=document.getElementById('tg'),r=document.documentElement;
+  try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    var isDark=cur?cur==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=isDark?'light':'dark';
+    r.setAttribute('data-theme',next);
+    try{localStorage.setItem(K,next);}catch(e){}
+  });
+})();
+</script>
