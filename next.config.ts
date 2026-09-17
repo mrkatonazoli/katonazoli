@@ -8,8 +8,8 @@ const nextConfig: NextConfig = {
     return {
       // Run before filesystem/app routes so V2 becomes the homepage.
       beforeFiles: [
-        { source: "/", destination: "/v2.html" },
-        { source: "/en", destination: "/v2-en.html" },
+        { source: "/", destination: "/home.html" },
+        { source: "/en", destination: "/home-en.html" },
       ],
       afterFiles: [
         { source: "/rsnew", destination: "/rsnew.html" },
