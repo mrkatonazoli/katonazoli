@@ -2,103 +2,56 @@
 <title>Román szállodák digitális audit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
 <style>
   :root{
-    --ground:#F4F1EA;
-    --surface:#FFFFFF;
-    --surface-2:#FBF9F4;
-    --ink:#1E2530;
-    --ink-soft:#414B59;
-    --muted:#6B7583;
-    --line:#E4DFD3;
-    --line-strong:#D3CCBC;
-    --accent:#1C6E68;
+    --ground:#eef2f1;
+    --surface:#ffffff;
+    --surface-2:#f7faf9;
+    --ink:#2b2b2a;
+    --ink-soft:#485955;
+    --muted:#5c6e6a;
+    --line:#ccd8d4;
+    --line-strong:#bccbc6;
+    --accent:#0F9C8E;
     --accent-soft:#DCEDEA;
     --good:#2F7D64;
     --warn:#C08A2C;
     --crit:#B14B3F;
-    --c1:#1C6E68;
+    --c1:#0F9C8E;
     --c2:#C08A2C;
     --c3:#B14B3F;
     --c4:#4B6A8A;
     --c5:#8A6D9E;
     --c6:#A6A093;
-    --shadow:0 1px 2px rgba(30,37,48,.05),0 6px 20px rgba(30,37,48,.06);
+    --grad:linear-gradient(135deg,#14AF9F,#50B16B,#6CB42E);
+    --shadow:0 1px 2px rgba(13,21,38,.05),0 6px 20px rgba(13,21,38,.06);
     color-scheme:light;
-  }
-  :root:not([data-theme="light"]){
-    @media (prefers-color-scheme: dark){
-      --ground:#14171D;
-      --surface:#1B1F27;
-      --surface-2:#20252E;
-      --ink:#EAEDF2;
-      --ink-soft:#C2C9D4;
-      --muted:#8A94A2;
-      --line:#2C323C;
-      --line-strong:#3A424E;
-      --accent:#4FB8AE;
-      --accent-soft:#1E3A38;
-      --good:#5CBFA0;
-      --warn:#E0AC55;
-      --crit:#E27C6E;
-      --c1:#4FB8AE;
-      --c2:#E0AC55;
-      --c3:#E27C6E;
-      --c4:#7FA0C4;
-      --c5:#B79BCC;
-      --c6:#B4AE9F;
-      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
-      color-scheme:dark;
-    }
-  }
-  :root[data-theme="dark"]{
-    --ground:#14171D;
-    --surface:#1B1F27;
-    --surface-2:#20252E;
-    --ink:#EAEDF2;
-    --ink-soft:#C2C9D4;
-    --muted:#8A94A2;
-    --line:#2C323C;
-    --line-strong:#3A424E;
-    --accent:#4FB8AE;
-    --accent-soft:#1E3A38;
-    --good:#5CBFA0;
-    --warn:#E0AC55;
-    --crit:#E27C6E;
-    --c1:#4FB8AE;
-    --c2:#E0AC55;
-    --c3:#E27C6E;
-    --c4:#7FA0C4;
-    --c5:#B79BCC;
-    --c6:#B4AE9F;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
-    color-scheme:dark;
   }
 
   *{box-sizing:border-box}
   body{background:var(--ground);color:var(--ink);
-    font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-family:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
     line-height:1.55;-webkit-font-smoothing:antialiased;margin:0}
   .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px) 96px}
 
-  h1,h2,h3{font-family:"Spectral",Georgia,serif;text-wrap:balance;line-height:1.12;margin:0}
-  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--accent);font-weight:500}
-  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  h1,h2,h3{font-family:"Space Grotesk",Georgia,serif;text-wrap:balance;line-height:1.12;margin:0}
+  .eyebrow{display:inline-block;font-family:"Space Grotesk",sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#fff;background:var(--grad);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+  .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mono{font-family:"Space Grotesk",monospace;font-variant-numeric:tabular-nums}
 
   /* header */
   header.masthead{border-bottom:1px solid var(--line-strong);padding-bottom:28px;margin-bottom:8px}
   header.masthead h1{font-size:clamp(30px,5.2vw,50px);font-weight:700;letter-spacing:-.01em;margin:14px 0 12px}
   header.masthead p.lead{font-size:clamp(16px,2.1vw,19px);color:var(--ink-soft);max-width:62ch;margin:0}
   .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:13px;color:var(--muted);
-    font-family:"IBM Plex Mono",monospace}
+    font-family:"Space Grotesk",monospace}
   .meta span b{color:var(--ink-soft);font-weight:500}
 
   /* kpi strip */
   .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:32px 0 8px}
   .kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px;box-shadow:var(--shadow)}
-  .kpi .num{font-family:"Spectral",serif;font-size:34px;font-weight:700;line-height:1;letter-spacing:-.01em;
+  .kpi .num{font-family:"Space Grotesk",serif;font-size:34px;font-weight:700;line-height:1;letter-spacing:-.01em;
     font-variant-numeric:tabular-nums}
   .kpi .lab{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.35}
   .kpi.hl .num{color:var(--accent)}
@@ -106,10 +59,10 @@
   section{margin-top:56px}
   .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);
     padding-bottom:14px;margin-bottom:24px}
-  .sec-head .idx{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--accent);font-weight:600;
+  .sec-head .idx{font-family:"Space Grotesk",monospace;font-size:13px;color:var(--accent);font-weight:600;
     border:1px solid var(--line-strong);border-radius:6px;padding:3px 9px;flex:none}
   .sec-head h2{font-size:clamp(22px,3.4vw,30px);font-weight:600}
-  .sec-head .sub{margin-left:auto;font-size:13px;color:var(--muted);font-family:"IBM Plex Mono",monospace;
+  .sec-head .sub{margin-left:auto;font-size:13px;color:var(--muted);font-family:"Space Grotesk",monospace;
     text-align:right;flex:none}
 
   p.note{color:var(--ink-soft);max-width:70ch;font-size:15.5px}
@@ -122,14 +75,14 @@
 
   .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;box-shadow:var(--shadow)}
   .card h3{font-size:18px;font-weight:600;margin-bottom:4px}
-  .card .cap{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:"IBM Plex Mono",monospace}
+  .card .cap{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:"Space Grotesk",monospace}
 
   /* horizontal bars */
   .bars{display:flex;flex-direction:column;gap:11px}
   .bar-row{display:grid;grid-template-columns:1fr;gap:5px}
   .bar-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px}
   .bar-top .name{color:var(--ink-soft);font-weight:500}
-  .bar-top .val{font-family:"IBM Plex Mono",monospace;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+  .bar-top .val{font-family:"Space Grotesk",monospace;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
   .bar-top .val b{color:var(--ink);font-weight:600}
   .track{height:9px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
   .fill{height:100%;border-radius:5px 0 0 5px;background:var(--accent);
@@ -144,7 +97,7 @@
   .legend .li{display:flex;gap:10px;align-items:flex-start}
   .legend .dot{width:12px;height:12px;border-radius:3px;margin-top:4px;flex:none}
   .legend .li .t{color:var(--ink-soft)}
-  .legend .li .t b{color:var(--ink);font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  .legend .li .t b{color:var(--ink);font-family:"Space Grotesk",monospace;font-variant-numeric:tabular-nums}
   .legend .li .t small{display:block;color:var(--muted);font-size:12px}
 
   /* maturity segment cards */
@@ -153,17 +106,17 @@
   .segcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;
     box-shadow:var(--shadow);position:relative;overflow:hidden}
   .segcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--sc)}
-  .segcard .pct{font-family:"Spectral",serif;font-size:40px;font-weight:700;line-height:1;color:var(--sc);
+  .segcard .pct{font-family:"Space Grotesk",serif;font-size:40px;font-weight:700;line-height:1;color:var(--sc);
     font-variant-numeric:tabular-nums}
-  .segcard .cnt{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-top:6px}
+  .segcard .cnt{font-family:"Space Grotesk",monospace;font-size:13px;color:var(--muted);margin-top:6px}
   .segcard .ttl{font-weight:600;font-size:15px;margin-top:12px}
   .segcard .dsc{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.45}
 
   .stacked{height:34px;display:flex;border-radius:9px;overflow:hidden;border:1px solid var(--line);margin-bottom:8px}
   .stacked > div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;
-    font-family:"IBM Plex Mono",monospace;min-width:0}
+    font-family:"Space Grotesk",monospace;min-width:0}
   .stacked-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--muted);
-    font-family:"IBM Plex Mono",monospace;margin-bottom:4px}
+    font-family:"Space Grotesk",monospace;margin-bottom:4px}
   .stacked-key i{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:6px;vertical-align:baseline}
 
   .callout{background:var(--accent-soft);border:1px solid var(--line);border-left:3px solid var(--accent);
@@ -172,23 +125,21 @@
 
   .takeaways{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:14px}
   .takeaways li{display:flex;gap:14px;font-size:15.5px;color:var(--ink-soft);max-width:78ch}
-  .takeaways li .k{font-family:"IBM Plex Mono",monospace;color:var(--accent);font-weight:600;flex:none;
+  .takeaways li .k{font-family:"Space Grotesk",monospace;color:var(--accent);font-weight:600;flex:none;
     font-variant-numeric:tabular-nums}
   .takeaways li b{color:var(--ink)}
 
   footer{margin-top:64px;border-top:1px solid var(--line-strong);padding-top:22px;color:var(--muted);
-    font-size:13px;font-family:"IBM Plex Mono",monospace;line-height:1.6}
+    font-size:13px;font-family:"Space Grotesk",monospace;line-height:1.6}
 
   .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;
     text-decoration:none;font-weight:600;font-size:14.5px;padding:12px 20px;border-radius:10px;
     border:1px solid transparent;box-shadow:var(--shadow);transition:transform .12s ease,filter .12s ease;
-    font-family:"IBM Plex Sans",sans-serif}
+    font-family:"Poppins",sans-serif}
   .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
   .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .btn .ar{font-family:"IBM Plex Mono",monospace;font-weight:500}
+  .btn .ar{font-family:"Space Grotesk",monospace;font-weight:500}
   .btn .sub{font-weight:400;font-size:12px;opacity:.82}
-  :root[data-theme="dark"] .btn, :root:not([data-theme="light"]) .btn{color:#0d1412}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0d1412}}
   .btn-row{margin-top:24px}
 
   /* strategy / opportunity */
@@ -196,17 +147,17 @@
   @media(min-width:760px){.opp{grid-template-columns:1fr 1fr}}
   .oppcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px;
     box-shadow:var(--shadow);position:relative}
-  .oppcard .tag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  .oppcard .tag{font-family:"Space Grotesk",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
     color:var(--accent);font-weight:600}
-  .oppcard h4{font-family:"Spectral",serif;font-size:18px;font-weight:600;margin:9px 0 8px;line-height:1.2}
+  .oppcard h4{font-family:"Space Grotesk",serif;font-size:18px;font-weight:600;margin:9px 0 8px;line-height:1.2}
   .oppcard p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.5}
-  .oppcard .metric{font-family:"IBM Plex Mono",monospace;color:var(--ink);font-weight:600}
+  .oppcard .metric{font-family:"Space Grotesk",monospace;color:var(--ink);font-weight:600}
   .oppcard.warnc{border-left:3px solid var(--warn)}
   .oppcard.warnc .tag{color:var(--warn)}
 
   .thesis{background:var(--accent-soft);border:1px solid var(--line);border-left:4px solid var(--accent);
     border-radius:12px;padding:22px 26px;margin:0 0 28px;box-shadow:var(--shadow)}
-  .thesis .tlab{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  .thesis .tlab{display:block;font-family:"Space Grotesk",monospace;font-size:11px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
   .thesis p{margin:0;font-size:17px;line-height:1.55;color:var(--ink-soft)}
   .thesis p + p{margin-top:12px;font-size:15px}
@@ -217,26 +168,26 @@
     box-shadow:var(--shadow);overflow-x:auto}
   .map-svg{width:100%;min-width:560px;height:auto;display:block}
   .map-legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:8px 6px 14px;font-size:12.5px;color:var(--muted);
-    font-family:"IBM Plex Mono",monospace}
+    font-family:"Space Grotesk",monospace}
   .map-legend .li{display:flex;align-items:center;gap:8px}
   .map-legend .sw{width:12px;height:12px;border-radius:50%;flex:none}
-  .axis-lab{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--muted)}
-  .axis-end{font-family:"IBM Plex Mono",monospace;font-size:12.5px;fill:var(--ink-soft);font-weight:500}
-  .quad-lab{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;font-weight:600;fill:var(--muted);opacity:.55}
+  .axis-lab{font-family:"Space Grotesk",monospace;font-size:12px;fill:var(--muted)}
+  .axis-end{font-family:"Space Grotesk",monospace;font-size:12.5px;fill:var(--ink-soft);font-weight:500}
+  .quad-lab{font-family:"Poppins",sans-serif;font-size:12.5px;font-weight:600;fill:var(--muted);opacity:.55}
 
   /* profile + comparison */
   .profile-box{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--crit);
     border-radius:12px;padding:20px 22px;margin-bottom:22px}
-  .profile-box h4{font-family:"Spectral",serif;font-size:19px;font-weight:600;margin:0 0 4px}
-  .profile-box .url{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .profile-box h4{font-family:"Space Grotesk",serif;font-size:19px;font-weight:600;margin:0 0 4px}
+  .profile-box .url{font-family:"Space Grotesk",monospace;font-size:12.5px;color:var(--muted);margin-bottom:12px}
   .profile-box p{margin:0 0 10px;font-size:14.5px;color:var(--ink-soft);line-height:1.55;max-width:75ch}
   .profile-box .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-  .profile-box .chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-soft);
+  .profile-box .chip{font-family:"Space Grotesk",monospace;font-size:11.5px;color:var(--ink-soft);
     background:var(--surface);border:1px solid var(--line-strong);border-radius:20px;padding:4px 11px}
   .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
   table.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:620px;background:var(--surface)}
   table.cmp th,table.cmp td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
-  table.cmp thead th{font-family:"IBM Plex Mono",monospace;font-size:11.5px;text-transform:uppercase;
+  table.cmp thead th{font-family:"Space Grotesk",monospace;font-size:11.5px;text-transform:uppercase;
     letter-spacing:.06em;color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--surface)}
   table.cmp tbody tr:last-child td{border-bottom:none}
   table.cmp td.dim{font-weight:600;color:var(--ink);white-space:nowrap;font-size:13.5px}
@@ -250,7 +201,7 @@
 
   <header class="masthead">
     <div class="eyebrow">Digitális jelenlét audit · Románia</div>
-    <h1>Milyen weboldal- és foglalási rendszert használnak a román szállodák?</h1>
+    <h1>Milyen weboldal- és foglalási rendszert használnak <span class="gr">a román szállodák?</span></h1>
     <p class="lead">1547 lekutatott romániai szálláshely CMS- és foglalómotor-térképe, majd a 853 valódi szálloda külön elemzése — apartmanok, aparthotelek és panziók nélkül.</p>
     <div class="meta">
       <span><b>Forrás:</b> „Hotels" fül</span>
@@ -326,7 +277,7 @@
     </div>
     <p class="lead-in">A teljes mintából kiszűrve azok, amelyek a táblázatban kifejezetten <b>„Szálloda (Hotel)"</b> besorolást kaptak (a 67 apartman, 51 aparthotel, 46 panzió és 530 egyéb szálláshely nélkül). Ez a szegmens a tényleges hotelpiac.</p>
 
-    <h3 style="font-family:'Spectral',serif;font-size:20px;font-weight:600;margin:8px 0 4px">Digitális érettség — a fő tanulság</h3>
+    <h3 style="font-family:'Space Grotesk',serif;font-size:20px;font-weight:600;margin:8px 0 4px">Digitális érettség — a fő tanulság</h3>
     <p class="note" style="margin:0 0 20px">Minden szállodát három csoportba soroltunk aszerint, hogy mennyire képes <b>közvetlen</b> (OTA-mentes) foglalást fogadni:</p>
 
     <div class="stacked-key">
@@ -473,7 +424,7 @@
       <span class="li">Buborékméret ≈ romániai jelenlét (foglalómotor-találat a mintában)</span>
     </div>
 
-    <h3 style="font-family:'Spectral',serif;font-size:20px;font-weight:600;margin:36px 0 6px">RoomSome vs. Pynbooking — hol dől el</h3>
+    <h3 style="font-family:'Space Grotesk',serif;font-size:20px;font-weight:600;margin:36px 0 6px">RoomSome vs. Pynbooking — hol dől el</h3>
     <p class="note" style="margin:0 0 18px">A két helyi ökoszisztéma ugyanazt a vendégutat célozza, de más modellel. A különbség nem a funkciólistában van, hanem a <b>hozzáférésben és a felelősségvállalásban</b>.</p>
     <div class="tbl-scroll">
       <table class="cmp">
@@ -628,7 +579,7 @@
         </tbody>
       </table>
     </div>
-    <p class="note" style="font-size:12.5px;color:var(--muted);margin-top:10px;font-family:'IBM Plex Mono',monospace">¹ vegyes tevékenységű cég (ingatlanértékelés + SEO); az árbevétel a teljes SRL-é. Forrás: román cégregiszter (targetare.ro / risco.ro), 2025-ös mérlegek.</p>
+    <p class="note" style="font-size:12.5px;color:var(--muted);margin-top:10px;font-family:'Space Grotesk',monospace">¹ vegyes tevékenységű cég (ingatlanértékelés + SEO); az árbevétel a teljes SRL-é. Forrás: román cégregiszter (targetare.ro / risco.ro), 2025-ös mérlegek.</p>
 
     <ul class="takeaways">
       <li><span class="k">→</span><span><b>Nincs skálázott inkumbens.</b> A teljes RM + marketing service-mezőny 1–6 fős mikrocégekből áll, egyenként sub-€500k árbevétellel. A legnagyobb (re7, ~€441k) is <b>veszteséges</b> volt 2025-ben.</span></li>
@@ -709,7 +660,7 @@ function donut(svgId,legId,segs){
   const cen=document.createElementNS('http://www.w3.org/2000/svg','text');
   cen.setAttribute('x',cx);cen.setAttribute('y',cy+0.5);cen.setAttribute('text-anchor','middle');
   cen.setAttribute('dominant-baseline','middle');cen.setAttribute('font-size','6');
-  cen.setAttribute('font-family','Spectral,serif');cen.setAttribute('font-weight','700');
+  cen.setAttribute('font-family','Space Grotesk,serif');cen.setAttribute('font-weight','700');
   cen.setAttribute('fill','var(--ink)');cen.textContent='1547';
   svg.appendChild(cen);
   document.getElementById(legId).innerHTML=segs.map(s=>{
@@ -782,9 +733,9 @@ document.getElementById('mat-stack').innerHTML=mat.map(m=>{
     if(d.lp==='below'){lx=cx;ly=cy+r+18;anc='middle';}
     else if(d.lp==='right'){lx=cx+r+9;ly=cy-2;anc='start';}
     else {lx=cx-r-9;ly=cy-2;anc='end';}
-    const name=el('text',{x:lx,y:ly,'text-anchor':anc,class:'bub-name','font-size':13.5,'font-weight':700,fill:'var(--ink)','font-family':'"IBM Plex Sans",sans-serif'},d.n);
+    const name=el('text',{x:lx,y:ly,'text-anchor':anc,class:'bub-name','font-size':13.5,'font-weight':700,fill:'var(--ink)','font-family':'"Poppins",sans-serif'},d.n);
     g.appendChild(name);
-    g.appendChild(el('text',{x:lx,y:ly+15,'text-anchor':anc,'font-size':10.5,fill:'var(--muted)','font-family':'"IBM Plex Mono",monospace'},d.t));
+    g.appendChild(el('text',{x:lx,y:ly+15,'text-anchor':anc,'font-size':10.5,fill:'var(--muted)','font-family':'"Space Grotesk",monospace'},d.t));
   });
 
   svg.appendChild(g);
