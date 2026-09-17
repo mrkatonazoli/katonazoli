@@ -122,7 +122,7 @@ figcaption{font-size:12.5px;color:var(--dim);margin-top:10px;line-height:1.5}
     <li>a <strong>román piacra lépés 2027-től</strong>, amely 2031-re 931 M Ft bevételt ad.</li>
   </ol>
   <p>Az EBITDA-marzs a 2023–2025 közötti <strong>15–19%-os szintről</strong> 2031-re <strong>49,5%-ra</strong> nő; a kumulált cash EBITDA a kilenc év alatt ~5,8 Mrd Ft.</p>
-  <p>A tervhez <strong>kétlépcsős tulajdonszerzési tranzakció</strong> kapcsolódik: 27% secondary kivásárlás 70% diszkonttal, plusz ~70 M Ft primary tőkeemelés a román terjeszkedésre. A javított képletekkel a két új tulajdonos fejenként ~117,4 M Ft tőkével száll be, ~12,9%-os végső részesedésért.</p>
+  <p>A tervhez a <strong>„Két befektető" secondary tranzakció</strong> kapcsolódik: Katona Zoltán, Befektető 1 és Befektető 2 összesen a cég <strong>32%-át</strong> vásárolja ki a jelenlegi tulajdonosoktól 70% diszkonttal (229,24 M Ft), primary tőkeemelés nélkül. A végső irányító kör (Katona 23% + Befektető 1–2 14–14%) 51%, a négy eladó egyenként 11%-ot tart meg.</p>
 </section>
 
 <!-- 2 -->
@@ -333,44 +333,48 @@ figcaption{font-size:12.5px;color:var(--dim);margin-top:10px;line-height:1.5}
     </tbody>
   </table></div>
 
-  <h3>Secondary — 27% kivásárlása (70% diszkonttal)</h3>
+  <h3>Secondary — 32% kivásárlása („Két befektető" forgatókönyv)</h3>
+  <p>Katona Zoltán, Befektető 1 és Befektető 2 összesen a társaság <strong>32%-át</strong> vásárolja meg a jelenlegi tulajdonosoktól (Tulaj1–4) másodlagos (secondary) tranzakcióban. <strong>Primary tőkeemelés nincs</strong> — a modell 2031-ig 0 Ft primary befektetéssel számol, így az eladók megmaradó részesedése nem hígul.</p>
   <ul>
-    <li>Diszkontált cégérték: 2 388 × 0,30 = <strong>716,4 M Ft</strong>; a 27%-os csomag ára <strong>193,4 M Ft</strong></li>
-    <li>Eladók: Tulaj1–4, fejenként 6,75% → fejenként <strong>~48,4 M Ft</strong> bevétel</li>
-    <li>Katona Zoltán: +4% → <strong>~28,7 M Ft</strong></li>
-    <li>Új Tulajdonos 1 és 2: 11,5–11,5% → fejenként <strong>~82,4 M Ft</strong></li>
+    <li>Diszkontált cégérték: 2 387,93 × 0,30 = <strong>716,4 M Ft</strong> → egy százalékpont ára <strong>~7,16 M Ft</strong></li>
+    <li>Eladók: Tulaj1–4, mindegyik <strong>8 százalékpontot</strong> ad el (19% → 11%) → fejenként <strong>~57,31 M Ft</strong> most, azonnal</li>
+    <li>Teljes vételár a 32%-ért (secondary pool): <strong>229,24 M Ft</strong></li>
   </ul>
 
-  <h3>Primary — tőkeemelés</h3>
-  <ul>
-    <li>Pre-money (25% primary diszkonttal): 1 791 M Ft · investment: 70,05 M Ft · post-money: 1 861 M Ft</li>
-    <li>Új részvények: ~3,76%, a két új tulajdonos fele-fele arányban jegyzi (35,0 M Ft/fő)</li>
-    <li><strong>Új tulajdonosok teljes tőkeigénye fejenként: 82,4 + 35,0 = ~117,4 M Ft</strong></li>
-  </ul>
-
-  <h3>Cap table</h3>
-  <figure>
-    <div class="figtitle">Végső tulajdonosi szerkezet (primary után)</div>
-    <div class="chart" id="c-cap"></div>
-    <figcaption>A Tulaj1–4 csoport négy, egyenként 11,8%-os tulajdonost jelöl.</figcaption>
-  </figure>
-
+  <h3>Vevők</h3>
   <div class="tblwrap"><table>
-    <thead><tr><th>Tulajdonos</th><th class="num">Eredeti</th><th class="num">Secondary után</th><th class="num">Primary után (végső)</th></tr></thead>
+    <thead><tr><th>Vevő</th><th class="num">Vásárolt rész</th><th class="num">Fizetett összeg</th></tr></thead>
     <tbody>
-      <tr><td>Katona Zoltán</td><td class="num">19,0%</td><td class="num">23,0%</td><td class="num"><strong>22,1%</strong></td></tr>
-      <tr><td>Morgens COO</td><td class="num">5,0%</td><td class="num">5,0%</td><td class="num">4,8%</td></tr>
-      <tr><td>Tulaj1</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
-      <tr><td>Tulaj2</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
-      <tr><td>Tulaj3</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
-      <tr><td>Tulaj4</td><td class="num">19,0%</td><td class="num">12,25%</td><td class="num">11,8%</td></tr>
-      <tr><td>Új Tulaj 1</td><td class="num">—</td><td class="num">11,5%</td><td class="num"><strong>12,9%</strong></td></tr>
-      <tr><td>Új Tulaj 2</td><td class="num">—</td><td class="num">11,5%</td><td class="num"><strong>12,9%</strong></td></tr>
-      <tr class="total"><td>Összesen</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
+      <tr><td>Katona Zoltán</td><td class="num">4%</td><td class="num">28,66 M Ft</td></tr>
+      <tr><td>Befektető 1</td><td class="num">14%</td><td class="num">100,29 M Ft</td></tr>
+      <tr><td>Befektető 2</td><td class="num">14%</td><td class="num">100,29 M Ft</td></tr>
+      <tr class="total"><td>Összesen</td><td class="num">32%</td><td class="num">229,24 M Ft</td></tr>
     </tbody>
   </table></div>
 
-  <div class="note"><p>A secondary implikált ára <strong>7,16 M Ft/százalékpont</strong>, a primary <strong>~18,6 M Ft/százalékpont</strong> — a ~2,6-szeres különbség logikusan tükrözi, hogy a kiszálló tulajdonosok diszkontot adnak, míg a friss növekedési tőke a teljes(ebb) értéken száll be.</p></div>
+  <h3>Cap table</h3>
+  <figure>
+    <div class="figtitle">Végső tulajdonosi szerkezet (secondary után)</div>
+    <div class="chart" id="c-cap"></div>
+    <figcaption>Irányító kör: Katona Zoltán + Befektető 1 + Befektető 2 = 51%. A Tulaj1–4 négy passzív, egyenként 11%-os kisebbségi tulajdonos.</figcaption>
+  </figure>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Tulajdonos</th><th class="num">Eredeti</th><th class="num">Végső (secondary után)</th></tr></thead>
+    <tbody>
+      <tr><td>Katona Zoltán</td><td class="num">19,0%</td><td class="num"><strong>23,0%</strong></td></tr>
+      <tr><td>Befektető 1</td><td class="num">—</td><td class="num"><strong>14,0%</strong></td></tr>
+      <tr><td>Befektető 2</td><td class="num">—</td><td class="num"><strong>14,0%</strong></td></tr>
+      <tr><td>Morgens COO</td><td class="num">5,0%</td><td class="num">5,0%</td></tr>
+      <tr><td>Tulaj1</td><td class="num">19,0%</td><td class="num">11,0%</td></tr>
+      <tr><td>Tulaj2</td><td class="num">19,0%</td><td class="num">11,0%</td></tr>
+      <tr><td>Tulaj3</td><td class="num">19,0%</td><td class="num">11,0%</td></tr>
+      <tr><td>Tulaj4</td><td class="num">19,0%</td><td class="num">11,0%</td></tr>
+      <tr class="total"><td>Összesen</td><td class="num">100%</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><p>Egy százalékpont implikált ára a secondaryben <strong>~7,16 M Ft</strong> (a 70%-os kisebbségi/illikviditási diszkont mellett). Az eladók a részesedésük kevesebb mint felét (8 a 19 pontból) adják át azonnali, biztos készpénzért, a megmaradó <strong>11%-uk</strong> pedig részesül a jövőbeli növekedésből. A Morgens COO 5%-a a tranzakcióban nem változik.</p></div>
 </section>
 
 <!-- 10 -->
@@ -389,7 +393,7 @@ figcaption{font-size:12.5px;color:var(--dim);margin-top:10px;line-height:1.5}
     <li><strong>Bérinfláció:</strong> az évi ~3–4%-os béremelés a magyar piacon historikusan alacsony; ha a tényleges bérnövekedés magasabb, a 2031-es ~50%-os EBITDA-marzs arányosan sérül.</li>
   </ol>
 
-  <div class="note"><p><strong>Ami kifejezetten jól megoldott:</strong> a RO-felfutás kommentekkel dokumentált, HU-bázisú módszertana; a primary investment és a RO tőkeigény képletszintű összekötése; a javított secondary-árazás; és a cap table mindhárom oszlopban 100%-ra záró ellenőrzőösszege.</p></div>
+  <div class="note"><p><strong>Ami kifejezetten jól megoldott:</strong> a RO-felfutás kommentekkel dokumentált, HU-bázisú módszertana; a 70%-os kisebbségi diszkonttal számolt secondary-árazás; és a cap table 100%-ra záró ellenőrzőösszege.</p></div>
 </section>
 
 <p class="foot">
@@ -576,10 +580,10 @@ hBar('c-cost',[
   {k:'Szoftver',v:17},{k:'Sales',v:14},{k:'Marketing',v:3}],' M Ft');
 
 stackBar('c-cap',[
-  {k:'Tulaj1–4',v:47.2,c:'#0a5f57'},
-  {k:'Katona Zoltán',v:22.1,c:'#0F9C8E'},
-  {k:'Új tulajdonosok',v:25.8,c:'#D98324'},
-  {k:'Morgens COO',v:4.8,c:'#7fc9c0'}]);
+  {k:'Katona Zoltán',v:23,c:'#0F9C8E'},
+  {k:'Befektető 1–2',v:28,c:'#D98324'},
+  {k:'Tulaj1–4 (passzív)',v:44,c:'#0a5f57'},
+  {k:'Morgens COO',v:5,c:'#7fc9c0'}]);
 </script>
 </body>
 </html>
