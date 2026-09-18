@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="hu">
-<head>
+<html lang="hu"><head>
 <meta name="robots" content="noindex">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RoomSome — tech ökoszisztéma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   --gray:#3C3C3B; --ink:#041C19; --teal:#0C4A42;
@@ -89,6 +87,19 @@ h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 .d-plan{background:#9aa8a5;box-shadow:0 0 0 3px rgba(154,168,165,.20)}
 .d-new{background:#f0a92b;box-shadow:0 0 0 3px rgba(240,169,43,.18)}
 
+/* ---------- két irányú modul (Roomlytics) ---------- */
+.duo{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.duo-i{
+  flex:1 1 270px;border:1px solid var(--line2);border-radius:11px;background:#fff;
+  padding:11px 13px;font-size:12.2px;color:var(--dim);font-weight:400;line-height:1.55;
+}
+.duo-i .ar{
+  display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;
+  border-radius:50%;background:rgba(20,175,159,.15);color:#08635a;font-weight:700;
+  font-size:12px;margin-right:8px;vertical-align:-5px;
+}
+.duo-i b{color:var(--gray);font-weight:600}
+
 /* ---------- external rails ---------- */
 .rail{
   display:grid;grid-template-columns:132px 1fr;gap:20px;margin-bottom:12px;
@@ -109,6 +120,21 @@ h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;
   font-size:12.5px;font-weight:500;padding:8px 15px;border-radius:999px;
   background:rgba(219,241,131,.16);border:1px solid rgba(219,241,131,.45);color:#eaf7c9;
 }
+.svc span.on{background:rgba(219,241,131,.34);border-color:#DBF183;color:#fbfff0;font-weight:600}
+
+.adtech{
+  margin-top:16px;border-radius:14px;padding:15px 17px;
+  background:rgba(219,241,131,.09);border:1px solid rgba(219,241,131,.30);
+}
+.adtech .at-t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:#DBF183;margin-bottom:11px}
+.adtech ul{list-style:none;display:flex;flex-wrap:wrap;gap:12px}
+.adtech li{
+  flex:1 1 260px;font-size:12.3px;line-height:1.55;color:#cfe9db;font-weight:300;
+  border-left:2px solid rgba(219,241,131,.42);padding-left:12px;
+}
+.adtech li b{color:#eaf7c9;font-weight:500}
+.adtech .why{margin-top:12px;font-size:12.3px;color:#bfe6d8;font-weight:300;line-height:1.55}
+.adtech .why strong{color:#eaf7c9;font-weight:500}
 
 /* ---------- diagrams ---------- */
 .diagram{margin-top:44px}
@@ -129,6 +155,7 @@ svg text{font-family:'Poppins',sans-serif}
 .ns{font-size:11.2px;font-weight:400;fill:#4f625e}
 .el{font-size:11.2px;font-weight:400;fill:#556865}
 .el.hi{fill:#2c7a16;font-weight:600}
+.el.dt{fill:#0a6b61;font-weight:500}
 .node{fill:#ffffff;stroke:#b3c3bf;stroke-width:1.3}
 .node.hub{fill:rgba(20,175,159,.12);stroke:#0f9c8e;stroke-width:2}
 .node.focus{fill:rgba(108,180,46,.12);stroke:#5aa326;stroke-width:2.2}
@@ -138,6 +165,29 @@ svg text{font-family:'Poppins',sans-serif}
 .edge.dash{stroke-dasharray:6 5;stroke:rgba(20,175,159,.7)}
 .edge.loop{stroke:#6CB42E;stroke-width:1.8;fill:none}
 .edge.data{stroke:rgba(20,175,159,.65);stroke-width:1.3;stroke-dasharray:5 5;fill:none}
+.edge.data.strong{stroke:rgba(20,175,159,.95);stroke-width:2}
+
+
+/* ---------- tőkeáttétel blokk ---------- */
+.lev{display:flex;flex-wrap:wrap;gap:12px}
+.lev-i{
+  flex:1 1 280px;border:1px solid var(--line2);border-radius:14px;background:#fff;
+  padding:15px 17px;display:flex;flex-direction:column;gap:8px;
+}
+.lev-i.sys{border-color:rgba(20,175,159,.55);background:rgba(20,175,159,.07)}
+.lev-i .r{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;color:var(--gray)}
+.lev-i.sys .r{color:#08635a}
+.lev-i .w{font-size:12.4px;color:var(--dim);font-weight:400;line-height:1.55}
+.lev-i .sc{
+  margin-top:auto;font-size:11.5px;font-weight:600;color:#2c7a16;
+  border-top:1px dashed rgba(108,180,46,.45);padding-top:9px;
+}
+.lev-note{
+  margin-top:14px;border-radius:14px;padding:14px 17px;
+  background:rgba(108,180,46,.07);border:1px solid rgba(108,180,46,.32);
+  font-size:12.8px;color:var(--dim);font-weight:400;line-height:1.6;
+}
+.lev-note strong{color:var(--gray);font-weight:600}
 
 /* ---------- legend + footer ---------- */
 .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
@@ -295,12 +345,23 @@ svg text{font-family:'Poppins',sans-serif}
 </div>
 
 <!-- ADAT -->
-<div class="layer">
+<div class="layer core">
   <div class="name">Adat</div>
   <div class="cards">
-    <div class="card wide">
-      <div class="t"><span class="dot d-live"></span>Roomlytics <span style="font-size:11px;font-weight:400;color:var(--dim)">— a mérési és adatréteg</span></div>
-      <div class="d">RoomSome foglalási adatok, loyalty, GA4, Google Ads, Meta hirdetés és organikus, ActiveCampaign — egy helyen. Ez köti össze a tech stacket a service réteggel: enélkül a Direct nem tudja, mit célozzon, és a revenue management vak.</div>
+    <div class="card mag wide">
+      <div class="t"><span class="dot d-live"></span>Roomlytics <span style="font-size:11px;font-weight:400;color:var(--dim)">— az adatréteg és a vezérlősík</span></div>
+      <div class="d">Egy helyen a keresleti oldal (foglalás, pickup, kihasználtság, árváltozás, lemondás), a marketing oldal (Google Ads, Meta, organikus, e-mail, loyalty) és a <strong>csatornánkénti produkció és költség — az OTA-jutalékkal együtt</strong> — mindez egymásra vezetve. Nem riporteszköz: innen vezérelhető az egész gépezet.</div>
+      <div class="duo">
+        <div class="duo-i">
+          <span class="ar">↓</span><b>A szállodának — riport.</b> Nyolc füle mutatja meg, mi történt: összefoglaló, Google Ads, Meta Ads, total direct, hűségprogram, in-house, e-mail &amp; CRO, social. <b>Itt válik láthatóvá, mit végzett a service réteg.</b>
+        </div>
+        <div class="duo-i">
+          <span class="ar">↑</span><b>A service rétegnek — vezérlőpult.</b> Egy képernyőn a revenue-számok és az élő kampányteljesítmény. Nem külön kell összerakni, hogy mi hozta a foglalást: <b>a döntés és a mérés ugyanott van.</b>
+        </div>
+        <div class="duo-i">
+          <span class="ar">↻</span><b>A rendszernek — végrehajtás.</b> Innen fut az advertisement technology a végrehajtó felületekre: hirdetés, e-mail marketing, CRM, RoomSome Direct, Loyalty — és <b>keresleti szignál megy az RMS felé</b> az árazáshoz. <b>Amit itt eldöntünk, az ott azonnal megtörténik.</b>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -324,11 +385,25 @@ svg text{font-family:'Poppins',sans-serif}
       <span>Revenue management</span>
       <span>RMS</span>
       <span>Digital marketing</span>
-      <span>Advertisement technology</span>
+      <span class="on">Advertisement technology</span>
       <span>Sales</span>
       <span>BI</span>
       <span>Webfejlesztés</span>
       <span>Tudás · tapasztalat · know-how</span>
+    </div>
+
+    <div class="adtech">
+      <div class="at-t">Advertisement technology — a vendégszerző gépezet, ami magát működteti</div>
+      <ul>
+        <li><b>A cél vezérli, nem a szabad szoba.</b> A kiindulópont az időszaki <b>bevételi és eredménycél</b>. Ehhez épül fel a kampányszett: mit hirdetünk, kinek, melyik csatornán, mekkora büdzsével. A szabad kapacitás és az árazás csak az egyik bemenet.</li>
+        <li><b>Egy motor, az egész akvizíció.</b> Hirdetésmenedzsment, e-mail marketing és CRM ugyanabból a rendszerből, ugyanazzal a szegmentációval — nem három külön eszköz, amit valakinek össze kell hangolnia.</li>
+        <li><b>Hotelenként tanul, és maga csinálja.</b> Elkészíti a kreatívokat, kitelepíti a hirdetési rendszerekbe, szegmentál, visszaméri az eredményt és újraoptimalizál — folyamatosan, emberi beavatkozás nélkül.</li>
+        <li><b>A mérőszám a teljes akvizíciós költség.</b> Nem a kattintás és nem az elérés, és nem is csak a hirdetési költés: <b>minden csatorna valódi költsége, az OTA-jutalékkal együtt</b> — így eldönthető, hogy egy foglalást olcsóbb-e megvenni hirdetéssel, mint jutalékkal.</li>
+      </ul>
+      <p class="why">Ezért lehet <strong>20 szobától</strong> kiszolgálni a piacot: a kampánykezelés határköltsége hotelenként közel nulla. Üzemanyaga és vezérlőpultja a <strong>Roomlytics</strong>: egy felületen a revenue-számok és az élő kampányadatok, egymásra vezetve — <strong>a döntés és a mérés ugyanott van.</strong></p>
+      <p class="why" style="border-top:1px solid rgba(219,241,131,.22);padding-top:11px">
+        <strong>Amit nem építünk meg.</strong> A channel manager motorját (Channex) és az RMS-t partnertől vesszük, és a saját absztrakciós és service rétegünket tesszük rá — a differenciálás nem itt van. Az RMS felé viszont <strong>mi küldünk keresleti szignált</strong>: szándékadat a foglalás előttről, valós árrugalmasság a booking engine-ből, a kampányterv és a csatornánkénti <strong>nettó</strong> bevétel. Így az árazás nem bruttó ADR-re, hanem a ténylegesen megmaradó bevételre optimalizálhat.
+      </p>
     </div>
   </div>
 </div>
@@ -350,104 +425,104 @@ svg text{font-family:'Poppins',sans-serif}
   <svg viewBox="0 0 1200 800" role="img" aria-label="A RoomSome modulok kapcsolati térképe">
     <defs>
       <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"></path>
       </marker>
       <marker id="as" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto">
-        <path d="M9,0 L0,4.5 L9,9 z" fill="#879995"/>
+        <path d="M9,0 L0,4.5 L9,9 z" fill="#879995"></path>
       </marker>
       <marker id="at" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="rgba(20,175,159,.9)"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="rgba(20,175,159,.9)"></path>
       </marker>
     </defs>
 
-    <rect class="node ext" x="450" y="12" width="300" height="46" rx="23"/>
+    <rect class="node ext" x="450" y="12" width="300" height="46" rx="23"></rect>
     <text class="ns" x="600" y="40" text-anchor="middle">OTA · GDS · wholesaler · metasearch</text>
-    <path class="edge" d="M600,60 L600,86" marker-end="url(#a)"/>
+    <path class="edge" d="M600,60 L600,86" marker-end="url(#a)"></path>
 
-    <rect class="node ext" x="90" y="90" width="210" height="78" rx="13"/>
+    <rect class="node ext" x="90" y="90" width="210" height="78" rx="13"></rect>
     <text class="nt" x="195" y="124" text-anchor="middle">Partner PMS-ek</text>
     <text class="ns" x="195" y="143" text-anchor="middle">bármelyik · nem versenytárs</text>
 
-    <rect class="node" x="495" y="90" width="210" height="78" rx="13"/>
+    <rect class="node" x="495" y="90" width="210" height="78" rx="13"></rect>
     <text class="nt" x="600" y="124" text-anchor="middle">Channel Manager</text>
     <text class="ns" x="600" y="143" text-anchor="middle">disztribúció</text>
 
-    <rect class="node" x="900" y="90" width="210" height="78" rx="13"/>
+    <rect class="node" x="900" y="90" width="210" height="78" rx="13"></rect>
     <text class="nt" x="1005" y="124" text-anchor="middle">Weboldal + Direct</text>
     <text class="ns" x="1005" y="143" text-anchor="middle">konverzió</text>
 
-    <rect class="node" x="90" y="350" width="210" height="78" rx="13"/>
+    <rect class="node" x="90" y="350" width="210" height="78" rx="13"></rect>
     <text class="nt" x="195" y="384" text-anchor="middle">Event</text>
     <text class="ns" x="195" y="403" text-anchor="middle">MICE · teremkapacitás</text>
 
-    <rect class="node hub" x="460" y="340" width="280" height="110" rx="16"/>
+    <rect class="node hub" x="460" y="340" width="280" height="110" rx="16"></rect>
     <text class="nt hub" x="600" y="381" text-anchor="middle">Booking Engine</text>
     <text class="nt hub" x="600" y="404" text-anchor="middle">+ CRS</text>
     <text class="ns" x="600" y="426" text-anchor="middle">a mag · a keresleti adat forrása</text>
 
-    <rect class="node" x="900" y="350" width="210" height="78" rx="13"/>
+    <rect class="node" x="900" y="350" width="210" height="78" rx="13"></rect>
     <text class="nt" x="1005" y="384" text-anchor="middle">RoomSome Pay</text>
     <text class="ns" x="1005" y="403" text-anchor="middle">kártya · SZÉP · qvik · utalás</text>
 
-    <rect class="node focus" x="90" y="600" width="210" height="96" rx="15"/>
+    <rect class="node focus" x="90" y="600" width="210" height="96" rx="15"></rect>
     <text class="nt focus" x="195" y="637" text-anchor="middle">RoomSome Loyalty</text>
     <text class="ns" x="195" y="657" text-anchor="middle">vendéghűség — a visszatérő</text>
     <text class="ns" x="195" y="673" text-anchor="middle">vendég a legolcsóbb vendég</text>
 
-    <rect class="node" x="325" y="612" width="165" height="72" rx="13"/>
+    <rect class="node" x="325" y="612" width="165" height="72" rx="13"></rect>
     <text class="nt" x="407" y="644" text-anchor="middle">Voucher</text>
     <text class="ns" x="407" y="663" text-anchor="middle">ajándékutalvány</text>
 
-    <path class="edge" d="M303,648 L322,648" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M303,648 L322,648" marker-end="url(#a)" marker-start="url(#as)"></path>
 
-    <rect class="node" x="495" y="610" width="210" height="78" rx="13"/>
+    <rect class="node" x="495" y="610" width="210" height="78" rx="13"></rect>
     <text class="nt" x="600" y="644" text-anchor="middle">Inbox · CRM</text>
     <text class="ns" x="600" y="663" text-anchor="middle">kommunikáció · automatizmus</text>
 
-    <rect class="node" x="900" y="610" width="210" height="78" rx="13"/>
+    <rect class="node" x="900" y="610" width="210" height="78" rx="13"></rect>
     <text class="nt" x="1005" y="644" text-anchor="middle">GuestApp</text>
     <text class="ns" x="1005" y="663" text-anchor="middle">helyszín · vendégélmény</text>
 
-    <rect class="node ext" x="90" y="722" width="210" height="48" rx="24"/>
+    <rect class="node ext" x="90" y="722" width="210" height="48" rx="24"></rect>
     <text class="ns" x="195" y="751" text-anchor="middle">Shared Loyalty — más szállodák</text>
-    <path class="edge dash" d="M195,698 L195,718" marker-end="url(#at)" marker-start="url(#as)"/>
+    <path class="edge dash" d="M195,698 L195,718" marker-end="url(#at)" marker-start="url(#as)"></path>
 
-    <path class="edge" d="M302,129 L491,129" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M302,129 L491,129" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="396" y="118" text-anchor="middle">kétirányú szinkron</text>
 
-    <path class="edge" d="M195,170 L195,240 L456,240 L456,336" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M195,170 L195,240 L456,240 L456,336" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="300" y="231" text-anchor="middle">CRS mint csatlakozási pont</text>
 
-    <path class="edge" d="M600,170 L600,336" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M600,170 L600,336" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="612" y="258" text-anchor="start">készlet · ár · foglalás</text>
 
-    <path class="edge" d="M1005,170 L1005,240 L744,240 L744,336" marker-end="url(#a)"/>
+    <path class="edge" d="M1005,170 L1005,240 L744,240 L744,336" marker-end="url(#a)"></path>
     <text class="el" x="900" y="231" text-anchor="middle">konvertált látogató</text>
 
-    <path class="edge" d="M898,389 L744,393" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M898,389 L744,393" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="821" y="376" text-anchor="middle">fizetési kérés</text>
     <text class="el" x="821" y="414" text-anchor="middle">visszaigazolás</text>
 
-    <path class="edge" d="M302,389 L456,393" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M302,389 L456,393" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="379" y="376" text-anchor="middle">opciós szoba</text>
     <text class="el" x="379" y="414" text-anchor="middle">allotment</text>
 
-    <path class="edge" d="M1005,608 L1005,520 L744,520 L744,456" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M1005,608 L1005,520 L744,520 L744,456" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="900" y="511" text-anchor="middle">foglalási adat · on-stay upsell</text>
 
-    <path class="edge" d="M600,608 L600,456" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M600,608 L600,456" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="612" y="536" text-anchor="start">vendégprofil · automatizmus</text>
 
-    <path class="edge" d="M150,598 L150,505 L490,505 L490,452" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M150,598 L150,505 L490,505 L490,452" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="300" y="496" text-anchor="middle">tagsági ár · pont · szegmens</text>
 
-    <path class="edge" d="M407,610 L407,548 L548,548 L548,452" marker-end="url(#a)" marker-start="url(#as)"/>
+    <path class="edge" d="M407,610 L407,548 L548,548 L548,452" marker-end="url(#a)" marker-start="url(#as)"></path>
     <text class="el" x="468" y="539" text-anchor="middle">utalvány beváltás</text>
 
-    <path class="edge" d="M898,649 L709,649" marker-end="url(#a)"/>
+    <path class="edge" d="M898,649 L709,649" marker-end="url(#a)"></path>
     <text class="el" x="803" y="638" text-anchor="middle">üzenetek</text>
 
-    <path class="edge" d="M600,690 L600,710 L216,710 L216,700" marker-end="url(#a)"/>
+    <path class="edge" d="M600,690 L600,710 L216,710 L216,700" marker-end="url(#a)"></path>
     <text class="el" x="440" y="726" text-anchor="middle">vendégprofil · szegmentálás</text>
   </svg>
   </div>
@@ -457,85 +532,124 @@ svg text{font-family:'Poppins',sans-serif}
 <section class="diagram">
   <div class="lbl">02 · A hurok</div>
   <h2>Miért erősödik minden foglalással</h2>
-  <p class="cap">Ez a rendszer lényege egyetlen ábrában. A hirdetéstől a visszatérő vendégig zárt kör fut, és minden kör adatot termel, amiből a service réteg <strong>kedvezőbb áron hoz vendéget</strong> a következő körben. Ezt egyetlen különálló modul sem tudja — csak az egymásra épülő rendszer.</p>
+  <p class="cap">Ez a rendszer lényege egyetlen ábrában. A hirdetéstől a visszatérő vendégig zárt kör fut, és minden kör adatot termel, amiből a service réteg <strong>kedvezőbb áron hoz vendéget</strong> a következő körben. A <strong>Roomlytics</strong> a tengely: lefelé megmutatja a szállodának, mi történt, felfelé pedig ez a <strong>vezérlősík</strong> — innen fut az advertisement technology a végrehajtó felületekre (hirdetés, e-mail, CRM, Direct, Loyalty). Ezt egyetlen különálló modul sem tudja — csak az egymásra épülő rendszer.</p>
 
   <div class="canvas">
-  <svg viewBox="0 0 1200 490" role="img" aria-label="A RoomSome értékteremtő hurok">
+  <svg viewBox="0 0 1200 500" role="img" aria-label="A RoomSome értékteremtő hurok">
     <defs>
       <marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#879995"></path>
       </marker>
       <marker id="bl" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-        <path d="M0,0 L10,5 L0,10 z" fill="#6CB42E"/>
+        <path d="M0,0 L10,5 L0,10 z" fill="#6CB42E"></path>
       </marker>
       <marker id="bd" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-        <path d="M0,0 L9,4.5 L0,9 z" fill="rgba(20,175,159,.9)"/>
+        <path d="M0,0 L9,4.5 L0,9 z" fill="rgba(20,175,159,.9)"></path>
+      </marker>
+      <marker id="bds" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto">
+        <path d="M9,0 L0,4.5 L9,9 z" fill="rgba(20,175,159,.9)"></path>
       </marker>
     </defs>
 
-    <rect class="node" x="32"   y="60" width="140" height="72" rx="13"/>
-    <text class="nt" x="102"  y="94" text-anchor="middle">Hirdetés</text>
-    <text class="ns" x="102"  y="113" text-anchor="middle">adtech</text>
+    <rect class="node" x="32" y="60" width="140" height="72" rx="13"></rect>
+    <text class="nt" x="102" y="94" text-anchor="middle">Hirdetés</text>
+    <text class="ns" x="102" y="113" text-anchor="middle">adtech</text>
 
-    <rect class="node" x="198"  y="60" width="140" height="72" rx="13"/>
-    <text class="nt" x="268"  y="94" text-anchor="middle">Weboldal</text>
-    <text class="ns" x="268"  y="113" text-anchor="middle">a saját felület</text>
+    <rect class="node" x="198" y="60" width="140" height="72" rx="13"></rect>
+    <text class="nt" x="268" y="94" text-anchor="middle">Weboldal</text>
+    <text class="ns" x="268" y="113" text-anchor="middle">a saját felület</text>
 
-    <rect class="node" x="364"  y="60" width="140" height="72" rx="13"/>
-    <text class="nt" x="434"  y="94" text-anchor="middle">Direct</text>
-    <text class="ns" x="434"  y="113" text-anchor="middle">aktiválás</text>
+    <rect class="node" x="364" y="60" width="140" height="72" rx="13"></rect>
+    <text class="nt" x="434" y="94" text-anchor="middle">Direct</text>
+    <text class="ns" x="434" y="113" text-anchor="middle">aktiválás</text>
 
-    <rect class="node hub" x="530" y="56" width="140" height="80" rx="13"/>
+    <rect class="node hub" x="530" y="56" width="140" height="80" rx="13"></rect>
     <text class="nt hub" x="600" y="90" text-anchor="middle">Booking</text>
     <text class="nt hub" x="600" y="110" text-anchor="middle">Engine</text>
 
-    <rect class="node" x="696"  y="60" width="140" height="72" rx="13"/>
-    <text class="nt" x="766"  y="94" text-anchor="middle">Pay</text>
-    <text class="ns" x="766"  y="113" text-anchor="middle">fizetés</text>
+    <rect class="node" x="696" y="60" width="140" height="72" rx="13"></rect>
+    <text class="nt" x="766" y="94" text-anchor="middle">Pay</text>
+    <text class="ns" x="766" y="113" text-anchor="middle">fizetés</text>
 
-    <rect class="node" x="862"  y="60" width="140" height="72" rx="13"/>
-    <text class="nt" x="932"  y="94" text-anchor="middle">GuestApp</text>
-    <text class="ns" x="932"  y="113" text-anchor="middle">helyszín</text>
+    <rect class="node" x="862" y="60" width="140" height="72" rx="13"></rect>
+    <text class="nt" x="932" y="94" text-anchor="middle">GuestApp</text>
+    <text class="ns" x="932" y="113" text-anchor="middle">helyszín</text>
 
-    <rect class="node" x="1028" y="60" width="140" height="72" rx="13"/>
+    <rect class="node" x="1028" y="60" width="140" height="72" rx="13"></rect>
     <text class="nt" x="1098" y="94" text-anchor="middle">CRM · Loyalty</text>
     <text class="ns" x="1098" y="113" text-anchor="middle">utókövetés</text>
 
-    <path class="edge" d="M174,96 L194,96" marker-end="url(#b)"/>
-    <path class="edge" d="M340,96 L360,96" marker-end="url(#b)"/>
-    <path class="edge" d="M506,96 L526,96" marker-end="url(#b)"/>
-    <path class="edge" d="M672,96 L692,96" marker-end="url(#b)"/>
-    <path class="edge" d="M838,96 L858,96" marker-end="url(#b)"/>
-    <path class="edge" d="M1004,96 L1024,96" marker-end="url(#b)"/>
+    <path class="edge" d="M174,96 L194,96" marker-end="url(#b)"></path>
+    <path class="edge" d="M340,96 L360,96" marker-end="url(#b)"></path>
+    <path class="edge" d="M506,96 L526,96" marker-end="url(#b)"></path>
+    <path class="edge" d="M672,96 L692,96" marker-end="url(#b)"></path>
+    <path class="edge" d="M838,96 L858,96" marker-end="url(#b)"></path>
+    <path class="edge" d="M1004,96 L1024,96" marker-end="url(#b)"></path>
 
-    <path class="edge loop" d="M1098,134 L1098,210 Q1098,220 1088,220 L112,220 Q102,220 102,210 L102,142" marker-end="url(#bl)"/>
+    <path class="edge loop" d="M1098,134 L1098,210 Q1098,220 1088,220 L112,220 Q102,220 102,210 L102,142" marker-end="url(#bl)"></path>
     <text class="el hi" x="600" y="245" text-anchor="middle">visszatérő vendég — a legolcsóbb foglalás, nulla akvizíciós költséggel</text>
 
-    <path class="edge data" d="M268,136 L268,288" marker-end="url(#bd)"/>
-    <path class="edge data" d="M600,140 L600,288" marker-end="url(#bd)"/>
-    <path class="edge data" d="M932,136 L932,288" marker-end="url(#bd)"/>
+    <path class="edge data" d="M268,136 L268,288" marker-end="url(#bd)"></path>
+    <path class="edge data" d="M600,140 L600,288" marker-end="url(#bd)"></path>
+    <path class="edge data" d="M932,136 L932,288" marker-end="url(#bd)"></path>
 
-    <rect class="node" x="32" y="292" width="1136" height="56" rx="14"/>
-    <text class="nt" x="600" y="317" text-anchor="middle">Roomlytics — mérés és egységes adatréteg</text>
-    <text class="ns" x="600" y="335" text-anchor="middle">foglalás · loyalty · GA4 · Google Ads · Meta · e-mail — egy helyen</text>
+    <rect class="node hub" x="32" y="292" width="1136" height="60" rx="14"></rect>
+    <text class="nt hub" x="600" y="317" text-anchor="middle">Roomlytics — az adatréteg és a vezérlősík</text>
+    <text class="ns" x="600" y="337" text-anchor="middle">pickup · kihasználtság · ár · lemondás · kampányteljesítmény · szegmens — egymásra vezetve</text>
 
-    <path class="edge data" d="M600,350 L600,378" marker-end="url(#bd)"/>
+    <path class="edge data strong" d="M548,356 L548,386" marker-end="url(#bd)"></path>
+    <text class="el dt" x="538" y="376" text-anchor="end">mérés</text>
+    <path class="edge data strong" d="M652,386 L652,356" marker-end="url(#bd)"></path>
+    <text class="el dt" x="662" y="376" text-anchor="start">vezérlés · adtech</text>
 
-    <rect x="32" y="382" width="1136" height="66" rx="14" fill="#0C4A42" stroke="#0C4A42" stroke-width="1.5"/>
-    <text class="nt" x="600" y="410" text-anchor="middle" style="fill:#DBF183">Service réteg — Morgens</text>
-    <text class="ns" x="600" y="430" text-anchor="middle" style="fill:#cdeade">revenue management · RMS · digital marketing · adtech · sales · BI</text>
+    <rect x="32" y="390" width="1136" height="66" rx="14" fill="#0C4A42" stroke="#0C4A42" stroke-width="1.5"></rect>
+    <text class="nt" x="600" y="418" text-anchor="middle" style="fill:#DBF183">Service réteg — Morgens</text>
+    <text class="ns" x="600" y="438" text-anchor="middle" style="fill:#cdeade">revenue management · RMS · digital marketing · adtech · sales · BI</text>
 
-    <path class="edge loop" d="M32,415 L20,415 Q8,415 8,403 L8,110 Q8,98 20,98 L28,98" marker-end="url(#bl)"/>
-    <text class="el hi" x="600" y="472" text-anchor="middle">a service réteg dönti el, hol és mennyiért hirdetünk, és milyen áron adjuk a szobát</text>
+    <path class="edge loop" d="M32,423 L20,423 Q8,423 8,411 L8,110 Q8,98 20,98 L28,98" marker-end="url(#bl)"></path>
+    <path class="edge loop" d="M1168,423 L1180,423 Q1192,423 1192,411 L1192,110 Q1192,98 1180,98 L1172,98" marker-end="url(#bl)"></path>
+    <text class="el hi" x="600" y="480" text-anchor="middle">a service réteg dönti el, hol és mennyiért hirdetünk, mit küldünk a vendégnek, és milyen áron adjuk a szobát</text>
   </svg>
+  </div>
+</section>
+
+
+<!-- ============ DIAGRAM 3 — A TŐKEÁTTÉTEL ============ -->
+<section class="diagram">
+  <div class="lbl">03 · A tőkeáttétel</div>
+  <h2>Miért nem kell arányosan nőnie a csapatnak</h2>
+  <p class="cap">A rendszernek nem az a célja, hogy jobb szoftvert adjon, hanem hogy <strong>ugyanaz a csapat több szállodát tudjon vinni.</strong> A végrehajtás átkerül a gép oldalára; az ember ott marad, ahol a döntés van.</p>
+
+  <div class="canvas" style="padding:18px">
+    <div class="lev">
+      <div class="lev-i">
+        <div class="r">Account · tanácsadó</div>
+        <div class="w">Ügyfélkapcsolat, időszaki célkitűzés, döntés és kivételkezelés. Ő vezérli a szálloda gépezetét a Roomlyticsból.</div>
+        <div class="sc">↗ a hotelszámmal nő</div>
+      </div>
+      <div class="lev-i">
+        <div class="r">Revenue manager</div>
+        <div class="w">Árazás és keresletkezelés a vezérlősík adatain — pickup, pace, versenyár, csatornánkénti nettó bevétel.</div>
+        <div class="sc">↗ a hotelszámmal nő, laposabban</div>
+      </div>
+      <div class="lev-i sys">
+        <div class="r">Rendszercsapat — szakági specialisták</div>
+        <div class="w">Performance és social PPC, content, e-mail, adat. Nem kampányt futtatnak hotelenként, hanem <strong>a motort építik, hangolják és validálják.</strong></div>
+        <div class="sc">→ a képességgel nő, nem a hotelszámmal</div>
+      </div>
+    </div>
+
+    <div class="lev-note">
+      <strong>A végrehajtás a gép oldalán van</strong> — kampányépítés, kitelepítés, szegmentálás, kreatív, mérés, riport. Ezért tud úgy nőni az ügyfélszám, hogy a csapat nem nő vele arányosan. És ezért marad a szakági tudás a házon belül: a specialista nem kikerül a rendszerből, hanem <strong>ő az, aki tanítja és ellenőrzi.</strong>
+    </div>
   </div>
 </section>
 
 <p class="foot">
   A Pre-arrival Upselling a Booking Engine része, nem önálló modul. A korábbi <em>CBX</em> feloldva: a Sales Automation a CRM-be, a CRO a Sales Activationnel együtt a <em>RoomSome Direct</em>-be került.<br>
-  RoomSome / Morgens · 2026. augusztus 3.
+  RoomSome / Morgens · 2026. szeptember 18.
 </p>
 
 </div>
-</body>
-</html>
+
+</body></html>
