@@ -1,8 +1,9 @@
+# Bejárás engedélyezett, hogy megosztott linkeket AI-k/eszközök olvashassanak.
+# Az egyes aloldalak <meta name="robots" content="noindex"> révén NEM indexelődnek
+# a keresőben — csak a főoldal (/ és /en) indexelhető.
 User-agent: *
-Allow: /$
-Allow: /en$
-Allow: /sitemap.xml
-Allow: /portrait.png
-Disallow: /
+Allow: /
+Disallow: /bonvital
+Disallow: /2027bp
 
 Sitemap: https://katonazoli.hu/sitemap.xml
