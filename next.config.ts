@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
         { source: "/v2", destination: "/v2.html" },
         { source: "/galbusz", destination: "/galbusz/index.html" },
         { source: "/galbusz100", destination: "/galbusz100/index.html" },
+        { source: "/galbusz101", destination: "/galbusz101/index.html" },
         { source: "/rs2027", destination: "/rs2027.html" },
         { source: "/romania", destination: "/romania.html" },
         { source: "/metaads", destination: "/metaads/meta-ads-booster.html" },
