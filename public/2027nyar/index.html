@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MORGENS · Nyár 2026 a magyar szálláspiacon</title>
+<link rel="stylesheet" href="/2027nyar/morgens.css">
+<style>
+/* Deck-specifikus kiegészítések: táblák, statkártyák, két-oszlopos számblokkok */
+.deck .slide{justify-content:flex-start;padding-top:12vh;padding-bottom:9vh}
+.deck .slide>.eyebrow{align-self:flex-start}
+.deck .slide.tight .card{padding:1.5vh 1.3vw;margin-bottom:1.1vh}
+.deck .slide.tight .card h3{font-size:1.2vw}
+.deck .slide.tight .card p{font-size:.98vw;line-height:1.35}
+.deck .slide.tight .note{font-size:.98vw;padding:1.3vh 1.2vw}
+.deck .slide.titleslide{justify-content:center;padding-top:7vh}
+.deck .slide h2{font-size:2.5vw;margin-bottom:1.4vh}
+.deck .slide .lead{font-size:1.45vw;line-height:1.45;color:var(--muted);max-width:72vw;margin:0 0 2vh}
+.deck .slide.dark .lead{color:#b7d2cb}
+.deck table.price{margin:1vh 0 1.2vh;width:100%}
+.deck table.price td{font-size:1.18vw;padding:1.15vh 1vw;line-height:1.3}
+.deck table.price .head td{font-size:.82vw;letter-spacing:.07em}
+.deck table.price td.val{width:auto;text-align:right}
+.deck table.price .desc{font-size:.92vw}
+.deck table.price .sum td{background:#eef8ef}
+.deck .slide.dark table.price td{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.12);color:#eaf3f0}
+.deck .slide.dark table.price td.val,.deck .slide.dark table.price b{color:#fff}
+.deck .slide.dark table.price .head td{background:rgba(255,255,255,.1);color:#9fd7bf}
+.deck .slide.dark table.price .desc{color:#9fbcb6}
+.deck .slide.dark table.price .sum td{background:rgba(56,189,109,.18)}
+.up{color:#38BD6D;font-weight:700;white-space:nowrap}
+.dn{color:#d98282;font-weight:700;white-space:nowrap}
+.deck .slide.light .dn{color:#b85c5c}
+.flat{color:var(--muted);font-weight:700;white-space:nowrap}
+.deck .slide.dark .flat{color:#9fbcb6}
+.deck .stats{display:flex;gap:1.4vw;margin:1.5vh 0 1.5vh}
+.deck .stats .s{flex:1;display:block;border-radius:12px;padding:2.2vh 1.4vw}
+.deck .slide.dark .stats .s{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.deck .stats .s .n{font-size:2.9vw}
+.deck .stats .s .l{font-size:.95vw;margin-top:.8vh}
+.deck .slide.dark .stats .s .l{color:#b7d2cb}
+.deck .note{font-size:1.05vw;padding:1.6vh 1.4vw;margin:1.2vh 0 0}
+.deck .slide.dark .note{background:rgba(219,241,131,.08);color:#cfe0db}
+.deck .slide.dark .note b{color:#DBF183}
+.deck ul.dash li,.deck ul.check li{font-size:1.25vw;margin-bottom:1vh;padding-left:1.3vw;line-height:1.4}
+.deck .slide.dark ul.dash li,.deck .slide.dark ul.check li,.deck .slide.dark ul.x li{color:#dcebe7}
+.deck .slide.dark ul.x li{font-size:1.25vw;margin-bottom:1vh;padding-left:1.3vw;line-height:1.4}
+.deck .slide.dark ul.x li:before{color:#e59a9a}
+.deck .slide.dark ul.x li b{color:#fff}
+.deck .slide.dark ul.dash li b,.deck .slide.dark ul.check li b{color:#fff}
+.deck .slide.dark ul.check li:before{color:#38BD6D}
+.deck .card h3{font-size:1.3vw;margin-bottom:.5vh}
+.deck .card p{font-size:1.05vw;line-height:1.4}
+.deck .slide.dark .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.deck .slide.dark .card h3{color:#fff}
+.deck .slide.dark .card p{color:#b7d2cb}
+.bignum{font-size:4.6vw;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.srcline{position:absolute;bottom:5vh;left:8vw;font-size:.85vw;color:var(--muted)}
+.deck .slide.dark .srcline{color:#7fa39c}
+.splitcol{display:flex;gap:3vw;margin-top:1.5vh}
+.splitcol>div{flex:1}
+.coltitle{font-size:1.15vw;font-weight:700;color:var(--ink);letter-spacing:.02em;margin:0 0 .8vh}
+.deck .slide.dark .coltitle{color:#DBF183}
+</style>
+
+<style id="kz-nav">
+/* --- Vízszintes lapozás + navigáció (katonazoli.hu/2027nyar) --- */
+html,body{height:100%}
+body.deck{display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth}
+body.deck::-webkit-scrollbar{display:none}
+.deck .slide{flex:0 0 100vw;scroll-snap-align:start}
+.navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:60;width:54px;height:54px;border-radius:50%;
+  border:none;cursor:pointer;background:rgba(12,74,66,.55);color:#fff;font-size:28px;line-height:54px;text-align:center;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .15s,opacity .15s;opacity:.8;font-family:'Space Grotesk',sans-serif}
+.navbtn:hover{background:#38BD6D;opacity:1}
+.navbtn.prev{left:22px}.navbtn.next{right:22px}
+.navbtn[disabled]{opacity:.18;cursor:default}
+.navcount{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:60;
+  font-family:'Space Grotesk',sans-serif;font-size:13px;color:#fff;background:rgba(12,74,66,.6);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:6px 14px;border-radius:20px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.navhint{position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:60;
+  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:#041C19;background:#DBF183;
+  padding:9px 18px;border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.22);transition:opacity .5s;white-space:nowrap}
+.navhint.hide{opacity:0;pointer-events:none}
+@media(max-width:820px){.navbtn{width:44px;height:44px;line-height:44px;font-size:23px}.navbtn.prev{left:10px}.navbtn.next{right:10px}.navhint{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body class="deck">
+
+<!-- 01 — CÍMLAP -->
+<section class="slide dark titleslide">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS"></div>
+  <span class="eyebrow">Piaci körkép · 2026. június–augusztus</span>
+  <h1>Nyár 2026<br>a magyar szálláspiacon</h1>
+  <p class="sub">Vendégforgalom, bevétel és kihasználtság — Budapest, országos és vidéki bontásban,<br>a KSH és az MSZÉSZ Trendriport adatai alapján.</p>
+  <div class="pageno">MORGENS · 01</div>
+</section>
+
+<!-- 02 — A NYÁR EGY KÉPEN -->
+<section class="slide dark">
+  <span class="eyebrow">2026 nyara egy képen</span>
+  <h2>Kettéhasadt a piac: a szállodák nőttek, a többi szálláshely zuhant</h2>
+  <div class="stats">
+    <div class="s"><div class="n">+3,1%</div><div class="l">szállodai vendégéjszaka<br>országosan, 2026. június–augusztus</div></div>
+    <div class="s"><div class="n" style="color:#d98282">−9–10%</div><div class="l">vendégéjszaka a magán- és<br>egyéb szálláshelyeken</div></div>
+    <div class="s"><div class="n">+10,8%</div><div class="l">szállodai vendégéjszaka<br>Budapesten a nyáron</div></div>
+    <div class="s"><div class="n" style="color:#DBF183">−7,0%</div><div class="l">bruttó átlag szobaár<br>országosan (45 290 → 42 133 Ft)</div></div>
+  </div>
+  <ul class="dash" style="margin-top:1.5vh">
+    <li><b>Több vendég, kevesebb forint.</b> A szállodák megtartották, Budapesten jelentősen növelték a forgalmat — de a forintban mért árak és a REVPAR mindenhol estek.</li>
+    <li><b>Az összesített turisztikai statisztika félrevezet:</b> az országos mínuszt szinte teljes egészében a magán- és egyéb szálláshelyek adják.</li>
+  </ul>
+  <div class="srcline">Forrás: MSZÉSZ közlemény (2026. 10. 02.), KSH</div>
+  <div class="pageno">MORGENS · 02</div>
+</section>
+
+<!-- 03 — KÉT ADATKÖR -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">Olvasási útmutató</span>
+  <h2>Két adatkör, két történet — <span class="hl">ne keverjük össze</span></h2>
+  <p class="lead">A nyári hírek azért mondanak ellent egymásnak, mert nem ugyanarról a piacról szólnak. Minden szám alatt jelezzük, melyik körre vonatkozik.</p>
+  <div class="splitcol">
+    <div>
+      <p class="coltitle">KSH — összes turisztikai szálláshely</p>
+      <ul class="dash">
+        <li>Kereskedelmi + magán- és egyéb szálláshelyek együtt (augusztusban 35 621 szálláshely)</li>
+        <li>Ebben benne van az Airbnb-típusú kiadás is → ez húzza le az országos adatot</li>
+        <li>Mutatók: vendégszám, vendégéjszaka, bruttó árbevétel, SZÉP-kártya</li>
+      </ul>
+    </div>
+    <div>
+      <p class="coltitle">MSZÉSZ Trendriport — szállodák</p>
+      <ul class="dash">
+        <li>Csak a szállodák (országosan 1 033 szálloda, Budapesten 248; 65 601 szoba)</li>
+        <li>A vendégéjszakák 43%-a augusztusban; a magán- és egyéb szálláshelyek 36%</li>
+        <li>Mutatók: foglaltság, bruttó ADR, REVPAR, TREVPAR, árbevétel-szerkezet</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>Gyakorlati következtetés:</b> ha a sajtó „turisztikai visszaesést" ír, az a teljes szálláshely-kört jelenti. A szállodai piac ettől külön pályán mozog — az ügyfélkommunikációban mindig a szállodai adatot érdemes szembeállítani a hírekkel.</div>
+  <div class="srcline">Forrás: KSH 2026. augusztusi jelentés; MSZÉSZ Trendriport 2026. június–július</div>
+  <div class="pageno">03</div>
+</section>
+
+<!-- 04 — ORSZÁGOS, ÖSSZES SZÁLLÁSHELY -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">2026. június–augusztus · országos, összes turisztikai szálláshely (KSH)</span>
+  <h2>Gyenge június, stabil július, <span class="hl">zuhanó augusztus</span></h2>
+  <table class="price quad">
+    <tr class="head"><td>Mutató</td><td class="val">2026. június</td><td class="val">2026. július</td><td class="val">2026. augusztus</td></tr>
+    <tr><td><b>Vendégszám</b><br><span class="desc">előző év azonos hónapja = 100%</span></td>
+        <td class="val">1,9 M · <span class="dn">−2,2%</span></td>
+        <td class="val">2,5 M · <span class="dn">−0,4%</span></td>
+        <td class="val">2,6 M · <span class="dn">−7,3%</span></td></tr>
+    <tr><td><b>Vendégéjszaka</b></td>
+        <td class="val">4,3 M · <span class="dn">−2,5%</span></td>
+        <td class="val">6,7 M · <span class="up">+0,3%</span></td>
+        <td class="val">6,9 M · <span class="dn">−5,8%</span></td></tr>
+    <tr><td>Ebből belföldi vendégéjszaka</td>
+        <td class="val"><span class="dn">−3,6%</span></td>
+        <td class="val"><span class="dn">−0,8%</span></td>
+        <td class="val"><span class="dn">−2,8%</span></td></tr>
+    <tr><td>Ebből külföldi vendégéjszaka</td>
+        <td class="val"><span class="dn">−1,3%</span></td>
+        <td class="val"><span class="up">+1,9%</span></td>
+        <td class="val"><span class="dn">−9,3%</span></td></tr>
+    <tr><td><b>Bruttó árbevétel</b><br><span class="desc">folyó áron</span></td>
+        <td class="val">107,7 Mrd Ft · <span class="dn">−0,5%</span></td>
+        <td class="val">148,1 Mrd Ft · <span class="up">+5,8%</span></td>
+        <td class="val">151,9 Mrd Ft · <span class="dn">−5,8%</span></td></tr>
+    <tr class="sum"><td>SZÉP-kártyás költés</td>
+        <td class="val">3,4 Mrd Ft · <span class="dn">−14%</span></td>
+        <td class="val">7,4 Mrd Ft · <span class="up">+1,1%</span></td>
+        <td class="val">7,6 Mrd Ft · <span class="up">+0,4%</span></td></tr>
+  </table>
+  <div class="note"><b>Az augusztusi fordulat két oka:</b> a forint 8,3%-os erősödése (Magyarország drágább lett a beutazóknak) és a rendkívüli szárazság, ami elsősorban a vízparti turizmust érintette. A szezonálisan kiigazított adat szerint a vendégszám 11, a vendégéjszaka 8,1%-kal maradt el.</div>
+  <div class="srcline">Forrás: KSH / turizmus.com — 2026. június, július, augusztus</div>
+  <div class="pageno">04</div>
+</section>
+
+<!-- 05 — ORSZÁGOS, SZÁLLODÁK -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">2026. június–augusztus · országos, szállodák (MSZÉSZ)</span>
+  <h2>A szállodák nőttek — de az <span class="hl">árban fizettek érte</span></h2>
+  <table class="price quad">
+    <tr class="head"><td>Mutató</td><td class="val">2026. június</td><td class="val">2026. július</td><td class="val">2026. augusztus</td></tr>
+    <tr><td><b>Szállodai vendégéjszaka</b></td>
+        <td class="val">2,2 M · <span class="up">+3,8%</span></td>
+        <td class="val">2,8 M · <span class="up">+5,8%</span></td>
+        <td class="val">~3,0 M · <span class="flat">≈ 0%</span></td></tr>
+    <tr><td>Ebből belföldi / külföldi</td>
+        <td class="val"><span class="up">+0,5%</span> / <span class="up">+6,7%</span></td>
+        <td class="val"><span class="up">+3,2%</span> / <span class="up">+8,8%</span></td>
+        <td class="val"><span class="desc">nincs bontás</span></td></tr>
+    <tr><td><b>Szobafoglaltság</b></td>
+        <td class="val">62,0% · <span class="up">+2,6 pp</span></td>
+        <td class="val">67,6% · <span class="up">+3,0 pp</span></td>
+        <td class="val">70,4% · <span class="dn">−1,0 pp</span></td></tr>
+    <tr><td><b>Bruttó átlag szobaár (ADR)</b></td>
+        <td class="val">38 614 Ft · <span class="dn">−9,0%</span></td>
+        <td class="val">44 269 Ft · <span class="dn">−1,0%</span></td>
+        <td class="val">43 026 Ft · <span class="dn">−10,6%</span></td></tr>
+    <tr><td><b>Bruttó REVPAR</b></td>
+        <td class="val">23 960 Ft · <span class="dn">−4,9%</span></td>
+        <td class="val">29 908 Ft · <span class="up">+3,7%</span></td>
+        <td class="val">30 270 Ft · <span class="dn">−11,9%</span></td></tr>
+    <tr><td>Összes bruttó árbevétel<br><span class="desc">ebből szobaárbevétel</span></td>
+        <td class="val">81,1 Mrd · <span class="up">+1,1%</span><br><span class="desc">46,8 Mrd · −4,4%</span></td>
+        <td class="val">99,6 Mrd · <span class="up">+7,5%</span><br><span class="desc">61,6 Mrd · +5,5%</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+    <tr class="sum"><td>SZÉP-kártya a szállodákban</td>
+        <td class="val">2,8 Mrd Ft<br><span class="desc">= belföldi szállásdíj 16,8%-a</span></td>
+        <td class="val">5,6 Mrd Ft · <span class="up">+6,3%</span><br><span class="desc">= belföldi szállásdíj 20,4%-a</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+  </table>
+  <div class="note"><b>Az augusztusi ADR- és REVPAR-érték az előző évhez képest:</b> 48 114 → 43 026 Ft, illetve 34 362 → 30 270 Ft. Euróban a szállodai árak emelkedtek — a forintos csökkenés nagyrészt árfolyamhatás.</div>
+  <div class="srcline">Forrás: MSZÉSZ Trendriport 2026. június és július; MSZÉSZ közlemény 2026. 10. 02. (augusztus)</div>
+  <div class="pageno">05</div>
+</section>
+
+<!-- 06 — SZÁLLODA VS. MAGÁN/EGYÉB -->
+<section class="slide dark">
+  <span class="eyebrow">2026. augusztus · a szakadék</span>
+  <h2>Ugyanabban a hónapban, két ellentétes irány</h2>
+  <div class="splitcol" style="margin-top:3vh">
+    <div style="text-align:center">
+      <div class="bignum" style="color:#38BD6D">≈ 0%</div>
+      <p class="sub" style="margin-top:1.2vh">Szállodák<br>vendégéjszaka-változása</p>
+      <p style="font-size:1.1vw;color:#9fbcb6">közel 3 millió vendégéjszaka<br>a vendégéjszakák <b style="color:#fff">43%</b>-a</p>
+    </div>
+    <div style="text-align:center">
+      <div class="bignum" style="color:#d98282">−12%</div>
+      <p class="sub" style="margin-top:1.2vh">Magán- és egyéb<br>szálláshelyek</p>
+      <p style="font-size:1.1vw;color:#9fbcb6">a vendégéjszakák <b style="color:#fff">36%</b>-a<br>a vendégszám −15%</p>
+    </div>
+    <div style="text-align:center">
+      <div class="bignum" style="color:#DBF183">−5,8%</div>
+      <p class="sub" style="margin-top:1.2vh">Összes turisztikai<br>szálláshely együtt</p>
+      <p style="font-size:1.1vw;color:#9fbcb6">7,3 M → 6,9 M<br>vendégéjszaka</p>
+    </div>
+  </div>
+  <div class="note" style="margin-top:3vh"><b>Ez az a szám, amit a sajtó idéz.</b> A −5,8% nem a szállodák teljesítménye: a különbséget szinte teljes egészében a magán- és egyéb szálláshelyek visszaesése adja. Kereskedelmi szálláshelyen a vendégszám 2,8%-kal, magán- és egyéb szálláshelyen 15%-kal csökkent.</div>
+  <div class="srcline">Forrás: MSZÉSZ közlemény 2026. 10. 02.; KSH augusztusi jelentés</div>
+  <div class="pageno">MORGENS · 06</div>
+</section>
+
+<!-- 07 — BUDAPEST -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">2026. június–augusztus · Budapest, szállodák</span>
+  <h2>A főváros vitte a nyarat — <span class="hl">+10,8% vendégéjszaka</span></h2>
+  <table class="price quad">
+    <tr class="head"><td>Mutató</td><td class="val">2026. június</td><td class="val">2026. július</td><td class="val">2026. augusztus</td></tr>
+    <tr><td><b>Szállodai vendégéjszaka</b></td>
+        <td class="val">895 e · <span class="up">+10,9%</span></td>
+        <td class="val">987 e · <span class="up">+15,6%</span></td>
+        <td class="val"><span class="up">+6,4%</span></td></tr>
+    <tr><td>Ebből belföldi / külföldi</td>
+        <td class="val"><span class="up">+12,1%</span> / <span class="up">+10,7%</span></td>
+        <td class="val"><span class="up">+11,0%</span> / <span class="up">+16,3%</span></td>
+        <td class="val"><span class="desc">nincs bontás</span></td></tr>
+    <tr><td><b>Szobafoglaltság</b></td>
+        <td class="val">77,3% · <span class="up">+3,4 pp</span></td>
+        <td class="val">77,7% · <span class="up">+6,9 pp</span></td>
+        <td class="val">79,7%</td></tr>
+    <tr><td><b>Bruttó ADR</b></td>
+        <td class="val">45 882 Ft · <span class="dn">−9,9%</span></td>
+        <td class="val">47 072 Ft · <span class="up">+5,0%</span></td>
+        <td class="val"><span class="desc">nyári átlagban −8,1%</span></td></tr>
+    <tr><td><b>Bruttó REVPAR</b></td>
+        <td class="val">35 489 Ft · <span class="dn">−5,7%</span></td>
+        <td class="val">36 567 Ft · <span class="up">+15,4%</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+    <tr class="sum"><td>Szállodai bruttó árbevétel</td>
+        <td class="val">39,4 Mrd Ft · <span class="up">+3,2%</span></td>
+        <td class="val">40,4 Mrd Ft · <span class="up">+19,0%</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+  </table>
+  <div class="note"><b>A főváros is kettéhasadt.</b> Miközben a budapesti szállodák vendégéjszakái augusztusban 6,4%-kal nőttek, az összes budapesti turisztikai szálláshely forgalma közel 7%-kal esett — a magán- és egyéb szálláshelyek <b>27%-os</b> visszaesése miatt. KSH-adat szerint augusztusban a belföldi vendégszám 8,1%-kal nőtt, a külföldi 15%-kal csökkent a fővárosban (összes szálláshely).</div>
+  <div class="srcline">Forrás: MSZÉSZ Trendriport 2026. június–július; MSZÉSZ közlemény 2026. 10. 02.; KSH</div>
+  <div class="pageno">07</div>
+</section>
+
+<!-- 08 — VIDÉK -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">2026. június–augusztus · vidék, szállodák</span>
+  <h2>Vidéken stagnálás, a Balatonnál <span class="hl">csökkenő forgalom</span></h2>
+  <table class="price quad">
+    <tr class="head"><td>Mutató</td><td class="val">2026. június</td><td class="val">2026. július</td><td class="val">2026. augusztus / nyár</td></tr>
+    <tr><td><b>Fővároson kívüli szállodák</b><br><span class="desc">vendégéjszaka</span></td>
+        <td class="val">1,3 M · <span class="dn">−0,6%</span></td>
+        <td class="val"><span class="desc">nem publikált külön</span></td>
+        <td class="val"><span class="desc">nem publikált külön</span></td></tr>
+    <tr><td>Fővároson kívüli árbevétel<br><span class="desc">ebből szobaárbevétel 52%</span></td>
+        <td class="val">41,7 Mrd Ft · <span class="dn">−0,9%</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+    <tr><td><b>Balaton · vendégéjszaka</b></td>
+        <td class="val">433 e <span class="desc">(69% belföldi)</span></td>
+        <td class="val">644 e · <span class="dn">−1,0%</span></td>
+        <td class="val"><span class="dn">−3,0%</span> <span class="desc">(jún–aug)</span></td></tr>
+    <tr><td>Balaton belföldi / külföldi</td>
+        <td class="val"><span class="dn">−3,7%</span> / <span class="up">+1,5%</span></td>
+        <td class="val"><span class="up">+1,9%</span> / <span class="dn">−10,0%</span></td>
+        <td class="val"><span class="desc">nincs bontás</span></td></tr>
+    <tr><td><b>Balaton · szobafoglaltság</b></td>
+        <td class="val">53,6% · <span class="dn">−0,5 pp</span></td>
+        <td class="val">67,4% · <span class="dn">−1,3 pp</span></td>
+        <td class="val">64,4% <span class="desc">(66,2%-ról)</span></td></tr>
+    <tr><td><b>Balaton · ADR / REVPAR</b></td>
+        <td class="val">36 233 Ft · <span class="dn">−7,2%</span><br><span class="desc">REVPAR 19 413 Ft · −8,2%</span></td>
+        <td class="val">50 747 Ft · <span class="dn">−5,3%</span><br><span class="desc">REVPAR 34 181 Ft · −7,0%</span></td>
+        <td class="val">ADR <span class="dn">−6,1%</span><br><span class="desc">nyári átlag</span></td></tr>
+    <tr class="sum"><td>Balaton · bruttó árbevétel</td>
+        <td class="val">14,3 Mrd Ft · <span class="up">+0,8%</span></td>
+        <td class="val">22,6 Mrd Ft · <span class="dn">−1,6%</span></td>
+        <td class="val"><span class="desc">nem publikált</span></td></tr>
+  </table>
+  <div class="note"><b>A vidék nem egységes.</b> KSH-adat (összes szálláshely, belföldi vendégszám): júliusban Bük–Sárvár <b>+9,3%</b>, Szeged −3,3%; augusztusban Bük–Sárvár <b>+6,7%</b>, Mátra–Bükk −6,3%. Külföldi vendégszámban augusztusban minden térség csökkent, legerősebben Szeged (−21%). A balatoni SZÉP-kártyás forgalom viszont júliusban 2 Mrd Ft volt, <b>+9,6%</b>.</div>
+  <div class="srcline">Forrás: MSZÉSZ Trendriport 2026. június–július; MSZÉSZ közlemény 2026. 10. 02.; KSH</div>
+  <div class="pageno">08</div>
+</section>
+
+<!-- 09 — AZ ÁRFOLYAM -->
+<section class="slide dark">
+  <span class="eyebrow">2026. június–augusztus · bevétel és árazás</span>
+  <h2>Az erős forint elvitte a növekedés hasznát</h2>
+  <div class="splitcol" style="margin-top:1.5vh">
+    <div>
+      <p class="coltitle">Ami nőtt</p>
+      <ul class="check">
+        <li>Országos szállodai foglaltság: <b>65,2% → 66,7%</b> (jún–aug)</li>
+        <li>Budapesti foglaltság: <b>75,0% → 78,2%</b></li>
+        <li>Szállodai vendégéjszaka a nyáron: <b>+3,1%</b>, közel 8 millió</li>
+        <li>Euróban a szállodai árak <b>emelkedtek</b></li>
+      </ul>
+    </div>
+    <div>
+      <p class="coltitle">Ami csökkent</p>
+      <ul class="x">
+        <li>Országos ADR: 45 290 → <b>42 133 Ft</b> (−7,0%)</li>
+        <li>Országos REVPAR: 29 517 → <b>28 116 Ft</b> (−4,7%)</li>
+        <li>Budapesti ADR: <b>−8,1%</b>, balatoni ADR: <b>−6,1%</b></li>
+        <li>Forintban mért bruttó átlagár: <b>több mint 10%</b> esés (augusztus)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>Miért fontos ez a szállodának?</b> A júliusi EUR/HUF-on a forint 10%-kal volt erősebb, augusztusban 8,3%-kal. Az euróban realizált bevétel átváltása rontja az eredményt, miközben a forintköltségek (bér, energia, beszerzés) nem csökkentek. A növekvő foglaltság tehát <b>nem</b> jelent automatikusan jobb eredményt — a szobaár és a csatornaköltség oldalán kell nyerni.</div>
+  <div class="srcline">Forrás: MSZÉSZ Trendriport 2026. július; MSZÉSZ közlemény 2026. 10. 02.; mfor.hu / KSH</div>
+  <div class="pageno">MORGENS · 09</div>
+</section>
+
+<!-- 10 — KÜLDŐPIACOK -->
+<section class="slide light">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">2026. június–július · küldőpiacok, szállodai vendégéjszaka</span>
+  <h2>Németország stagnál, <span class="hl">Izrael és az USA robban</span></h2>
+  <div class="splitcol">
+    <div>
+      <p class="coltitle">2026. június · TOP 10</p>
+      <table class="price tri">
+        <tr class="head"><td>Ország</td><td class="val">Vendégéj.</td><td class="val">Változás</td></tr>
+        <tr><td>Németország</td><td class="val">137 e</td><td class="val"><span class="up">+1%</span></td></tr>
+        <tr><td>Egyesült Államok</td><td class="val">91 e</td><td class="val"><span class="up">+18%</span></td></tr>
+        <tr><td>Egyesült Királyság</td><td class="val">75 e</td><td class="val"><span class="flat">0%</span></td></tr>
+        <tr><td>Csehország</td><td class="val">74 e</td><td class="val"><span class="dn">−3%</span></td></tr>
+        <tr><td>Lengyelország</td><td class="val">73 e</td><td class="val"><span class="up">+13%</span></td></tr>
+        <tr><td>Izrael</td><td class="val">65 e</td><td class="val"><span class="up">+54%</span></td></tr>
+        <tr><td>Ausztria</td><td class="val">57 e</td><td class="val"><span class="dn">−2%</span></td></tr>
+        <tr><td>Szlovákia</td><td class="val">52 e</td><td class="val"><span class="up">+8%</span></td></tr>
+        <tr><td>Románia</td><td class="val">50 e</td><td class="val"><span class="dn">−9%</span></td></tr>
+        <tr><td>Olaszország</td><td class="val">41 e</td><td class="val"><span class="up">+11%</span></td></tr>
+      </table>
+    </div>
+    <div>
+      <p class="coltitle">2026. július · kiemelt piacok</p>
+      <table class="price tri">
+        <tr class="head"><td>Ország</td><td class="val">Vendégéj.</td><td class="val">Változás</td></tr>
+        <tr><td>Németország</td><td class="val">149 e</td><td class="val"><span class="up">+4,6%</span></td></tr>
+        <tr><td>Egyesült Királyság</td><td class="val">93 e</td><td class="val"><span class="up">+11,1%</span></td></tr>
+        <tr><td>Egyesült Államok</td><td class="val">88 e</td><td class="val"><span class="up">+16,7%</span></td></tr>
+        <tr><td>Izrael</td><td class="val">82 e</td><td class="val"><span class="up">≈ +50%</span></td></tr>
+      </table>
+      <div class="note" style="margin-top:2vh"><b>Balaton-figyelmeztetés:</b> júliusban Szlovákiából, Németországból és Csehországból <b>számottevően kevesebben</b> érkeztek a tóhoz, mint egy évvel korábban. A balatoni külföldi vendégéjszaka 10%-kal esett.</div>
+      <div class="note"><b>Nemzetközi mérce (STR, június):</b> Budapest 79,2%-os foglaltsággal a közép-kelet-európai fővárosok közül a 4., nettó ADR 136,6 € (2.), nettó REVPAR 108,2 € (3.). A 35 európai desztináció rangsorában 21. / 22. / 20. hely.</div>
+    </div>
+  </div>
+  <div class="srcline">Forrás: MSZÉSZ Trendriport 2026. június és július (KSH, STR adatok alapján)</div>
+  <div class="pageno">10</div>
+</section>
+
+<!-- 11 — JANUÁR-AUGUSZTUS -->
+<section class="slide dark">
+  <span class="eyebrow">2026. január–augusztus</span>
+  <h2>Nyolc hónap: több vendég, kevesebb szobaárbevétel</h2>
+  <div class="stats">
+    <div class="s"><div class="n">16,7 M</div><div class="l">szállodai vendégéjszaka<br>16,0 millióról · <b style="color:#38BD6D">+3,7%</b></div></div>
+    <div class="s"><div class="n">58,3%</div><div class="l">országos szállodai foglaltság<br>57,1%-ról · <b style="color:#38BD6D">+1,2 pp</b></div></div>
+    <div class="s"><div class="n" style="color:#DBF183">39 464</div><div class="l">bruttó ADR, Ft<br>42 118 Ft-ról · <b style="color:#d98282">−6,3%</b></div></div>
+    <div class="s"><div class="n" style="color:#DBF183">23 018</div><div class="l">bruttó REVPAR, Ft<br>24 063 Ft-ról · <b style="color:#d98282">−4,3%</b></div></div>
+  </div>
+  <table class="price tri" style="margin-top:1.5vh">
+    <tr class="head"><td>Összes turisztikai szálláshely (KSH), 2026. január–augusztus</td><td class="val">Érték</td><td class="val">Változás</td></tr>
+    <tr><td>Összes vendég</td><td class="val">13,4 M</td><td class="val"><span class="dn">−0,9%</span></td></tr>
+    <tr><td>Belföldi vendég</td><td class="val">~7,0 M</td><td class="val"><span class="up">+1,0%</span></td></tr>
+    <tr class="sum"><td>Külföldi vendég</td><td class="val">6,4 M</td><td class="val"><span class="dn">−2,9%</span></td></tr>
+  </table>
+  <div class="note"><b>Június végéig a szállodai oldalon:</b> 10,9 M vendégéjszaka (+4,2%), 406,2 Mrd Ft árbevétel (+5,0%), ebből 228,3 Mrd Ft szállásdíj; SZÉP-kártya 14,2 Mrd Ft (a belföldi szállásdíjbevétel 17,3%-a). Budapest: 4,7 M vendégéjszaka (+6,0%), 198,2 Mrd Ft (+6,7%). 2026-ban június végéig <b>9 új szálloda</b> nyílt, 816 szobával.</div>
+  <div class="srcline">Forrás: MSZÉSZ közlemény 2026. 10. 02.; MSZÉSZ Trendriport 2026. június; KSH augusztusi jelentés</div>
+  <div class="pageno">MORGENS · 11</div>
+</section>
+
+<!-- 12 — MIT JELENT EZ A SZÁLLODÁNAK -->
+<section class="slide light tight">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS" style="filter:invert(1)"></div>
+  <span class="eyebrow">Következtetések</span>
+  <h2>Öt dolog, amit a nyári adatokból <span class="hl">érdemes hazavinni</span></h2>
+  <div class="grid2" style="margin-top:1.5vh">
+    <div class="c">
+      <div class="card"><span class="knum">01</span><h3>A foglaltság már nem elég</h3><p>Nőtt a foglaltság, miközben a REVPAR esett. A kérdés nem az, hogy tele van-e a ház, hanem hogy milyen áron és milyen csatornaköltséggel.</p></div>
+      <div class="card"><span class="knum">02</span><h3>Az árfolyam a csendes költség</h3><p>Euróban emelkedtek az árak, forintban több mint 10%-ot estek. Az euróalapú szegmensben az árazást és a devizás kalkulációt felül kell vizsgálni.</p></div>
+      <div class="card"><span class="knum">03</span><h3>A belföldi kereslet lett a stabilizátor</h3><p>Augusztusban a belföldi vendégszám Budapesten 8,1%-kal nőtt, miközben a külföldi 15%-kal esett. A hazai vendég megtartása (törzsvendégprogram, SZÉP-kártya, direkt csatorna) felértékelődik.</p></div>
+    </div>
+    <div class="c">
+      <div class="card"><span class="knum">04</span><h3>A magán- és egyéb kör vesztesége a szálloda lehetősége</h3><p>Budapesten 27%-kal, országosan 12%-kal esett a magán- és egyéb szálláshelyek forgalma. Ez a kereslet nem feltétlenül tűnt el — újra meg lehet szerezni, ha a szálloda ott van, ahol a vendég keres.</p></div>
+      <div class="card"><span class="knum">05</span><h3>A marketingcsend már mérhető</h3><p>Az MSZÉSZ szerint a visszafogott országos turisztikai marketing hatása már látszik — elsősorban a nemzetközi versenynek jobban kitett és árérzékeny szegmensekben. Erős márka és stabil saját értékesítési csatorna nélkül a szálloda kiszolgáltatott.</p></div>
+    </div>
+  </div>
+  <div class="note"><b>Gyakorlati sorrend a 2027-es tervezéshez:</b> 1) árstruktúra és yield-naptár újraépítése a devizahatás figyelembevételével · 2) direkt csatorna erősítése (saját foglalási motor, törzsvendégprogram) · 3) láthatóság a keresésben és az AI-ajánlásokban · 4) a vendégszerzés valódi költségének (CAC) csatornánkénti mérése.</div>
+  <div class="srcline">Forrás: saját következtetések a KSH és MSZÉSZ 2026. június–augusztusi adatai alapján</div>
+  <div class="pageno">12</div>
+</section>
+
+<!-- 13 — ZÁRÓ -->
+<section class="slide dark titleslide">
+  <div class="brand"><img src="/2027nyar/morgens-logo-white.png" alt="MORGENS"></div>
+  <span class="eyebrow">Beszéljünk a számok mögötti döntésekről</span>
+  <h1>A kihasználtság megvan.<br>A bevételt kell visszaszerezni.</h1>
+  <p class="sub">Revenue management · direkt értékesítés · AI-láthatóság · digitális marketing — egy szerződésben.</p>
+  <p class="sub" style="color:#DBF183;font-weight:700;margin-top:3vh">MORGENS · Katona Zoltán, ügyvezető / CEO · katona.zoltan@morgens.hu · +36 30 210 8515</p>
+  <div class="pageno">MORGENS · 13</div>
+</section>
+
+
+<!-- Lapozó navigáció -->
+<button class="navbtn prev" id="navPrev" aria-label="Előző dia">&#8249;</button>
+<button class="navbtn next" id="navNext" aria-label="Következő dia">&#8250;</button>
+<div class="navcount" id="navCount">01 / 01</div>
+<div class="navhint" id="navHint">&#8592; &#8594; nyilakkal vagy húzással lapozhatsz</div>
+
+<script>
+/* Vízszintes lapozás: ←/→ (és ↑/↓, Space) + nyíl-gombok + ujjhúzás. */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var deck=document.body;
+  var prev=document.getElementById('navPrev'),next=document.getElementById('navNext');
+  var count=document.getElementById('navCount'),hint=document.getElementById('navHint');
+  var i=0;
+  function pad(n){return (n<10?'0':'')+n;}
+  function render(){
+    count.textContent=pad(i+1)+' / '+pad(slides.length);
+    prev.disabled=(i<=0); next.disabled=(i>=slides.length-1);
+  }
+  function go(n){i=Math.max(0,Math.min(slides.length-1,n));
+    slides[i].scrollIntoView({behavior:'smooth',inline:'start',block:'nearest'});render();}
+  prev.addEventListener('click',function(){go(i-1);});
+  next.addEventListener('click',function(){go(i+1);});
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','ArrowDown',' ','PageDown'].indexOf(e.key)>-1){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(i-1);}
+  });
+  var raf;
+  deck.addEventListener('scroll',function(){
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(function(){
+      var idx=Math.round(deck.scrollLeft/window.innerWidth);
+      if(idx>=0&&idx<slides.length&&idx!==i){i=idx;render();}
+    });
+  });
+  setTimeout(function(){hint.classList.add('hide');},5000);
+  deck.addEventListener('scroll',function(){hint.classList.add('hide');},{once:true});
+  render();
+})();
+</script>
+</body>
+
+</html>

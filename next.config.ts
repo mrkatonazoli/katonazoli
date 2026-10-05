@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
         { source: "/startro", destination: "/startro.html" },
         { source: "/2027", destination: "/2027.html" },
         { source: "/2027bp", destination: "/2027bp.html" },
+        { source: "/2027nyar", destination: "/2027nyar/index.html" },
         { source: "/roomlytics", destination: "/roomlytics.html" },
         { source: "/roomlytics-plan", destination: "/roomlytics-plan.html" },
         { source: "/v2", destination: "/v2.html" },
