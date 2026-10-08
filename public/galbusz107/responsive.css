@@ -86,3 +86,39 @@
   [style*="padding: 22px 26px 26px"] { padding: 14px !important; }
   [style*="gap: 56px"], [style*="gap: 64px"], [style*="gap: 48px"] { gap: 24px !important; }
 }
+
+
+/* ---- V18/V19 blokkok: mobil kiegészítés ---- */
+@media (max-width: 1080px) {
+  /* hero magasság mobilon */
+  [style*="padding: 200px 40px 300px"] { padding: 90px 20px 150px !important; }
+  /* idegenvezető portrék: 2x2 */
+  section[aria-label="Akikkel utazik"] [style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+  section[aria-label="Akikkel utazik"] [style*="width: 180px"] { width: 140px !important; height: 140px !important; }
+  /* hírlevél-képeslap: egy oszlop, bélyeg kisebb és nem lóg a mezőkre */
+  section[aria-label="Hírlevél"] [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  section[aria-label="Hírlevél"] [style*="border-right: 1px solid"] { border-right: 0 !important; border-bottom: 1px solid #EDE3D2; }
+  section[aria-label="Hírlevél"] [style*="padding: 56px 60px 56px 56px"], section[aria-label="Hírlevél"] [style*="padding: 56px 56px 56px 60px"] { padding: 28px 24px !important; }
+  section[aria-label="Hírlevél"] [style*="width: 66px"][style*="height: 80px"] { width: 52px !important; height: 64px !important; right: 16px !important; top: 16px !important; }
+  /* utalvány + törzsutas: egy oszlop */
+  section[aria-label="Ajándékutalvány és törzsutasprogram"] [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  section[aria-label="Ajándékutalvány és törzsutasprogram"] [style*="padding: 40px 44px"] { padding: 28px 24px !important; }
+  /* kiemelt ajánlatok: 1 kártya + lapozó nyilak maradnak */
+  section[aria-label="Közelgő indulásaink"] [style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+  /* indulás-táblázat: görgethető */
+  section[aria-label="Következő indulásaink"] table { min-width: 640px; }
+  section[aria-label="Következő indulásaink"] [style*="border-radius: 16px"] { overflow-x: auto !important; }
+  /* garanciasáv: 2x2 */
+  section[aria-label="Garanciáink"] [style*="grid-template-columns: 1.35fr 1fr 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; gap: 18px !important; }
+  /* bento kategóriakártyák: szöveg ne lógjon ki */
+  [data-bento] [style*="top: 50%"] { left: 20px !important; right: 20px !important; }
+  [data-bento] [style*="width: 56px"][style*="height: 56px"] { display: none !important; }
+}
+@media (max-width: 700px) {
+  [style*="padding: 200px 40px 300px"] { padding: 64px 20px 120px !important; }
+  section[aria-label="Akikkel utazik"] [style*="width: 180px"] { width: 120px !important; height: 120px !important; }
+  /* Caveat hero sor */
+  [style*="font-size: 64px"][style*="Caveat"] { font-size: 38px !important; }
+  /* footer logó + oszlopok */
+  footer [style*="grid-template-columns: 1fr 1fr 1.3fr 1fr"] { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+}
