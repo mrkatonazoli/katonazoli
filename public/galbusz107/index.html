@@ -61,7 +61,7 @@ input{font-family:inherit}
     </a>
     <nav data-desktop-nav="1" style="display:flex;align-items:center;gap:10px;margin-left:auto" aria-label="Fő navigáció">
       <div style="position:relative">
-        <button onMouseEnter="{{ megaOpenFn }}" onClick="{{ megaToggle }}" aria-expanded="{{ mega }}" style="background:#FF9C00;border:0;border-radius:999px;font-size:16px;font-weight:700;color:#fff;padding:11px 22px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 3px 10px rgba(122,44,4,.28)" style-hover="background:#E68C00">Utazások <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+        <button onMouseEnter="{{ megaOpenFn }}" onClick="{{ megaToggle }}" aria-expanded="{{ mega }}" style="background:#FF9C00;border:0;border-radius:999px;font-size:16px;font-weight:700;color:#fff;padding:11px 22px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 3px 10px rgba(0,78,108,.18)" style-hover="background:#E68C00">Utazások <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
       </div>
       <a href="#" style="font-size:16px;font-weight:700;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none" style-hover="background:rgba(255,255,255,.14);color:#fff">Rólunk</a>
       <a href="#" style="font-size:16px;font-weight:700;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none" style-hover="background:rgba(255,255,255,.14);color:#fff">Ajándékutalvány</a>
@@ -277,7 +277,7 @@ input{font-family:inherit}
 </div>
 
 <!-- S4 Kiemelt utazások -->
-<section id="utak" data-screen-label="S4 Kiemelt utazások" aria-label="Közelgő indulásaink" style="background:#fff;padding:60px 0 72px;display:flex;justify-content:center">
+<section id="utak" data-screen-label="S4 Kiemelt utazások" aria-label="Közelgő indulásaink" style="background:#fff;padding:80px 0;display:flex;justify-content:center">
   <div ref="{{ tripsRef }}" style="width:1140px;max-width:100%;padding:0 40px;box-sizing:border-box">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
       <div>
@@ -336,7 +336,7 @@ input{font-family:inherit}
   </div>
 </section>
 <!-- S6 Élménykategóriák -->
-<section data-screen-label="S6 Élménykategóriák" aria-label="Milyen útra vágyik" style="background:#FFF6EA;padding:68px 0;display:flex;justify-content:center;position:relative;overflow:hidden">
+<section data-screen-label="S6 Élménykategóriák" aria-label="Milyen útra vágyik" style="background:#FFF6EA;padding:80px 0;display:flex;justify-content:center;position:relative;overflow:hidden">
   
   <div style="position:relative;width:1140px;max-width:100%;padding:0 40px;box-sizing:border-box">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:40px">
@@ -375,7 +375,7 @@ input{font-family:inherit}
 </section>
 
 <!-- S9b Immerzív Európa -->
-<section data-screen-label="S9b Útközben" aria-label="Útközben" style="background:radial-gradient(120% 140% at 8% 0%,#0A87B0 0%,#004E6C 45%,#003A50 100%);padding:68px 0;display:flex;justify-content:center">
+<section data-screen-label="S9b Útközben" aria-label="Útközben" style="background:radial-gradient(120% 140% at 8% 0%,#0A87B0 0%,#004E6C 45%,#003A50 100%);padding:80px 0;display:flex;justify-content:center">
   <div style="width:1140px;max-width:100%;padding:0 40px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1.7fr;gap:56px;align-items:center">
     <div style="color:#fff">
       <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#FFD27A;margin-bottom:18px">Útközben</div>
@@ -396,7 +396,7 @@ input{font-family:inherit}
   <div style="position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:0 40px;box-sizing:border-box">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px">
       <div>
-        <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:24px;line-height:1;color:#E68A00;margin-bottom:8px;letter-spacing:.01em;">Hamarosan induló utak</div>
+        <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#E68A00;margin-bottom:8px;letter-spacing:.01em;">Hamarosan induló utak</div>
         <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:36px;letter-spacing:0;color:#0A7FA8;margin:0">Következő indulásaink</h2>
         
       </div>
@@ -428,11 +428,11 @@ input{font-family:inherit}
 </div>
 
 <!-- S9 Idegenvezetők -->
-<section id="vezetok" data-screen-label="S9 Idegenvezetőink" aria-label="Akikkel utazik" style="background:radial-gradient(120% 140% at 8% 0%,#0A87B0 0%,#004E6C 45%,#003A50 100%);padding:80px 0 88px;display:flex;justify-content:center">
+<section id="vezetok" data-screen-label="S9 Idegenvezetőink" aria-label="Akikkel utazik" style="background:radial-gradient(120% 140% at 8% 0%,#0A87B0 0%,#004E6C 45%,#003A50 100%);padding:88px 0 96px;display:flex;justify-content:center">
   <div style="width:1200px;max-width:100%;padding:0 40px;box-sizing:border-box">
     <div style="text-align:center;max-width:720px;margin:0 auto 64px">
       <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#FFB84D;margin-bottom:10px;letter-spacing:.01em">Ismerős arcok</div>
-      <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:40px;letter-spacing:0;color:#fff;margin:0 0 18px">Akikkel utazik</h2>
+      <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:36px;letter-spacing:0;color:#fff;margin:0 0 18px">Akikkel utazik</h2>
       <p style="font-size:17px;line-height:1.6;color:#E0F1F7;margin:0 auto;max-width:620px">Idegenvezetőink évek óta velünk járják Európát — az utak végére sokan már névről köszönnek egymásnak.</p>
       
     </div>
@@ -451,11 +451,11 @@ input{font-family:inherit}
 </section>
 
 <!-- S12 Hírlevél -->
-<section id="hirlevel" data-screen-label="S12 Hírlevél" aria-label="Hírlevél" style="position:relative;background:#fff;padding:72px 0 40px;display:flex;justify-content:center">
+<section id="hirlevel" data-screen-label="S12 Hírlevél" aria-label="Hírlevél" style="position:relative;background:#fff;padding:80px 0 40px;display:flex;justify-content:center">
   <div style="position:relative;width:1140px;max-width:100%;padding:0 40px;box-sizing:border-box">
     <div style="text-align:center;margin-bottom:40px">
       <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#E68A00;margin-bottom:10px">Képeslap havonta egyszer</div>
-      <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:38px;line-height:1.05;letter-spacing:0;color:#0A7FA8;margin:0">Gál-Busz hírlevél</h2>
+      <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:36px;line-height:1.05;letter-spacing:0;color:#0A7FA8;margin:0">Gál-Busz hírlevél</h2>
     </div>
     <div style="position:relative;background:#fff;border:1px solid #F2E4CE;border-radius:28px;box-shadow:0 16px 40px rgba(0,78,108,.08);display:grid;grid-template-columns:1fr 1fr">
       <div style="padding:56px 56px 56px 60px;border-right:1px solid #EDE3D2">
@@ -464,14 +464,14 @@ input{font-family:inherit}
         <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:24px;color:#E68A00;margin-top:24px">— a Gál-Busz csapata</div>
       </div>
       <div style="position:relative;padding:56px 60px 56px 56px">
-        <div aria-hidden="true" style="position:absolute;right:28px;top:28px;width:66px;height:80px;background:#FF9C00;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff;transform:rotate(4deg);box-shadow:0 8px 18px rgba(200,110,10,.35)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v9H4z"></path><path d="M4 15l2 4M20 15l-2 4"></path><circle cx="8" cy="12" r="1"></circle><circle cx="16" cy="12" r="1"></circle></svg><span style="font-size:10px;font-weight:800;letter-spacing:.08em">1998</span></div>
+        <div aria-hidden="true" style="position:absolute;right:28px;top:28px;width:66px;height:80px;background:#FF9C00;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff;transform:rotate(4deg);box-shadow:0 8px 18px rgba(0,78,108,.18)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v9H4z"></path><path d="M4 15l2 4M20 15l-2 4"></path><circle cx="8" cy="12" r="1"></circle><circle cx="16" cy="12" r="1"></circle></svg><span style="font-size:10px;font-weight:800;letter-spacing:.08em">1998</span></div>
         <sc-if value="{{ nlPending }}" hint-placeholder-val="{{ true }}">
           <label style="display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8A7A5E;margin-bottom:4px" for="nl-name">Név</label>
           <input id="nl-name" type="text" placeholder="Kovács Anna" value="{{ nlName }}" onChange="{{ nlNameType }}" autoComplete="name" style="width:100%;max-width:420px;border:0;border-bottom:1.5px solid #C9B894;background:transparent;padding:8px 2px 10px;font-size:18px;color:#00394F;box-sizing:border-box;outline:none;font-family:Inter,sans-serif;font-weight:500" style-focus="border-bottom-color:#0A7FA8">
           <label style="display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8A7A5E;margin:26px 0 4px" for="nl-email">E-mail cím</label>
           <input id="nl-email" type="email" placeholder="anna@example.hu" value="{{ nlv }}" onChange="{{ nlType }}" autoComplete="email" style="width:100%;max-width:420px;border:0;border-bottom:1.5px solid #C9B894;background:transparent;padding:8px 2px 10px;font-size:18px;color:#00394F;box-sizing:border-box;outline:none;font-family:Inter,sans-serif;font-weight:500" style-focus="border-bottom-color:#0A7FA8">
           <label style="display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:#7A7A7A;margin-top:24px;cursor:pointer;max-width:420px"><input type="checkbox" checked="{{ nlConsent }}" onChange="{{ nlConsentTgl }}" style="width:16px;height:16px;accent-color:#0A7FA8;margin-top:2px;flex:none"><span>A „Feliratkozom" gombra kattintva megerősítem, hogy elolvastam az <a href="#" style="color:#0A7FA8;text-decoration:underline">adatvédelmi tájékoztatót</a>.</span></label>
-          <button onClick="{{ nlSubmit }}" disabled="{{ nlDisabled }}" style="display:inline-flex;align-items:center;gap:10px;background:#FF9C00;color:#fff;border:0;height:54px;padding:0 30px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:26px;transition:background 120ms ease-out;opacity:{{ nlBtnOp }}" style-hover="background:#E68C00">Feliratkozom →</button>
+          <button onClick="{{ nlSubmit }}" disabled="{{ nlDisabled }}" style="display:inline-flex;align-items:center;gap:10px;background:#FF9C00;color:#fff;border:0;height:54px;padding:0 30px;border-radius:999px;font-size:16px;font-weight:800;cursor:pointer;margin-top:26px;transition:background 120ms ease-out;opacity:{{ nlBtnOp }}" style-hover="background:#E68C00">Feliratkozom →</button>
         </sc-if>
         <sc-if value="{{ nlDone }}" hint-placeholder-val="{{ false }}">
           <div style="display:inline-flex;align-items:center;gap:12px;background:#E7F7EF;border-radius:12px;padding:14px 18px;margin-top:8px">
@@ -514,7 +514,7 @@ input{font-family:inherit}
     <div><div style="display:grid;grid-template-columns:minmax(0,1fr) 460px;gap:48px;align-items:center">
       <div style="padding:0;min-width:0">
         <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#E68A00;margin-bottom:10px">Rólunk, röviden</div>
-        <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:30px;line-height:1.15;letter-spacing:0;color:#0A7FA8;margin:0 0 20px;text-wrap:balance">Buszos utazási iroda Kapuváron — 1998 óta</h2>
+        <h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:36px;line-height:1.15;letter-spacing:0;color:#0A7FA8;margin:0 0 20px;text-wrap:balance">Buszos utazási iroda Kapuváron — 1998 óta</h2>
         <div style="font-size:16px;line-height:1.7;color:#686868">
           <p style="margin:0 0 12px">A Gál-Busz Utazási Iroda buszos utazásokat szervez Európa-szerte: egynapos kirándulásokat, körutazásokat, adventi és szilveszteri utakat, valamint tengerparti nyaralásokat. Saját Setra túrabuszainkkal utazunk, minden úton magyar nyelvű, saját idegenvezetővel.</p>
           <p style="margin:0">Felszállási helyeink: Kapuvár (Piac tér 1.), Győr (Aradi vértanúk útja 2.) és Sopron — Budapestről a legtöbb úthoz csatlakozó transzfert biztosítunk. MUISZ-tag irodaként vagyoni biztosítékkal és 0–24 órás ügyelettel dolgozunk.</p>
@@ -538,18 +538,18 @@ input{font-family:inherit}
 </section>
 
 <!-- S14b Utalvány + Törzsutas -->
-<section data-screen-label="S14b Utalvány és törzsutas" aria-label="Ajándékutalvány és törzsutasprogram" style="background:#fff;padding:24px 0 72px;display:flex;justify-content:center">
+<section data-screen-label="S14b Utalvány és törzsutas" aria-label="Ajándékutalvány és törzsutasprogram" style="background:#fff;padding:28px 0 80px;display:flex;justify-content:center">
   <div style="width:1140px;max-width:100%;padding:0 40px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:24px">
     <div style="position:relative;background:linear-gradient(135deg,#FFF6EA 0%,#FFE9CF 100%);border:1px solid #F2E4CE;border-radius:28px;padding:40px 44px;overflow:hidden">
       <div aria-hidden="true" style="position:absolute;right:-22px;top:-22px;width:120px;height:120px;border-radius:999px;background:rgba(255,156,0,.14)"></div>
-      <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:24px;line-height:1;color:#E68A00;margin-bottom:8px">Ajándékba egy utazást?</div>
+      <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#E68A00;margin-bottom:8px">Ajándékba egy utazást?</div>
       <h3 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:28px;color:#00394F;margin:0 0 12px">Ajándékutalvány</h3>
       <p style="font-size:16px;line-height:1.6;color:#686868;margin:0 0 24px">Tetszőleges összegről, névre szólóan kiállítva — beváltható bármely utunkra, két évig. Kapuvári és győri irodánkban azonnal átvehető.</p>
       <a href="#" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;background:#FF9C00;border-radius:999px;padding:12px 24px;text-decoration:none" style-hover="background:#E68C00;text-decoration:none">Utalványt kérek →</a>
     </div>
     <div style="position:relative;background:linear-gradient(135deg,#0A7FA8 0%,#004E6C 100%);border-radius:28px;padding:40px 44px;overflow:hidden;color:#fff">
       <div aria-hidden="true" style="position:absolute;right:-22px;bottom:-22px;width:120px;height:120px;border-radius:999px;background:rgba(255,255,255,.08)"></div>
-      <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:24px;line-height:1;color:#FFB84D;margin-bottom:8px">Visszatérő utasainknak</div>
+      <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#FFB84D;margin-bottom:8px">Visszatérő utasainknak</div>
       <h3 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:28px;color:#fff;margin:0 0 14px">Törzsutasprogram</h3>
       <ul style="list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:9px;font-size:15px;line-height:1.5;color:#E0F1F7">
         <li style="display:flex;gap:10px;align-items:flex-start"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFB84D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px"><path d="M20 6L9 17l-5-5"></path></svg>Kedvezmény minden harmadik út árából</li>
@@ -562,7 +562,7 @@ input{font-family:inherit}
 </section>
 
 <!-- S14 GYIK -->
-<section id="gyik" data-screen-label="S14 GYIK" aria-label="Gyakori kérdések" style="background:#FFF6EA;padding:68px 0;display:flex;justify-content:center">
+<section id="gyik" data-screen-label="S14 GYIK" aria-label="Gyakori kérdések" style="background:#FFF6EA;padding:80px 0;display:flex;justify-content:center">
   <div style="width:1000px;max-width:100%;padding:0 40px;box-sizing:border-box">
     <div style="font-family:Caveat,'Segoe Script',cursive;font-weight:700;font-size:26px;line-height:1;color:#E68A00;margin-bottom:8px;text-align:center">Mielőtt elindulna</div><h2 style="font-family:Cambria,'Source Serif 4',Georgia,serif;font-weight:700;font-size:36px;letter-spacing:0;color:#0A7FA8;margin:0 0 32px;text-align:center">Gyakori kérdések</h2>
     <div style="display:grid;grid-template-columns:1fr;gap:12px;align-items:start;max-width:760px;margin:0 auto">
@@ -573,7 +573,7 @@ input{font-family:inherit}
         </details>
       </sc-for>
     </div>
-    <p style="text-align:center;font-size:16px;color:#7A7A7A;margin-top:28px">Nem találja a választ? Hívjon: <a href="tel:+3696595080" style="font-weight:600">+36 96 595 080</a> vagy írjon: <a href="mailto:info@galbusz.hu" style="font-weight:600">info@galbusz.hu</a></p>
+    <p style="text-align:center;font-size:16px;color:#7A7A7A;margin-top:28px">Nem találja a választ? Hívjon: <a href="tel:+3696595080" style="font-weight:600;color:#0A7FA8">+36 96 595 080</a> vagy írjon: <a href="mailto:info@galbusz.hu" style="font-weight:600;color:#0A7FA8">info@galbusz.hu</a></p>
   </div>
 </section>
 
