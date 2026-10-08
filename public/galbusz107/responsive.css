@@ -1,0 +1,88 @@
+/* GálBusz – reszponzív felülíró réteg (inline stílusok fölé) */
+@media (max-width: 1080px) {
+  div[style*="min-width: 1280px"] { min-width: 0 !important; }
+  [style*="padding: 0 40px"], [style*="padding: 0px 40px"] { padding-left: 20px !important; padding-right: 20px !important; }
+  [style*="grid-template-columns:"]:not([style*="repeat(7"]) { grid-template-columns: 1fr !important; }
+  [style*="grid-column: 1 / 3"], [style*="grid-column: 1 / 4"] { grid-column: auto !important; }
+  [style*="grid-row: 1 / 3"] { grid-row: auto !important; }
+  [style*="font-size: 64px"], [style*="font-size: 56px"] { font-size: 38px !important; }
+  [style*="font-size: 48px"], [style*="font-size: 46px"], [style*="font-size: 44px"] { font-size: 32px !important; }
+  [style*="font-size: 40px"], [style*="font-size: 36px"] { font-size: 28px !important; }
+  header > div { height: auto !important; min-height: 56px; flex-wrap: wrap !important; padding-top: 8px !important; padding-bottom: 8px !important; row-gap: 4px !important; }
+  header nav { flex-wrap: wrap !important; }
+  section [style*="display: flex"], footer [style*="display: flex"] { flex-wrap: wrap !important; }
+  [style*="position: sticky"][style*="top: 88px"] { position: static !important; max-height: none !important; }
+  [style*="width: 860px"] { width: min(94vw, 860px) !important; right: -12px !important; }
+  [style*="width: 640px"] { width: min(94vw, 640px) !important; left: 0 !important; }
+  [style*="width: 420px"] { width: min(94vw, 420px) !important; left: 0 !important; }
+  [style*="min-height: 420px"] { min-height: 260px !important; }
+  [style*="min-width: 340px"], [style*="min-width: 480px"], [style*="min-width: 240px"], [style*="min-width: 260px"], [style*="min-width: 320px"] { min-width: 0 !important; }
+  image-slot { max-width: 100%; }
+}
+@media (max-width: 700px) {
+  [style*="font-size: 64px"], [style*="font-size: 56px"] { font-size: 30px !important; }
+  [style*="font-size: 48px"], [style*="font-size: 46px"], [style*="font-size: 44px"] { font-size: 27px !important; }
+  [style*="padding: 88px 40px"], [style*="padding: 96px 40px"], [style*="padding: 64px 40px"] { padding-top: 44px !important; padding-bottom: 44px !important; }
+  [style*="height: 220px"], [style*="height: 200px"] { height: 180px !important; }
+  [style*="padding: 36px 40px"], [style*="padding: 32px 36px"], [style*="padding: 36px"] { padding: 22px !important; }
+}
+
+
+/* ---- V16 főoldal: mobil kiegészítés ---- */
+@media (max-width: 1080px) {
+  /* hero: kép teljes szélességben, halványítva; szöveg fölé */
+  [style*="width: 64%"][style*="mask-image"] { width: 100% !important; -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)) !important; mask-image: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)) !important; }
+  /* felső infósáv elrejtése */
+  header > div:first-child { display: none !important; }
+  /* kereső kártya */
+  [style*="margin-top: -96px"] { margin-top: -40px !important; }
+  [style*="margin-top: -48px"] { margin-top: -24px !important; }
+  /* bento: automatikus sormagasság, fix kártyamagasság */
+  [style*="grid-template-rows: 264px 264px"] { grid-template-rows: auto !important; }
+  [data-bento] { min-height: 220px !important; }
+  /* garancia sáv: elválasztók le */
+  [style*="border-right: 1px solid"] { border-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }
+  /* hírlevél kör */
+  [style*="width: 340px"][style*="height: 340px"] { width: min(72vw, 300px) !important; height: min(72vw, 300px) !important; margin: 0 auto; }
+  [style*="grid-template-columns: 340px 1fr"] { justify-items: center; text-align: center; }
+  [style*="grid-template-columns: 340px 1fr"] label { text-align: left; }
+  /* panoráma */
+  [style*="margin-top: -90px"] { margin-top: -30px !important; }
+  [style*="aspect-ratio: 2400 / 700"] { min-height: 180px; object-fit: cover; }
+  /* szekció-paddingok */
+  [style*="padding: 80px 0px"], [style*="padding: 72px 0px"], [style*="padding: 68px 0px"], [style*="padding: 60px 0px"] { padding-top: 48px !important; padding-bottom: 48px !important; }
+  [style*="padding: 60px 0px 72px"] { padding-top: 44px !important; padding-bottom: 48px !important; }
+  /* címek */
+  [style*="font-size: 51px"] { font-size: 34px !important; }
+  [style*="font-size: 38px"] { font-size: 30px !important; }
+  [style*="font-size: 36px"] { font-size: 28px !important; }
+  [style*="font-size: 30px"][style*="line-height: 1.15"] { font-size: 26px !important; }
+  /* idegenvezető képeslap ne forogjon, ne legyen max-width */
+  [style*="transform: rotate(1.5deg)"] { transform: none !important; max-width: none !important; }
+  [style*="transform: rotate("][style*="padding: 10px 10px 18px"] { transform: none !important; }
+  /* mega-menü teljes szélességben */
+  header [style*="position: absolute"][style*="left: 0px"][style*="right: 0px"] { position: static !important; }
+  /* footer alsó sor */
+  footer [style*="justify-content: space-between"] { flex-direction: column; align-items: flex-start !important; gap: 8px !important; }
+}
+@media (max-width: 700px) {
+  [role="tablist"][aria-label="Utazás típusa"] { display: none !important; }
+  [data-hero-chips] { display: none !important; }
+  [data-desktop-tabs] { display: none !important; }
+  [data-desktop-nav] { display: none !important; }
+  [data-hamburger] { display: flex !important; }
+  header > div:nth-child(2) { padding-right: 16px !important; justify-content: space-between !important; }
+  header a[aria-label="Gál-Busz főoldal"] { padding-left: 12px !important; margin-right: auto; }
+  header a[aria-label="Gál-Busz főoldal"] > span { padding: 8px 14px !important; }
+  header a[aria-label="Gál-Busz főoldal"] > span > span { font-size: 30px !important; }
+  [data-mobile-select] { display: block !important; }
+  [style*="font-size: 51px"] { font-size: 30px !important; }
+  [style*="font-size: 38px"] { font-size: 26px !important; }
+  [style*="font-size: 36px"] { font-size: 25px !important; }
+  [style*="font-size: 26px"][style*="Caveat"] { font-size: 22px !important; }
+  [style*="height: 196px"] { height: 170px !important; }
+  [style*="padding: 18px 20px 20px"] { padding: 14px 16px 16px !important; }
+  header nav a, header nav button { font-size: 14px !important; padding: 6px 8px !important; }
+  [style*="padding: 22px 26px 26px"] { padding: 14px !important; }
+  [style*="gap: 56px"], [style*="gap: 64px"], [style*="gap: 48px"] { gap: 24px !important; }
+}
