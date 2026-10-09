@@ -35,6 +35,7 @@ button{font-family:inherit}
 details>summary{list-style:none;cursor:pointer}
 details>summary::-webkit-details-marker{display:none}
 input{font-family:inherit}
+@keyframes heroXfade{0%{opacity:0}6%{opacity:1}39%{opacity:1}45%{opacity:0}100%{opacity:0}}
 </style>
 </helmet>
 
@@ -144,6 +145,8 @@ input{font-family:inherit}
 <section data-screen-label="S2 Hero + kereső" aria-label="Kereső" style="position:relative;background:#004E6C">
   <div style="position:absolute;inset:0;overflow:hidden">
     <image-slot id="hero-foto" shape="rect" src="/galbusz109/img/kep-hero-vieste-shutterstock.jpg" placeholder="Hero fotó: Firenze látképe (21:9)" credit="Photo on Unsplash" credit-href="https://unsplash.com" style="width:100%;height:100%"></image-slot>
+    <img src="/galbusz109/img/kep-hero-viadukt.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:heroXfade 21s linear infinite;animation-delay:7s;pointer-events:none">
+    <img src="/galbusz109/img/kep-hero-firenze-duomo.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:heroXfade 21s linear infinite;animation-delay:14s;pointer-events:none">
   </div>
   <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,58,80,.72) 0%,rgba(0,58,80,.45) 38%,rgba(0,58,80,.1) 70%,rgba(0,58,80,0) 100%);pointer-events:none"></div>
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,78,108,.9) 0%,rgba(0,78,108,.3) 20%,rgba(0,58,80,0) 42%,rgba(0,58,80,0) 63%,rgba(0,58,80,.45) 100%);pointer-events:none"></div>
