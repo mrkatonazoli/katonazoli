@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rendezvénytermek · Hotel Vinifera</title>
+<style>
+/* Vinifera — tokens.css, generálva a tokens.json-ből. Ne szerkeszd kézzel. */
+
+/* Betűk — a fájlok a fonts/ mappában, e fájlhoz képest. */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/vinifera/fonts/cinzel-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/vinifera/fonts/cinzel-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/vinifera/fonts/cinzel-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Marcellus';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/vinifera/fonts/marcellus-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/vinifera/fonts/ubuntu-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/vinifera/fonts/ubuntu-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/vinifera/fonts/ubuntu-700.woff2') format('woff2');
+}
+
+:root {
+  /* Szín */
+  --surface-page: #ffffff;
+  --surface-muted: #ececec;
+  --surface-champagne: #e9ddc5;
+  --surface-ink: #242424;
+  --surface-overlay: rgba(36, 36, 36, 0.5);
+  --text-primary: #6a5d4d;
+  --text-heading: #242424;
+  --text-strong: rgba(36, 36, 36, 0.8);
+  --text-muted: #8f8a85;
+  --text-on-ink: #ececec;
+  --text-on-image: #ffffff;
+  --gold-primary: #daad6e;
+  --gold-logo: #c59d5f;
+  --bronze-deep: #736347;
+  --line-ornament: #242424;
+  --line-hairline: rgba(36, 36, 36, 0.8);
+  --line-on-image: #ffffff;
+
+  /* Térköz */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 60px;
+  --space-9: 90px;
+  --space-10: 120px;
+
+  /* Sarok */
+  --radius-none: 0;
+  --radius-full: 9999px;
+
+  /* Méret */
+  --container-max: 1140px;
+  --ornament-rule: 60px;
+  --border-hairline: 1px;
+
+  /* Betűcsaládok */
+  --font-display: Cinzel, "Times New Roman", serif;
+  --font-body: Ubuntu, system-ui, sans-serif;
+  --font-accent: Marcellus, Georgia, serif;
+}
+
+/* Szövegstílusok — osztályként */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 57.6px;
+  font-weight: 500;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 38.4px;
+  font-weight: 500;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 33.6px;
+  font-weight: 500;
+}
+.display-sm {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 500;
+}
+.lead {
+  font-family: var(--font-accent);
+  font-size: 19.2px;
+  line-height: 23px;
+  font-weight: 500;
+}
+.body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 28.8px;
+  font-weight: 400;
+}
+.body-tight {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+}
+.nav {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+.cta {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Vinifera — komponens-stílusok. Minden érték tokenre mutat. */
+
+.vn-cta {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-none);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.vn-cta--fill {
+  background: var(--gold-primary);
+  border-color: var(--gold-primary);
+  color: var(--text-on-image);
+}
+.vn-cta--fill:hover { background: var(--gold-logo); border-color: var(--gold-logo); }
+.vn-cta--safe {
+  background: var(--bronze-deep);
+  border-color: var(--bronze-deep);
+  color: var(--text-on-image);
+}
+.vn-cta--safe:hover { background: var(--text-heading); border-color: var(--text-heading); }
+.vn-cta--outline {
+  background: transparent;
+  border-color: var(--line-hairline);
+  color: var(--text-strong);
+  padding-left: var(--space-7);
+  padding-right: var(--space-7);
+}
+.vn-cta--outline:hover { background: var(--text-strong); color: var(--text-on-image); }
+.vn-cta--onImage {
+  background: transparent;
+  border-color: var(--line-on-image);
+  color: var(--text-on-image);
+  padding-left: var(--space-7);
+  padding-right: var(--space-7);
+}
+.vn-cta--onImage:hover { background: var(--text-on-image); color: var(--text-heading); }
+.vn-cta:focus-visible { outline: 2px solid var(--gold-logo); outline-offset: 2px; }
+
+.vn-heading { max-width: 680px; }
+.vn-heading--center { margin-inline: auto; text-align: center; }
+.vn-heading__rule {
+  width: var(--ornament-rule);
+  height: var(--border-hairline);
+  background: var(--line-ornament);
+  margin-bottom: var(--space-4);
+  border: 0;
+}
+.vn-heading--center .vn-heading__rule { margin-inline: auto; }
+.vn-heading--onInk .vn-heading__rule { background: var(--text-on-ink); }
+.vn-heading__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 38.4px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.vn-heading--onInk .vn-heading__title { color: var(--text-on-image); }
+.vn-heading__lead {
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 28.8px;
+  color: var(--text-primary);
+}
+.vn-heading--onInk .vn-heading__lead { color: var(--text-on-ink); }
+
+.vn-card { display: flex; flex-direction: column; gap: var(--space-4); }
+.vn-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-ink);
+  border-radius: var(--radius-none);
+  overflow: hidden;
+}
+.vn-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vn-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 33.6px;
+  font-weight: 500;
+  color: var(--text-heading);
+}
+.vn-card__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 28.8px;
+  color: var(--text-primary);
+}
+.vn-card__actions { margin-top: var(--space-2); }
+
+.vn-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 320px;
+  padding: var(--space-8);
+  background: var(--surface-ink);
+  overflow: hidden;
+}
+.vn-hero__media { position: absolute; inset: 0; }
+.vn-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vn-hero__veil { position: absolute; inset: 0; background: var(--surface-overlay); }
+.vn-hero__body { position: relative; max-width: 640px; }
+.vn-hero__title {
+  margin: 0 0 var(--space-6);
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 57.6px;
+  font-weight: 500;
+  color: var(--text-on-image);
+}
+.vn-hero--center { justify-content: center; text-align: center; }
+.vn-hero--center .vn-hero__body { margin-inline: auto; }
+
+.vn-band {
+  position: relative;
+  padding: var(--space-10) var(--space-8);
+  background: var(--surface-ink);
+  overflow: hidden;
+  text-align: center;
+}
+.vn-band--muted { background: var(--surface-muted); }
+.vn-band__media { position: absolute; inset: 0; }
+.vn-band__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vn-band__veil { position: absolute; inset: 0; background: var(--surface-overlay); }
+.vn-band__body { position: relative; max-width: 680px; margin-inline: auto; }
+.vn-band__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 38.4px;
+  font-weight: 500;
+  color: var(--text-on-image);
+}
+.vn-band--muted .vn-band__title { color: var(--text-primary); }
+.vn-band__text {
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 28.8px;
+  color: var(--text-on-ink);
+}
+.vn-band--muted .vn-band__text { color: var(--text-primary); }
+.vn-band__actions { margin-top: var(--space-6); }
+
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--surface-page);color:var(--text-primary);font-family:var(--font-body)}
+img{max-width:100%}
+.vn-container{max-width:var(--container-max);margin:0 auto;padding-left:var(--space-5);padding-right:var(--space-5)}
+.vn-section{padding-top:var(--space-8);padding-bottom:var(--space-8)}
+.vn-section--muted{background:var(--surface-muted)}
+.vn-prose{max-width:680px;margin:var(--space-5) 0 0;font-family:var(--font-body);font-size:16px;line-height:28.8px;color:var(--text-primary)}
+.vn-header{background:var(--surface-ink);color:var(--text-on-ink)}
+.vn-header .inner{max-width:var(--container-max);margin:0 auto;padding:var(--space-4) var(--space-5);display:flex;align-items:center;justify-content:space-between;gap:var(--space-5)}
+.vn-brand{display:flex;align-items:center;gap:var(--space-3)}
+.vn-brand img{height:30px;width:auto;display:block}
+.vn-brand .wm{font-family:var(--font-display);font-size:22px;line-height:1;letter-spacing:.16em;color:var(--text-on-image)}
+.vn-nav{font-family:var(--font-body);font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-ink)}
+.vn-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-7);margin-top:var(--space-7)}
+.vn-events{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-7);margin-top:var(--space-6);border-top:var(--border-hairline) solid var(--line-hairline)}
+.vn-ev{padding:var(--space-5) 0;border-bottom:var(--border-hairline) solid var(--line-hairline)}
+.vn-ev h3{margin:0;font-family:var(--font-display);font-size:22px;line-height:28px;font-weight:500;color:var(--text-heading)}
+.vn-ev p{margin:var(--space-1) 0 0;font-family:var(--font-body);font-size:14px;line-height:21px;color:var(--text-primary)}
+.vn-footer{background:var(--surface-ink);color:var(--text-on-ink)}
+.vn-footer .inner{max-width:var(--container-max);margin:0 auto;padding:var(--space-8) var(--space-5)}
+.vn-footer b{display:block;color:var(--text-on-image);font-family:var(--font-display);font-weight:500;letter-spacing:.04em;font-size:18px;margin-bottom:var(--space-2)}
+.vn-footer .meta{font-family:var(--font-body);font-size:14px;line-height:21px;color:var(--text-on-ink)}
+@media(max-width:860px){
+  .vn-grid{grid-template-columns:1fr}
+  .vn-events{grid-template-columns:1fr}
+  .vn-header .inner{flex-direction:column;align-items:flex-start;gap:var(--space-3)}
+}
+
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script>
+/* @ds-bundle: {"format":4,"namespace":"Vinifera","components":[{"name":"Button"},{"name":"SectionHeading"},{"name":"ImageCard"},{"name":"Hero"},{"name":"DarkBand"}]} */
+(function (global) {
+  'use strict';
+  var React = global.React;
+  var h = React.createElement;
+
+  function cx() {
+    var out = [];
+    for (var i = 0; i < arguments.length; i++) if (arguments[i]) out.push(arguments[i]);
+    return out.join(' ');
+  }
+
+  var CTA_VARIANTS = { fill: 'vn-cta--fill', safe: 'vn-cta--safe', outline: 'vn-cta--outline', onImage: 'vn-cta--onImage' };
+
+  function Button(props) {
+    props = props || {};
+    var variant = CTA_VARIANTS[props.variant] ? props.variant : 'fill';
+    var className = cx('vn-cta', CTA_VARIANTS[variant], props.className);
+    var rest = { className: className, onClick: props.onClick };
+    if (props.href) {
+      rest.href = props.href;
+      return h('a', rest, props.children);
+    }
+    rest.type = props.type || 'button';
+    return h('button', rest, props.children);
+  }
+
+  function SectionHeading(props) {
+    props = props || {};
+    var cls = cx('vn-heading', props.align === 'center' && 'vn-heading--center', props.tone === 'onInk' && 'vn-heading--onInk', props.className);
+    var kids = [h('hr', { className: 'vn-heading__rule', key: 'r' }), h('h2', { className: 'vn-heading__title', key: 't' }, props.title)];
+    if (props.lead) kids.push(h('p', { className: 'vn-heading__lead', key: 'l' }, props.lead));
+    return h('div', { className: cls }, kids);
+  }
+
+  function Media(wrapClass, veilClass, image, alt, veil) {
+    var kids = [];
+    if (image) kids.push(h('img', { src: image, alt: alt || '', key: 'i' }));
+    var out = [h('div', { className: wrapClass, key: 'm' }, kids)];
+    if (veil) out.push(h('div', { className: veilClass, key: 'v' }));
+    return out;
+  }
+
+  function ImageCard(props) {
+    props = props || {};
+    var kids = [h('div', { className: 'vn-card__media', key: 'm' }, props.image ? h('img', { src: props.image, alt: props.imageAlt || '' }) : null),
+      h('h3', { className: 'vn-card__title', key: 't' }, props.title)];
+    if (props.text) kids.push(h('p', { className: 'vn-card__text', key: 'x' }, props.text));
+    if (props.actionLabel) {
+      kids.push(h('div', { className: 'vn-card__actions', key: 'a' },
+        h(Button, { variant: props.actionVariant || 'outline', href: props.href }, props.actionLabel)));
+    }
+    return h('article', { className: cx('vn-card', props.className) }, kids);
+  }
+
+  function Hero(props) {
+    props = props || {};
+    var body = [h('h1', { className: 'vn-hero__title', key: 't' }, props.title)];
+    if (props.actionLabel) body.push(h(Button, { variant: 'onImage', href: props.href, key: 'a' }, props.actionLabel));
+    var kids = Media('vn-hero__media', 'vn-hero__veil', props.image, props.imageAlt, props.veil !== false);
+    kids.push(h('div', { className: 'vn-hero__body', key: 'b' }, body));
+    return h('section', { className: cx('vn-hero', props.align === 'center' && 'vn-hero--center', props.className) }, kids);
+  }
+
+  function DarkBand(props) {
+    props = props || {};
+    var muted = props.tone === 'muted';
+    var body = [h('h2', { className: 'vn-band__title', key: 't' }, props.title)];
+    if (props.text) body.push(h('p', { className: 'vn-band__text', key: 'x' }, props.text));
+    if (props.actionLabel) {
+      body.push(h('div', { className: 'vn-band__actions', key: 'a' },
+        h(Button, { variant: muted ? 'outline' : 'onImage', href: props.href }, props.actionLabel)));
+    }
+    var kids = muted ? [] : Media('vn-band__media', 'vn-band__veil', props.image, props.imageAlt, !!props.image);
+    kids.push(h('div', { className: 'vn-band__body', key: 'b' }, body));
+    return h('section', { className: cx('vn-band', muted && 'vn-band--muted', props.className) }, kids);
+  }
+
+  global.Vinifera = { Button: Button, SectionHeading: SectionHeading, ImageCard: ImageCard, Hero: Hero, DarkBand: DarkBand };
+})(window);
+
+</script>
+<script>
+
+var e=React.createElement, V=window.Vinifera;
+function card(t,x){return e(V.ImageCard,{key:t,title:t,text:x,actionLabel:'RÉSZLETEK',actionVariant:'outline',href:'#kapcsolat'});}
+function ev(t,x){return e('div',{className:'vn-ev',key:t},[e('h3',{key:'h'},t),e('p',{key:'p'},x)]);}
+
+var header=e('header',{className:'vn-header',key:'hd'},
+  e('div',{className:'inner'},[
+    e('div',{className:'vn-brand',key:'b'},[
+      e('img',{key:'l',src:'/vinifera/assets/logold.svg',alt:'Vinifera'}),
+      e('span',{className:'wm',key:'w'},'VINIFERA')
+    ]),
+    e('nav',{className:'vn-nav',key:'n'},'Rendezvények')
+  ]));
+
+var hero=e(V.Hero,{key:'hero',title:'Rendezvénytermeink',actionLabel:'ÁRAJÁNLATOT KÉREK',href:'#kapcsolat'});
+
+var intro=e('section',{className:'vn-section',key:'s1'},
+  e('div',{className:'vn-container'},[
+    e(V.SectionHeading,{key:'h',title:'Bemutatkozás',lead:'Ezen az oldalon mutatjuk be a szálloda rendezvénytermeit, és azt, milyen eseményeknek adhatnak otthont.'}),
+    e('p',{className:'vn-prose',key:'p'},'A Hotel Vinifera rendezvénytermei rugalmasan alakíthatók a vendégek létszámához és az alkalom jellegéhez. Legyen szó meghitt összejövetelről vagy nagyobb szabású ünnepségről, tereink természetes fénnyel, visszafogott, szögletes formavilággal és a szálloda gasztronómiai hátterével állnak rendelkezésre.')
+  ]));
+
+var rooms=e('section',{className:'vn-section vn-section--muted',key:'s2'},
+  e('div',{className:'vn-container'},[
+    e(V.SectionHeading,{key:'h',title:'Termeink'}),
+    e('div',{className:'vn-grid',key:'g'},[
+      card('Nagyterem','Tágas, osztható terem bálokhoz, esküvőkhöz és konferenciákhoz, beépített színpaddal. Legfeljebb 120 fő.'),
+      card('Kisterem','Kamara-rendezvényekhez, tárgyalásokhoz és workshopokhoz, rugalmas elrendezéssel. Legfeljebb 40 fő.'),
+      card('Teraszos szalon','Természetes fényes szalon kerti kapcsolattal, állófogadásokhoz és köszöntőkhöz. Legfeljebb 60 fő.')
+    ])
+  ]));
+
+var embed=e('section',{className:'vn-section',key:'emb'},
+  e('div',{className:'vn-container'},
+    e('div',{'data-mrevent':'vinifera'})));
+
+var events=e('section',{className:'vn-section',key:'s3'},
+  e('div',{className:'vn-container'},[
+    e(V.SectionHeading,{key:'h',title:'Milyen rendezvények lehetnek nálunk?'}),
+    e('div',{className:'vn-events',key:'g'},[
+      ev('Esküvők','ceremónia és vacsora'),
+      ev('Céges események','konferencia, csapatépítés'),
+      ev('Családi ünnepek','születésnap, évforduló'),
+      ev('Gálavacsorák','díjátadók, bálok'),
+      ev('Borvacsorák','kóstolók, tematikus esték'),
+      ev('Keresztelők & ballagások','meghitt összejövetelek')
+    ])
+  ]));
+
+var closing=e('div',{id:'kapcsolat',key:'cta'},
+  e(V.DarkBand,{title:'Tervez egy eseményt?',text:'Mondja el, mire gondol — összeállítjuk az Önnek megfelelő ajánlatot.',actionLabel:'KAPCSOLAT',href:'mailto:info@vinifera.hu',tone:'ink'}));
+
+var footer=e('footer',{className:'vn-footer',key:'ft'},
+  e('div',{className:'inner'},[
+    e('b',{key:'b'},'Hotel Vinifera Wine & Spa ***** superior'),
+    e('div',{className:'meta',key:'m'},'Balatonfüred · rendezvénytermek · demo oldal')
+  ]));
+
+var app=e('div',null,[header,hero,intro,rooms,embed,events,closing,footer]);
+ReactDOM.createRoot(document.getElementById('root')).render(app);
+
+</script>
+
+<script src="https://event.katonazoli.hu/embed/vinifera.js" async></script>
+</body>
+</html>
