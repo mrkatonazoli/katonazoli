@@ -479,10 +479,6 @@ var rooms=e('section',{className:'vn-section vn-section--muted',key:'s2'},
     ])
   ]));
 
-var embed=e('section',{className:'vn-section',key:'emb'},
-  e('div',{className:'vn-container'},
-    e('div',{'data-mrevent':'vinifera'})));
-
 var events=e('section',{className:'vn-section',key:'s3'},
   e('div',{className:'vn-container'},[
     e(V.SectionHeading,{key:'h',title:'Milyen rendezvények lehetnek nálunk?'}),
@@ -505,7 +501,7 @@ var footer=e('footer',{className:'vn-footer',key:'ft'},
     e('div',{className:'meta',key:'m'},'Balatonfüred · rendezvénytermek · demo oldal')
   ]));
 
-var app=e('div',null,[header,hero,intro,rooms,embed,events,closing,footer]);
+var app=e('div',null,[header,hero,intro,rooms,events,closing,footer]);
 ReactDOM.createRoot(document.getElementById('root')).render(app);
 
 </script>
