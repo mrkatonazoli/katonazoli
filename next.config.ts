@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
         { source: "/galbusz107", destination: "/galbusz107/index.html" },
         { source: "/galbusz108", destination: "/galbusz108/index.html" },
         { source: "/galbusz109", destination: "/galbusz109/index.html" },
+        { source: "/vinifera", destination: "/vinifera.html" },
         { source: "/galbusz105", destination: "/galbusz105/index.html" },
         { source: "/rs2027", destination: "/rs2027.html" },
         { source: "/romania", destination: "/romania.html" },
